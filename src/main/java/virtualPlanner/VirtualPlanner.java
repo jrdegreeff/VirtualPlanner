@@ -1,14 +1,14 @@
-package gradeTracker;
+package virtualPlanner;
 
 /**
- * Main class for the GradeTracker project.
+ * Main class for the VirtualPlanner project.
  * 
  * @author AnnaDai
  * @author JeremiahDeGreeff
  * @author LeoDong
  * @author KevinGao
  */
-public class GradeTracker {
+public class VirtualPlanner {
 	
 	public static void main(String[] args) {
 		

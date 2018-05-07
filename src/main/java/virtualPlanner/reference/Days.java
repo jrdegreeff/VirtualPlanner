@@ -1,6 +1,6 @@
-package gradeTracker.reference;
+package virtualPlanner.reference;
 
-import gradeTracker.util.Time;
+import virtualPlanner.util.Time;
 
 /**
  * An enum which holds the block information for each day in a normal weekly Middlesex schedule.

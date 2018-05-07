@@ -1,4 +1,4 @@
-package gradeTracker.util;
+package virtualPlanner.util;
 
 /**
  * Represents a time of day with minute precision.

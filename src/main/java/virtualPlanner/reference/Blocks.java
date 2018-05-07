@@ -1,4 +1,4 @@
-package gradeTracker.reference;
+package virtualPlanner.reference;
 
 /**
  * An enum which holds all the blocks in the weekly Middlesex Schedule.

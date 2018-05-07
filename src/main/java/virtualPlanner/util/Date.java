@@ -1,9 +1,9 @@
-package gradeTracker.util;
+package virtualPlanner.util;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import gradeTracker.reference.Days;
+import virtualPlanner.reference.Days;
 
 /**
  * Represents a date and automatically determines the day of the week from {@link Days}.
