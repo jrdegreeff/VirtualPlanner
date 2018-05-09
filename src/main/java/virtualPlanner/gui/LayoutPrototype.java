@@ -158,58 +158,46 @@ public class LayoutPrototype extends JFrame{
 		panelCalendar = new JPanel();
 		panelCalendar.setLayout(new GridBagLayout());
 		
-		JButton button1 = new JButton("Monday");
-		JButton button2 = new JButton("Tuesday");
+		JButton button1 = new JButton("Wednesday");
+		JButton button2 = new JButton("Wednesday");
 		JButton button3 = new JButton("Wednesday");
-		JButton button4 = new JButton("Thursday");
-		JButton button5 = new JButton("Friday");
-		JButton button6 = new JButton("Button 6");
-		JButton button7 = new JButton("Button 7");
-		JButton button8 = new JButton("Button 8");
+		JButton button4 = new JButton("Wednesday");
+		JButton button5 = new JButton("Wednesday");
+		JButton button6 = new JButton("Wednesday");
+		JButton button7 = new JButton("Wednesday");
+		JButton button8 = new JButton("Wednesday");
 		
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.VERTICAL;
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 1;
-		gbc.weightx = 1;
-		gbc.weighty = 1;
-		gbc.fill = GridBagConstraints.VERTICAL;
-		panelCalendar.add(button1, gbc);
+		GridBagConstraints c = new GridBagConstraints();
+		c.ipadx = 10;
+		c.ipady = 10;
 		
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		panelCalendar.add(button2, gbc);
+		c.gridx = 0;
+		c.gridy = 0;
+		panelCalendar.add(button1, c);
 		
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		panelCalendar.add(button3, gbc);
+		c.gridx = 1;
+		c.gridy = 0;
+		panelCalendar.add(button2, c);
 		
-		gbc.gridx = 3;
-		gbc.gridy = 0;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		panelCalendar.add(button4, gbc);
+		c.gridx = 2;
+		c.gridy = 0;
+		panelCalendar.add(button3, c);
 		
-		gbc.gridx = 4;
-		gbc.gridy = 0;
-		gbc.gridheight = 1;
-		gbc.gridwidth = 1;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		panelCalendar.add(button5, gbc);
+		c.gridx = 3;
+		c.gridy = 0;
+		panelCalendar.add(button4, c);
+		
+		c.gridx = 4;
+		c.gridy = 0;
+		panelCalendar.add(button5, c);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		panelCalendar.add(button6, c);
+		
+		c.gridx = 0;
+		c.gridy = 4;
+		panelCalendar.add(button7, c);
 		
 		//Final Box
 		Box calendarVertical = Box.createVerticalBox();
