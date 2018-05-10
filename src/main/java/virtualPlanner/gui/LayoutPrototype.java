@@ -1,6 +1,7 @@
 package virtualPlanner.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -30,7 +31,8 @@ public class LayoutPrototype extends JFrame{
 	private static JFrame frame;
 	private static JPanel mainPanel, panelCalendar;
 	private final static int resolutionMultiplier = 2;
-
+	private final static int calendarColumnWidth = 60;
+	
 	//JMenuBar
 	private static JMenuBar menuBar;
 	private static JMenu menuFile, menu1, menu2, menu3, menu4; 
@@ -41,12 +43,14 @@ public class LayoutPrototype extends JFrame{
 
 	//JLabels
 	private static JLabel labelWeek;
-	
-	//Font
+
+	//Fonts
 	private static Font defaultFont = new Font("SansSerif", Font.BOLD, 24); 
-	
+	private static Font calendarFont = new Font("Dialog", Font.BOLD, 18);
+
+	//Icons and Images
 	private static BufferedImage imagePrev, imageNext;
-	
+
 	/**
 	 * Constructor: Creates the main GUI
 	 */
@@ -63,13 +67,13 @@ public class LayoutPrototype extends JFrame{
 
 		//Color
 		frame.setBackground(Color.WHITE);
-		
+
 		//Main Panel
 		mainPanel = new JPanel();
 
 		//Load Images
 		loadImages();
-		
+
 		//JMenuBar
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -89,7 +93,7 @@ public class LayoutPrototype extends JFrame{
 		menu3 = new JMenu("Anna is cool");
 		menuItem3 = new JMenuItem("Just kidding lol");
 		menu3.add(menuItem3);
-		
+
 		menu4 = new JMenu("Kevin is cool");
 		menuItem4 = new JMenuItem("TRUE IF BIG.");
 		menu4.add(menuItem4);
@@ -108,21 +112,21 @@ public class LayoutPrototype extends JFrame{
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}
-	
+
 	/**
 	 * Loads the images from the source folder
 	 */
 	public void loadImages()
 	{
 		try {
-		    imagePrev = ImageIO.read(getClass().getResource("previous.png"));
-		    imageNext = ImageIO.read(getClass().getResource("next.png"));
-		    System.out.println("Image loaded");
-		  } catch (Exception e) {
-		    System.out.println("Error loading images: " + e.getMessage());
-		  }
+			imagePrev = ImageIO.read(getClass().getResource("previous.png"));
+			imageNext = ImageIO.read(getClass().getResource("next.png"));
+			System.out.println("Images loaded");
+		} catch (Exception e) {
+			System.out.println("Error loading images: " + e.getMessage());
+		}
 	}
-			
+
 
 	/**
 	 * Updates the GUI
@@ -131,98 +135,87 @@ public class LayoutPrototype extends JFrame{
 	{
 		//Clear frame
 		frame.getContentPane().removeAll();
-		
+
 		//Calendar Portion
 		buttonLeft = new JButton();
-	    buttonLeft.setIcon(new ImageIcon(imagePrev));
+		buttonLeft.setIcon(new ImageIcon(imagePrev));
 		buttonLeft.setOpaque(false);
 		buttonLeft.setContentAreaFilled(false);
 		buttonLeft.setBorderPainted(false);
-	    
+
 		buttonRight = new JButton();
-	    buttonRight.setIcon(new ImageIcon(imageNext));
-	    buttonRight.setOpaque(false);
-	    buttonRight.setContentAreaFilled(false);
-	    buttonRight.setBorderPainted(false);
-		
+		buttonRight.setIcon(new ImageIcon(imageNext));
+		buttonRight.setOpaque(false);
+		buttonRight.setContentAreaFilled(false);
+		buttonRight.setBorderPainted(false);
+
 		panelCalendar = new JPanel();
 		labelWeek = new JLabel("May 5  –  May 8");
 		labelWeek.setOpaque(true);
 		labelWeek.setBackground(Color.WHITE);
 		labelWeek.setForeground(Color.MAGENTA);
 		labelWeek.setFont(defaultFont);
-		
+
 		Box level1 = Box.createHorizontalBox();
 		level1.add(buttonLeft);
 		level1.add(Box.createHorizontalStrut(20));
 		level1.add(labelWeek);
 		level1.add(Box.createHorizontalStrut(20));
 		level1.add(buttonRight);
-		
+
 		//Main Panel for Calendar
 		panelCalendar = new JPanel();
 		panelCalendar.setLayout(new GridBagLayout());
-		
-		JButton button1 = new JButton("Mon");
-		JButton button2 = new JButton("Tue");
-		JButton button3 = new JButton("Wed");
-		JButton button4 = new JButton("Thu");
-		JButton button5 = new JButton("Fri");
-		JButton button6 = new JButton("Sat");
-		JButton button7 = new JButton("Sun");
-		
-		//Initial default values for GBC
+
+		//Initial default values for GridBagLayout constraints
 		GridBagConstraints c = new GridBagConstraints();
 		c.ipadx = 50;
-		c.ipady = 10;
+		c.ipady = -26;
+		//For 0:
+		//c.ipady = -26;
+
+		//Day Labels
+		ArrayList<JButton> days = new ArrayList<JButton>();
+		days.add(new JButton("Mon"));
+		days.add(new JButton("Tue"));
+		days.add(new JButton("Wed"));
+		days.add(new JButton("Thu"));
+		days.add(new JButton("Fri"));
+		days.add(new JButton("Sat"));
+		days.add(new JButton("Sun"));
 		
-		//Monday
+		
+		//Default constant values
 		c.gridx = 0;
 		c.gridy = 0;
-		panelCalendar.add(button1, c);
-		
-		//Tuesday
-		c.gridx = 1;
-		c.gridy = 0;
-		panelCalendar.add(button2, c);
-		
-		//Wednesday
-		c.gridx = 2;
-		c.gridy = 0;
-		panelCalendar.add(button3, c);
-		
-		//Thursday
-		c.gridx = 3;
-		c.gridy = 0;
-		panelCalendar.add(button4, c);
-		
-		//Friday
-		c.gridx = 4;
-		c.gridy = 0;
-		panelCalendar.add(button5, c);
-		
-		//Saturday
-		c.gridx = 5;
-		c.gridy = 0;
-		panelCalendar.add(button6, c);
-		
-		//Sunday
-		c.gridx = 6;
-		c.gridy = 0;
-		panelCalendar.add(button7, c);
-		
+		c.ipady = 10;
+		int calendarMarkerHeight = days.get(0).getPreferredSize().height;
+		System.out.println(calendarMarkerHeight);
+		for (int i = 0; i < days.size(); i++)
+		{
+			c.gridx = i;
+			JButton button = days.get(i);
+			button.setPreferredSize(new Dimension(calendarColumnWidth, calendarMarkerHeight));
+			button.setOpaque(true);
+			button.setBackground(Color.WHITE);
+			button.setFont(calendarFont);
+			panelCalendar.add(button, c);
+		}
+
+
 		//Monday Blocks
 		ArrayList<JButton> mondayButtons = new ArrayList<JButton>();
-		JButton monC = new JButton("CCC");
-		JButton monF = new JButton("FFF");
-		JButton monMTG = new JButton("MTG");
-		JButton monD = new JButton("DDD");
-		JButton monE = new JButton("EEE");
-		JButton monG = new JButton("GGG");
-		JButton monLUN = new JButton("LUN");
-		JButton monB = new JButton("BBB");
-		JButton monA = new JButton("AAA");
-		JButton monL = new JButton("LLL");
+		JButton monC = new JButton("C");
+		JButton monF = new JButton("F");
+		JButton monMTG = new JButton("MTNG");
+		JButton monD = new JButton("D");
+		JButton monE = new JButton("E");
+		JButton monG = new JButton("G");
+		JButton monLUN = new JButton("LUNCH");
+		JButton monB = new JButton("B");
+		JButton monA = new JButton("A");
+		JButton monL = new JButton("L");
+		
 		mondayButtons.add(monC);
 		mondayButtons.add(monF);
 		mondayButtons.add(monMTG);
@@ -234,12 +227,29 @@ public class LayoutPrototype extends JFrame{
 		mondayButtons.add(monA);
 		mondayButtons.add(monL);
 
+		//Add Monday Blocks
+		c.ipady = 25;
+		c.gridx = 0;
+		for(int i = 0; i < mondayButtons.size(); i ++)
+		{
+			c.gridy = i+1;
+			JButton button = mondayButtons.get(i);
+			button.setFont(calendarFont);
+			button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
+			button.setOpaque(true);
+			button.setBackground(Color.WHITE);
+			button.setFont(calendarFont);
+			panelCalendar.add(mondayButtons.get(i), c);
+		}
 
-		
+
+
+
 		//Final Box
 		Box calendarVertical = Box.createVerticalBox();
+		calendarVertical.add(Box.createVerticalStrut(5));
 		calendarVertical.add(level1);
-		calendarVertical.add(Box.createVerticalStrut(20));
+		calendarVertical.add(Box.createVerticalStrut(10));
 		calendarVertical.add(panelCalendar);
 		mainPanel.setBackground(Color.WHITE);
 		mainPanel.add(calendarVertical);
