@@ -18,6 +18,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * 
@@ -30,9 +31,10 @@ public class LayoutPrototype extends JFrame{
 	//JFrame
 	private static JFrame frame;
 	private static JPanel mainPanel, panelCalendar;
+	//TODO: Resolution
 	private final static int resolutionMultiplier = 2;
 	private final static int calendarColumnWidth = 60;
-	
+
 	//JMenuBar
 	private static JMenuBar menuBar;
 	private static JMenu menuFile, menu1, menu2, menu3, menu4; 
@@ -46,7 +48,8 @@ public class LayoutPrototype extends JFrame{
 
 	//Fonts
 	private static Font defaultFont = new Font("SansSerif", Font.BOLD, 24); 
-	private static Font calendarFont = new Font("Dialog", Font.BOLD, 18);
+	private static Font calendarDayFont = new Font("Dialog", Font.BOLD, 18);
+	private static Font calendarBlockNameFont = new Font("Dialog", Font.BOLD, 12);
 
 	//Icons and Images
 	private static BufferedImage imagePrev, imageNext;
@@ -116,7 +119,7 @@ public class LayoutPrototype extends JFrame{
 	/**
 	 * Loads the images from the source folder
 	 */
-	public void loadImages()
+	private void loadImages()
 	{
 		try {
 			imagePrev = ImageIO.read(getClass().getResource("previous.png"));
@@ -136,7 +139,7 @@ public class LayoutPrototype extends JFrame{
 		//Clear frame
 		frame.getContentPane().removeAll();
 
-		//Calendar Portion
+		//Calendar 
 		buttonLeft = new JButton();
 		buttonLeft.setIcon(new ImageIcon(imagePrev));
 		buttonLeft.setOpaque(false);
@@ -156,6 +159,7 @@ public class LayoutPrototype extends JFrame{
 		labelWeek.setForeground(Color.MAGENTA);
 		labelWeek.setFont(defaultFont);
 
+		//Level 1 -> labelWeek and Prev + Next buttons
 		Box level1 = Box.createHorizontalBox();
 		level1.add(buttonLeft);
 		level1.add(Box.createHorizontalStrut(20));
@@ -174,7 +178,7 @@ public class LayoutPrototype extends JFrame{
 		//For 0:
 		//c.ipady = -26;
 
-		//Day Labels
+		//Day Name Labels
 		ArrayList<JButton> days = new ArrayList<JButton>();
 		days.add(new JButton("Mon"));
 		days.add(new JButton("Tue"));
@@ -183,22 +187,32 @@ public class LayoutPrototype extends JFrame{
 		days.add(new JButton("Fri"));
 		days.add(new JButton("Sat"));
 		days.add(new JButton("Sun"));
-		
-		
+
+
 		//Default constant values
+
+		//x-coordinate of GridBagLayout
 		c.gridx = 0;
+		//y-coordinate of GridBagLayout
 		c.gridy = 0;
+		//Vertical Padding
 		c.ipady = 10;
+		//Preferred height of all JButtons
 		int calendarMarkerHeight = days.get(0).getPreferredSize().height;
-		System.out.println(calendarMarkerHeight);
+		//Dimension to keep all sizes constant
+		Dimension d = new Dimension(calendarColumnWidth, calendarMarkerHeight);
+
+		//i >> row
 		for (int i = 0; i < days.size(); i++)
 		{
 			c.gridx = i;
 			JButton button = days.get(i);
-			button.setPreferredSize(new Dimension(calendarColumnWidth, calendarMarkerHeight));
+			button.setPreferredSize(d);
 			button.setOpaque(true);
 			button.setBackground(Color.WHITE);
-			button.setFont(calendarFont);
+			button.setFont(calendarDayFont);
+			//			if(i == 1)
+			//				button.setBackground(Color.RED);
 			panelCalendar.add(button, c);
 		}
 
@@ -215,7 +229,7 @@ public class LayoutPrototype extends JFrame{
 		JButton monB = new JButton("B");
 		JButton monA = new JButton("A");
 		JButton monL = new JButton("L");
-		
+
 		mondayButtons.add(monC);
 		mondayButtons.add(monF);
 		mondayButtons.add(monMTG);
@@ -234,16 +248,194 @@ public class LayoutPrototype extends JFrame{
 		{
 			c.gridy = i+1;
 			JButton button = mondayButtons.get(i);
-			button.setFont(calendarFont);
+			button.setVerticalAlignment(SwingConstants.TOP);
 			button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
 			button.setOpaque(true);
 			button.setBackground(Color.WHITE);
-			button.setFont(calendarFont);
-			panelCalendar.add(mondayButtons.get(i), c);
+			button.setFont(calendarBlockNameFont);
+			panelCalendar.add(button, c);
 		}
 
+		//Tuesday Blocks
+		ArrayList<JButton> tuesdayButtons = new ArrayList<JButton>();
+		JButton tuesD = new JButton("D");
+		JButton tuesA = new JButton("A");
+		JButton tuesXAS = new JButton("XAS:ASSEM");
+		JButton tuesC = new JButton("C");
+		JButton tuesB = new JButton("B");
+		JButton tuesH = new JButton("H");
+		JButton tuesLUN = new JButton("LUNCH");
+		JButton tuesF = new JButton("F");
+		JButton tuesE = new JButton("E");
+		JButton tuesL = new JButton("L");
 
+		tuesdayButtons.add(tuesD);
+		tuesdayButtons.add(tuesA);
+		tuesdayButtons.add(tuesXAS);
+		tuesdayButtons.add(tuesC);
+		tuesdayButtons.add(tuesB);
+		tuesdayButtons.add(tuesH);
+		tuesdayButtons.add(tuesLUN);
+		tuesdayButtons.add(tuesF);
+		tuesdayButtons.add(tuesE);
+		tuesdayButtons.add(tuesL);
 
+		//Add Tuesday Blocks
+		c.ipady = 25;
+		c.gridx = 1;
+		for(int i = 0; i < tuesdayButtons.size(); i ++)
+		{
+			c.gridy = i+1;
+			JButton button = tuesdayButtons.get(i);
+			button.setVerticalAlignment(SwingConstants.TOP);
+			button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
+			button.setOpaque(true);
+			button.setBackground(Color.WHITE);
+			button.setFont(calendarBlockNameFont);
+			panelCalendar.add(button, c);
+		}
+
+		//Wednesday Blocks
+		ArrayList<JButton> wednesdayButtons = new ArrayList<JButton>();
+		JButton wedB = new JButton("B");
+		JButton wedC = new JButton("C");
+		JButton wedXCH = new JButton("XCH:CHAPEL");
+		JButton wedA = new JButton("A");
+		JButton wedF = new JButton("F");
+		JButton wedG = new JButton("G");
+		JButton wedLUN = new JButton("LUNCH");
+
+		wednesdayButtons.add(wedB);
+		wednesdayButtons.add(wedC);
+		wednesdayButtons.add(wedXCH);
+		wednesdayButtons.add(wedA);
+		wednesdayButtons.add(wedF);
+		wednesdayButtons.add(wedG);
+		wednesdayButtons.add(wedLUN);
+
+		//Add Wednesday Blocks
+		c.ipady = 25;
+		c.gridx = 2;
+		for(int i = 0; i < wednesdayButtons.size(); i ++)
+		{
+			c.gridy = i+1;
+			JButton button = wednesdayButtons.get(i);
+			button.setVerticalAlignment(SwingConstants.TOP);
+			button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
+			button.setOpaque(true);
+			button.setBackground(Color.WHITE);
+			button.setFont(calendarBlockNameFont);
+			panelCalendar.add(button, c);
+		}
+
+		//Thursday Blocks
+		ArrayList<JButton> thursdayButtons = new ArrayList<JButton>();
+		JButton thursFCMTG = new JButton("FCMTG");
+		JButton thursE = new JButton("E");
+		JButton thursD = new JButton("D");
+		JButton thursH = new JButton("H");
+		JButton thursF = new JButton("F");
+		JButton thursLUN = new JButton("LUNCH");
+		JButton thursB = new JButton("B");
+		JButton thursC = new JButton("C");
+		JButton thursL = new JButton("L");
+
+		thursdayButtons.add(thursFCMTG);
+		thursdayButtons.add(thursE);
+		thursdayButtons.add(thursD);
+		thursdayButtons.add(thursH);
+		thursdayButtons.add(thursF);
+		thursdayButtons.add(thursLUN);
+		thursdayButtons.add(thursB);
+		thursdayButtons.add(thursC);
+		thursdayButtons.add(thursL);
+
+		//Add Thursday Blocks
+		c.ipady = 25;
+		c.gridx = 3;
+		for(int i = 0; i < thursdayButtons.size(); i ++)
+		{
+			c.gridy = i+1;
+			JButton button = thursdayButtons.get(i);
+			button.setVerticalAlignment(SwingConstants.TOP);
+			button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
+			button.setOpaque(true);
+			button.setBackground(Color.WHITE);
+			button.setFont(calendarBlockNameFont);
+			//			if(i == 0) TODO: DOUBLE SPACE FCMTG
+			//				button.setPreferredSize(new Dimension(calendarColumnWidth, ));
+			panelCalendar.add(button, c);
+		}
+
+		//Friday Blocks
+		ArrayList<JButton> fridayButtons = new ArrayList<JButton>();
+		JButton friF = new JButton("F");
+		JButton friE = new JButton("E");
+		JButton friSEN = new JButton("SENATE");
+		JButton friB = new JButton("B");
+		JButton friC = new JButton("C");
+		JButton friG = new JButton("G");
+		JButton friLUN = new JButton("LUNCH");
+		JButton friA = new JButton("A");
+		JButton friD = new JButton("D");
+		JButton friL = new JButton("L");
+
+		fridayButtons.add(friF);
+		fridayButtons.add(friE);
+		fridayButtons.add(friSEN);
+		fridayButtons.add(friB);
+		fridayButtons.add(friC);
+		fridayButtons.add(friG);
+		fridayButtons.add(friLUN);
+		fridayButtons.add(friA);
+		fridayButtons.add(friD);
+		fridayButtons.add(friL);
+
+		//Add Friday Blocks
+		c.ipady = 25;
+		c.gridx = 4;
+		for(int i = 0; i < fridayButtons.size(); i ++)
+		{
+			c.gridy = i+1;
+			JButton button = fridayButtons.get(i);
+			button.setVerticalAlignment(SwingConstants.TOP);
+			button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
+			button.setOpaque(true);
+			button.setBackground(Color.WHITE);
+			button.setFont(calendarBlockNameFont);
+			panelCalendar.add(button, c);
+		}
+
+		//Saturday Blocks
+		ArrayList<JButton> saturdayButtons = new ArrayList<JButton>();
+		JButton satA = new JButton("A");
+		JButton satH = new JButton("H");
+		JButton satXAS = new JButton("XAS:ASSEM");
+		JButton satE = new JButton("E");
+		JButton satD = new JButton("D");
+		JButton satLUN = new JButton("LUNCH");
+
+		saturdayButtons.add(satA);
+		saturdayButtons.add(satH);
+		saturdayButtons.add(satXAS);
+		saturdayButtons.add(satE);
+		saturdayButtons.add(satD);
+		saturdayButtons.add(satLUN);
+
+		//Add Saturday Blocks
+		c.ipady = 25;
+		c.gridx = 5;
+		for(int i = 0; i < saturdayButtons.size(); i ++)
+		{
+			c.gridy = i+1;
+			JButton button = saturdayButtons.get(i);
+			button.setVerticalAlignment(SwingConstants.TOP);
+			button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
+			button.setOpaque(true);
+			button.setBackground(Color.WHITE);
+			button.setFont(calendarBlockNameFont);
+			panelCalendar.add(button, c);
+		}
 
 		//Final Box
 		Box calendarVertical = Box.createVerticalBox();
@@ -265,4 +457,5 @@ public class LayoutPrototype extends JFrame{
 		new LayoutPrototype();
 	}
 
+	//TODO ActionListener with bordercolors
 }
