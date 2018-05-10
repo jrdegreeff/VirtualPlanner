@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -32,8 +33,8 @@ public class LayoutPrototype extends JFrame{
 
 	//JMenuBar
 	private static JMenuBar menuBar;
-	private static JMenu menuFile, menu1, menu2, menu3; 
-	private static JMenuItem menuItemFile, menuItem1, menuItem2, menuItem3;
+	private static JMenu menuFile, menu1, menu2, menu3, menu4; 
+	private static JMenuItem menuItemFile, menuItem1, menuItem2, menuItem3, menuItem4;
 
 	//JButtons
 	private static JButton buttonLeft, buttonRight;
@@ -85,15 +86,19 @@ public class LayoutPrototype extends JFrame{
 		menuItem2 = new JMenuItem("Just kidding lol");
 		menu2.add(menuItem2);
 
-
 		menu3 = new JMenu("Anna is cool");
 		menuItem3 = new JMenuItem("Just kidding lol");
 		menu3.add(menuItem3);
+		
+		menu4 = new JMenu("Kevin is cool");
+		menuItem4 = new JMenuItem("TRUE IF BIG.");
+		menu4.add(menuItem4);
 
 		menuBar.add(menuFile);
 		menuBar.add(menu1);
 		menuBar.add(menu2);
 		menuBar.add(menu3);
+		menuBar.add(menu4);
 
 		//Add components
 		updateGUI();
@@ -158,55 +163,87 @@ public class LayoutPrototype extends JFrame{
 		panelCalendar = new JPanel();
 		panelCalendar.setLayout(new GridBagLayout());
 		
-		JButton button1 = new JButton("Wednesday");
-		JButton button2 = new JButton("Wednesday");
-		JButton button3 = new JButton("Wednesday");
-		JButton button4 = new JButton("Wednesday");
-		JButton button5 = new JButton("Wednesday");
-		JButton button6 = new JButton("Wednesday");
-		JButton button7 = new JButton("Wednesday");
-		JButton button8 = new JButton("Wednesday");
+		JButton button1 = new JButton("Mon");
+		JButton button2 = new JButton("Tue");
+		JButton button3 = new JButton("Wed");
+		JButton button4 = new JButton("Thu");
+		JButton button5 = new JButton("Fri");
+		JButton button6 = new JButton("Sat");
+		JButton button7 = new JButton("Sun");
 		
+		//Initial default values for GBC
 		GridBagConstraints c = new GridBagConstraints();
-		c.ipadx = 10;
+		c.ipadx = 50;
 		c.ipady = 10;
 		
+		//Monday
 		c.gridx = 0;
 		c.gridy = 0;
 		panelCalendar.add(button1, c);
 		
+		//Tuesday
 		c.gridx = 1;
 		c.gridy = 0;
 		panelCalendar.add(button2, c);
 		
+		//Wednesday
 		c.gridx = 2;
 		c.gridy = 0;
 		panelCalendar.add(button3, c);
 		
+		//Thursday
 		c.gridx = 3;
 		c.gridy = 0;
 		panelCalendar.add(button4, c);
 		
+		//Friday
 		c.gridx = 4;
 		c.gridy = 0;
 		panelCalendar.add(button5, c);
 		
-		c.gridx = 0;
-		c.gridy = 1;
+		//Saturday
+		c.gridx = 5;
+		c.gridy = 0;
 		panelCalendar.add(button6, c);
 		
-		c.gridx = 0;
-		c.gridy = 4;
+		//Sunday
+		c.gridx = 6;
+		c.gridy = 0;
 		panelCalendar.add(button7, c);
+		
+		//Monday Blocks
+		ArrayList<JButton> mondayButtons = new ArrayList<JButton>();
+		JButton monC = new JButton("CCC");
+		JButton monF = new JButton("FFF");
+		JButton monMTG = new JButton("MTG");
+		JButton monD = new JButton("DDD");
+		JButton monE = new JButton("EEE");
+		JButton monG = new JButton("GGG");
+		JButton monLUN = new JButton("LUN");
+		JButton monB = new JButton("BBB");
+		JButton monA = new JButton("AAA");
+		JButton monL = new JButton("LLL");
+		mondayButtons.add(monC);
+		mondayButtons.add(monF);
+		mondayButtons.add(monMTG);
+		mondayButtons.add(monD);
+		mondayButtons.add(monE);
+		mondayButtons.add(monG);
+		mondayButtons.add(monLUN);
+		mondayButtons.add(monB);
+		mondayButtons.add(monA);
+		mondayButtons.add(monL);
+
+
 		
 		//Final Box
 		Box calendarVertical = Box.createVerticalBox();
 		calendarVertical.add(level1);
+		calendarVertical.add(Box.createVerticalStrut(20));
 		calendarVertical.add(panelCalendar);
 		mainPanel.setBackground(Color.WHITE);
 		mainPanel.add(calendarVertical);
 		frame.add(mainPanel);
-		//frame.setJMenuBar(menuBar);
 	}
 
 	/**
