@@ -26,7 +26,7 @@ public class Preferences {
 	private boolean display12Hour;
 	
 	/**
-	 * Retreives the color selected for a particular block.
+	 * Retrieves the color selected for a particular block.
 	 * 
 	 * @param Block the block to find.
 	 * @return The color selected for the specified block.
