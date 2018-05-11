@@ -43,6 +43,7 @@ public enum Days {
 			new Block(Blocks.LUNCH, new Time(12, 25), new Time(13, 00))
 		}),
 	THURSDAY(new Block[] {
+			new Block(Blocks.FACULTY, new Time(8, 00), new Time(8, 55)),
 			new Block(Blocks.E, new Time(9, 15), new Time(9, 55)),
 			new Block(Blocks.D, new Time(10, 00), new Time(10, 40)),
 			new Block(Blocks.H, new Time(10, 45), new Time(11, 25)),
