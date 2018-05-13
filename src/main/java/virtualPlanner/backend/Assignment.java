@@ -1,5 +1,6 @@
 package virtualPlanner.backend;
 
+import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.util.Date;
 
 /**
@@ -38,38 +39,67 @@ public class Assignment {
 		return assigned;
 	}
 	
+	/**
+	 * @return due date of an assignment
+	 */
 	public Date getDue() {
 		return due;
 	}
 	
-	public getAssignmentTypes() {
+	/**
+	 * @return type of the assignment
+	 */
+	public AssignmentTypes getAssignmentTypes() {
 		return type;
 	}
 	
+	/**
+	 * @return true if assignment is completed; false if otherwise
+	 */
 	public boolean isComplete() {
 		return isComplete;
 	}
 	
+	/**
+	 * Set the assignment to be completed. 
+	 */
 	public void complete() {
 		isComplete = true;
 	}
 	
+	/**
+	 * Set the assignment to be not completed. 
+	 */
 	public void uncomplete() {
 		isComplete = false;
 	}
 	
+	/**
+	 * @return name of the assignment
+	 */
 	public String getName() {
 		return name;
 	}
 	
+	/**
+	 * Set the name of the assignment. 
+	 * @param newName name of the assignment
+	 */
 	public void setName(String newName) {
 		name = newName;
 	}
 	
+	/**
+	 * @return description of the assignment
+	 */
 	public String getDescrip() {
 		return descrip; 
 	}
 	
+	/**
+	 * Set the description of the assignment. 
+	 * @param newDescrip new description of the assignment
+	 */
 	public void setDescrip(String newDescrip) {
 		descrip = newDescrip;
 	}
