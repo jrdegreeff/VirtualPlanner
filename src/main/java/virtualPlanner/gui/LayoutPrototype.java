@@ -56,6 +56,15 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 
 	//Icons and Images
 	private static BufferedImage imagePrev, imageNext;
+	
+	//JButtons for the actionListener
+	private static JButton monC, monF, monMTG, monD, monE, monG, monLUN, monB, monA, monL,
+	tuesD, tuesA, tuesXAS, tuesC, tuesB, tuesH, tuesLUN, tuesF, tuesE, tuesL,
+	wedB, wedC, wedXCH, wedA, wedF, wedG, wedLUN,
+	thursFCMTG, thursE, thursD, thursH, thursF, thursLUN, thursB, thursC, thursL,
+	friF, friE, friSEN, friB, friC, friG, friLUN, friA, friD, friL,
+	satA, satH, satXAS, satE, satD, satLUN;
+	
 
 	/**
 	 * Constructor: Creates the main GUI
@@ -133,11 +142,10 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 		}
 	}
 
-
 	/**
 	 * Updates the GUI
 	 */
-	public static void updateGUI()
+	public void updateGUI()
 	{
 		//Clear frame
 		frame.getContentPane().removeAll();
@@ -148,12 +156,14 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 		buttonLeft.setOpaque(false);
 		buttonLeft.setContentAreaFilled(false);
 		buttonLeft.setBorderPainted(false);
-
+		buttonLeft.addActionListener(this);
+		
 		buttonRight = new JButton();
 		buttonRight.setIcon(new ImageIcon(imageNext));
 		buttonRight.setOpaque(false);
 		buttonRight.setContentAreaFilled(false);
 		buttonRight.setBorderPainted(false);
+		buttonRight.addActionListener(this);
 
 		panelCalendar = new JPanel();
 		labelWeek = new JLabel("May 5  –  May 8");
@@ -222,16 +232,16 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 
 		//Monday Blocks
 		ArrayList<JButton> mondayButtons = new ArrayList<JButton>();
-		JButton monC = new JButton("C");
-		JButton monF = new JButton("F");
-		JButton monMTG = new JButton("MTNG");
-		JButton monD = new JButton("D");
-		JButton monE = new JButton("E");
-		JButton monG = new JButton("G");
-		JButton monLUN = new JButton("LUNCH");
-		JButton monB = new JButton("B");
-		JButton monA = new JButton("A");
-		JButton monL = new JButton("L");
+		monC = new JButton("C");
+		monF = new JButton("F");
+		monMTG = new JButton("MTNG");
+		monD = new JButton("D");
+		monE = new JButton("E");
+		monG = new JButton("G");
+		monLUN = new JButton("LUNCH");
+		monB = new JButton("B");
+		monA = new JButton("A");
+		monL = new JButton("L");
 
 		mondayButtons.add(monC);
 		mondayButtons.add(monF);
@@ -261,16 +271,16 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 
 		//Tuesday Blocks
 		ArrayList<JButton> tuesdayButtons = new ArrayList<JButton>();
-		JButton tuesD = new JButton("D");
-		JButton tuesA = new JButton("A");
-		JButton tuesXAS = new JButton("XAS:ASSEM");
-		JButton tuesC = new JButton("C");
-		JButton tuesB = new JButton("B");
-		JButton tuesH = new JButton("H");
-		JButton tuesLUN = new JButton("LUNCH");
-		JButton tuesF = new JButton("F");
-		JButton tuesE = new JButton("E");
-		JButton tuesL = new JButton("L");
+		tuesD = new JButton("D");
+		tuesA = new JButton("A");
+		tuesXAS = new JButton("XAS:ASSEM");
+		tuesC = new JButton("C");
+		tuesB = new JButton("B");
+		tuesH = new JButton("H");
+		tuesLUN = new JButton("LUNCH");
+		tuesF = new JButton("F");
+		tuesE = new JButton("E");
+		tuesL = new JButton("L");
 
 		tuesdayButtons.add(tuesD);
 		tuesdayButtons.add(tuesA);
@@ -300,13 +310,13 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 
 		//Wednesday Blocks
 		ArrayList<JButton> wednesdayButtons = new ArrayList<JButton>();
-		JButton wedB = new JButton("B");
-		JButton wedC = new JButton("C");
-		JButton wedXCH = new JButton("XCH:CHAPEL");
-		JButton wedA = new JButton("A");
-		JButton wedF = new JButton("F");
-		JButton wedG = new JButton("G");
-		JButton wedLUN = new JButton("LUNCH");
+		wedB = new JButton("B");
+		wedC = new JButton("C");
+		wedXCH = new JButton("XCH:CHAPEL");
+		wedA = new JButton("A");
+		wedF = new JButton("F");
+		wedG = new JButton("G");
+		wedLUN = new JButton("LUNCH");
 
 		wednesdayButtons.add(wedB);
 		wednesdayButtons.add(wedC);
@@ -333,15 +343,15 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 
 		//Thursday Blocks
 		ArrayList<JButton> thursdayButtons = new ArrayList<JButton>();
-		JButton thursFCMTG = new JButton("FCMTG");
-		JButton thursE = new JButton("E");
-		JButton thursD = new JButton("D");
-		JButton thursH = new JButton("H");
-		JButton thursF = new JButton("F");
-		JButton thursLUN = new JButton("LUNCH");
-		JButton thursB = new JButton("B");
-		JButton thursC = new JButton("C");
-		JButton thursL = new JButton("L");
+		thursFCMTG = new JButton("FCMTG");
+		thursE = new JButton("E");
+		thursD = new JButton("D");
+		thursH = new JButton("H");
+		thursF = new JButton("F");
+		thursLUN = new JButton("LUNCH");
+		thursB = new JButton("B");
+		thursC = new JButton("C");
+		thursL = new JButton("L");
 
 		thursdayButtons.add(thursFCMTG);
 		thursdayButtons.add(thursE);
@@ -372,16 +382,16 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 
 		//Friday Blocks
 		ArrayList<JButton> fridayButtons = new ArrayList<JButton>();
-		JButton friF = new JButton("F");
-		JButton friE = new JButton("E");
-		JButton friSEN = new JButton("SENATE");
-		JButton friB = new JButton("B");
-		JButton friC = new JButton("C");
-		JButton friG = new JButton("G");
-		JButton friLUN = new JButton("LUNCH");
-		JButton friA = new JButton("A");
-		JButton friD = new JButton("D");
-		JButton friL = new JButton("L");
+		friF = new JButton("F");
+		friE = new JButton("E");
+		friSEN = new JButton("SENATE");
+		friB = new JButton("B");
+		friC = new JButton("C");
+		friG = new JButton("G");
+		friLUN = new JButton("LUNCH");
+		friA = new JButton("A");
+		friD = new JButton("D");
+		friL = new JButton("L");
 
 		fridayButtons.add(friF);
 		fridayButtons.add(friE);
@@ -411,12 +421,12 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 
 		//Saturday Blocks
 		ArrayList<JButton> saturdayButtons = new ArrayList<JButton>();
-		JButton satA = new JButton("A");
-		JButton satH = new JButton("H");
-		JButton satXAS = new JButton("XAS:ASSEM");
-		JButton satE = new JButton("E");
-		JButton satD = new JButton("D");
-		JButton satLUN = new JButton("LUNCH");
+		satA = new JButton("A");
+		satH = new JButton("H");
+		satXAS = new JButton("XAS:ASSEM");
+		satE = new JButton("E");
+		satD = new JButton("D");
+		satLUN = new JButton("LUNCH");
 		
 		saturdayButtons.add(satA);
 		saturdayButtons.add(satH);
@@ -440,6 +450,24 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 			panelCalendar.add(button, c);
 		}
 
+		//2D - ArrayList implementation of the days
+		ArrayList<ArrayList<JButton>> weekdays = new ArrayList<ArrayList<JButton>>();
+		mondayButtons.add(days.get(0));
+		tuesdayButtons.add(days.get(1));
+		wednesdayButtons.add(days.get(2));
+		thursdayButtons.add(days.get(3));
+		fridayButtons.add(days.get(4));
+		saturdayButtons.add(days.get(5));
+		weekdays.add(mondayButtons);
+		weekdays.add(tuesdayButtons);
+		weekdays.add(wednesdayButtons);
+		weekdays.add(thursdayButtons);
+		weekdays.add(fridayButtons);
+		weekdays.add(saturdayButtons);
+		for(ArrayList<JButton> list1: weekdays)
+			for(JButton j: list1)
+				j.addActionListener(this);
+		
 		//Final Box
 		Box calendarVertical = Box.createVerticalBox();
 		calendarVertical.add(Box.createVerticalStrut(5));
@@ -460,9 +488,30 @@ public class LayoutPrototype extends JFrame implements ActionListener{
 		new LayoutPrototype();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	/**
+	 * 
+	 */
+	public void actionPerformed(ActionEvent e) 
+	{
+		Object src = e.getSource();
+		//Left button on the calendar
+		if (src.equals(buttonLeft))
+		{
+			labelWeek.setText("May 1 - May 3");
+			System.out.println("ClicktL");
+		}
 		
+		//Right button on the calendar
+		else if (src.equals(buttonRight))
+		{
+			labelWeek.setText("May 5 - May 7");
+			System.out.println("ClicktR");
+		}
+		
+		else if (src instanceof JButton)
+		{
+			System.out.println(((JButton) src).getText());
+		}
 	}
 
 	//TODO ActionListener with bordercolors
