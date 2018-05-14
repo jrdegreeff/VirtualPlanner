@@ -8,7 +8,7 @@ import virtualPlanner.util.Date;
  * @author Leo Dong
  *
  */
-public class Assignment {
+public class Assignment implements Comparable<Assignment> {
 	private Date assigned;
 	private Date due;
 	private AssignmentTypes type;
@@ -102,6 +102,16 @@ public class Assignment {
 	 */
 	public void setDescrip(String newDescrip) {
 		descrip = newDescrip;
+	}
+	
+	/**
+	 * Compare this assignment to another assignment in terms of priority. 
+	 * @param assn another assignment to compare to 
+	 * @return a negative number if this is smaller than assn, positive number if this is greater
+	 * than assn, and 0 if this is equal to assn
+	 */
+	public int compareTo(Assignment assn) {
+		return this.type.getPriority() - assn.type.getPriority();
 	}
 	
 	
