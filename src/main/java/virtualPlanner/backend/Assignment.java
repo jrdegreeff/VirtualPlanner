@@ -40,11 +40,34 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
+	 * Changes the assigned date. 
+	 * @param newAssn new assigned date
+	 * @return old assigned date
+	 */
+	protected Date changeAssignedDate(Date newAssn) {
+		Date oldAssn = assigned; 
+		assigned = newAssn;
+		return oldAssn; 
+	}
+	
+	/**
 	 * @return due date of an assignment
 	 */
 	public Date getDue() {
 		return due;
 	}
+	
+	/**
+	 * Changes the due date. 
+	 * @param newDue new due date
+	 * @return old due date
+	 */
+	protected Date changeDueDate(Date newDue) {
+		Date oldDue = assigned; 
+		assigned = newDue;
+		return oldDue; 
+	}
+	
 	
 	/**
 	 * @return type of the assignment
