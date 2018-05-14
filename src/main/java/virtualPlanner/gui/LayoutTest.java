@@ -47,7 +47,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 	private static JButton buttonLeft, buttonRight;
 
 	//JLabels
-	private static JLabel labelWeek;
+	private static JLabel labelWeek, labelDay;
 
 	//Fonts
 	private static Font defaultFont = new Font("SansSerif", Font.BOLD, 24); 
@@ -169,8 +169,15 @@ public class LayoutTest extends JFrame implements ActionListener{
 		labelWeek = new JLabel("May 5  –  May 8");
 		labelWeek.setOpaque(true);
 		labelWeek.setBackground(Color.WHITE);
-		labelWeek.setForeground(Color.MAGENTA);
+		labelWeek.setForeground(Color.RED);
 		labelWeek.setFont(defaultFont);
+		
+		labelDay = new JLabel("Monday May 14, 2018");
+		labelDay.setOpaque(true);
+		labelDay.setBackground(Color.WHITE);
+		labelDay.setForeground(Color.CYAN);
+		labelWeek.setFont(defaultFont);
+		//TODO: Unique font
 
 		//Level 1 -> labelWeek and Prev + Next buttons
 		Box level1 = Box.createHorizontalBox();
@@ -474,8 +481,12 @@ public class LayoutTest extends JFrame implements ActionListener{
 		calendarVertical.add(level1);
 		calendarVertical.add(Box.createVerticalStrut(10));
 		calendarVertical.add(panelCalendar);
+		
+		Box mainHorizontal = Box.createHorizontalBox();
+		mainHorizontal.add(calendarVertical);
+		mainHorizontal.add(labelDay);
 		mainPanel.setBackground(Color.WHITE);
-		mainPanel.add(calendarVertical);
+		mainPanel.add(mainHorizontal);
 		frame.add(mainPanel);
 	}
 
@@ -497,15 +508,13 @@ public class LayoutTest extends JFrame implements ActionListener{
 		//Left button on the calendar
 		if (src.equals(buttonLeft))
 		{
-			labelWeek.setText("May 1 - May 3");
-			System.out.println("ClicktL");
+			labelWeek.setText("May 1  –  May 3");
 		}
 		
 		//Right button on the calendar
 		else if (src.equals(buttonRight))
 		{
-			labelWeek.setText("May 5 - May 7");
-			System.out.println("ClicktR");
+			labelWeek.setText("May 5  –  May 7");
 		}
 		
 		else if (src instanceof JButton)
