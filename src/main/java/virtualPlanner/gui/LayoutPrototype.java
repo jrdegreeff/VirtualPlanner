@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ import javax.swing.SwingConstants;
  * This class represents a Prototype with no actionListeners/keyListeners
  */
 @SuppressWarnings("serial")
-public class LayoutPrototype extends JFrame{
+public class LayoutPrototype extends JFrame implements ActionListener{
 
 	//JFrame
 	private static JFrame frame;
@@ -212,8 +214,8 @@ public class LayoutPrototype extends JFrame{
 			button.setOpaque(true);
 			button.setBackground(Color.WHITE);
 			button.setFont(calendarDayFont);
-			//			if(i == 1)
-			//				button.setBackground(Color.RED);
+//					if(i == 1)
+//							button.setBackground(Color.RED);
 			panelCalendar.add(button, c);
 		}
 
@@ -456,6 +458,11 @@ public class LayoutPrototype extends JFrame{
 	public static void main (String[] args)
 	{
 		new LayoutPrototype();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
 	}
 
 	//TODO ActionListener with bordercolors
