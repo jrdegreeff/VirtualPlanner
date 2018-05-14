@@ -25,11 +25,11 @@ public class GUIController {
 	 * 
 	 * @param day The day to query.
 	 * @param block The block to query.
-	 * @return The {@code Assignment}s which the user has for the specified day and block.
+	 * @return The {@code Assignment}s which the user has for the specified day and block or {@code null} if there are no such {@code Assignment}s.
 	 */
 	public ArrayList<Assignment> getAssignments(Days day, Blocks block) {
 		Course course = user.getCourse(block);
-		return course == null ? null : course.getAssignments(day);
+		return null; //course == null ? null : course.getAssignments(day);
 	}
 	
 }
