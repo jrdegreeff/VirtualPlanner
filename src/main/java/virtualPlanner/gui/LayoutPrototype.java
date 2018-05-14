@@ -31,6 +31,7 @@ public class LayoutPrototype extends JFrame{
 	//JFrame
 	private static JFrame frame;
 	private static JPanel mainPanel, panelCalendar;
+	
 	//TODO: Resolution
 	private final static int resolutionMultiplier = 2;
 	private final static int calendarColumnWidth = 60;
@@ -414,7 +415,7 @@ public class LayoutPrototype extends JFrame{
 		JButton satE = new JButton("E");
 		JButton satD = new JButton("D");
 		JButton satLUN = new JButton("LUNCH");
-
+		
 		saturdayButtons.add(satA);
 		saturdayButtons.add(satH);
 		saturdayButtons.add(satXAS);
