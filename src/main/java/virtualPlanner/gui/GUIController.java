@@ -2,6 +2,8 @@ package virtualPlanner.gui;
 
 import java.util.ArrayList;
 
+import virtualPlanner.backend.Assignment;
+import virtualPlanner.backend.Course;
 import virtualPlanner.backend.User;
 import virtualPlanner.reference.Blocks;
 import virtualPlanner.reference.Days;
