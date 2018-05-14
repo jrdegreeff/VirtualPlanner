@@ -20,7 +20,8 @@ public enum Blocks {
 	ASSEMBLY("Assembly", "ASSEM", false),
 	CHAPEL("Chapel", "CHAPEL", false),
 	SENATE("Senate", "SENATE", false),
-	LUNCH("Lunch", "LUNCH", false);
+	LUNCH("Lunch", "LUNCH", false),
+	FACULTY("Faculty Meeting", "FCMTNG", false);
 	
 	/**
 	 * The full name of the block.
