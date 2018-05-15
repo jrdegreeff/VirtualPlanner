@@ -1,35 +1,42 @@
 package virtualPlanner.backend;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import virtualPlanner.util.Block;
+
+// don't forget to comment later anna !!
+
 public class Student implements User {
 	
-	String name;
-	Map<jdk.nashorn.internal.ir.Block, Course> schedule;
+	private String name;
+	private Map<Block, Course> schedule;
 	
 	public Student(String name) {
 		this.name = name;
-		schedule = new HashMap<jdk.nashorn.internal.ir.Block, Course>();
+		schedule = new HashMap<Block, Course>();
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public Course getCourse(jdk.nashorn.internal.ir.Block block) {
+	public Course getCourse(Block block) {
 		return schedule.get(block);
 	}
-	
-	public void addBlock(ArrayList<jdk.nashorn.internal.ir.Block> blocks, Course course) {
-		for (jdk.nashorn.internal.ir.Block block : blocks) {
+
+	public boolean addCourse(Block[] blocks, Course course) {
+		for (Block block : blocks) {
+			if (schedule.containsKey(block)) {
+				return false;
+			}
 			schedule.put(block, course);
 		}
+		return true;
 	}
-	
-	public void dropBlock(Course course) {
-		for (jdk.nashorn.internal.ir.Block block : schedule.keySet()) {
+
+	public void removeCourse(Course course) {
+		for (Block block : schedule.keySet()) {
 			if (schedule.get(block).equals(course)) {
 				schedule.remove(block);
 			}

@@ -1,5 +1,6 @@
 package virtualPlanner.util;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -10,7 +11,7 @@ import virtualPlanner.reference.Days;
  * 
  * @author JeremiahDeGreeff
  */
-public class Date {
+public class Date implements Comparable<Date> {
 	
 	/**
 	 * The day of the month. Must be in the range [1, 31].
@@ -44,7 +45,16 @@ public class Date {
 		this.day = day;
 		this.month = month;
 		this.year = year;
-		dayOfWeek = Days.getDay(new GregorianCalendar(year, month - 1, day).get(Calendar.DAY_OF_WEEK));
+		dayOfWeek = Days.getDay(getCalendar().get(Calendar.DAY_OF_WEEK));
+	}
+	
+	/**
+	 * Creates a {@code Calendar} which represents this {@code Date}.
+	 * 
+	 * @return The {@code Calendar}.
+	 */
+	public Calendar getCalendar() {
+		return new GregorianCalendar(year, month - 1, day);
 	}
 	
 	/**
@@ -73,6 +83,41 @@ public class Date {
 	 */
 	public Days getDayOfWeek() {
 		return dayOfWeek;
+	}
+	
+	/**
+	 * Returns a String representation of this {@code Date}.
+	 */
+	@Override
+	public String toString() {
+		return dayOfWeek.getName() + " " + DateFormat.getDateInstance(DateFormat.LONG).format(getCalendar().getTime());
+	}
+	
+	/**
+	 * Indicates whether another {@code Object} is equal to this one.
+	 * 
+	 * The {@code Object}s are considered equal if they are both instances of {@code Date} and satisfy either of the following:
+	 * <ul>
+	 * <li>both references point to the same object</li>
+	 * <li>both {@code Object}s have the same day, month, and year fields</li>
+	 * </ul>
+	 */
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o instanceof Date && (this == o || this.day == ((Date) o).day && this.month == ((Date) o).month && this.year == ((Date) o).year);
+	}
+	
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+	
+	/**
+	 * Compares this {@code Date} with the specified {@code Date} for order.
+	 */
+	@Override
+	public int compareTo(Date o) {
+		return this.getCalendar().compareTo(o.getCalendar());
 	}
 	
 }

@@ -54,4 +54,31 @@ public class Block {
 		return end;
 	}
 	
+	/**
+	 * Returns a String representation of this {@code Block}.
+	 */
+	@Override
+	public String toString() {
+		return block.getFullName() + " [" + start + "-" + end + "]";
+	}
+	
+	/**
+	 * Indicates whether another {@code Object} is equal to this one.
+	 * 
+	 * The {@code Object}s are considered equal if they are both instances of {@code Block} and satisfy either of the following:
+	 * <ul>
+	 * <li>both references point to the same {@code Object}</li>
+	 * <li>both {@code Object}s have the same block, start, and end fields</li>
+	 * </ul>
+	 */
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o instanceof Block && (this == o || this.block == ((Block) o).block && this.start == ((Block) o).start && this.end == ((Block) o).end);
+	}
+	
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+	
 }

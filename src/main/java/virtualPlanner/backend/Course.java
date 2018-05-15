@@ -3,6 +3,7 @@ package virtualPlanner.backend;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 import virtualPlanner.util.Date;
 
@@ -12,16 +13,17 @@ import virtualPlanner.util.Date;
  * The Course class maps dates to an ArrayList of assignments.
  */
 public class Course {
-	String name, teacher;
-	Map<Date, ArrayList<Assignment>> assigned;
-	Map<Date, ArrayList<Assignment>> due;
+	
+	private String name, teacher;
+	private Map<Date, PriorityQueue<Assignment>> assigned;
+	private Map<Date, PriorityQueue<Assignment>> due;
 	
 	// maps dates to an arraylist of assignments, order of arrival
 	public Course(String name, String teacher) {
 		this.name = name;
 		this.teacher = teacher;
-		assigned = new HashMap<Date, ArrayList<Assignment>>();
-		due = new HashMap<Date, ArrayList<Assignment>>();
+		assigned = new HashMap<Date, PriorityQueue<Assignment>>();
+		due = new HashMap<Date, PriorityQueue<Assignment>>();
 	}
 	
 	// return course name
@@ -35,12 +37,12 @@ public class Course {
 	}
 	
 	// returns ArrayList of assignments due on a specific date
-	public ArrayList<Assignment> getDue(Date dateDue) {
+	public PriorityQueue<Assignment> getDue(Date dateDue) {
 		return due.get(dateDue);
 	}
 	
 	// returns ArrayList of assignments assigned on a specific date
-	public ArrayList<Assignment> getAssigned(Date dateAssigned) {
+	public PriorityQueue<Assignment> getAssigned(Date dateAssigned) {
 		return assigned.get(dateAssigned);
 	}
 	
@@ -51,7 +53,7 @@ public class Course {
 		Date dateAssigned = hw.getAssignedDate();
 		
 		if (!due.containsKey(dateDue)) {
-			ArrayList<Assignment> homework = new ArrayList<Assignment>();
+			PriorityQueue<Assignment> homework = new PriorityQueue<Assignment>();
 			homework.add(hw);
 			due.put(dateDue, homework);
 		}
@@ -60,7 +62,7 @@ public class Course {
 		}
 		
 		if (!assigned.containsKey(dateAssigned)) {
-			ArrayList<Assignment> homework = new ArrayList<Assignment>();
+			PriorityQueue<Assignment> homework = new PriorityQueue<Assignment>();
 			homework.add(hw);
 			assigned.put(dateAssigned, homework);
 		}
