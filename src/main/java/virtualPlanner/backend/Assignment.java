@@ -13,12 +13,12 @@ public class Assignment implements Comparable<Assignment> {
 	/**
 	 * date assigned
 	 */
-	private Date assigned;
+	private Date assignedDate;
 	
 	/**
 	 * date due
 	 */
-	private Date due;
+	private Date dueDate;
 	
 	/**
 	 * type of assignment (e.g. homework, test, quiz, etc.)
@@ -59,8 +59,8 @@ public class Assignment implements Comparable<Assignment> {
 	 * @param description detailed description of the assignment
 	 */
 	public Assignment(Date assigned, Date due, AssignmentTypes type, String name, String description) {
-		this.assigned = assigned;
-		this.due = due; 
+		this.assignedDate = assigned;
+		this.dueDate = due; 
 		this.name = name;
 		this.descrip = description; 
 		isComplete = false;
@@ -72,7 +72,7 @@ public class Assignment implements Comparable<Assignment> {
 	 * @return assignment date
 	 */
 	public Date getAssignedDate() {
-		return assigned;
+		return assignedDate;
 	}
 	
 	/**
@@ -81,8 +81,8 @@ public class Assignment implements Comparable<Assignment> {
 	 * @return old assigned date
 	 */
 	protected Date changeAssignedDate(Date newAssn) {
-		Date oldAssn = assigned; 
-		assigned = newAssn;
+		Date oldAssn = assignedDate; 
+		assignedDate = newAssn;
 		return oldAssn; 
 	}
 	
@@ -90,7 +90,7 @@ public class Assignment implements Comparable<Assignment> {
 	 * @return due date of an assignment
 	 */
 	public Date getDue() {
-		return due;
+		return dueDate;
 	}
 	
 	/**
@@ -99,8 +99,8 @@ public class Assignment implements Comparable<Assignment> {
 	 * @return old due date
 	 */
 	protected Date changeDueDate(Date newDue) {
-		Date oldDue = assigned; 
-		assigned = newDue;
+		Date oldDue = assignedDate; 
+		assignedDate = newDue;
 		return oldDue; 
 	}
 	
@@ -170,9 +170,21 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
+	 * @return string representation of the assignment
+	 */
+	public String toString() {
+		String str = "";
+		str += "Assigned Date: " + assignedDate + "; " + "Due Date: " + dueDate + "\n"; 
+		str += "Type: " + type + "; Name: " + name + "; ID: " + ID + "\nDescription: " + descrip + "\n";
+		str += "Completed: " + isComplete; 
+		return str;
+	}
+	
+	
+	/**
 	 * Compare this assignment to another assignment in terms of priority and id.
 	 * When two assignments are of different priorities, compare priorities. 
-	 * When two assginemnts are of the same priority, compare ids. 
+	 * When two assignments are of the same priority, compare ids. 
 	 * @param assn another assignment to compare to 
 	 * @return a negative number if this assignment is smaller than the other assignment 
 	 * (either smaller priority or same priority but is created earlier), positive number if 
