@@ -10,7 +10,7 @@ import virtualPlanner.util.Time;
  */
 public enum Days {
 	
-	MONDAY(new Block[] {
+	MONDAY("Monday", new Block[] {
 			new Block(Blocks.C, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.F, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.MEETING, new Time(9, 30), new Time(10, 00)),
@@ -22,7 +22,7 @@ public enum Days {
 			new Block(Blocks.A, new Time(13, 40), new Time(14, 20)),
 			new Block(Blocks.L, new Time(14, 20), new Time(15, 00))
 		}),
-	TUESDAY(new Block[] {
+	TUESDAY("Tuesday", new Block[] {
 			new Block(Blocks.D, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.A, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.ASSEMBLY, new Time(9, 30), new Time(10, 10)),
@@ -34,7 +34,7 @@ public enum Days {
 			new Block(Blocks.E, new Time(13, 50), new Time(14, 30)),
 			new Block(Blocks.L, new Time(14, 30), new Time(15, 10))
 		}),
-	WEDNESDAY(new Block[] {
+	WEDNESDAY("Wednesday", new Block[] {
 			new Block(Blocks.B, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.C, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.CHAPEL, new Time(9, 30), new Time(10, 10)),
@@ -43,7 +43,7 @@ public enum Days {
 			new Block(Blocks.G, new Time(11, 45), new Time(12, 25)),
 			new Block(Blocks.LUNCH, new Time(12, 25), new Time(13, 00))
 		}),
-	THURSDAY(new Block[] {
+	THURSDAY("Thursday", new Block[] {
 			new Block(Blocks.FACULTY, new Time(8, 00), new Time(8, 55)),
 			new Block(Blocks.E, new Time(9, 15), new Time(9, 55)),
 			new Block(Blocks.D, new Time(10, 00), new Time(10, 40)),
@@ -54,7 +54,7 @@ public enum Days {
 			new Block(Blocks.C, new Time(13, 40), new Time(14, 20)),
 			new Block(Blocks.L, new Time(14, 20), new Time(15, 00))
 		}),
-	FRIDAY(new Block[] {
+	FRIDAY("Friday", new Block[] {
 			new Block(Blocks.F, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.E, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.SENATE, new Time(9, 30), new Time(10, 00)),
@@ -66,7 +66,7 @@ public enum Days {
 			new Block(Blocks.D, new Time(13, 40), new Time(14, 20)),
 			new Block(Blocks.L, new Time(14, 20), new Time(15, 00))
 		}),
-	SATURDAY(new Block[] {
+	SATURDAY("Saturday", new Block[] {
 			new Block(Blocks.A, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.H, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.ASSEMBLY, new Time(9, 30), new Time(10, 00)),
@@ -74,7 +74,12 @@ public enum Days {
 			new Block(Blocks.D, new Time(10, 45), new Time(11, 25)),
 			new Block(Blocks.LUNCH, new Time(11, 30), new Time(12, 10))
 		}),
-	SUNDAY(new Block[] {});
+	SUNDAY("Sunday", new Block[] {});
+	
+	/**
+	 * The name of this day.
+	 */
+	private final String name;
 	
 	/**
 	 * The blocks which occur on this day in a normal Middlesex Schedule.
@@ -82,9 +87,11 @@ public enum Days {
 	private final Block[] blocks;
 	
 	/**
+	 * @param name The name of this day.
 	 * @param blocks The blocks which occur on this day in a normal Middlesex Schedule.
 	 */
-	Days(Block[] blocks) {
+	Days(String name, Block[] blocks) {
+		this.name = name;
 		this.blocks = blocks;
 	}
 	
@@ -93,6 +100,13 @@ public enum Days {
 	 */
 	public int getBlockCount() {
 		return blocks.length;
+	}
+	
+	/**
+	 * @return The name of this day.
+	 */
+	public String getName() {
+		return name;
 	}
 	
 	/**
