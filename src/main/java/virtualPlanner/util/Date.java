@@ -75,4 +75,22 @@ public class Date {
 		return dayOfWeek;
 	}
 	
+	/**
+	 * Indicates whether another Object is equal to this one.
+	 * 
+	 * The objects are considered equal if they are both instances of {@code Date} and satisfy either of the following:
+	 * <ul>
+	 * <li>both references point to the same object</li>
+	 * <li>both objects have the same day, month, and year fields</li>
+	 * </ul>
+	 */
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o instanceof Date && (this == o || this.day == ((Date) o).day && this.month == ((Date) o).month && this.year == ((Date) o).year);
+	}
+	
+	@Override
+	public int hashCode() {
+		return (int) new GregorianCalendar(year, month - 1, day).getTimeInMillis();
+	}
 }
