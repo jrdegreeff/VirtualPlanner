@@ -2,6 +2,7 @@ package virtualPlanner.backend;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import virtualPlanner.util.Date;
@@ -21,12 +22,12 @@ public class Course {
 	/**
 	 * maps Dates to a set of all Assignments assigned that day
 	 */
-	private Map<Date, TreeSet<Assignment>> assigned;
+	private Map<Date, Set<Assignment>> assigned;
 	
 	/**
 	 * maps Dates to a set of all Assignments due that day
 	 */
-	private Map<Date, TreeSet<Assignment>> due;
+	private Map<Date, Set<Assignment>> due;
 	
 	/**
 	 * Constructor for Course class. assigned and due maps are set to empty HashMaps.
@@ -36,8 +37,8 @@ public class Course {
 	public Course(String name, String teacher) {
 		this.name = name;
 		this.teacher = teacher;
-		assigned = new HashMap<Date, TreeSet<Assignment>>();
-		due = new HashMap<Date, TreeSet<Assignment>>();
+		assigned = new HashMap<Date, Set<Assignment>>();
+		due = new HashMap<Date, Set<Assignment>>();
 	}
 	
 	/**
@@ -58,7 +59,7 @@ public class Course {
 	 * @param dateDue
 	 * @return TreeSet of Assignments due on a given date.
 	 */
-	public TreeSet<Assignment> getDue(Date dateDue) {
+	public Set<Assignment> getDue(Date dateDue) {
 		return due.get(dateDue);
 	}
 	
@@ -66,7 +67,7 @@ public class Course {
 	 * @param dateAssigned
 	 * @return TreeSet of Assignments assigned on a given date.
 	 */
-	public TreeSet<Assignment> getAssigned(Date dateAssigned) {
+	public Set<Assignment> getAssigned(Date dateAssigned) {
 		return assigned.get(dateAssigned);
 	}
 	
@@ -76,27 +77,18 @@ public class Course {
 	 * @param hw
 	 */
 	public void addAssignment(Assignment hw) {
-		
 		Date dateDue = hw.getDue();
 		Date dateAssigned = hw.getAssignedDate();
 		
 		if (!due.containsKey(dateDue)) {
-			TreeSet<Assignment> homework = new TreeSet<Assignment>();
-			homework.add(hw);
-			due.put(dateDue, homework);
+			due.put(dateDue, new TreeSet<Assignment>());
 		}
-		else {
-			due.get(dateDue).add(hw);
-		}
+		due.get(dateDue).add(hw);
 		
 		if (!assigned.containsKey(dateAssigned)) {
-			TreeSet<Assignment> homework = new TreeSet<Assignment>();
-			homework.add(hw);
-			assigned.put(dateAssigned, homework);
+			assigned.put(dateAssigned, new TreeSet<Assignment>());
 		}
-		else {
-			assigned.get(dateAssigned).add(hw);
-		}
+		assigned.get(dateAssigned).add(hw);
 	}
 	
 	/**
