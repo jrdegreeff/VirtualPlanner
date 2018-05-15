@@ -10,12 +10,9 @@ import virtualPlanner.util.Date;
  */
 public class Assignment implements Comparable<Assignment> {
 	
-<<<<<<< HEAD
-=======
 	/**
 	 * date assigned
 	 */
->>>>>>> 0f75376d601c300622e7cbca6a300ea22720dfd5
 	private Date assigned;
 	
 	/**
@@ -166,9 +163,9 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * @return unique id for this assignment object
+	 * @return unique id as hash code for this assignment object
 	 */
-	public int getId() {
+	public int hashCode() {
 		return ID;
 	}
 	
