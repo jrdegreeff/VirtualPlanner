@@ -68,4 +68,8 @@ public class Course {
 			assigned.get(dateAssigned).add(hw);
 		}
 	}
+	
+	private void addAssignment(ArrayList<Assignment>) {
+		
+	}
 }
