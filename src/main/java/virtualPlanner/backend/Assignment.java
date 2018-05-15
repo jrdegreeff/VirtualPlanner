@@ -9,6 +9,7 @@ import virtualPlanner.util.Date;
  *
  */
 public class Assignment implements Comparable<Assignment> {
+	
 	private Date assigned;
 	private Date due;
 	private AssignmentTypes type;
