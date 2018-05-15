@@ -1,71 +1,107 @@
 package virtualPlanner.backend;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import virtualPlanner.util.Date;
 
 /**
- * 
+ * The Course class maps dates to a TreeSet of Assignment objects.
  * @author aldai
- * The Course class maps dates to an ArrayList of assignments.
+ * 
  */
 public class Course {
-	String name, teacher;
-	Map<Date, ArrayList<Assignment>> assigned;
-	Map<Date, ArrayList<Assignment>> due;
 	
-	// maps dates to an arraylist of assignments, order of arrival
+	/**
+	 * course name and teacher
+	 */
+	private String name, teacher;
+	
+	/**
+	 * maps Dates to a set of all Assignments assigned that day
+	 */
+	private Map<Date, Set<Assignment>> assigned;
+	
+	/**
+	 * maps Dates to a set of all Assignments due that day
+	 */
+	private Map<Date, Set<Assignment>> due;
+	
+	/**
+	 * Constructor for Course class. assigned and due maps are set to empty HashMaps.
+	 * @param name
+	 * @param teacher
+	 */
 	public Course(String name, String teacher) {
 		this.name = name;
 		this.teacher = teacher;
-		assigned = new HashMap<Date, ArrayList<Assignment>>();
-		due = new HashMap<Date, ArrayList<Assignment>>();
+		assigned = new HashMap<Date, Set<Assignment>>();
+		due = new HashMap<Date, Set<Assignment>>();
 	}
 	
-	// return course name
+	/**
+	 * @return course name
+	 */
 	public String getCourseName() {
 		return name;
 	}
 	
-	// return teacher name
+	/**
+	 * @return teacher name
+	 */
 	public String getTeacher() {
 		return teacher;
 	}
 	
-	// returns ArrayList of assignments due on a specific date
-	public ArrayList<Assignment> getDue(Date dateDue) {
+	/**
+	 * @param dateDue
+	 * @return TreeSet of Assignments due on a given date.
+	 */
+	public Set<Assignment> getDue(Date dateDue) {
 		return due.get(dateDue);
 	}
 	
-	// returns ArrayList of assignments assigned on a specific date
-	public ArrayList<Assignment> getAssigned(Date dateAssigned) {
+	/** 
+	 * @param dateAssigned
+	 * @return TreeSet of Assignments assigned on a given date.
+	 */
+	public Set<Assignment> getAssigned(Date dateAssigned) {
 		return assigned.get(dateAssigned);
 	}
 	
-	// add assignments by due date
+	/**
+	 * addAssignment adds the given Assignment object to the Assigned HashMap
+	 * and the Due HashMap by respective dates.
+	 * @param hw
+	 */
 	public void addAssignment(Assignment hw) {
-		
 		Date dateDue = hw.getDue();
 		Date dateAssigned = hw.getAssignedDate();
 		
 		if (!due.containsKey(dateDue)) {
-			ArrayList<Assignment> homework = new ArrayList<Assignment>();
-			homework.add(hw);
-			due.put(dateDue, homework);
+			due.put(dateDue, new TreeSet<Assignment>());
 		}
-		else {
-			due.get(dateDue).add(hw);
-		}
+		due.get(dateDue).add(hw);
 		
 		if (!assigned.containsKey(dateAssigned)) {
-			ArrayList<Assignment> homework = new ArrayList<Assignment>();
-			homework.add(hw);
-			assigned.put(dateAssigned, homework);
+			assigned.put(dateAssigned, new TreeSet<Assignment>());
 		}
-		else {
-			assigned.get(dateAssigned).add(hw);
-		}
+		assigned.get(dateAssigned).add(hw);
+	}
+	
+	/**
+	 * @return true if two courses have the same course name and teacher.
+	 */
+	public boolean equals(Course other) {
+		return name.equals(other.getCourseName()) && teacher.equals(other.getTeacher());
+	}
+	
+	/**
+	 * @return course name taught by teacher
+	 */
+	public String toString() {
+		return name + " taught by " + teacher;
 	}
 }
