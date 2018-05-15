@@ -5,7 +5,7 @@ package virtualPlanner.util;
  * 
  * @author JeremiahDeGreeff
  */
-public class Time {
+public class Time implements Comparable<Time> {
 	
 	/**
 	 * The hour represented by this {@code Time}. Must be in the range [0, 24).
@@ -55,6 +55,41 @@ public class Time {
 	 */
 	public int getMinute() {
 		return minute;
+	}
+	
+	/**
+	 * Returns a String representation of this {@code Time}.
+	 */
+	@Override
+	public String toString() {
+		return hour + ":" + String.format("%02d", minute);
+	}
+	
+	/**
+	 * Indicates whether another {@code Object} is equal to this one.
+	 * 
+	 * The {@code Object}s are considered equal if they are both instances of {@code Time} and satisfy either of the following:
+	 * <ul>
+	 * <li>both references point to the same {@code Object}</li>
+	 * <li>both {@code Object}s have the same hour and minute fields</li>
+	 * </ul>
+	 */
+	@Override
+	public boolean equals(Object o) {
+		return o != null && o instanceof Time && (this == o || this.hour == ((Time) o).hour && this.minute == ((Time) o).minute);
+	}
+	
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+	
+	/**
+	 * Compares this {@code Time} with the specified {@code Time} for order.
+	 */
+	@Override
+	public int compareTo(Time o) {
+		return (this.hour * 60 + this.minute) - (o.hour * 60 + o.minute);
 	}
 	
 }
