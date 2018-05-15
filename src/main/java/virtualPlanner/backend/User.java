@@ -64,7 +64,7 @@ public interface User {
 	 */
 	public default ArrayList<Assignment> getAssignments(Date date, Block block, boolean onDue) {
 		Course course = getCourse(block);
-		return course == null ? null : onDue ? course.getDue(date) : course.getAssigned(date);
+		return course == null ? null : new ArrayList<Assignment>(onDue ? course.getDue(date) : course.getAssigned(date));
 	}
 	
 	/**
