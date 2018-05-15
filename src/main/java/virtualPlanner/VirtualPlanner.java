@@ -1,5 +1,7 @@
 package virtualPlanner;
 
+import virtualPlanner.reference.Preferences;
+
 /**
  * Main class for the VirtualPlanner project.
  * 
@@ -11,7 +13,7 @@ package virtualPlanner;
 public class VirtualPlanner {
 	
 	public static void main(String[] args) {
-		
+		Preferences.loadPreferences();
 	}
 	
 }
