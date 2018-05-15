@@ -1,6 +1,7 @@
 package virtualPlanner.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,7 +34,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 
 	//JFrame
 	private static JFrame frame;
-	private static JPanel mainPanel, panelCalendar;
+	private static JPanel mainPanel, panelCalendar, infoPanel;
 	
 	//TODO: Resolution
 	private final static int resolutionMultiplier = 2;
@@ -152,6 +154,8 @@ public class LayoutTest extends JFrame implements ActionListener{
 		frame.getContentPane().removeAll();
 
 		//Calendar 
+		
+		//Left and Right Calendar buttons
 		buttonLeft = new JButton();
 		buttonLeft.setIcon(new ImageIcon(imagePrev));
 		buttonLeft.setOpaque(false);
@@ -166,6 +170,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 		buttonRight.setBorderPainted(false);
 		buttonRight.addActionListener(this);
 
+		//JPanel for the calendar itself
 		panelCalendar = new JPanel();
 		labelWeek = new JLabel("May 5  –  May 8");
 		labelWeek.setOpaque(true);
@@ -173,13 +178,30 @@ public class LayoutTest extends JFrame implements ActionListener{
 		labelWeek.setForeground(Color.RED);
 		labelWeek.setFont(defaultFont);
 		
+		//JPanel for the right of the calendar - the 'info' section
+		infoPanel = new JPanel();
+		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+		infoPanel.setBackground(Color.BLUE);
+		infoPanel.setAlignmentY(CENTER_ALIGNMENT);
+		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
+		
 		labelDay = new JLabel("Monday May 14, 2018");
 		labelDay.setOpaque(true);
-		labelDay.setBackground(Color.WHITE);
-		labelDay.setForeground(Color.BLUE);
+		labelDay.setBackground(Color.PINK);
+		labelDay.setForeground(Color.BLACK);
 		labelDay.setFont(dateFont);
-		JPanel panelDate = new JPanel();
-		panelDate.add(labelDay);
+		labelDay.setAlignmentX(CENTER_ALIGNMENT);
+		infoPanel.add(labelDay);
+		
+	
+		JLabel spaceTaker = new JLabel("Monday May 14, 2018");
+		spaceTaker.setOpaque(true);
+		spaceTaker.setForeground(Color.WHITE);
+		spaceTaker.setBackground(Color.WHITE);
+		spaceTaker.setFont(dateFont);
+		spaceTaker.setAlignmentX(CENTER_ALIGNMENT);
+		infoPanel.add(spaceTaker);
+
 		
 		//TODO: Unique font
 
@@ -486,9 +508,14 @@ public class LayoutTest extends JFrame implements ActionListener{
 		calendarVertical.add(Box.createVerticalStrut(10));
 		calendarVertical.add(panelCalendar);
 		
+		Box infoVertical = Box.createVerticalBox();
+		infoVertical.add(infoPanel);
+		
 		Box mainHorizontal = Box.createHorizontalBox();
 		mainHorizontal.add(calendarVertical);
-		mainHorizontal.add(labelDay);
+		mainHorizontal.add(Box.createHorizontalStrut(20));
+		mainHorizontal.add(infoVertical);
+		
 		mainPanel.setBackground(Color.WHITE);
 		mainPanel.add(mainHorizontal);
 		frame.add(mainPanel);
