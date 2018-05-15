@@ -57,7 +57,7 @@ public class GUIController {
 	/**
 	 * Retrieves the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
 	 * 
-	 * @param day The {@code Date} to query.
+	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
 	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
 	 */
