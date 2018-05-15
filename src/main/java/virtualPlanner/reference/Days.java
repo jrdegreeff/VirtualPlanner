@@ -1,5 +1,6 @@
 package virtualPlanner.reference;
 
+import virtualPlanner.util.Block;
 import virtualPlanner.util.Time;
 
 /**
@@ -9,7 +10,7 @@ import virtualPlanner.util.Time;
  */
 public enum Days {
 	
-	MONDAY(new Block[] {
+	MONDAY("Monday", new Block[] {
 			new Block(Blocks.C, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.F, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.MEETING, new Time(9, 30), new Time(10, 00)),
@@ -21,7 +22,7 @@ public enum Days {
 			new Block(Blocks.A, new Time(13, 40), new Time(14, 20)),
 			new Block(Blocks.L, new Time(14, 20), new Time(15, 00))
 		}),
-	TUESDAY(new Block[] {
+	TUESDAY("Tuesday", new Block[] {
 			new Block(Blocks.D, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.A, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.ASSEMBLY, new Time(9, 30), new Time(10, 10)),
@@ -33,7 +34,7 @@ public enum Days {
 			new Block(Blocks.E, new Time(13, 50), new Time(14, 30)),
 			new Block(Blocks.L, new Time(14, 30), new Time(15, 10))
 		}),
-	WEDNESDAY(new Block[] {
+	WEDNESDAY("Wednesday", new Block[] {
 			new Block(Blocks.B, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.C, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.CHAPEL, new Time(9, 30), new Time(10, 10)),
@@ -42,7 +43,8 @@ public enum Days {
 			new Block(Blocks.G, new Time(11, 45), new Time(12, 25)),
 			new Block(Blocks.LUNCH, new Time(12, 25), new Time(13, 00))
 		}),
-	THURSDAY(new Block[] {
+	THURSDAY("Thursday", new Block[] {
+			new Block(Blocks.FACULTY, new Time(8, 00), new Time(8, 55)),
 			new Block(Blocks.E, new Time(9, 15), new Time(9, 55)),
 			new Block(Blocks.D, new Time(10, 00), new Time(10, 40)),
 			new Block(Blocks.H, new Time(10, 45), new Time(11, 25)),
@@ -52,7 +54,7 @@ public enum Days {
 			new Block(Blocks.C, new Time(13, 40), new Time(14, 20)),
 			new Block(Blocks.L, new Time(14, 20), new Time(15, 00))
 		}),
-	FRIDAY(new Block[] {
+	FRIDAY("Friday", new Block[] {
 			new Block(Blocks.F, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.E, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.SENATE, new Time(9, 30), new Time(10, 00)),
@@ -64,7 +66,7 @@ public enum Days {
 			new Block(Blocks.D, new Time(13, 40), new Time(14, 20)),
 			new Block(Blocks.L, new Time(14, 20), new Time(15, 00))
 		}),
-	SATURDAY(new Block[] {
+	SATURDAY("Saturday", new Block[] {
 			new Block(Blocks.A, new Time(8, 00), new Time(8, 40)),
 			new Block(Blocks.H, new Time(8, 45), new Time(9, 25)),
 			new Block(Blocks.ASSEMBLY, new Time(9, 30), new Time(10, 00)),
@@ -72,7 +74,12 @@ public enum Days {
 			new Block(Blocks.D, new Time(10, 45), new Time(11, 25)),
 			new Block(Blocks.LUNCH, new Time(11, 30), new Time(12, 10))
 		}),
-	SUNDAY(new Block[] {});
+	SUNDAY("Sunday", new Block[] {});
+	
+	/**
+	 * The name of this day.
+	 */
+	private final String name;
 	
 	/**
 	 * The blocks which occur on this day in a normal Middlesex Schedule.
@@ -80,9 +87,11 @@ public enum Days {
 	private final Block[] blocks;
 	
 	/**
+	 * @param name The name of this day.
 	 * @param blocks The blocks which occur on this day in a normal Middlesex Schedule.
 	 */
-	Days(Block[] blocks) {
+	Days(String name, Block[] blocks) {
+		this.name = name;
 		this.blocks = blocks;
 	}
 	
@@ -94,36 +103,21 @@ public enum Days {
 	}
 	
 	/**
-	 * Retrieves a particular block in this day.
-	 * 
-	 * @param n The index of the block (0-indexed).
-	 * @return The element of {@code Blocks} which the {@code n}-th block of this day corresponds to.
-	 * @throws ArrayIndexOutOfBoundsException If {@code n} exceeds the valid indices of blocks for this day.
+	 * @return The name of this day.
 	 */
-	public Blocks getBlock(int n) {
-		return blocks[n].getBlock();
+	public String getName() {
+		return name;
 	}
 	
 	/**
-	 * Retrieves the start time of a particular block in this day.
+	 * Retrieves a particular {@code Block} in this day.
 	 * 
-	 * @param n The index of the block (0-indexed).
-	 * @return The start time of the {@code n}-th block of this day.
+	 * @param n The index of the {@code Block} (0-indexed).
+	 * @return The {@code n}-th {@code Block} of this day.
 	 * @throws ArrayIndexOutOfBoundsException If {@code n} exceeds the valid indices of blocks for this day.
 	 */
-	public Time getBlockStartTime(int n) {
-		return blocks[n].getStartTime();
-	}
-	
-	/**
-	 * Retrieves the end time of a particular block in this day.
-	 * 
-	 * @param n The index of the block (0-indexed).
-	 * @return The end time of the {@code n}-th block of this day.
-	 * @throws ArrayIndexOutOfBoundsException If {@code n} exceeds the valid indices of blocks for this day.
-	 */
-	public Time getBlockEndTime(int n) {
-		return blocks[n].getEndTime();
+	public Block getBlock(int n) {
+		return blocks[n];
 	}
 	
 	/**
@@ -135,60 +129,6 @@ public enum Days {
 	 */
 	public static Days getDay(int ordinal) {
 		return Days.values()[(ordinal + 5) % 7];
-	}
-	
-	/**
-	 * Internal class for storing each block with its start and end times.
-	 * 
-	 * @author JeremiahDeGreeff
-	 */
-	private static class Block {
-		
-		/**
-		 * The type of this {@code Block} from {@code Blocks}.
-		 */
-		private Blocks block;
-		/**
-		 * The start time of this {@code Block}.
-		 */
-		private Time start;
-		/**
-		 * The end time of this {@code Block}.
-		 */
-		private Time end;
-		
-		/**
-		 * @param block The type of this {@code Block} from {@code Blocks}.
-		 * @param start The start time of this {@code Block}.
-		 * @param end The end time of this {@code Block}.
-		 */
-		public Block(Blocks block, Time start, Time end) {
-			this.block = block;
-			this.start = start;
-			this.end = end;
-		}
-		
-		/**
-		 * @return The type of this {@code Block} from {@code Blocks}.
-		 */
-		public Blocks getBlock() {
-			return block;
-		}
-		
-		/**
-		 * @return The start time of this {@code Block}.
-		 */
-		public Time getStartTime() {
-			return start;
-		}
-		
-		/**
-		 * @return The end time of this {@code Block}.
-		 */
-		public Time getEndTime() {
-			return end;
-		}
-		
 	}
 	
 }
