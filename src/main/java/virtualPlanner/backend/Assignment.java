@@ -9,12 +9,46 @@ import virtualPlanner.util.Date;
  *
  */
 public class Assignment implements Comparable<Assignment> {
+	
+	/**
+	 * date assigned
+	 */
 	private Date assigned;
+	
+	/**
+	 * date due
+	 */
 	private Date due;
+	
+	/**
+	 * type of assignment (e.g. homework, test, quiz, etc.)
+	 */
 	private AssignmentTypes type;
+	
+	/**
+	 * whether the assignment is completed
+	 */
 	private boolean isComplete;
+	
+	/**
+	 * name of the assignment
+	 */
 	private String name;
-	private String descrip; 
+	
+	/**
+	 * description of the assignment
+	 */
+	private String descrip;
+	
+	/**
+	 * internal id counter for giving unique ids
+	 */
+	private static int idCounter = 0;
+	
+	/**
+	 * unique id for each assignment object
+	 */
+	private final int ID;
 	
 	/**
 	 * Constructor for Assignment class. isComplete is set to false by default.
@@ -30,6 +64,8 @@ public class Assignment implements Comparable<Assignment> {
 		this.name = name;
 		this.descrip = description; 
 		isComplete = false;
+		ID = idCounter; 
+		idCounter++; // update idCounter to ensure unique ids
 	}
 	
 	/**
@@ -67,7 +103,6 @@ public class Assignment implements Comparable<Assignment> {
 		assigned = newDue;
 		return oldDue; 
 	}
-	
 	
 	/**
 	 * @return type of the assignment
@@ -128,15 +163,33 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Compare this assignment to another assignment in terms of priority. 
+	 * @return unique id for this assignment object
+	 */
+	public int getId() {
+		return ID;
+	}
+	
+	/**
+	 * Compare this assignment to another assignment in terms of priority and id.
+	 * When two assignments are of different priorities, compare priorities. 
+	 * When two assginemnts are of the same priority, compare ids. 
 	 * @param assn another assignment to compare to 
-	 * @return a negative number if this is smaller than assn, positive number if this is greater
-	 * than assn, and 0 if this is equal to assn
+	 * @return a negative number if this assignment is smaller than the other assignment 
+	 * (either smaller priority or same priority but is created earlier), positive number if 
+	 * this is assignment is greater than the other assignment, and 0 if they are equal. 
 	 */
 	public int compareTo(Assignment assn) {
-		return this.type.getPriority() - assn.type.getPriority();
+		return this.type.getPriority() == assn.type.getPriority() ? this.ID - assn.ID : this.type.getPriority() - assn.type.getPriority();
 	}
 	
 	
+	/**
+	 * Compare this assignment to another assignment in terms of priority and id.  
+	 * @param assn another assignment to compare to
+	 * @return true if two assignments have the same priority and id; false if otherwise
+	 */
+	public boolean equals(Assignment assn) {
+		return this.compareTo(assn) == 0;
+	}
 	
 }
