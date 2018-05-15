@@ -19,12 +19,12 @@ public class Course {
 	private String name, teacher;
 	
 	/**
-	 * maps Dates to a TreeSet of all Assignments assigned that day
+	 * maps Dates to a set of all Assignments assigned that day
 	 */
 	private Map<Date, TreeSet<Assignment>> assigned;
 	
 	/**
-	 * maps Dates to a TreeSet of all Assignments due that day
+	 * maps Dates to a set of all Assignments due that day
 	 */
 	private Map<Date, TreeSet<Assignment>> due;
 	
