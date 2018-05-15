@@ -42,13 +42,13 @@ public interface User {
 	 * Updates a {@code Course} in this {@code User}'s schedule.
 	 * Adds the {@code Course} to the specified {@code Block}s and removes the {@code Course} from any {@code Block} that is not specified.
 	 * 
-	 * @param blocks The updated {@code Block}s for the {@code Course}.
+	 * @param newBlocks The updated {@code Block}s for the {@code Course}.
 	 * @param course The {@code Course} to update.
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in this {@code User}'s schedule.
 	 */
-	public default boolean update(Block[] blocks, Course course) {
+	public default boolean updateCourse(Block[] newBlocks, Course course) {
 		removeCourse(course);
-		return addCourse(blocks, course);
+		return addCourse(newBlocks, course);
 	}
 	
 }
