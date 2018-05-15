@@ -53,6 +53,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 	private static Font defaultFont = new Font("SansSerif", Font.BOLD, 24); 
 	private static Font calendarDayFont = new Font("Dialog", Font.BOLD, 18);
 	private static Font calendarBlockNameFont = new Font("Dialog", Font.BOLD, 12);
+	private static Font dateFont = new Font("SansSerif", Font.BOLD, 40);
 
 	//Icons and Images
 	private static BufferedImage imagePrev, imageNext;
@@ -175,8 +176,11 @@ public class LayoutTest extends JFrame implements ActionListener{
 		labelDay = new JLabel("Monday May 14, 2018");
 		labelDay.setOpaque(true);
 		labelDay.setBackground(Color.WHITE);
-		labelDay.setForeground(Color.CYAN);
-		labelWeek.setFont(defaultFont);
+		labelDay.setForeground(Color.BLUE);
+		labelDay.setFont(dateFont);
+		JPanel panelDate = new JPanel();
+		panelDate.add(labelDay);
+		
 		//TODO: Unique font
 
 		//Level 1 -> labelWeek and Prev + Next buttons
@@ -520,6 +524,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 		else if (src instanceof JButton)
 		{
 			System.out.println(((JButton) src).getText());
+			labelDay.setText("YAY");
 		}
 	}
 
