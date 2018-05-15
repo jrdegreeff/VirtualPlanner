@@ -1,5 +1,7 @@
 package virtualPlanner.backend;
 
+import virtualPlanner.util.Block;
+
 /**
  * Defines a user with a block schedule.
  * 
@@ -13,11 +15,11 @@ public interface User {
 	public String getName();
 	
 	/**
-	 * Retrieves the course which this {@code User} has in a particular block.
+	 * Retrieves the course which this {@code User} has in a particular {@code Block}.
 	 * 
-	 * @param block The block to find the course for.
-	 * @return The {@code Course} associated with the specified block, or {@code null} if this {@code User} has no {@code Course} for that block.
+	 * @param block The {@code Block} to find the course for.
+	 * @return The {@code Course} associated with the specified {@code Block}, or {@code null} if this {@code User} has no {@code Course} for that {@code Block}.
 	 */
-	public Course getCourse(jdk.nashorn.internal.ir.Block block);
+	public Course getCourse(Block block);
 	
 }
