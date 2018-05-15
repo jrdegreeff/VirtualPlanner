@@ -62,8 +62,7 @@ public class GUIController {
 	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
 	 */
 	public ArrayList<Assignment> getAssignments(Date date, Block block) {
-		Course course = user.getCourse(block);
-		return course == null ? null : Preferences.displayOnDue() ? course.getDue(date) : course.getAssigned(date);
+		return user.getAssignments(date, block, Preferences.displayOnDue());
 	}
 	
 }
