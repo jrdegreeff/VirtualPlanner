@@ -38,7 +38,7 @@ public class Preferences {
 			in = new FileInputStream(Paths.PREFERENCES);
 			properties.load(in);
 			in.close();
-		} catch (IOException e) {e.printStackTrace();}
+		} catch (IOException e) {savePreferences();}
 		
 	}
 	
