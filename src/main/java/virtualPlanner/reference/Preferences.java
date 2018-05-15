@@ -3,6 +3,8 @@ package virtualPlanner.reference;
 import java.awt.Color;
 import java.util.Map;
 
+import virtualPlanner.backend.Course;
+
 /**
  * Loads and stores various user preferences.
  * 
@@ -11,41 +13,41 @@ import java.util.Map;
 public class Preferences {
 	
 	/**
-	 * The colors selected for each block.
+	 * The {@code Color}s selected for each {@code Course}.
 	 */
-	private Map<Blocks, Color> colors;
+	private static Map<Course, Color> colors;
 	/**
 	 * If true, assignments should be displayed on the day when they are due.
 	 * If false, assignments should be displayed on the day when they are assigned.
 	 */
-	private boolean displayOnDue;
+	private static boolean displayOnDue;
 	/**
 	 * If true, times should be displayed in the 12 hour format.
 	 * If false, times should be displayed in the 24 hour format.
 	 */
-	private boolean display12Hour;
+	private static boolean display12Hour;
 	
 	/**
-	 * Retrieves the color selected for a particular block.
+	 * Retrieves the {@code Color} selected for a particular {@code Course}.
 	 * 
-	 * @param Block the block to find.
-	 * @return The color selected for the specified block.
+	 * @param course The {@code Course} to find.
+	 * @return The {@code Color} selected for the specified {@code Course}.
 	 */
-	public Color getColor(Blocks block) {
-		return colors.get(block);
+	public static Color getColor(Course course) {
+		return colors.get(course);
 	}
 	
 	/**
-	 * @return True if assignments should be displayed on the day when they are due; false if assignments should be displayed on the day when they are assigned.
+	 * @return {@code true} if assignments should be displayed on the day when they are due; {@code false} if assignments should be displayed on the day when they are assigned.
 	 */
-	public boolean displayOnDue() {
+	public static boolean displayOnDue() {
 		return displayOnDue;
 	}
 	
 	/**
-	 * @return True if times should be displayed in the 12 hour format; false if times should be displayed in the 24 hour format.
+	 * @return {@code true} if times should be displayed in the 12 hour format; {@code false} if times should be displayed in the 24 hour format.
 	 */
-	public boolean display12Hour() {
+	public static boolean display12Hour() {
 		return display12Hour;
 	}
 	
