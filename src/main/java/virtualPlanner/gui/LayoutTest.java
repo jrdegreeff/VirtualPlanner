@@ -551,7 +551,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 		else if (src instanceof JButton)
 		{
 			System.out.println(((JButton) src).getText());
-			labelDay.setText("YAY");
+			labelDay.setText(((JButton) src).getText());
 		}
 	}
 
