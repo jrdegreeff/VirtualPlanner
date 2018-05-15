@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
 import virtualPlanner.backend.User;
+import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
@@ -20,6 +21,13 @@ public class GUIController {
 	 * The {@code User} whose schedule is represented by the GUI.
 	 */
 	private User user;
+	
+	/**
+	 * @return The name of the user.
+	 */
+	public String getUserName() {
+		return user.getName();
+	}
 	
 	/**
 	 * Creates a new {@code Course} and adds it to the user's schedule in the specified {@code Block}s.
@@ -63,6 +71,20 @@ public class GUIController {
 	 */
 	public ArrayList<Assignment> getAssignments(Date date, Block block) {
 		return user.getAssignments(date, block, Preferences.displayOnDue());
+	}
+	
+	/**
+	 * Creates a new {@code Assignment} and adds it to the specified {@code Course} in the user's schedule.
+	 * 
+	 * @param course The {@code Course} to add the new {@code Assignment} to.
+	 * @param assigned The assigned date for the new {@code Assignment}.
+	 * @param due The due date for the new {@code Assignment}.
+	 * @param type The type for the new {@code Assignment}.
+	 * @param name The name for the new {@code Assignment}.
+	 * @param description The description for the new {@code Assignment}.
+	 */
+	public void addAssignment(Course course, Date assigned, Date due, AssignmentTypes type, String name, String description) {
+		user.addAssignment(course, new Assignment(assigned, due, type, name, description));
 	}
 	
 }
