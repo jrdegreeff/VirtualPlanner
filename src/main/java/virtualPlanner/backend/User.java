@@ -1,6 +1,9 @@
 package virtualPlanner.backend;
 
+import java.util.ArrayList;
+
 import virtualPlanner.util.Block;
+import virtualPlanner.util.Date;
 
 /**
  * Defines a user with a block schedule.
@@ -49,6 +52,19 @@ public interface User {
 	public default boolean updateCourse(Block[] newBlocks, Course course) {
 		removeCourse(course);
 		return addCourse(newBlocks, course);
+	}
+	
+	/**
+	 * Retrieves the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * 
+	 * @param date The {@code Date} to query.
+	 * @param block The {@code Block} to query.
+	 * @param onDue {@code true} if querying by due date, {@code false} if querying by assigned date.
+	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 */
+	public default ArrayList<Assignment> getAssignments(Date date, Block block, boolean onDue) {
+		Course course = getCourse(block);
+		return course == null ? null : onDue ? course.getDue(date) : course.getAssigned(date);
 	}
 	
 }
