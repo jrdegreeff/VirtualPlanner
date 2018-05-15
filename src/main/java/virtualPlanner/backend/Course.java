@@ -2,7 +2,6 @@ package virtualPlanner.backend;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.TreeSet;
 
 import virtualPlanner.util.Date;
@@ -14,8 +13,19 @@ import virtualPlanner.util.Date;
  */
 public class Course {
 	
+	/**
+	 * course name and teacher
+	 */
 	private String name, teacher;
+	
+	/**
+	 * maps Dates to a TreeSet of all Assignments assigned that day
+	 */
 	private Map<Date, TreeSet<Assignment>> assigned;
+	
+	/**
+	 * maps Dates to a TreeSet of all Assignments due that day
+	 */
 	private Map<Date, TreeSet<Assignment>> due;
 	
 	/**
@@ -89,15 +99,17 @@ public class Course {
 		}
 	}
 	
-	public boolean equals() {
-		return name.equals(name) && teacher.equals(teacher);
+	/**
+	 * @return true if two courses have the same course name and teacher.
+	 */
+	public boolean equals(Course other) {
+		return name.equals(other.getCourseName()) && teacher.equals(other.getTeacher());
 	}
 	
+	/**
+	 * @return course name taught by teacher
+	 */
 	public String toString() {
 		return name + " taught by " + teacher;
-	}
-	
-	public int hashCode() {
-		
 	}
 }
