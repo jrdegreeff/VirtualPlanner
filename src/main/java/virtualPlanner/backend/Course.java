@@ -2,6 +2,7 @@ package virtualPlanner.backend;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import virtualPlanner.util.Date;
@@ -22,6 +23,7 @@ public class Course {
 	/**
 	 * maps Dates to a set of all Assignments assigned that day
 	 */
+<<<<<<< HEAD
 	private Map<Date, TreeSet<Assignment>> assnDateMap;
 
 	/**
@@ -29,6 +31,15 @@ public class Course {
 	 */
 	private Map<Date, TreeSet<Assignment>> dueDateMap;
 
+=======
+	private Map<Date, Set<Assignment>> assigned;
+	
+	/**
+	 * maps Dates to a set of all Assignments due that day
+	 */
+	private Map<Date, Set<Assignment>> due;
+	
+>>>>>>> 2fd0d907b4ad450f360ceed7f61050ff6dc34273
 	/**
 	 * Constructor for Course class. assigned and due maps are set to empty HashMaps.
 	 * @param name
@@ -37,8 +48,13 @@ public class Course {
 	public Course(String name, String teacher) {
 		this.name = name;
 		this.teacher = teacher;
+<<<<<<< HEAD
 		assnDateMap = new HashMap<Date, TreeSet<Assignment>>();
 		dueDateMap = new HashMap<Date, TreeSet<Assignment>>();
+=======
+		assigned = new HashMap<Date, Set<Assignment>>();
+		due = new HashMap<Date, Set<Assignment>>();
+>>>>>>> 2fd0d907b4ad450f360ceed7f61050ff6dc34273
 	}
 
 	/**
@@ -59,16 +75,26 @@ public class Course {
 	 * @param dateDue
 	 * @return TreeSet of Assignments due on a given date.
 	 */
+<<<<<<< HEAD
 	public TreeSet<Assignment> getDue(Date dateDue) {
 		return dueDateMap.get(dateDue);
+=======
+	public Set<Assignment> getDue(Date dateDue) {
+		return due.get(dateDue);
+>>>>>>> 2fd0d907b4ad450f360ceed7f61050ff6dc34273
 	}
 
 	/** 
 	 * @param dateAssigned
 	 * @return TreeSet of Assignments assigned on a given date.
 	 */
+<<<<<<< HEAD
 	public TreeSet<Assignment> getAssigned(Date dateAssigned) {
 		return assnDateMap.get(dateAssigned);
+=======
+	public Set<Assignment> getAssigned(Date dateAssigned) {
+		return assigned.get(dateAssigned);
+>>>>>>> 2fd0d907b4ad450f360ceed7f61050ff6dc34273
 	}
 
 	/**
@@ -77,6 +103,7 @@ public class Course {
 	 * @param hw
 	 */
 	public void addAssignment(Assignment hw) {
+<<<<<<< HEAD
 
 		Date dateDue = hw.getDue();
 		Date dateAssigned = hw.getAssignedDate();
@@ -97,7 +124,20 @@ public class Course {
 		}
 		else {
 			assnDateMap.get(dateAssigned).add(hw);
+=======
+		Date dateDue = hw.getDue();
+		Date dateAssigned = hw.getAssignedDate();
+		
+		if (!due.containsKey(dateDue)) {
+			due.put(dateDue, new TreeSet<Assignment>());
 		}
+		due.get(dateDue).add(hw);
+		
+		if (!assigned.containsKey(dateAssigned)) {
+			assigned.put(dateAssigned, new TreeSet<Assignment>());
+>>>>>>> 2fd0d907b4ad450f360ceed7f61050ff6dc34273
+		}
+		assigned.get(dateAssigned).add(hw);
 	}
 
 	/**
