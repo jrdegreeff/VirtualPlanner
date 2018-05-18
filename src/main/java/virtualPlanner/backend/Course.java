@@ -133,8 +133,12 @@ public class Course {
 	/**
 	 * @return true if two courses have the same course name and teacher.
 	 */
-	public boolean equals(Course other) {
-		return name.equals(other.getCourseName()) && teacher.equals(other.getTeacher());
+	public boolean equals(Object other) {
+		if(other == null)
+			return false;
+		if(!(other instanceof Course))
+			return false;
+		return name.equals(((Course) other).getCourseName()) && teacher.equals(((Course) other).getTeacher());
 	}
 
 	/**

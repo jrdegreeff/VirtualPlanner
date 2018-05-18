@@ -200,8 +200,12 @@ public class Assignment implements Comparable<Assignment> {
 	 * @param assn another assignment to compare to
 	 * @return true if two assignments have the same priority and id; false if otherwise
 	 */
-	public boolean equals(Assignment assn) {
-		return this.compareTo(assn) == 0;
+	public boolean equals(Object assn) {
+		if(assn == null)
+			return false;
+		if(!(assn instanceof Assignment))
+			return false;
+		return this.compareTo((Assignment)assn) == 0;
 	}
 	
 }
