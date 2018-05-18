@@ -2,7 +2,6 @@ package virtualPlanner.backend;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 
 import virtualPlanner.util.Date;
@@ -30,12 +29,6 @@ public class Course {
 	 */
 	private Map<Date, TreeSet<Assignment>> dueDateMap;
 
-	private Map<Date, Set<Assignment>> assigned;
-	
-	/**
-	 * maps Dates to a set of all Assignments due that day
-	 */
-	private Map<Date, Set<Assignment>> due;
 	
 	/**
 	 * Constructor for Course class. assigned and due maps are set to empty HashMaps.
@@ -47,8 +40,6 @@ public class Course {
 		this.teacher = teacher;
 		assnDateMap = new HashMap<Date, TreeSet<Assignment>>();
 		dueDateMap = new HashMap<Date, TreeSet<Assignment>>();
-		assigned = new HashMap<Date, Set<Assignment>>();
-		due = new HashMap<Date, Set<Assignment>>();
 	}
 
 	/**
@@ -90,15 +81,15 @@ public class Course {
 		Date dateDue = hw.getDue();
 		Date dateAssigned = hw.getAssignedDate();
 		
-		if (!due.containsKey(dateDue)) {
-			due.put(dateDue, new TreeSet<Assignment>());
+		if (!dueDateMap.containsKey(dateDue)) {
+			dueDateMap.put(dateDue, new TreeSet<Assignment>());
 		}
-		due.get(dateDue).add(hw);
+		dueDateMap.get(dateDue).add(hw);
 		
-		if (!assigned.containsKey(dateAssigned)) {
-			assigned.put(dateAssigned, new TreeSet<Assignment>());
+		if (!assnDateMap.containsKey(dateAssigned)) {
+			assnDateMap.put(dateAssigned, new TreeSet<Assignment>());
 		}
-		assigned.get(dateAssigned).add(hw);
+		assnDateMap.get(dateAssigned).add(hw);
 	}
 
 	/**
