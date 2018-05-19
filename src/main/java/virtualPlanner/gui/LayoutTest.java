@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -69,8 +68,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 	/**
 	 * Constructor: Creates the main GUI
 	 */
-	public LayoutTest()
-	{
+	public LayoutTest() {
 		//Name
 		super("Virtual Planner");
 
@@ -132,8 +130,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 	/**
 	 * Loads the images from the source folder
 	 */
-	private void loadImages()
-	{
+	private void loadImages() {
 		try {
 			imagePrev = ImageIO.read(getClass().getResource("previous.png"));
 			imageNext = ImageIO.read(getClass().getResource("next.png"));
@@ -146,8 +143,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 	/**
 	 * Updates the GUI
 	 */
-	public void updateGUI()
-	{
+	public void updateGUI() {
 		//Clear frame
 		frame.getContentPane().removeAll();
 
@@ -284,16 +280,15 @@ public class LayoutTest extends JFrame implements ActionListener{
 		Dimension d = new Dimension(calendarColumnWidth, calendarMarkerHeight);
 
 		//i >> row
-		for (int i = 0; i < days.size(); i++)
-		{
+		for (int i = 0; i < days.size(); i++) {
 			c.gridx = i;
 			JButton button = days.get(i);
 			button.setPreferredSize(d);
 			button.setOpaque(true);
 			button.setBackground(Color.WHITE);
 			button.setFont(calendarDayFont);
-			//							if(i == 1)
-			//									button.setBackground(Color.RED);
+//			if(i == 1)
+//				button.setBackground(Color.RED);
 			panelCalendar.add(button, c);
 		}
 
@@ -324,31 +319,26 @@ public class LayoutTest extends JFrame implements ActionListener{
 	 * Instantiates a LayoutPrototype
 	 * @param args
 	 */
-	public static void main (String[] args)
-	{
+	public static void main (String[] args) {
 		new LayoutTest();
 	}
 
 	/**
 	 * 
 	 */
-	public void actionPerformed(ActionEvent e) 
-	{
+	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
 		//Left button on the calendar
-		if (src.equals(buttonLeft))
-		{
+		if (src.equals(buttonLeft)) {
 			labelWeek.setText("May 1  �  May 3");
 		}
 		
 		//Right button on the calendar
-		else if (src.equals(buttonRight))
-		{
+		else if (src.equals(buttonRight)) {
 			labelWeek.setText("May 5  �  May 7");
 		}
 		
-		else if (src instanceof JButton)
-		{
+		else if (src instanceof JButton) {
 			System.out.println(((JButton) src).getText());
 			labelDay.setText(((JButton) src).getText());
 		}
