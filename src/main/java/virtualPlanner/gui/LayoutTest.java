@@ -18,10 +18,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import virtualPlanner.reference.Days;
@@ -36,35 +38,43 @@ public class LayoutTest extends JFrame implements ActionListener{
 
 	//JFrame
 	private static JFrame frame;
+	
+	//JPanels
 	private static JPanel mainPanel, panelCalendar, infoPanel;
 
 	//TODO: Resolution
 	private final static int resolutionMultiplier = 2;
-	private final static int calendarColumnWidth = 60;
+	private final static int calendarColumnWidth = 70;
 
 	//JMenuBar
-	private static JMenuBar menuBar;
-	private static JMenu menuFile, menu1, menu2, menu3, menu4; 
-	private static JMenuItem menuItemFile, menuItem1, menuItem2, menuItem3, menuItem4;
+	private JMenuBar menuBar;
+	private JMenu menuFile, menu1, menu2, menu3, menu4; 
+	private JMenuItem menuItemFile, menuItem1, menuItem2, menuItem3, menuItem4;
 
 	//JButtons
-	private static JButton buttonLeft, buttonRight;
+	private JButton buttonLeft, buttonRight;
 
 	//JLabels
-	private static JLabel labelWeek, labelDay;
+	private JLabel labelWeek, labelDay;
 
 	//Fonts
 	private static final Font defaultFont = new Font("SansSerif", Font.BOLD, 24); 
+	private static final Font dateFont = new Font("SansSerif", Font.BOLD, 40);
 	private static final Font calendarDayFont = new Font("Dialog", Font.BOLD, 18);
 	private static final Font calendarBlockNameFont = new Font("Dialog", Font.BOLD, 12);
-	private static final Font dateFont = new Font("SansSerif", Font.BOLD, 40);
+	private static final Font listFont = new Font("Dialog", Font.BOLD, 22);
+
 
 	//Icons and Images
 	private static BufferedImage imagePrev, imageNext;
 
 	//JButtons for the actionListener
 	private GUIButton[][] buttons;
-
+	
+	//JList and JScrollPane for upcomingEvents
+	private JList<String> events;
+	private JScrollPane eventsScrollPane;
+	
 
 	/**
 	 * Constructor: Creates the main GUI
@@ -153,20 +163,25 @@ public class LayoutTest extends JFrame implements ActionListener{
 		//Left and Right Calendar buttons
 		buttonLeft = new JButton();
 		buttonLeft.setIcon(new ImageIcon(imagePrev));
-		buttonLeft.setOpaque(false);
+		buttonLeft.setOpaque(true);
 		buttonLeft.setContentAreaFilled(false);
 		buttonLeft.setBorderPainted(false);
 		buttonLeft.addActionListener(this);
 		buttonLeft.setFocusable(false);
+		buttonLeft.setBackground(Color.GRAY);
+		
 
 		buttonRight = new JButton();
 		buttonRight.setIcon(new ImageIcon(imageNext));
-		buttonRight.setOpaque(false);
+		buttonRight.setOpaque(true);
 		buttonRight.setContentAreaFilled(false);
 		buttonRight.setBorderPainted(false);
 		buttonRight.addActionListener(this);
 		buttonRight.setFocusable(false);
+		buttonRight.setBackground(Color.GRAY);
 
+		//TODO: UNIFORM COLORS
+		
 		//JPanel for the calendar itself
 		panelCalendar = new JPanel();
 		labelWeek = new JLabel("May 5  -  May 8");
@@ -193,7 +208,6 @@ public class LayoutTest extends JFrame implements ActionListener{
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 		infoPanel.setBackground(Color.BLUE);
-		infoPanel.setAlignmentY(CENTER_ALIGNMENT);
 		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
 
 		labelDay = new JLabel("Monday May 14, 2018");
@@ -213,7 +227,28 @@ public class LayoutTest extends JFrame implements ActionListener{
 		spaceTaker.setAlignmentX(CENTER_ALIGNMENT);
 		infoPanel.add(spaceTaker);
 
-
+		//Upcoming Events
+		//TODO: Upcoming Events system
+		JLabel labelEvents = new JLabel("Upcoming Events");
+		labelEvents.setOpaque(true);
+		labelEvents.setBackground(Color.WHITE);
+		labelEvents.setForeground(Color.RED);
+		labelEvents.setFont(listFont);
+		
+		events = new JList<String>();
+		events.setFont(listFont);
+		events.setForeground(Color.BLACK);
+		String[] test = {"History Paper", "Chemistry Test", "Math Homework", "Writing Workshop Packet"};
+		events.setListData(test);
+		
+		eventsScrollPane = new JScrollPane(events);
+		System.out.println(infoPanel.getWidth());
+		Dimension scrollPaneSize = new Dimension(100, 250);
+		eventsScrollPane.setPreferredSize(scrollPaneSize);
+		
+		infoPanel.add(labelEvents);
+		infoPanel.add(eventsScrollPane);
+		
 		//Final Box
 		JPanel calendarVertical = new JPanel();
 		calendarVertical.add(level1);
@@ -223,19 +258,13 @@ public class LayoutTest extends JFrame implements ActionListener{
 		calendarVertical.setBackground(Color.pink);
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
 
-		Box infoVertical = Box.createVerticalBox();
-		infoVertical.add(infoPanel);
-
-		JPanel panelInfo = new JPanel();
-		panelInfo.setOpaque(true);
-		panelInfo.setBackground(Color.yellow);
-
-		panelInfo.add(infoVertical);
+		JPanel temp2 = new JPanel();
+		temp2.add(infoPanel);
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(calendarVertical);
 		mainPanel.add(Box.createHorizontalGlue());
-		mainPanel.add(panelInfo);
+		mainPanel.add(temp2);
 
 		frame.add(mainPanel);
 	}
@@ -289,6 +318,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 			button.setOpaque(true);
 			button.setBackground(Color.WHITE);
 			button.setFont(calendarDayFont);
+			button.setFocusable(false);
 			//TODO: BUTTON BORDERS AND FITTINGS
 			//			button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 			button.setBorder(BorderFactory.createEtchedBorder(1));
@@ -296,6 +326,8 @@ public class LayoutTest extends JFrame implements ActionListener{
 			//				button.setBackground(Color.RED);
 			panelCalendar.add(button, c);
 		}
+		
+		//TODO: SPECIFIC BLOCK LENGTHS
 
 		//Blocks
 		for(int i = 0; i < Days.values().length; i++) {
@@ -309,6 +341,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 				button.setVerticalAlignment(SwingConstants.TOP);
 				button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
 				button.setOpaque(true);
+				button.setFocusable(false);
 				button.setBackground(Color.WHITE);
 				button.setFont(calendarBlockNameFont);
 				panelCalendar.add(button, c);
