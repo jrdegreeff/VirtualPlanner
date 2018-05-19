@@ -4,7 +4,7 @@ import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.util.Date;
 
 /**
- * Abstract class defining all assignments
+ * Class defining all assignments
  * @author Leo Dong
  *
  */
@@ -162,16 +162,15 @@ public class Assignment implements Comparable<Assignment> {
 		descrip = newDescrip;
 	}
 	
-	/**
-	 * @return unique id as hash code for this assignment object
-	 */
+	@Override
 	public int hashCode() {
-		return ID;
+		return toString().hashCode();
 	}
 	
 	/**
 	 * @return string representation of the assignment
 	 */
+	@Override
 	public String toString() {
 		String str = "";
 		str += "Assigned Date: " + assignedDate + "; " + "Due Date: " + dueDate + "\n"; 
@@ -190,6 +189,7 @@ public class Assignment implements Comparable<Assignment> {
 	 * (either smaller priority or same priority but is created earlier), positive number if 
 	 * this is assignment is greater than the other assignment, and 0 if they are equal. 
 	 */
+	@Override
 	public int compareTo(Assignment assn) {
 		return this.type.getPriority() == assn.type.getPriority() ? this.ID - assn.ID : this.type.getPriority() - assn.type.getPriority();
 	}
@@ -200,6 +200,7 @@ public class Assignment implements Comparable<Assignment> {
 	 * @param assn another assignment to compare to
 	 * @return true if two assignments have the same priority and id; false if otherwise
 	 */
+	@Override
 	public boolean equals(Object assn) {
 		if(assn == null)
 			return false;

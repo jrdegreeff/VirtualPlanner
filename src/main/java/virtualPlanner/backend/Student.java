@@ -34,6 +34,7 @@ public class Student implements User {
 	/**
 	 * @return student name
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -41,6 +42,7 @@ public class Student implements User {
 	/**
 	 * @return course associated with a specific block
 	 */
+	@Override
 	public Course getCourse(Block block) {
 		return schedule.get(block);
 	}
@@ -51,11 +53,14 @@ public class Student implements User {
 	 * @param course
 	 * @return true if method successfully adds a course to the students' schedule
 	 */
+	@Override
 	public boolean addCourse(Block[] blocks, Course course) {
 		for (Block block : blocks) {
 			if (schedule.containsKey(block)) {
 				return false;
 			}
+		}
+		for (Block block : blocks) {
 			schedule.put(block, course);
 		}
 		return true;
@@ -65,6 +70,7 @@ public class Student implements User {
 	 * removeCourse removes a course from a students' schedule by removing the associated blocks.
 	 * @param course to be removed
 	 */
+	@Override
 	public void removeCourse(Course course) {
 		for (Block block : schedule.keySet()) {
 			if (schedule.get(block).equals(course)) {

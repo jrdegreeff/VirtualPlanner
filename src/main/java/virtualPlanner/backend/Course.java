@@ -2,6 +2,7 @@ package virtualPlanner.backend;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import virtualPlanner.util.Date;
@@ -22,12 +23,12 @@ public class Course {
 	/**
 	 * maps Dates to a set of all Assignments assigned that day
 	 */
-	private Map<Date, TreeSet<Assignment>> assnDateMap;
+	private Map<Date, Set<Assignment>> assnDateMap;
 
 	/**
 	 * maps Dates to a set of all Assignments due that day
 	 */
-	private Map<Date, TreeSet<Assignment>> dueDateMap;
+	private Map<Date, Set<Assignment>> dueDateMap;
 
 	
 	/**
@@ -38,8 +39,8 @@ public class Course {
 	public Course(String name, String teacher) {
 		this.name = name;
 		this.teacher = teacher;
-		assnDateMap = new HashMap<Date, TreeSet<Assignment>>();
-		dueDateMap = new HashMap<Date, TreeSet<Assignment>>();
+		assnDateMap = new HashMap<Date, Set<Assignment>>();
+		dueDateMap = new HashMap<Date, Set<Assignment>>();
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class Course {
 	 * @param dateDue
 	 * @return TreeSet of Assignments due on a given date.
 	 */
-	public TreeSet<Assignment> getDue(Date dateDue) {
+	public Set<Assignment> getDue(Date dateDue) {
 		return dueDateMap.get(dateDue);
 	}
 
@@ -68,7 +69,7 @@ public class Course {
 	 * @param dateAssigned
 	 * @return TreeSet of Assignments assigned on a given date.
 	 */
-	public TreeSet<Assignment> getAssigned(Date dateAssigned) {
+	public Set<Assignment> getAssigned(Date dateAssigned) {
 		return assnDateMap.get(dateAssigned);
 	}
 
@@ -102,9 +103,9 @@ public class Course {
 		Date oldAssnDate = assn.changeAssignedDate(newAssnDate);
 
 		// ArrayList of assignment on old assignment date
-		TreeSet<Assignment> oldAssignments = assnDateMap.get(oldAssnDate); // old assignments set for old date
+		Set<Assignment> oldAssignments = assnDateMap.get(oldAssnDate); // old assignments set for old date
 		oldAssignments.remove(assn);
-		TreeSet<Assignment> newAssignments = assnDateMap.get(newAssnDate); // new assignments set for new date
+		Set<Assignment> newAssignments = assnDateMap.get(newAssnDate); // new assignments set for new date
 		newAssignments.add(assn);
 		
 		assnDateMap.put(newAssnDate, newAssignments);
@@ -121,9 +122,9 @@ public class Course {
 		Date oldDueDate = assn.changeDueDate(newDueDate);
 
 		// ArrayList of assignment on old assignment date
-		TreeSet<Assignment> oldAssignments = assnDateMap.get(oldDueDate); // old assignments set for old date
+		Set<Assignment> oldAssignments = assnDateMap.get(oldDueDate); // old assignments set for old date
 		oldAssignments.remove(assn);
-		TreeSet<Assignment> newAssignments = assnDateMap.get(newDueDate); // new assignments set for new date
+		Set<Assignment> newAssignments = assnDateMap.get(newDueDate); // new assignments set for new date
 		newAssignments.add(assn);
 		
 		assnDateMap.put(newDueDate, newAssignments);
@@ -133,6 +134,7 @@ public class Course {
 	/**
 	 * @return true if two courses have the same course name and teacher.
 	 */
+	@Override
 	public boolean equals(Object other) {
 		if(other == null)
 			return false;
@@ -144,7 +146,13 @@ public class Course {
 	/**
 	 * @return course name taught by teacher
 	 */
+	@Override
 	public String toString() {
 		return name + " taught by " + teacher;
+	}
+	
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
 	}
 }
