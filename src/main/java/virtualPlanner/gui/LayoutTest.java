@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -36,7 +37,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 	//JFrame
 	private static JFrame frame;
 	private static JPanel mainPanel, panelCalendar, infoPanel;
-	
+
 	//TODO: Resolution
 	private final static int resolutionMultiplier = 2;
 	private final static int calendarColumnWidth = 60;
@@ -53,17 +54,17 @@ public class LayoutTest extends JFrame implements ActionListener{
 	private static JLabel labelWeek, labelDay;
 
 	//Fonts
-	private static Font defaultFont = new Font("SansSerif", Font.BOLD, 24); 
-	private static Font calendarDayFont = new Font("Dialog", Font.BOLD, 18);
-	private static Font calendarBlockNameFont = new Font("Dialog", Font.BOLD, 12);
-	private static Font dateFont = new Font("SansSerif", Font.BOLD, 40);
+	private static final Font defaultFont = new Font("SansSerif", Font.BOLD, 24); 
+	private static final Font calendarDayFont = new Font("Dialog", Font.BOLD, 18);
+	private static final Font calendarBlockNameFont = new Font("Dialog", Font.BOLD, 12);
+	private static final Font dateFont = new Font("SansSerif", Font.BOLD, 40);
 
 	//Icons and Images
 	private static BufferedImage imagePrev, imageNext;
-	
+
 	//JButtons for the actionListener
 	private GUIButton[][] buttons;
-	
+
 
 	/**
 	 * Constructor: Creates the main GUI
@@ -119,7 +120,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 
 		//Add components
 		buttons = new GUIButton[7][];
-		updateGUI();
+		addComponents();
 
 		//Frame
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -141,14 +142,14 @@ public class LayoutTest extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * Updates the GUI
+	 * Adds the main base components of the GUI 
 	 */
-	public void updateGUI() {
+	public void addComponents() {
 		//Clear frame
 		frame.getContentPane().removeAll();
 
 		//Calendar 
-		
+
 		//Left and Right Calendar buttons
 		buttonLeft = new JButton();
 		buttonLeft.setIcon(new ImageIcon(imagePrev));
@@ -157,7 +158,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 		buttonLeft.setBorderPainted(false);
 		buttonLeft.addActionListener(this);
 		buttonLeft.setFocusable(false);
-		
+
 		buttonRight = new JButton();
 		buttonRight.setIcon(new ImageIcon(imageNext));
 		buttonRight.setOpaque(false);
@@ -168,38 +169,11 @@ public class LayoutTest extends JFrame implements ActionListener{
 
 		//JPanel for the calendar itself
 		panelCalendar = new JPanel();
-		labelWeek = new JLabel("May 5  �  May 8");
+		labelWeek = new JLabel("May 5  -  May 8");
 		labelWeek.setOpaque(true);
 		labelWeek.setBackground(Color.WHITE);
 		labelWeek.setForeground(Color.RED);
 		labelWeek.setFont(defaultFont);
-		
-		//JPanel for the right of the calendar - the 'info' section
-		infoPanel = new JPanel();
-		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-		infoPanel.setBackground(Color.BLUE);
-		infoPanel.setAlignmentY(CENTER_ALIGNMENT);
-		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
-		
-		labelDay = new JLabel("Monday May 14, 2018");
-		labelDay.setOpaque(true);
-		labelDay.setBackground(Color.PINK);
-		labelDay.setForeground(Color.BLACK);
-		labelDay.setFont(dateFont);
-		labelDay.setAlignmentX(CENTER_ALIGNMENT);
-		infoPanel.add(labelDay);
-		
-	
-		JLabel spaceTaker = new JLabel("Monday May 14, 2018");
-		spaceTaker.setOpaque(true);
-		spaceTaker.setForeground(Color.CYAN);
-		spaceTaker.setBackground(Color.CYAN);
-		spaceTaker.setFont(dateFont);
-		spaceTaker.setAlignmentX(CENTER_ALIGNMENT);
-		infoPanel.add(spaceTaker);
-
-		
-		//TODO: Unique font
 
 		//Level 1 -> labelWeek and Prev + Next buttons
 		Box level1 = Box.createHorizontalBox();
@@ -212,29 +186,52 @@ public class LayoutTest extends JFrame implements ActionListener{
 		level1.add(buttonRight);
 		level1.add(Box.createHorizontalGlue());
 		level1.add(Box.createHorizontalGlue());
-		
+
 		initButtons();
-		
+
+		//JPanel for the right of the calendar - the 'info' section
+		infoPanel = new JPanel();
+		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+		infoPanel.setBackground(Color.BLUE);
+		infoPanel.setAlignmentY(CENTER_ALIGNMENT);
+		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
+
+		labelDay = new JLabel("Monday May 14, 2018");
+		labelDay.setOpaque(true);
+		labelDay.setBackground(Color.PINK);
+		labelDay.setForeground(Color.BLACK);
+		labelDay.setFont(dateFont);
+		labelDay.setAlignmentX(CENTER_ALIGNMENT);
+		infoPanel.add(labelDay);
+
+		//JLabel so that the spacing of labelDay is consistent
+		JLabel spaceTaker = new JLabel("Monday May 14, 2018");
+		spaceTaker.setOpaque(true);
+		spaceTaker.setForeground(Color.CYAN);
+		spaceTaker.setBackground(Color.CYAN);
+		spaceTaker.setFont(dateFont);
+		spaceTaker.setAlignmentX(CENTER_ALIGNMENT);
+		infoPanel.add(spaceTaker);
+
+
 		//Final Box
 		JPanel calendarVertical = new JPanel();
-		
-		//TODO: Spacing between the week/calendar
 		calendarVertical.add(level1);
 		calendarVertical.add(panelCalendar);
-		
+
 		calendarVertical.setOpaque(true);
 		calendarVertical.setBackground(Color.pink);
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
-		
+
 		Box infoVertical = Box.createVerticalBox();
 		infoVertical.add(infoPanel);
-		
+
 		JPanel panelInfo = new JPanel();
 		panelInfo.setOpaque(true);
-		panelInfo.setBackground(Color.blue);
+		panelInfo.setBackground(Color.yellow);
 
 		panelInfo.add(infoVertical);
-		
+
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(calendarVertical);
 		mainPanel.add(Box.createHorizontalGlue());
@@ -242,12 +239,16 @@ public class LayoutTest extends JFrame implements ActionListener{
 
 		frame.add(mainPanel);
 	}
-	
+
+	/**
+	 * This method adds the weekly JButtons to the calendarPanel
+	 */
 	public void initButtons() {
 		//Main Panel for Calendar
 		panelCalendar = new JPanel();
 		panelCalendar.setLayout(new GridBagLayout());
 
+		panelCalendar.setBackground(Color.WHITE);
 		//Initial default values for GridBagLayout constraints
 		GridBagConstraints c = new GridBagConstraints();
 		c.ipadx = 50;
@@ -279,7 +280,8 @@ public class LayoutTest extends JFrame implements ActionListener{
 		//Dimension to keep all sizes constant
 		Dimension d = new Dimension(calendarColumnWidth, calendarMarkerHeight);
 
-		//i >> row
+		//I > Row
+		//Add the Weekday Labels
 		for (int i = 0; i < days.size(); i++) {
 			c.gridx = i;
 			JButton button = days.get(i);
@@ -287,8 +289,11 @@ public class LayoutTest extends JFrame implements ActionListener{
 			button.setOpaque(true);
 			button.setBackground(Color.WHITE);
 			button.setFont(calendarDayFont);
-//			if(i == 1)
-//				button.setBackground(Color.RED);
+			//TODO: BUTTON BORDERS AND FITTINGS
+			//			button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+			button.setBorder(BorderFactory.createEtchedBorder(1));
+			//			if(i == 1)
+			//				button.setBackground(Color.RED);
 			panelCalendar.add(button, c);
 		}
 
@@ -308,12 +313,14 @@ public class LayoutTest extends JFrame implements ActionListener{
 				button.setFont(calendarBlockNameFont);
 				panelCalendar.add(button, c);
 				button.addActionListener(this);
+				button.setBorder(BorderFactory.createEtchedBorder(1));
+				//				button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 				buttons[i][j] = button;
 			}
 		}
 	}
-	
-	
+
+
 
 	/**
 	 * Instantiates a LayoutPrototype
@@ -330,19 +337,19 @@ public class LayoutTest extends JFrame implements ActionListener{
 		Object src = e.getSource();
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
-			labelWeek.setText("May 1  �  May 3");
+			labelWeek.setText("LEFT");
 		}
-		
+
 		//Right button on the calendar
 		else if (src.equals(buttonRight)) {
-			labelWeek.setText("May 5  �  May 7");
+			labelWeek.setText("RIGHT");
 		}
-		
+
 		else if (src instanceof JButton) {
-			System.out.println(((JButton) src).getText());
 			labelDay.setText(((JButton) src).getText());
 		}
 	}
 
+	//TODO: CURRENT BUTTON
 	//TODO ActionListener with bordercolors
 }
