@@ -29,7 +29,16 @@ public class Course {
 	 * maps Dates to a set of all Assignments due that day
 	 */
 	private Map<Date, Set<Assignment>> dueDateMap;
-
+	
+	/**
+	 * internal id counter for giving unique ids
+	 */
+	private static int idCounter = 0;
+	
+	/**
+	 * unique id for each course object
+	 */
+	private final int ID;
 	
 	/**
 	 * Constructor for Course class. assigned and due maps are set to empty HashMaps.
@@ -41,8 +50,17 @@ public class Course {
 		this.teacher = teacher;
 		assnDateMap = new HashMap<Date, Set<Assignment>>();
 		dueDateMap = new HashMap<Date, Set<Assignment>>();
+		ID = idCounter;
+		idCounter++;
 	}
 
+	/**
+	 * @return unique id for this course object
+	 */
+	public int getID() {
+		return ID;
+	}
+	
 	/**
 	 * @return course name
 	 */
