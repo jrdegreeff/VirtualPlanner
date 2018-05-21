@@ -18,9 +18,9 @@ public interface User {
 	public String getName();
 	
 	/**
-	 * Retrieves the {@code Course} from this {@code User}'s schedule in a particular {@code Block}.
+	 * Retrieves the {@code Course} from this {@code User}'s schedule in the specified {@code Block}.
 	 * 
-	 * @param block The {@code Block} to find the course for.
+	 * @param block The {@code Block} to find the {@code Course} for.
 	 * @return The {@code Course} associated with the specified {@code Block}, or {@code null} if this {@code User} has no {@code Course} for that {@code Block}.
 	 */
 	public Course getCourse(Block block);

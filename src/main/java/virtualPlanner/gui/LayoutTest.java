@@ -28,15 +28,27 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import virtualPlanner.reference.Days;
+import virtualPlanner.util.Block;
+import virtualPlanner.util.Date;
 
 /**
+ * This class represents a Prototype with no actionListeners/keyListeners.
  * 
  * @author Kevin
- * This class represents a Prototype with no actionListeners/keyListeners
+ * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class LayoutTest extends JFrame implements ActionListener{
+public class LayoutTest extends JFrame implements ActionListener {
 
+	/**
+	 * The controller for this JFrame.
+	 */
+	private GUIController controller;
+	/**
+	 * The start date of the week which is being displayed currently.
+	 */
+	private Date weekStartDate;
+	
 	//JFrame
 	private static JFrame frame;
 	
@@ -80,9 +92,12 @@ public class LayoutTest extends JFrame implements ActionListener{
 	/**
 	 * Constructor: Creates the main GUI
 	 */
-	public LayoutTest() {
+	public LayoutTest(GUIController controller) {
 		//Name
 		super("Virtual Planner");
+		
+		this.controller = controller;
+		this.weekStartDate = new Date();
 
 		//Reference
 		frame = this;
@@ -350,7 +365,8 @@ public class LayoutTest extends JFrame implements ActionListener{
 			buttons[i] = new GUIButton[blockOrder.getBlockCount()];
 			for(int j = 0; j < blockOrder.getBlockCount(); j++) {
 				c.gridy = j + 1;
-				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation());
+				Block block = blockOrder.getBlock(j);
+				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation(), controller.getCourseID(block), controller.getAssignments(weekStartDate.getUpcomingDate(j), block));
 				button.setVerticalAlignment(SwingConstants.TOP);
 				button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
 				button.setOpaque(true);
@@ -375,15 +391,15 @@ public class LayoutTest extends JFrame implements ActionListener{
 		events.setListData(eventList);
 	}
 
-	/**
-	 * Instantiates a LayoutPrototype
-	 * @param args
-	 */
-	public static void main (String[] args) {
-		LayoutTest GUI = new LayoutTest();
-		String[] h = {"HI", "HI2"};
-		GUI.setEventsList(h);
-	}
+//	/**
+//	 * Instantiates a LayoutPrototype
+//	 * @param args
+//	 */
+//	public static void main (String[] args) {
+//		LayoutTest GUI = new LayoutTest();
+//		String[] h = {"HI", "HI2"};
+//		GUI.setEventsList(h);
+//	}
 
 	/**
 	 * 

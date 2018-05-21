@@ -23,6 +23,14 @@ public class Date implements Comparable<Date> {
 	private Days dayOfWeek;
 	
 	/**
+	 * Creates a new {@code Date} instance for the current day.
+	 */
+	public Date() {
+		calendar = new GregorianCalendar();
+		dayOfWeek = Days.getDay(calendar.get(Calendar.DAY_OF_WEEK));
+	}
+	
+	/**
 	 * @param day The day of the month. (1-indexed)
 	 * @param month The month of the year. (1-indexed)
 	 * @param year The year of this {@code Date}.
