@@ -69,6 +69,13 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
+	 * @return unique ID for this assignment object
+	 */
+	public int getID() {
+		return ID;
+	}
+	
+	/**
 	 * @return assignment date
 	 */
 	public Date getAssignedDate() {
