@@ -22,11 +22,25 @@ public class GUIController {
 	 */
 	private User user;
 	
+	public GUIController() {
+		new LayoutTest(this);
+	}
+	
 	/**
 	 * @return The name of the user.
 	 */
 	public String getUserName() {
 		return user.getName();
+	}
+	
+	/**
+	 * Retrieves the id of the {@code Course} from the user's schedule in the specified {@code Block}.
+	 * 
+	 * @param block The {@code Block} to find the {@code Course} for.
+	 * @return The id of the {@code Course} associated with the specified {@code Block}, or {@code null} if the user has no {@code Course} for that {@code Block}.
+	 */
+	public int getCourseID(Block block) {
+		return user.getCourse(block).getID();
 	}
 	
 	/**
