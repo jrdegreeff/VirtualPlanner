@@ -1,6 +1,7 @@
 package virtualPlanner.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -167,9 +168,7 @@ public class LayoutTest extends JFrame implements ActionListener{
 		buttonLeft.setContentAreaFilled(false);
 		buttonLeft.setBorderPainted(false);
 		buttonLeft.addActionListener(this);
-		buttonLeft.setFocusable(false);
-		buttonLeft.setBackground(Color.GRAY);
-		
+		buttonLeft.setFocusable(false);		
 
 		buttonRight = new JButton();
 		buttonRight.setIcon(new ImageIcon(imageNext));
@@ -178,7 +177,6 @@ public class LayoutTest extends JFrame implements ActionListener{
 		buttonRight.setBorderPainted(false);
 		buttonRight.addActionListener(this);
 		buttonRight.setFocusable(false);
-		buttonRight.setBackground(Color.GRAY);
 
 		//TODO: UNIFORM COLORS
 		
@@ -207,22 +205,26 @@ public class LayoutTest extends JFrame implements ActionListener{
 		//JPanel for the right of the calendar - the 'info' section
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-		infoPanel.setBackground(Color.BLUE);
+//		infoPanel.setBackground(Color.BLUE);
 		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
 
 		labelDay = new JLabel("Monday May 14, 2018");
 		labelDay.setOpaque(true);
-		labelDay.setBackground(Color.PINK);
+//		labelDay.setBackground(Color.PINK);
 		labelDay.setForeground(Color.BLACK);
 		labelDay.setFont(dateFont);
 		labelDay.setAlignmentX(CENTER_ALIGNMENT);
 		infoPanel.add(labelDay);
+		
+		
+		//Add Course
+		
 
 		//JLabel so that the spacing of labelDay is consistent
 		JLabel spaceTaker = new JLabel("Monday May 14, 2018");
 		spaceTaker.setOpaque(true);
-		spaceTaker.setForeground(Color.CYAN);
-		spaceTaker.setBackground(Color.CYAN);
+		spaceTaker.setForeground(labelDay.getBackground());
+//		spaceTaker.setBackground(Color.CYAN);
 		spaceTaker.setFont(dateFont);
 		spaceTaker.setAlignmentX(CENTER_ALIGNMENT);
 		infoPanel.add(spaceTaker);
@@ -231,10 +233,13 @@ public class LayoutTest extends JFrame implements ActionListener{
 		//TODO: Upcoming Events system
 		JLabel labelEvents = new JLabel("Upcoming Events");
 		labelEvents.setOpaque(true);
-		labelEvents.setBackground(Color.WHITE);
-		labelEvents.setForeground(Color.RED);
+//		labelEvents.setBackground(Color.WHITE);
+		labelEvents.setForeground(Color.BLACK);
 		labelEvents.setFont(listFont);
-		
+		labelEvents.setAlignmentX(LEFT_ALIGNMENT);
+		infoPanel.add(labelEvents);
+
+		//JList
 		events = new JList<String>();
 		events.setFont(listFont);
 		events.setForeground(Color.BLACK);
@@ -246,8 +251,16 @@ public class LayoutTest extends JFrame implements ActionListener{
 		Dimension scrollPaneSize = new Dimension(100, 250);
 		eventsScrollPane.setPreferredSize(scrollPaneSize);
 		
-		infoPanel.add(labelEvents);
 		infoPanel.add(eventsScrollPane);
+		
+		//Add Event Button
+		JButton button22 = new JButton("Add Event");
+		button22.setAlignmentX(CENTER_ALIGNMENT);
+		
+		infoPanel.add(button22);
+		button22.setBackground(Color.WHITE);
+		button22.setFocusable(false);
+		button22.setForeground(Color.BLACK);
 		
 		//Final Box
 		JPanel calendarVertical = new JPanel();
@@ -353,14 +366,23 @@ public class LayoutTest extends JFrame implements ActionListener{
 		}
 	}
 
-
+	/**
+	 * Sets the contents of the upcoming Events JList
+	 * @param eventList
+	 */
+	public void setEventsList(String[] eventList)
+	{
+		events.setListData(eventList);
+	}
 
 	/**
 	 * Instantiates a LayoutPrototype
 	 * @param args
 	 */
 	public static void main (String[] args) {
-		new LayoutTest();
+		LayoutTest GUI = new LayoutTest();
+		String[] h = {"HI", "HI2"};
+		GUI.setEventsList(h);
 	}
 
 	/**
