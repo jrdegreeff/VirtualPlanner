@@ -7,24 +7,36 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import virtualPlanner.backend.Assignment;
+
 @SuppressWarnings("serial")
 public class GUIButton extends JButton implements ActionListener
 {
 
-	private ArrayList<Object> assignments = new ArrayList<Object>();
+	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
 	private boolean hasOptionsWindow;
 	private String block;
+	private int id;
 
 	//TODO: Move calls to constructor
 	public GUIButton(String block)
 	{
 		super();
+		this.id = id;
+		this.assignments = assignments;
 		hasOptionsWindow = false;
 		this.addActionListener(this);
 		this.block = block + "\n";
 		this.setMultiLineText("");
 	}
 
+	public GUIButton(String block, int id, ArrayList<Assignment> assignments)
+	{
+		this(block);
+		this.id = id;
+		this.assignments = assignments;
+	}
+	
 	/**
 	 * Enables multi-line text
 	 * PRECONDITION: New lines are denotated by a "\n"
