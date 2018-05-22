@@ -2,9 +2,19 @@ TODO:
 
 Preferences
 - Colors
+
 GUIButton Window
 - Add
 - Remove
 - Edit
 - JList or JTextArea
 
+Check for Day Label --> Options Window
+
+Move settings to Constructor/Better Constuctor
+
+Alignment of JButton
+
+Specific Block Lengths
+
+Button Highlights

@@ -1,11 +1,17 @@
 package virtualPlanner.gui;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import virtualPlanner.backend.Assignment;
 
@@ -13,27 +19,58 @@ import virtualPlanner.backend.Assignment;
 public class GUIButton extends JButton implements ActionListener
 {
 
+	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
+;
+
+	
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
 	private boolean hasOptionsWindow;
-	private String block;
+	private String name;
 	private int id;
 	private String day;
+	private boolean isDayLabel;
 
-	//TODO: Move calls to constructor
-	public GUIButton(String block)
+	/**
+	 * Base constructor with call to super 
+	 * Sets the universal settings for the buttons
+	 */
+	public GUIButton(String name)
 	{
 		super();
 		hasOptionsWindow = false;
 		this.addActionListener(this);
-		this.block = block + "\n";
+		this.name = name + "\n";
 		this.setMultiLineText("");
+		this.setOpaque(true);
+		this.setFocusable(false);
+		this.setBackground(Color.WHITE);
+		this.setBorder(defaultBorder);
+//		this.setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
 	}
 
-	public GUIButton(String block, int id, ArrayList<Assignment> assignments)
+	/**
+	 * Constructor for the JButtons in the Calendar that represent Blocks
+	 * @param block
+	 * @param id
+	 * @param assignments
+	 * @param size
+	 */
+	public GUIButton(String name, int id, ArrayList<Assignment> assignments, Dimension size, Font font)
 	{
-		this(block);
+		this(name);
 		this.id = id;
 		this.assignments = assignments;
+		this.setPreferredSize(size);
+		this.setVerticalAlignment(SwingConstants.TOP);
+		this.setFont(font);
+		this.isDayLabel = false;
+	}
+	
+	public GUIButton(String name, Dimension size, Font font)
+	{
+		this(name);
+		this.setPreferredSize(size);
+		this.setFont(font);
 	}
 	
 	/**
@@ -43,7 +80,7 @@ public class GUIButton extends JButton implements ActionListener
 	 */
 	public void setMultiLineText(String text)
 	{
-		String newText = block + text;
+		String newText = name + text;
 		this.setText("<html>" + newText.replaceAll("\\n", "<br>") + "</html>");
 		this.setAlignmentX(CENTER_ALIGNMENT);
 	}
@@ -59,7 +96,7 @@ public class GUIButton extends JButton implements ActionListener
 
 		hasOptionsWindow = true;
 
-		JFrame optionsWindow = new JFrame("Options");
+		JFrame optionsWindow = new JFrame(name);
 
 		optionsWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -82,6 +119,5 @@ public class GUIButton extends JButton implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 		showUserOptions();
-		System.out.println("Called1");
 	}
 }

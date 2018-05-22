@@ -58,6 +58,7 @@ public class LayoutTest extends JFrame implements ActionListener {
 	//TODO: Resolution
 	private final static int resolutionMultiplier = 2;
 	private final static int calendarColumnWidth = 70;
+	private final static int calendarLabelHeight = 20;
 
 	//JMenuBar
 	private JMenuBar menuBar;
@@ -283,7 +284,7 @@ public class LayoutTest extends JFrame implements ActionListener {
 		calendarVertical.add(panelCalendar);
 
 		calendarVertical.setOpaque(true);
-		calendarVertical.setBackground(Color.pink);
+		calendarVertical.setBackground(Color.white);
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
 
 		JPanel temp2 = new JPanel();
@@ -313,17 +314,6 @@ public class LayoutTest extends JFrame implements ActionListener {
 		//For 0:
 		//c.ipady = -26;
 
-		//Day Name Labels
-		ArrayList<GUIButton> days = new ArrayList<GUIButton>();
-		days.add(new GUIButton("Mon"));
-		days.add(new GUIButton("Tue"));
-		days.add(new GUIButton("Wed"));
-		days.add(new GUIButton("Thu"));
-		days.add(new GUIButton("Fri"));
-		days.add(new GUIButton("Sat"));
-		days.add(new GUIButton("Sun"));
-
-
 		//Default constant values
 
 		//x-coordinate of GridBagLayout
@@ -332,31 +322,28 @@ public class LayoutTest extends JFrame implements ActionListener {
 		c.gridy = 0;
 		//Vertical Padding
 		c.ipady = 10;
-		//Preferred height of all JButtons
-		int calendarMarkerHeight = days.get(0).getPreferredSize().height;
-		//Dimension to keep all sizes constant
-		Dimension d = new Dimension(calendarColumnWidth, calendarMarkerHeight);
-
+		//Dimension to keep all sizes consant
+		Dimension labelSize = new Dimension(calendarColumnWidth, calendarLabelHeight);
+		
+		//Day Name Labels
+		ArrayList<GUIButton> days = new ArrayList<GUIButton>();
+		days.add(new GUIButton("Mon", labelSize, calendarDayFont));
+		days.add(new GUIButton("Tue", labelSize, calendarDayFont));
+		days.add(new GUIButton("Wed", labelSize, calendarDayFont));
+		days.add(new GUIButton("Thu", labelSize, calendarDayFont));
+		days.add(new GUIButton("Fri", labelSize, calendarDayFont));
+		days.add(new GUIButton("Sat", labelSize, calendarDayFont));
+		days.add(new GUIButton("Sun", labelSize, calendarDayFont));
+		
 		//I > Row
 		//Add the Weekday Labels
 		for (int i = 0; i < days.size(); i++) {
 			c.gridx = i;
 			JButton button = days.get(i);
-			button.setPreferredSize(d);
-			button.setOpaque(true);
-			button.setBackground(Color.WHITE);
-			button.setFont(calendarDayFont);
-			button.setFocusable(false);
-			//TODO: BUTTON BORDERS AND FITTINGS
-			//			button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-			button.setBorder(BorderFactory.createEtchedBorder(1));
-			//			if(i == 1)
-			//				button.setBackground(Color.RED);
 			panelCalendar.add(button, c);
 		}
-		
-		//TODO: SPECIFIC BLOCK LENGTHS
 
+		Dimension blockSize = new Dimension(calendarColumnWidth, 30);
 		//Blocks
 		for(int i = 0; i < Days.values().length; i++) {
 			c.ipady = 25;
@@ -366,17 +353,8 @@ public class LayoutTest extends JFrame implements ActionListener {
 			for(int j = 0; j < blockOrder.getBlockCount(); j++) {
 				c.gridy = j + 1;
 				Block block = blockOrder.getBlock(j);
-				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation(), controller.getCourseID(block), controller.getAssignments(weekStartDate.getUpcomingDate(j), block));
-				button.setVerticalAlignment(SwingConstants.TOP);
-				button.setPreferredSize(new Dimension(calendarColumnWidth, 30));
-				button.setOpaque(true);
-				button.setFocusable(false);
-				button.setBackground(Color.WHITE);
-				button.setFont(calendarBlockNameFont);
+				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation(), controller.getCourseID(block), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), blockSize, calendarBlockNameFont);
 				panelCalendar.add(button, c);
-				button.addActionListener(this);
-				button.setBorder(BorderFactory.createEtchedBorder(1));
-				//				button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 				buttons[i][j] = button;
 			}
 		}
@@ -415,12 +393,7 @@ public class LayoutTest extends JFrame implements ActionListener {
 		else if (src.equals(buttonRight)) {
 			labelWeek.setText("RIGHT");
 		}
-
-		else if (src instanceof JButton) {
-			labelDay.setText(((JButton) src).getText());
-		}
 	}
-
 	//TODO: CURRENT BUTTON
 	//TODO ActionListener with bordercolors
 }
