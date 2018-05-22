@@ -22,7 +22,8 @@ public class GUIController {
 	 */
 	private User user;
 	
-	public GUIController() {
+	public GUIController(User u) {
+		this.user = u;
 		new LayoutTest(this);
 	}
 	
