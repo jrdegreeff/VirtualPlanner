@@ -15,6 +15,11 @@ import javax.swing.border.Border;
 
 import virtualPlanner.backend.Assignment;
 
+/**
+ * This class is used in place of JButton to provide extra functionality to the JButtons in the Calendar
+ * @author Kevin
+ *
+ */
 @SuppressWarnings("serial")
 public class GUIButton extends JButton implements ActionListener
 {
@@ -142,7 +147,7 @@ public class GUIButton extends JButton implements ActionListener
 				button.setBorder(highlightedBorder);
 				
 				//Option Window
-//				showUserOptions();
+				showUserOptions();
 			}
 		}
 	}

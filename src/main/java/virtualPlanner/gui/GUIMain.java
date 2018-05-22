@@ -1,7 +1,6 @@
 package virtualPlanner.gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -12,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -25,7 +23,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 
 import virtualPlanner.reference.Days;
 import virtualPlanner.util.Block;
@@ -38,7 +35,7 @@ import virtualPlanner.util.Date;
  * @author JeremiahDeGreeff
  */
 @SuppressWarnings("serial")
-public class LayoutTest extends JFrame implements ActionListener {
+public class GUIMain extends JFrame implements ActionListener {
 
 	/**
 	 * The controller for this JFrame.
@@ -56,14 +53,14 @@ public class LayoutTest extends JFrame implements ActionListener {
 	private static JPanel mainPanel, panelCalendar, infoPanel;
 
 	//TODO: Resolution
-	private final static int resolutionMultiplier = 2;
+//	private final static int resolutionMultiplier = 2;
 	private final static int calendarColumnWidth = 70;
 	private final static int calendarLabelHeight = 20;
 
 	//JMenuBar
 	private JMenuBar menuBar;
-	private JMenu menuFile, menu1, menu2, menu3, menu4; 
-	private JMenuItem menuItemFile, menuItem1, menuItem2, menuItem3, menuItem4;
+	private JMenu menuFile;
+	private JMenuItem menuItemFile, menuItemAddCourse;
 
 	//JButtons
 	private JButton buttonLeft, buttonRight;
@@ -72,34 +69,44 @@ public class LayoutTest extends JFrame implements ActionListener {
 	private JLabel labelWeek, labelDay;
 
 	//Fonts
-	private static final Font weekFont = new Font("SansSerif", Font.BOLD, 34); 
+	private static final Font weekFont = new Font("SansSerif", Font.BOLD, 30); 
 	private static final Font dateFont = new Font("SansSerif", Font.BOLD, 40);
 	private static final Font calendarDayFont = new Font("Dialog", Font.BOLD, 18);
 	private static final Font calendarBlockNameFont = new Font("Dialog", Font.BOLD, 12);
 	private static final Font listFont = new Font("Dialog", Font.BOLD, 22);
 
-
 	//Icons and Images
 	private static BufferedImage imagePrev, imageNext;
 
-	//JButtons for the actionListener
+	//2D-Array representation of the Calendar GUIButtons
 	private GUIButton[][] buttons;
 	
 	//JList and JScrollPane for upcomingEvents
 	private JList<String> events;
 	private JScrollPane eventsScrollPane;
 	
+	//Add new Course Window Settings
+	private boolean hasAddCourseWindow;
+	private static final Dimension courseWindowSize = new Dimension(500, 600);
+	
 
 	/**
 	 * Constructor: Creates the main GUI
 	 */
-	public LayoutTest(GUIController controller) {
+	public GUIMain(GUIController controller) {
+		
 		//Name
 		super("Virtual Planner");
 		
+		//GUIController
 		this.controller = controller;
+		
+		//Date
 		this.weekStartDate = new Date();
 
+		//Variable to prevent multiple window instatiations
+		hasAddCourseWindow = false;
+		
 		//Reference
 		frame = this;
 
@@ -122,29 +129,12 @@ public class LayoutTest extends JFrame implements ActionListener {
 		menuFile = new JMenu("File");
 		menuItemFile = new JMenuItem("There's nothing here ):");
 		menuFile.add(menuItemFile);
-
-		menu1 = new JMenu("Leo is cool");
-		menuItem1 = new JMenuItem("Just kidding lol");
-		menu1.add(menuItem1);
-
-		menu2 = new JMenu("Jeremiah is cool");
-		menuItem2 = new JMenuItem("Just kidding lol");
-		menu2.add(menuItem2);
-
-		menu3 = new JMenu("Anna is cool");
-		menuItem3 = new JMenuItem("Just kidding lol");
-		menu3.add(menuItem3);
-
-		menu4 = new JMenu("Kevin is cool");
-		menuItem4 = new JMenuItem("TRUE IF BIG.");
-		menu4.add(menuItem4);
-
+		
+		menuItemAddCourse = new JMenuItem("Add Course");
+		menuItemAddCourse.addActionListener(this);
+		
 		menuBar.add(menuFile);
-		menuBar.add(menu1);
-		menuBar.add(menu2);
-		menuBar.add(menu3);
-		menuBar.add(menu4);
-
+		menuBar.add(menuItemAddCourse);
 		//Add components
 		buttons = new GUIButton[7][];
 		addComponents();
@@ -199,20 +189,20 @@ public class LayoutTest extends JFrame implements ActionListener {
 		labelWeek = new JLabel("May 5  -  May 8");
 		labelWeek.setOpaque(true);
 		labelWeek.setBackground(Color.WHITE);
-		labelWeek.setForeground(Color.RED);
+		labelWeek.setForeground(Color.MAGENTA);
 		labelWeek.setFont(weekFont);
 
 		//Level 1 -> labelWeek and Prev + Next buttons
 		Box level1 = Box.createHorizontalBox();
-		level1.add(Box.createHorizontalGlue());
-		level1.add(Box.createHorizontalGlue());
+//		level1.add(Box.createHorizontalGlue());
+//		level1.add(Box.createHorizontalGlue());
 		level1.add(buttonLeft);
 		level1.add(Box.createHorizontalGlue());
 		level1.add(labelWeek);
 		level1.add(Box.createHorizontalGlue());
 		level1.add(buttonRight);
-		level1.add(Box.createHorizontalGlue());
-		level1.add(Box.createHorizontalGlue());
+//		level1.add(Box.createHorizontalGlue());
+//		level1.add(Box.createHorizontalGlue());
 
 		initButtons();
 
@@ -229,10 +219,6 @@ public class LayoutTest extends JFrame implements ActionListener {
 		labelDay.setFont(dateFont);
 		labelDay.setAlignmentX(CENTER_ALIGNMENT);
 		infoPanel.add(labelDay);
-		
-		
-		//Add Course
-		
 
 		//JLabel so that the spacing of labelDay is consistent
 		JLabel spaceTaker = new JLabel("Monday May 14, 2018");
@@ -244,7 +230,7 @@ public class LayoutTest extends JFrame implements ActionListener {
 		infoPanel.add(spaceTaker);
 
 		//Upcoming Events
-		JLabel labelEvents = new JLabel("Upcoming Events");
+		JLabel labelEvents = new JLabel("    Upcoming Events");
 		labelEvents.setOpaque(true);
 		labelEvents.setForeground(Color.BLACK);
 		labelEvents.setFont(listFont);
@@ -264,15 +250,6 @@ public class LayoutTest extends JFrame implements ActionListener {
 		eventsScrollPane.setPreferredSize(scrollPaneSize);
 		
 		infoPanel.add(eventsScrollPane);
-		
-		//Add Event Button
-		JButton button22 = new JButton("Add Event");
-		button22.setAlignmentX(CENTER_ALIGNMENT);
-		
-		infoPanel.add(button22);
-		button22.setBackground(Color.WHITE);
-		button22.setFocusable(false);
-		button22.setForeground(Color.BLACK);
 		
 		//Final Box
 		JPanel calendarVertical = new JPanel();
@@ -355,6 +332,34 @@ public class LayoutTest extends JFrame implements ActionListener {
 			}
 		}
 	}
+	
+	/**
+	 * This method creates a pop-up window which allows a user to add a Course
+	 */
+	private void showAddCourseWindow()
+	{
+		if (hasAddCourseWindow)
+			return;
+		
+		hasAddCourseWindow = true;
+		
+		//Create new Window
+		JFrame addCourseWindow = new JFrame("Add a Course...");
+		
+		//Override default close operation
+		addCourseWindow.setSize(courseWindowSize);
+		addCourseWindow.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		addCourseWindow.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				hasAddCourseWindow = false;
+				addCourseWindow.dispose();
+			}
+		});
+		
+		
+		addCourseWindow.setVisible(true);
+	}
 
 	/**
 	 * Sets the contents of the upcoming Events JList
@@ -376,10 +381,11 @@ public class LayoutTest extends JFrame implements ActionListener {
 //	}
 
 	/**
-	 * 
+	 * Method which handles of of the ActionEvents recorded by ActionListeners
 	 */
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
+		
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
 			labelWeek.setText("LEFT");
@@ -388,6 +394,12 @@ public class LayoutTest extends JFrame implements ActionListener {
 		//Right button on the calendar
 		else if (src.equals(buttonRight)) {
 			labelWeek.setText("RIGHT");
+		}
+		
+		//User wants to add a Class
+		else if (src.equals(menuItemAddCourse)){
+			showAddCourseWindow();
+			System.out.println("yet");
 		}
 	}
 	//TODO: CURRENT BUTTON

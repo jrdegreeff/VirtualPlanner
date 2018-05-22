@@ -1,5 +1,13 @@
 TODO:
 
+Buttons
+- Gradebook
+- Settings
+- Current Week
+
+MenuItem
+- Add Class
+
 Preferences
 - Colors
 
@@ -8,8 +16,6 @@ GUIButton Window
 - Remove
 - Edit
 - JList or JTextArea
-
-Check for Day Label --> Options Window
 
 Alignment of JButton
 

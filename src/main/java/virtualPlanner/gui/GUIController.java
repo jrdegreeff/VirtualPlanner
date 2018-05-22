@@ -24,7 +24,7 @@ public class GUIController {
 	
 	public GUIController(User u) {
 		this.user = u;
-		new LayoutTest(this);
+		new GUIMain(this);
 	}
 	
 	/**
