@@ -22,8 +22,13 @@ public class GUIController {
 	 */
 	private User user;
 	
-	public GUIController(User u) {
-		this.user = u;
+	/**
+	 * Initializes the GUI.
+	 * 
+	 * @param user The user for the session.
+	 */
+	public GUIController(User user) {
+		this.user = user;
 		new GUIMain(this);
 	}
 	
