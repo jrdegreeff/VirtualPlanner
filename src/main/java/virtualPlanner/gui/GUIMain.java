@@ -542,13 +542,9 @@ public class GUIMain extends JFrame implements ActionListener {
 			System.out.println("yet");
 		}
 		
-<<<<<<< HEAD
+
 		else if (src.equals(buttonAddCourse)){
 			System.out.println("User wants to add course '" + nameField.getText() + "' (" + abbreviationField.getText() + ") with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
-=======
-		else if (src.equals(buttonAddCourse)) {
-			System.out.println("User wants to add course '" + nameField.getText() + "' with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
->>>>>>> 8dbbd1d6dc097ac5441af0905207f04c78b46ae6
 		}
 	}
 	//TODO: CURRENT BUTTON
