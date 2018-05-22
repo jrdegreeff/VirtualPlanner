@@ -97,7 +97,20 @@ public class Date implements Comparable<Date> {
 	}
 	
 	/**
-	 * Returns a {@code Date} instance for a day a specified number of days away.
+	 * Returns a {@code Date} instance that represents the Monday of the week of this {@code Date}.
+	 * 
+	 * @return The specified {@code Date} object.
+	 */
+	public Date getWeekStartDate() {
+		Calendar clone = (Calendar)calendar.clone();
+		if(clone.get(Calendar.DAY_OF_WEEK) == 1)
+			clone.set(Calendar.WEEK_OF_MONTH, clone.get(Calendar.WEEK_OF_MONTH) - 1);
+		clone.set(Calendar.DAY_OF_WEEK, 2);
+		return new Date(clone.get(Calendar.DAY_OF_MONTH), clone.get(Calendar.MONTH) + 1, clone.get(Calendar.YEAR));
+	}
+	
+	/**
+	 * Returns a {@code Date} instance for a day a specified number of days away from this {@code Date}.
 	 * 
 	 * @param increment The number of days from this {@code Date} to the desired {@code Date}.
 	 * @return The specified {@code Date} object.
