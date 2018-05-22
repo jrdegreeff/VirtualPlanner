@@ -20,7 +20,9 @@ public class GUIButton extends JButton implements ActionListener
 {
 
 	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
-;
+	private static final Border highlightedBorder = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
+
+	private static GUIButton highlightedButton;
 
 	
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
@@ -45,6 +47,7 @@ public class GUIButton extends JButton implements ActionListener
 		this.setFocusable(false);
 		this.setBackground(Color.WHITE);
 		this.setBorder(defaultBorder);
+		highlightedButton = null;
 //		this.setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
 	}
 
@@ -71,6 +74,7 @@ public class GUIButton extends JButton implements ActionListener
 		this(name);
 		this.setPreferredSize(size);
 		this.setFont(font);
+		this.isDayLabel = true;
 	}
 	
 	/**
@@ -87,7 +91,6 @@ public class GUIButton extends JButton implements ActionListener
 
 	/**
 	 * Creates a window of options for this GUIButton
-	 * 
 	 */
 	private void showUserOptions()
 	{
@@ -99,7 +102,6 @@ public class GUIButton extends JButton implements ActionListener
 		JFrame optionsWindow = new JFrame(name);
 
 		optionsWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
 		optionsWindow.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -118,6 +120,30 @@ public class GUIButton extends JButton implements ActionListener
 	 */
 	public void actionPerformed(ActionEvent e) 
 	{
-		showUserOptions();
+		Object src = e.getSource();
+		if (src instanceof GUIButton)
+		{	
+			GUIButton button = (GUIButton)src;
+			
+			//Button is a label for the day
+			if(button.isDayLabel)
+			{
+				
+			}
+			
+			//Button is a block
+			else
+			{
+				//Reset old highlight
+				if(highlightedButton != null)
+					highlightedButton.setBorder(defaultBorder);
+				highlightedButton = button;
+				
+				button.setBorder(highlightedBorder);
+				
+				//Option Window
+//				showUserOptions();
+			}
+		}
 	}
 }
