@@ -45,6 +45,10 @@ public class GUIMain extends JFrame implements ActionListener {
 	 */
 	private GUIController controller;
 	/**
+	 * Today's date.
+	 */
+	private Date currentDate;
+	/**
 	 * The start date of the week which is being displayed currently.
 	 */
 	private Date weekStartDate;
@@ -110,9 +114,10 @@ public class GUIMain extends JFrame implements ActionListener {
 		this.controller = controller;
 
 		//Date
-		this.weekStartDate = new Date();
+		this.currentDate = new Date();
+		this.weekStartDate = currentDate.getWeekStartDate();
 
-		//Variable to prevent multiple window instatiations
+		//Variable to prevent multiple window instantiations
 		hasAddCourseWindow = false;
 
 		//Reference
@@ -510,16 +515,10 @@ public class GUIMain extends JFrame implements ActionListener {
 	{
 		events.setListData(eventList);
 	}
-
-	//	/**
-	//	 * Instantiates a LayoutPrototype
-	//	 * @param args
-	//	 */
-	//	public static void main (String[] args) {
-	//		LayoutTest GUI = new LayoutTest();
-	//		String[] h = {"HI", "HI2"};
-	//		GUI.setEventsList(h);
-	//	}
+	
+	public void updateWeek() {
+		
+	}
 
 	/**
 	 * Method which handles of of the ActionEvents recorded by ActionListeners
@@ -529,22 +528,27 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
-			labelWeek.setText("LEFT");
+			
 		}
 
 		//Right button on the calendar
 		else if (src.equals(buttonRight)) {
-			labelWeek.setText("RIGHT");
+			
 		}
 
 		//User wants to add a Class
-		else if (src.equals(menuItemAddCourse)){
+		else if (src.equals(menuItemAddCourse)) {
 			showAddCourseWindow();
 			System.out.println("yet");
 		}
 		
+<<<<<<< HEAD
 		else if (src.equals(buttonAddCourse)){
 			System.out.println("User wants to add course '" + nameField.getText() + "' (" + abbreviationField.getText() + ") with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
+=======
+		else if (src.equals(buttonAddCourse)) {
+			System.out.println("User wants to add course '" + nameField.getText() + "' with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
+>>>>>>> 8dbbd1d6dc097ac5441af0905207f04c78b46ae6
 		}
 	}
 	//TODO: CURRENT BUTTON

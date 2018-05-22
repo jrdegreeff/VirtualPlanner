@@ -18,7 +18,14 @@ public interface User {
 	public String getName();
 	
 	/**
-	 * Retrieves the {@code Course} from this {@code User}'s schedule in the specified {@code Block}.
+	 * Retrieves string representations of all of this {@code User}'s courses.
+	 * 
+	 * @return String representations of the {@code User}'s courses.
+	 */
+	public String[] getCourseNames();
+	
+	/**
+	 * Retrieves the {@code Course} from this {@code User}'s schedule in a particular {@code Block}.
 	 * 
 	 * @param block The {@code Block} to find the {@code Course} for.
 	 * @return The {@code Course} associated with the specified {@code Block}, or {@code null} if this {@code User} has no {@code Course} for that {@code Block}.
