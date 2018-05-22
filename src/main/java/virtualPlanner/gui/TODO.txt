@@ -1,15 +1,17 @@
 TODO:
 
+MenuItem
+- Add Class
+- Get current classes
+
 Buttons
 - Gradebook
 - Settings
 - Current Week
 
-MenuItem
-- Add Class
-
 Preferences
 - Colors
+
 
 GUIButton Window
 - Add
