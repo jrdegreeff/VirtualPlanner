@@ -23,6 +23,14 @@ public class Date implements Comparable<Date> {
 	private Days dayOfWeek;
 	
 	/**
+	 * Creates a new {@code Date} instance for the current day.
+	 */
+	public Date() {
+		calendar = new GregorianCalendar();
+		dayOfWeek = Days.getDay(calendar.get(Calendar.DAY_OF_WEEK));
+	}
+	
+	/**
 	 * @param day The day of the month. (1-indexed)
 	 * @param month The month of the year. (1-indexed)
 	 * @param year The year of this {@code Date}.
@@ -62,11 +70,22 @@ public class Date implements Comparable<Date> {
 	}
 	
 	/**
-	 * Returns a String representation of this {@code Date}.
+	 * Returns a long string representation of this {@code Date}.
+	 * Equivalent to toStringLong().
 	 */
 	@Override
 	public String toString() {
-		return dayOfWeek.getName() + " " + DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
+		return toString(DateFormat.LONG);
+	}
+	
+	/**
+	 * Generates a string representation of this {@code Date} with a particular format.
+	 * 
+	 * @param format A format constant from {@link DateFormat}.
+	 * @return A string representation of this {@code Date} with the specified format.
+	 */
+	public String toString(int format) {
+		return dayOfWeek.getName() + " " + DateFormat.getDateInstance(format).format(calendar.getTime());
 	}
 	
 	/**
