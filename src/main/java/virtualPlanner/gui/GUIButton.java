@@ -77,7 +77,8 @@ public class GUIButton extends JButton implements ActionListener
 	public GUIButton(String name, Dimension size, Font font)
 	{
 		this(name);
-		this.setPreferredSize(size);
+		this.setSize(size);
+//		this.setPreferredSize(size);
 		this.setFont(font);
 		this.isDayLabel = true;
 	}
