@@ -1,23 +1,26 @@
 TODO:
 
-MenuItem
-- Add Class
-- Get current classes
-
 Buttons
 - Gradebook
 - Settings
 - Current Week
-
-Preferences
-- Colors
-
 
 GUIButton Window
 - Add
 - Remove
 - Edit
 - JList or JTextArea
+
+KeyListener Enters
+
+MenuItem
+- Add Class
+- Get current classes
+
+Preferences
+- Colors
+
+
 
 Alignment of JButton
 

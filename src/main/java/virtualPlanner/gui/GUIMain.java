@@ -91,10 +91,10 @@ public class GUIMain extends JFrame implements ActionListener {
 
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
-	private static final Dimension courseWindowSize = new Dimension(320, 550);
+	private static final Dimension courseWindowSize = new Dimension(320, 600);
 	private static final Dimension fieldSize = new Dimension(80, 35);
 	private JButton buttonAddCourse;
-	private JTextField nameField, teacherField;
+	private JTextField nameField, teacherField, abbreviationField;
 	private JComboBox<String> blockComboBox;
 
 
@@ -383,6 +383,20 @@ public class GUIMain extends JFrame implements ActionListener {
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 		
+		JLabel abbreviationLabel = new JLabel("Course Abbreviation:");
+		abbreviationLabel.setFont(addClassFont);
+		abbreviationLabel.setForeground(Color.BLACK);
+		JPanel panelAbbreviationLabel = new JPanel();
+		panelAbbreviationLabel.add(abbreviationLabel);
+		
+		abbreviationField = new JTextField(20);
+		abbreviationField.setFont(addClassFont);
+		abbreviationField.setPreferredSize(fieldSize);
+		abbreviationField.setMinimumSize(fieldSize);
+		abbreviationField.setMaximumSize(fieldSize);	
+		JPanel panelAbbreviationField = new JPanel();
+		panelAbbreviationField.add(abbreviationField);
+		
 		JLabel teacherLabel = new JLabel("Teacher:");
 		teacherLabel.setFont(addClassFont);
 		teacherLabel.setForeground(Color.BLACK);
@@ -403,8 +417,8 @@ public class GUIMain extends JFrame implements ActionListener {
 		JPanel panelBlockLabel = new JPanel();
 		panelBlockLabel.add(blockLabel);
 		
-		String[] list11111 = {"A", "B", "C", "D", "E", "F", "G", "H", "L"};
-		blockComboBox = new JComboBox<String>(list11111);
+		String[] blockList = {"A", "B", "C", "D", "E", "F", "G", "H", "L"};
+		blockComboBox = new JComboBox<String>(blockList);
 		blockComboBox.setFont(addClassFont);
 		blockComboBox.setBackground(Color.WHITE);
 		JPanel panelBlockComboBox = new JPanel();
@@ -428,6 +442,8 @@ public class GUIMain extends JFrame implements ActionListener {
 		Box mainVertical = Box.createVerticalBox();
 		mainVertical.add(panelNameLabel);
 		mainVertical.add(panelNameField);
+		mainVertical.add(panelAbbreviationLabel);
+		mainVertical.add(panelAbbreviationField);
 		mainVertical.add(panelTeacherLabel);
 		mainVertical.add(panelTeacherField);
 		mainVertical.add(panelBlockLabel);
@@ -436,7 +452,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		mainVertical.add(panelCoursesLabel);
 		
 		//TODO: CURRENT COURSES
-		String[] testCourses = {"AP Calculus BC", "AP Physics 1", "AP English", "US History", "Spanish 42", "Computer Science"};
+		String[] testCourses = {"AP Calculus BC", "AP Physics 1", "AP English", "US History", "Spanish 42", "Computer Science", "AP ART"};
 		JList<String> existingCourses = new JList<String>(testCourses);
 		existingCourses.setFont(addClassFont);
 		existingCourses.setVisibleRowCount(6);
@@ -528,7 +544,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		}
 		
 		else if (src.equals(buttonAddCourse)){
-			System.out.println("User wants to add course '" + nameField.getText() + "' with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
+			System.out.println("User wants to add course '" + nameField.getText() + "' (" + abbreviationField.getText() + ") with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
 		}
 	}
 	//TODO: CURRENT BUTTON

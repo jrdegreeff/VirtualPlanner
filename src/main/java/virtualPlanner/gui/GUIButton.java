@@ -90,7 +90,7 @@ public class GUIButton extends JButton implements ActionListener
 	public void setMultiLineText(String text)
 	{
 		String newText = name + text;
-		this.setText("<html>" + newText.replaceAll("\\n", "<br>") + "</html>");
+		this.setText("<html><center>" + newText.replaceAll("\\n", "<br>") + "</center></html>");
 		this.setAlignmentX(CENTER_ALIGNMENT);
 	}
 
