@@ -1,0 +1,10 @@
+TODO:
+
+Preferences
+- Colors
+GUIButton Window
+- Add
+- Remove
+- Edit
+- JList or JTextArea
+

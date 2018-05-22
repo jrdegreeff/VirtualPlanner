@@ -17,13 +17,12 @@ public class GUIButton extends JButton implements ActionListener
 	private boolean hasOptionsWindow;
 	private String block;
 	private int id;
+	private String day;
 
 	//TODO: Move calls to constructor
 	public GUIButton(String block)
 	{
 		super();
-		this.id = id;
-		this.assignments = assignments;
 		hasOptionsWindow = false;
 		this.addActionListener(this);
 		this.block = block + "\n";
