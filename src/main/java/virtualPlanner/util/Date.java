@@ -75,7 +75,7 @@ public class Date implements Comparable<Date> {
 	 */
 	@Override
 	public String toString() {
-		return toString(DateFormat.LONG);
+		return toString(DateFormat.FULL);
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class Date implements Comparable<Date> {
 	 * @return A string representation of this {@code Date} with the specified format.
 	 */
 	public String toString(int format) {
-		return dayOfWeek.getName() + " " + DateFormat.getDateInstance(format).format(calendar.getTime());
+		return DateFormat.getDateInstance(format).format(calendar.getTime());
 	}
 	
 	/**
