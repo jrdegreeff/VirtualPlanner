@@ -23,6 +23,14 @@ public class Date implements Comparable<Date> {
 	private Days dayOfWeek;
 	
 	/**
+	 * Creates a new {@code Date} instance for the current day.
+	 */
+	public Date() {
+		calendar = new GregorianCalendar();
+		dayOfWeek = Days.getDay(calendar.get(Calendar.DAY_OF_WEEK));
+	}
+	
+	/**
 	 * @param day The day of the month. (1-indexed)
 	 * @param month The month of the year. (1-indexed)
 	 * @param year The year of this {@code Date}.
@@ -62,11 +70,22 @@ public class Date implements Comparable<Date> {
 	}
 	
 	/**
-	 * Returns a String representation of this {@code Date}.
+	 * Returns a long string representation of this {@code Date}.
+	 * Equivalent to toStringLong().
 	 */
 	@Override
 	public String toString() {
-		return dayOfWeek.getName() + " " + DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
+		return toString(DateFormat.FULL);
+	}
+	
+	/**
+	 * Generates a string representation of this {@code Date} with a particular format.
+	 * 
+	 * @param format A format constant from {@link DateFormat}.
+	 * @return A string representation of this {@code Date} with the specified format.
+	 */
+	public String toString(int format) {
+		return DateFormat.getDateInstance(format).format(calendar.getTime());
 	}
 	
 	/**
@@ -97,7 +116,20 @@ public class Date implements Comparable<Date> {
 	}
 	
 	/**
-	 * Returns a {@code Date} instance for a day a specified number of days away.
+	 * Returns a {@code Date} instance that represents the Monday of the week of this {@code Date}.
+	 * 
+	 * @return The specified {@code Date} object.
+	 */
+	public Date getWeekStartDate() {
+		Calendar clone = (Calendar)calendar.clone();
+		if(clone.get(Calendar.DAY_OF_WEEK) == 1)
+			clone.set(Calendar.WEEK_OF_MONTH, clone.get(Calendar.WEEK_OF_MONTH) - 1);
+		clone.set(Calendar.DAY_OF_WEEK, 2);
+		return new Date(clone.get(Calendar.DAY_OF_MONTH), clone.get(Calendar.MONTH) + 1, clone.get(Calendar.YEAR));
+	}
+	
+	/**
+	 * Returns a {@code Date} instance for a day a specified number of days away from this {@code Date}.
 	 * 
 	 * @param increment The number of days from this {@code Date} to the desired {@code Date}.
 	 * @return The specified {@code Date} object.
