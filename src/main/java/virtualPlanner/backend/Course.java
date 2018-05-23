@@ -16,9 +16,9 @@ import virtualPlanner.util.Date;
 public class Course {
 
 	/**
-	 * course name and teacher
+	 * course name, teacher, and abbreviation
 	 */
-	private String name, teacher;
+	private String name, teacher, abbrev;
 
 	/**
 	 * maps Dates to a set of all Assignments assigned that day
@@ -73,6 +73,14 @@ public class Course {
 	 */
 	public String getTeacher() {
 		return teacher;
+	}
+	
+	public String getAbbrev() {
+		return abbrev;
+	}
+	
+	public void setAbbrev(String newAbbrev) {
+		abbrev = newAbbrev;
 	}
 
 	/**
