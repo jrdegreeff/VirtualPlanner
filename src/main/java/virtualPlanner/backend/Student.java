@@ -1,5 +1,6 @@
 package virtualPlanner.backend;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,8 +8,9 @@ import virtualPlanner.util.Block;
 
 /**
  * The Student class represents a student and his or her schedule.
+ * 
  * @author aldai
- *
+ * @author Leo
  */
 
 public class Student implements User {
@@ -70,13 +72,34 @@ public class Student implements User {
 	 * removeCourse removes a course from a students' schedule by removing the associated blocks.
 	 * @param course to be removed
 	 */
-	@Override
 	public void removeCourse(Course course) {
 		for (Block block : schedule.keySet()) {
 			if (schedule.get(block).equals(course)) {
 				schedule.remove(block);
 			}
 		}
+	}
+	
+	
+	/**
+	 * @return all the course names of this student 
+	 */
+	@Override
+	public String[] getCourseNames() {
+		// get the courses of this student
+		Collection<Course> courses = schedule.values();
+		
+		// record all the course names
+		String[] courseNames = new String[courses.size()];
+		int idx = 0;
+		
+		for(Course course : courses)
+		{
+			courseNames[idx] = course.getCourseName();
+			idx++;
+		}
+		
+		return courseNames;
 	}
 
 }

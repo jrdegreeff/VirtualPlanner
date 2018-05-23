@@ -5,8 +5,8 @@ import virtualPlanner.util.Date;
 
 /**
  * Class defining all assignments
+ * 
  * @author Leo Dong
- *
  */
 public class Assignment implements Comparable<Assignment> {
 	
@@ -66,6 +66,13 @@ public class Assignment implements Comparable<Assignment> {
 		isComplete = false;
 		ID = idCounter; 
 		idCounter++; // update idCounter to ensure unique ids
+	}
+	
+	/**
+	 * @return unique ID for this assignment object
+	 */
+	public int getID() {
+		return ID;
 	}
 	
 	/**
