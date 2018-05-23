@@ -8,8 +8,10 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.text.DateFormat;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -112,10 +114,10 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		//GUIController
 		this.controller = controller;
-
+		
 		//Date
-		this.currentDate = new Date();
-		this.weekStartDate = currentDate.getWeekStartDate();
+		currentDate = new Date();
+		weekStartDate = currentDate.getWeekStartDate();
 
 		//Variable to prevent multiple window instantiations
 		hasAddCourseWindow = false;
@@ -151,6 +153,8 @@ public class GUIMain extends JFrame implements ActionListener {
 		//Add components
 		buttons = new GUIButton[7][];
 		addComponents();
+		
+		updateWeek();
 
 		//Frame
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -199,10 +203,10 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		//JPanel for the calendar itself
 		panelCalendar = new JPanel();
-		labelWeek = new JLabel("May 5  -  May 8");
+		labelWeek = new JLabel();
 		labelWeek.setOpaque(true);
 		labelWeek.setBackground(Color.WHITE);
-		labelWeek.setForeground(Color.MAGENTA);
+//		labelWeek.setForeground(Color.MAGENTA);
 		labelWeek.setFont(weekFont);
 
 		//Level 1 -> labelWeek and Prev + Next buttons
@@ -217,7 +221,10 @@ public class GUIMain extends JFrame implements ActionListener {
 		//		level1.add(Box.createHorizontalGlue());
 		//		level1.add(Box.createHorizontalGlue());
 
-		initButtons();
+		//Main Panel for Calendar
+		panelCalendar = new JPanel();
+		panelCalendar.setLayout(new GridBagLayout());
+		panelCalendar.setBackground(Color.WHITE);
 
 		//JPanel for the right of the calendar - the 'info' section
 		infoPanel = new JPanel();
@@ -287,20 +294,11 @@ public class GUIMain extends JFrame implements ActionListener {
 	/**
 	 * This method adds the weekly JButtons to the calendarPanel
 	 */
-	public void initButtons() {
-		//Main Panel for Calendar
-		panelCalendar = new JPanel();
-		panelCalendar.setLayout(new GridBagLayout());
-
-		panelCalendar.setBackground(Color.WHITE);
+	public void updateButtons() {
 		//Initial default values for GridBagLayout constraints
 		GridBagConstraints c = new GridBagConstraints();
 		c.ipadx = 50;
 		c.ipady = -26;
-		//For 0:
-		//c.ipady = -26;
-
-		//Default constant values
 
 		//x-coordinate of GridBagLayout
 		c.gridx = 0;
@@ -308,25 +306,13 @@ public class GUIMain extends JFrame implements ActionListener {
 		c.gridy = 0;
 		//Vertical Padding
 		c.ipady = 10;
-		//Dimension to keep all sizes consant
+		//Dimension to keep all sizes constant
 		Dimension labelSize = new Dimension(calendarColumnWidth, calendarLabelHeight);
 
-		//Day Name Labels
-		ArrayList<GUIButton> days = new ArrayList<GUIButton>();
-		days.add(new GUIButton("Mon", labelSize, calendarDayFont));
-		days.add(new GUIButton("Tue", labelSize, calendarDayFont));
-		days.add(new GUIButton("Wed", labelSize, calendarDayFont));
-		days.add(new GUIButton("Thu", labelSize, calendarDayFont));
-		days.add(new GUIButton("Fri", labelSize, calendarDayFont));
-		days.add(new GUIButton("Sat", labelSize, calendarDayFont));
-		days.add(new GUIButton("Sun", labelSize, calendarDayFont));
-
-		//I > Row
-		//Add the Weekday Labels
-		for (int i = 0; i < days.size(); i++) {
+		//Weekday Labels
+		for (int i = 0; i < Days.values().length; i++) {
 			c.gridx = i;
-			JButton button = days.get(i);
-			panelCalendar.add(button, c);
+			panelCalendar.add(new GUIButton(Days.values()[i].getName(), labelSize, calendarDayFont), c);
 		}
 
 		Dimension blockSize = new Dimension(calendarColumnWidth, 30);
@@ -339,7 +325,7 @@ public class GUIMain extends JFrame implements ActionListener {
 			for(int j = 0; j < blockOrder.getBlockCount(); j++) {
 				c.gridy = j + 1;
 				Block block = blockOrder.getBlock(j);
-				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation(), controller.getCourseID(block), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), blockSize, calendarBlockNameFont);
+				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation(), blockOrder.getBlock(j), controller.getCourseID(block), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), blockSize, calendarBlockNameFont);
 				panelCalendar.add(button, c);
 				buttons[i][j] = button;
 			}
@@ -349,8 +335,7 @@ public class GUIMain extends JFrame implements ActionListener {
 	/**
 	 * This method creates a pop-up window which allows a user to add a Course
 	 */
-	private void showAddCourseWindow()
-	{
+	private void showAddCourseWindow() {
 		if (hasAddCourseWindow)
 			return;
 
@@ -362,9 +347,9 @@ public class GUIMain extends JFrame implements ActionListener {
 		//Override default close operation
 		addCourseWindow.setSize(courseWindowSize);
 		addCourseWindow.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		addCourseWindow.addWindowListener(new java.awt.event.WindowAdapter() {
+		addCourseWindow.addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+			public void windowClosing(WindowEvent windowEvent) {
 				hasAddCourseWindow = false;
 				addCourseWindow.dispose();
 			}
@@ -511,13 +496,17 @@ public class GUIMain extends JFrame implements ActionListener {
 	 * Sets the contents of the upcoming Events JList
 	 * @param eventList
 	 */
-	public void setEventsList(String[] eventList)
-	{
+	public void setEventsList(String[] eventList) {
 		events.setListData(eventList);
 	}
 	
+	/**
+	 * Refreshes the current date and sets the 
+	 */
 	public void updateWeek() {
-		
+		this.currentDate = new Date();
+		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
+		updateButtons();
 	}
 
 	/**
@@ -528,12 +517,14 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
-			
+			weekStartDate = weekStartDate.getUpcomingDate(-7);
+			updateWeek();
 		}
 
 		//Right button on the calendar
 		else if (src.equals(buttonRight)) {
-			
+			weekStartDate = weekStartDate.getUpcomingDate(7);
+			updateWeek();
 		}
 
 		//User wants to add a Class
