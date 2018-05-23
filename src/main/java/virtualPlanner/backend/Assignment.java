@@ -5,8 +5,8 @@ import virtualPlanner.util.Date;
 
 /**
  * Class defining all assignments
+ * 
  * @author Leo Dong
- *
  */
 public class Assignment implements Comparable<Assignment> {
 	
