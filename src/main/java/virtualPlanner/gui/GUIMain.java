@@ -436,8 +436,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		mainVertical.add(panelCoursesLabel);
 		
 		//TODO: CURRENT COURSES
-		String[] testCourses = {"AP Calculus BC", "AP Physics 1", "AP English", "US History", "Spanish 42", "Computer Science", "AP ART"};
-		JList<String> existingCourses = new JList<String>(testCourses);
+		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
 		existingCourses.setFont(Fonts.ADD_CLASS);
 		existingCourses.setVisibleRowCount(6);
 		
