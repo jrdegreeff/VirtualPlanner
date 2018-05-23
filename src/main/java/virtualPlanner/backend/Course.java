@@ -9,9 +9,9 @@ import virtualPlanner.util.Date;
 
 /**
  * The Course class maps dates to a TreeSet of Assignment objects.
- * @author aldai
- * @author Leo (changeAssignedDate and changeDueDate)
  * 
+ * @author aldai
+ * @author Leo
  */
 public class Course {
 
@@ -80,7 +80,8 @@ public class Course {
 	 * @return TreeSet of Assignments due on a given date.
 	 */
 	public Set<Assignment> getDue(Date dateDue) {
-		return dueDateMap.get(dateDue);
+		Set<Assignment> assignments = dueDateMap.get(dateDue);
+		return assignments == null ? new TreeSet<Assignment>() : assignments;
 	}
 
 	/** 
@@ -88,7 +89,8 @@ public class Course {
 	 * @return TreeSet of Assignments assigned on a given date.
 	 */
 	public Set<Assignment> getAssigned(Date dateAssigned) {
-		return assnDateMap.get(dateAssigned);
+		Set<Assignment> assignments = assnDateMap.get(dateAssigned);
+		return assignments == null ? new TreeSet<Assignment>() : assignments;
 	}
 
 	/**

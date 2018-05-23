@@ -20,7 +20,7 @@ public interface User {
 	/**
 	 * Retrieves string representations of all of this {@code User}'s courses.
 	 * 
-	 * @return String representations of the {@code User}'s courses.
+	 * @return String representations of this {@code User}'s courses.
 	 */
 	public String[] getCourseNames();
 	

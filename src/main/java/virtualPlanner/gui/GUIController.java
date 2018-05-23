@@ -22,8 +22,13 @@ public class GUIController {
 	 */
 	private User user;
 	
-	public GUIController(User u) {
-		this.user = u;
+	/**
+	 * Initializes the GUI.
+	 * 
+	 * @param user The user for the session.
+	 */
+	public GUIController(User user) {
+		this.user = user;
 		new GUIMain(this);
 	}
 	
@@ -32,6 +37,15 @@ public class GUIController {
 	 */
 	public String getUserName() {
 		return user.getName();
+	}
+	
+	/**
+	 * Retrieves string representations of all of the user's courses.
+	 * 
+	 * @return String representations of the user's courses.
+	 */
+	public String[] getCourseNames() {
+		return user.getCourseNames();
 	}
 	
 	/**

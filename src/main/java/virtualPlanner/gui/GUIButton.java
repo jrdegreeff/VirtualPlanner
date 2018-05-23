@@ -23,6 +23,8 @@ import javax.swing.border.Border;
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.util.Date;
+import virtualPlanner.reference.Preferences;
+import virtualPlanner.util.Block;
 
 /**
  * This class is used in place of JButton to provide extra functionality to the JButtons in the Calendar
@@ -30,8 +32,7 @@ import virtualPlanner.util.Date;
  *
  */
 @SuppressWarnings("serial")
-public class GUIButton extends JButton implements ActionListener
-{
+public class GUIButton extends JButton implements ActionListener {
 
 	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
 	private static final Border highlightedBorder = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
@@ -52,10 +53,10 @@ public class GUIButton extends JButton implements ActionListener
 
 
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+	private Block block;
 	private boolean hasOptionsWindow;
 	private String name;
-	private int id;
-	private String day;
+	private Color color;
 	private boolean isDayLabel;
 
 	//Variables for adding new assignments
@@ -67,8 +68,7 @@ public class GUIButton extends JButton implements ActionListener
 	 * Base constructor with call to super 
 	 * Sets the universal settings for the buttons
 	 */
-	public GUIButton(String name)
-	{
+	public GUIButton(String name) {
 		super();
 		hasOptionsWindow = false;
 		this.addActionListener(this);
@@ -76,7 +76,7 @@ public class GUIButton extends JButton implements ActionListener
 		this.setMultiLineText("");
 		this.setOpaque(true);
 		this.setFocusable(false);
-		this.setBackground(Color.WHITE);
+		this.setBackground(color);
 		this.setBorder(defaultBorder);
 		highlightedButton = null;
 		//		this.setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
@@ -85,23 +85,23 @@ public class GUIButton extends JButton implements ActionListener
 	/**
 	 * Constructor for the JButtons in the Calendar that represent Blocks
 	 * @param block
-	 * @param id
+	 * @param courseID
 	 * @param assignments
 	 * @param size
 	 */
-	public GUIButton(String name, int id, ArrayList<Assignment> assignments, Dimension size, Font font)
-	{
+	public GUIButton(String name, Block block, int courseID, ArrayList<Assignment> assignments, Dimension size, Font font) {
 		this(name);
-		this.id = id;
+		this.block = block;
+		this.color = Preferences.getColor(courseID);
+		this.setBackground(color);
 		this.assignments = assignments;
 		this.setPreferredSize(size);
 		this.setVerticalAlignment(SwingConstants.TOP);
 		this.setFont(font);
 		this.isDayLabel = false;
 	}
-
-	public GUIButton(String name, Dimension size, Font font)
-	{
+	
+	public GUIButton(String name, Dimension size, Font font) {
 		this(name);
 		this.setPreferredSize(size);
 		this.setFont(font);
@@ -113,8 +113,7 @@ public class GUIButton extends JButton implements ActionListener
 	 * PRECONDITION: New lines are denotated by a "\n"
 	 * @param text
 	 */
-	public void setMultiLineText(String text)
-	{
+	public void setMultiLineText(String text) {
 		String newText = name + text;
 		this.setText("<html><center>" + newText.replaceAll("\\n", "<br>") + "</center></html>");
 		this.setAlignmentX(CENTER_ALIGNMENT);
@@ -123,8 +122,8 @@ public class GUIButton extends JButton implements ActionListener
 	/**
 	 * Creates a window of options for this GUIButton
 	 */
-	private void showAssignments()
-	{
+	
+	private void showAssignments() {
 		if (hasOptionsWindow)
 			return;
 
@@ -273,33 +272,47 @@ public class GUIButton extends JButton implements ActionListener
 	}
 	//TODO: KeyListener
 	/**
+	 * Selects a particular button.
+	 * 
+	 * @param button The button to select.
+	 */
+	public static void select(GUIButton button) {
+		highlightedButton = button;
+		button.setBorder(highlightedBorder);
+	}
+	
+	/**
+	 * Deslects the button that is currently selected.
+	 */
+	public static void deselect() {
+		if(highlightedButton != null) {
+			highlightedButton.setBorder(defaultBorder);
+			highlightedButton = null;
+		}
+	}
+	
+	/**
 	 * ActionListener for each individual JButtno
 	 */
-	public void actionPerformed(ActionEvent e) 
-	{
+	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
-		if (src instanceof GUIButton)
-		{	
+		if (src instanceof GUIButton) {	
 			GUIButton button = (GUIButton)src;
 
 			//Button is a label for the day
-			if(button.isDayLabel)
-			{
-
+			if(button.isDayLabel) {
+				
 			}
 
 			//Button is a block
-			else
-			{
-				//Reset old highlight
-				if(highlightedButton != null)
-					highlightedButton.setBorder(defaultBorder);
-				highlightedButton = button;
-
-				button.setBorder(highlightedBorder);
-
-				//Option Window
-				showAssignments();
+			else {
+				deselect();
+				if(block.getBlock().isClass()) {
+					select(button);
+					
+					//Option Window
+					showAssignments();
+				}
 			}
 		}
 	}

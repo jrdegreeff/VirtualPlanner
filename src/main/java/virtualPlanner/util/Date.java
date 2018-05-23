@@ -70,11 +70,22 @@ public class Date implements Comparable<Date> {
 	}
 	
 	/**
-	 * Returns a String representation of this {@code Date}.
+	 * Returns a long string representation of this {@code Date}.
+	 * Equivalent to toStringLong().
 	 */
 	@Override
 	public String toString() {
-		return dayOfWeek.getName() + " " + DateFormat.getDateInstance(DateFormat.LONG).format(calendar.getTime());
+		return toString(DateFormat.FULL);
+	}
+	
+	/**
+	 * Generates a string representation of this {@code Date} with a particular format.
+	 * 
+	 * @param format A format constant from {@link DateFormat}.
+	 * @return A string representation of this {@code Date} with the specified format.
+	 */
+	public String toString(int format) {
+		return DateFormat.getDateInstance(format).format(calendar.getTime());
 	}
 	
 	/**

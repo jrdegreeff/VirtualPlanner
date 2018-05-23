@@ -8,8 +8,9 @@ import virtualPlanner.util.Block;
 
 /**
  * The Student class represents a student and his or her schedule.
+ * 
  * @author aldai
- * @author Leo (getCourseNames)
+ * @author Leo
  */
 
 public class Student implements User {

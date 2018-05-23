@@ -7,11 +7,11 @@ package virtualPlanner.reference;
  */
 public enum AssignmentTypes {
 	
+	HOMEWORK("Homework", 4),
 	TEST("Test", 0),
 	QUIZ("Quiz", 1),
-	PROJECT("Project", 2),
 	ESSAY("Essay", 3),
-	HOMEWORK("Homework", 4);
+	PROJECT("Project", 2);
 	
 	/**
 	 * The name of this type of assignment.
