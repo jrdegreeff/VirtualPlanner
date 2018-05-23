@@ -8,12 +8,21 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import virtualPlanner.backend.Assignment;
+import virtualPlanner.reference.AssignmentTypes;
+import virtualPlanner.util.Date;
 
 /**
  * This class is used in place of JButton to provide extra functionality to the JButtons in the Calendar
@@ -27,15 +36,32 @@ public class GUIButton extends JButton implements ActionListener
 	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
 	private static final Border highlightedBorder = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
 
+	private static final Dimension showAssignmentsSize = new Dimension(400, 650);
+	private static final Dimension assignmentListSize = new Dimension(275, 200);
+	private static final Dimension inputFieldSize = new Dimension(250, 35);
+
+
+	private static final Font titleFont = new Font("Dialog", Font.BOLD, 26);
+	private static final Font assignmentFont = new Font("Dialog", Font.BOLD, 20);
+	private static final Font buttonFont = new Font("SansSerif", Font.BOLD, 20);
+	private static final Font newAssignmentFont = new Font("Dialog", Font.BOLD, 18);
+
+
+
 	private static GUIButton highlightedButton;
 
-	
+
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
 	private boolean hasOptionsWindow;
 	private String name;
 	private int id;
 	private String day;
 	private boolean isDayLabel;
+
+	//Variables for adding new assignments
+	private JTextField nameField, descField;
+	private JComboBox<String> monthBox, dayBox, yearBox, typeBox;
+	private JButton submitButton, completeButton;
 
 	/**
 	 * Base constructor with call to super 
@@ -53,7 +79,7 @@ public class GUIButton extends JButton implements ActionListener
 		this.setBackground(Color.WHITE);
 		this.setBorder(defaultBorder);
 		highlightedButton = null;
-//		this.setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
+		//		this.setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
 	}
 
 	/**
@@ -73,7 +99,7 @@ public class GUIButton extends JButton implements ActionListener
 		this.setFont(font);
 		this.isDayLabel = false;
 	}
-	
+
 	public GUIButton(String name, Dimension size, Font font)
 	{
 		this(name);
@@ -81,7 +107,7 @@ public class GUIButton extends JButton implements ActionListener
 		this.setFont(font);
 		this.isDayLabel = true;
 	}
-	
+
 	/**
 	 * Enables multi-line text
 	 * PRECONDITION: New lines are denotated by a "\n"
@@ -97,7 +123,7 @@ public class GUIButton extends JButton implements ActionListener
 	/**
 	 * Creates a window of options for this GUIButton
 	 */
-	private void showUserOptions()
+	private void showAssignments()
 	{
 		if (hasOptionsWindow)
 			return;
@@ -105,7 +131,7 @@ public class GUIButton extends JButton implements ActionListener
 		hasOptionsWindow = true;
 
 		JFrame optionsWindow = new JFrame(name);
-
+		optionsWindow.setSize(showAssignmentsSize);
 		optionsWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		optionsWindow.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
@@ -114,12 +140,138 @@ public class GUIButton extends JButton implements ActionListener
 				optionsWindow.dispose();
 			}
 		});
-		
-		optionsWindow.setSize(600, 600);
-		optionsWindow.setVisible(true);
-		
-	}
 
+
+
+		//JLabel "Current Assignments"
+		JLabel labelCurAssignments = new JLabel("Current Assignments:");
+		labelCurAssignments.setFont(titleFont);
+		JPanel panelLabelCurAssignments = new JPanel();
+		panelLabelCurAssignments.add(labelCurAssignments);
+
+
+		//Assignment JList and JScrollPane
+		//TODO: Loop through assignments
+		//TODO: Descriptions on new line
+		String[] assignmentList = {"History Reading", "Computer Science Project"};
+		;
+		if (assignments != null){
+			int numAssignments = assignments.size();
+
+			assignmentList = new String[numAssignments];
+			for (int i = 0; i < numAssignments; i ++)
+				assignmentList[i] = assignments.get(i).getName();
+		}
+
+		JList<String> assignmentJList = new JList<String>(assignmentList);
+		assignmentJList.setFont(assignmentFont);
+		JScrollPane assignmentScrollPane = new JScrollPane(assignmentJList);
+		assignmentScrollPane.setPreferredSize(assignmentListSize);
+
+		JPanel panelAssignmentList = new JPanel();
+		panelAssignmentList.add(assignmentScrollPane);
+
+
+
+		completeButton = new JButton("Complete Assignment");
+		completeButton.setFont(buttonFont);
+		completeButton.setBackground(Color.green);
+		completeButton.addActionListener(this);
+		//TODO: Completed Tasks?
+		//completeButton.setPreferredSize();
+		//completeButton.setFocusable(false);
+		JPanel panelCompleteButton = new JPanel();
+		panelCompleteButton.add(completeButton);
+
+		//New Assignment: Name
+		JLabel labelName = new JLabel("Assignment Name:");
+		labelName.setFont(newAssignmentFont);
+		JPanel panelLabelName = new JPanel();
+		panelLabelName.add(labelName);
+
+		//TODO: This starts with focus
+		nameField = new JTextField();
+		nameField.setPreferredSize(inputFieldSize);
+		nameField.setFont(newAssignmentFont);
+		JPanel panelNameField = new JPanel();
+		panelNameField.add(nameField);
+
+		//Adding Assignment: Description
+		JLabel labelDesc = new JLabel("Assignment Description (Optional):");
+		labelDesc.setFont(newAssignmentFont);
+		JPanel panelLabelDesc = new JPanel();
+		panelLabelDesc.add(labelDesc);
+		
+		descField = new JTextField();
+		descField.setPreferredSize(inputFieldSize);
+		descField.setFont(newAssignmentFont);
+		JPanel panelDescField = new JPanel();
+		panelDescField.add(descField);
+
+		//JComboBox for TYPE of Assignment
+		String[] assignmentTypes = new String[AssignmentTypes.values().length];
+		for(int i = 0; i < assignmentTypes.length; i++)
+			assignmentTypes[i] = AssignmentTypes.values()[i].getName();
+		typeBox = new JComboBox<String>(assignmentTypes);
+		typeBox.setBackground(Color.WHITE);
+		typeBox.setFont(newAssignmentFont);
+		JPanel panelTypeBox = new JPanel();
+		panelTypeBox.add(typeBox);
+
+		//Adding Assignment: Date Due
+		JLabel labelDateDue = new JLabel("Date Due:");
+		labelDateDue.setFont(newAssignmentFont);
+		JPanel panelLabelDateDue = new JPanel();
+		panelLabelDateDue.add(labelDateDue);
+		
+		//TODO: Set to Current Date, functionality even needed?
+		String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+		monthBox = new JComboBox<String>(months);
+		monthBox.setBackground(Color.WHITE);
+		
+		String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+		dayBox = new JComboBox<String>(days);
+		dayBox.setBackground(Color.WHITE);
+		
+		String[] years = {"2018", "2019", "2020"};
+		yearBox = new JComboBox<String>(years);
+		yearBox.setBackground(Color.WHITE);
+		
+		Box datePicker = Box.createHorizontalBox();
+		datePicker.add(monthBox);
+		datePicker.add(dayBox);
+		datePicker.add(yearBox);
+		
+		JPanel panelDatePicker = new JPanel();
+		panelDatePicker.add(datePicker);
+		
+		//Submit Button
+		submitButton = new JButton("Submit");
+		submitButton.setFont(buttonFont);
+		submitButton.setBackground(Color.green);
+		submitButton.addActionListener(this);
+		JPanel panelSubmitButton = new JPanel();
+		panelSubmitButton.add(submitButton);
+		
+		//Main Horiztonal Box for all of the components
+		Box mainVertical = Box.createVerticalBox();
+		mainVertical.add(panelLabelCurAssignments);
+		mainVertical.add(panelAssignmentList);
+		mainVertical.add(panelCompleteButton);
+		mainVertical.add(panelLabelName);
+		mainVertical.add(panelNameField);
+		mainVertical.add(panelLabelDesc);
+		mainVertical.add(panelDescField);
+		mainVertical.add(panelTypeBox);
+		mainVertical.add(panelLabelDateDue);
+		mainVertical.add(panelDatePicker);
+		mainVertical.add(panelSubmitButton);
+
+		optionsWindow.add(mainVertical);
+		optionsWindow.setVisible(true);
+
+	}
+	//TODO: KeyListener
 	/**
 	 * ActionListener for each individual JButtno
 	 */
@@ -129,13 +281,13 @@ public class GUIButton extends JButton implements ActionListener
 		if (src instanceof GUIButton)
 		{	
 			GUIButton button = (GUIButton)src;
-			
+
 			//Button is a label for the day
 			if(button.isDayLabel)
 			{
-				
+
 			}
-			
+
 			//Button is a block
 			else
 			{
@@ -143,11 +295,11 @@ public class GUIButton extends JButton implements ActionListener
 				if(highlightedButton != null)
 					highlightedButton.setBorder(defaultBorder);
 				highlightedButton = button;
-				
+
 				button.setBorder(highlightedBorder);
-				
+
 				//Option Window
-				showUserOptions();
+				showAssignments();
 			}
 		}
 	}

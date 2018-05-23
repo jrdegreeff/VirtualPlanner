@@ -6,10 +6,10 @@ Buttons
 - Current Week
 
 GUIButton Window
-- Add
-- Remove
 - Edit
-- JList or JTextArea
+- Remove
+- Show on JButton
+- Assigned DATE
 
 KeyListener Enters
 
@@ -21,10 +21,12 @@ MenuItem
 - Add Class
 - Get current classes
 
-
 Preferences
 - Colors
 
+Upcoming Events
+- When they occur
+- Remove assignment directly from Jlist
 
 
 

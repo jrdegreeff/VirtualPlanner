@@ -242,6 +242,8 @@ public class GUIMain extends JFrame implements ActionListener {
 		spaceTaker.setAlignmentX(CENTER_ALIGNMENT);
 		infoPanel.add(spaceTaker);
 
+		
+		//
 		//Upcoming Events
 		JLabel labelEvents = new JLabel("    Upcoming Events");
 		labelEvents.setOpaque(true);
