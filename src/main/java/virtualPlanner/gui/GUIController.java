@@ -40,6 +40,15 @@ public class GUIController {
 	}
 	
 	/**
+	 * Retrieves string representations of all of the user's courses.
+	 * 
+	 * @return String representations of the user's courses.
+	 */
+	public String[] getCourseNames() {
+		return user.getCourseNames();
+	}
+	
+	/**
 	 * Retrieves the id of the {@code Course} from the user's schedule in the specified {@code Block}.
 	 * 
 	 * @param block The {@code Block} to find the {@code Course} for.
