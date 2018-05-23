@@ -2,7 +2,6 @@ package virtualPlanner.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -494,7 +493,7 @@ public class GUIMain extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Refreshes the current date and sets the 
+	 * Refreshes the current date, week label, and all the calendar buttons.
 	 */
 	public void updateWeek() {
 		this.currentDate = new Date();
