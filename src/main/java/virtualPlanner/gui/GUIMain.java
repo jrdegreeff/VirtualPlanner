@@ -93,7 +93,6 @@ public class GUIMain extends JFrame implements ActionListener {
 	//Dimension for the upcoming events list 
 	private static final Dimension upcomingEventsSize = new Dimension(365, 0);
 
-	
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
 	private static final Dimension courseWindowSize = new Dimension(320, 600);
@@ -201,22 +200,6 @@ public class GUIMain extends JFrame implements ActionListener {
 		buttonRight.setBorderPainted(false);
 		buttonRight.addActionListener(this);
 		buttonRight.setFocusable(false);
-
-		buttonGradebook = new JButton();
-		buttonGradebook.setIcon(new ImageIcon(imageGradebook));
-		buttonGradebook.setOpaque(true);
-		buttonGradebook.setContentAreaFilled(false);
-		buttonGradebook.setBorderPainted(false);
-		buttonGradebook.addActionListener(this);
-		buttonGradebook.setFocusable(false);
-		
-		buttonSettings = new JButton();
-		buttonSettings.setIcon(new ImageIcon(imageSettings));
-		buttonSettings.setOpaque(true);
-		buttonSettings.setContentAreaFilled(false);
-		buttonSettings.setBorderPainted(false);
-		buttonSettings.addActionListener(this);
-		buttonSettings.setFocusable(false);
 		
 		//JPanel for the calendar itself
 		panelCalendar = new JPanel();
@@ -275,7 +258,30 @@ public class GUIMain extends JFrame implements ActionListener {
 		eventsScrollPane = new JScrollPane(events);
 		JPanel panelEventsScrollPane = new JPanel();
 		panelEventsScrollPane.add(eventsScrollPane);
-
+		
+		//Gradebook and Settings Buttons
+		buttonGradebook = new JButton();
+		buttonGradebook.setIcon(new ImageIcon(imageGradebook));
+		buttonGradebook.setOpaque(true);
+		buttonGradebook.setContentAreaFilled(false);
+		buttonGradebook.setBorderPainted(false);
+		buttonGradebook.addActionListener(this);
+		buttonGradebook.setFocusable(false);
+		buttonGradebook.setBackground(Color.cyan);
+		
+		buttonSettings = new JButton();
+		buttonSettings.setIcon(new ImageIcon(imageSettings));
+		buttonSettings.setOpaque(false);
+		buttonSettings.setContentAreaFilled(false);
+		buttonSettings.setBorderPainted(false);
+		buttonSettings.addActionListener(this);
+		buttonSettings.setFocusable(false);
+		
+		Box infoButtons = Box.createHorizontalBox();
+		infoButtons.add(buttonGradebook);
+		infoButtons.add(buttonSettings);
+		
+		
 		//Final Organizing Structures
 		JPanel calendarVertical = new JPanel();
 		calendarVertical.add(level1);
@@ -293,6 +299,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		infoPanel.add(panelEventsScrollPane);
 		for(int i = 0; i < 35; i ++)
 			infoPanel.add(Box.createVerticalGlue());
+		infoPanel.add(infoButtons);
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(calendarVertical);
@@ -542,9 +549,16 @@ public class GUIMain extends JFrame implements ActionListener {
 			System.out.println("yet");
 		}
 		
-
 		else if (src.equals(buttonAddCourse)){
 			System.out.println("User wants to add course '" + nameField.getText() + "' (" + abbreviationField.getText() + ") with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
+		}
+		
+		else if (src.equals(buttonGradebook)){
+			System.out.println("Opened Gradebook");
+		}
+		
+		else if (src.equals(buttonSettings)){
+			System.out.println("Opened Settings");
 		}
 	}
 	//TODO: CURRENT BUTTON

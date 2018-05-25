@@ -30,7 +30,6 @@ Upcoming Events
 
 Login Screens
 
-Set Minimum Size Dimension of Day
 
 Implement Dates
 
@@ -41,3 +40,6 @@ Don't Extend JFrame
 Specific Block Lengths
 
 Actual Upcoming Events
+
+Dont
+Set Minimum Size Dimension of Day
