@@ -1,17 +1,8 @@
 TODO:
-
-Buttons
-- Current Week
-
 GUIButton Window
 - Edit
 - Remove
 - Show on JButton
-
-KeyListener Enters
-
-
-Alignment of JButton
 
 Preferences
 - Colors
@@ -25,7 +16,8 @@ Login Screens
 
 Specific Block Lengths
 
-Actual Upcoming Events
+Display
+- Upcoming Events
 
 Don't Extend JFrame
 Choosing a DUE DATE shows up for the block
@@ -55,3 +47,10 @@ MenuItem
 - Get current classes
 
 - Assigned DATE
+
+KeyListener Enters
+
+Alignment of JButton
+
+JMenuItem
+Current Week

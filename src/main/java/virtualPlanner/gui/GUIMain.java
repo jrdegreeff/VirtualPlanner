@@ -40,8 +40,7 @@ import virtualPlanner.util.Date;
  * @author Kevin
  * @author JeremiahDeGreeff
  */
-@SuppressWarnings("serial")
-public class GUIMain extends JFrame implements ActionListener {
+public class GUIMain implements ActionListener {
 
 	/**
 	 * The controller for this JFrame.
@@ -57,10 +56,10 @@ public class GUIMain extends JFrame implements ActionListener {
 	private static Date weekStartDate;
 
 	//JFrame
-	private static JFrame frame;
+	private JFrame frame;
 
 	//JPanels
-	private static JPanel mainPanel, panelCalendar, infoPanel;
+	private JPanel mainPanel, panelCalendar, infoPanel;
 
 	//TODO: Resolution
 	//	private final static int resolutionMultiplier = 2;
@@ -118,7 +117,7 @@ public class GUIMain extends JFrame implements ActionListener {
 	public GUIMain(GUIController controller) {
 
 		//Name
-		super("Virtual Planner");
+		frame = new JFrame("Virtual Planner");
 
 		//GUIController
 		this.controller = controller;
@@ -129,9 +128,6 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		//Variable to prevent multiple window instantiations
 		hasAddCourseWindow = false;
-
-		//Reference
-		frame = this;
 
 		//Size
 		frame.setSize(1280, 720);
@@ -173,7 +169,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		updateWeek();
 
 		//Frame
-		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}
@@ -404,7 +400,7 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		//Override default close operation
 		addCourseWindow.setSize(courseWindowSize);
-		addCourseWindow.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		addCourseWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addCourseWindow.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent windowEvent) {
@@ -576,6 +572,10 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		else if (src.equals(buttonSettings)){
 			System.out.println("Opened Settings");
+		}
+		
+		else if (src.equals(menuItemCurrentWeek)){
+			System.out.println("User wants to return to current week");
 		}
 	}
 }
