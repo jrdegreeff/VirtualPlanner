@@ -39,3 +39,5 @@ Highlight current day on planner
 Don't Extend JFrame
 
 Specific Block Lengths
+
+Actual Upcoming Events

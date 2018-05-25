@@ -72,10 +72,10 @@ public class GUIMain extends JFrame implements ActionListener {
 	private JMenuItem menuItemFile, menuItemAddCourse;
 
 	//JButtons
-	private JButton buttonLeft, buttonRight;
+	private JButton buttonLeft, buttonRight, buttonGradebook, buttonSettings;
 
 	//JLabels
-	private JLabel labelWeek, labelDay;
+	private JLabel labelWeek, labelDate;
 
 	//Icons and Images
 	private static BufferedImage imagePrev, imageNext, imageGradebook, imageSettings;
@@ -87,6 +87,9 @@ public class GUIMain extends JFrame implements ActionListener {
 	private JList<String> events;
 	private JScrollPane eventsScrollPane;
 
+	//Dimension for the current day
+	private static final Dimension dateSize = new Dimension(400, 400);
+	
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
 	private static final Dimension courseWindowSize = new Dimension(320, 600);
@@ -161,9 +164,8 @@ public class GUIMain extends JFrame implements ActionListener {
 		try {
 			imagePrev = ImageIO.read(getClass().getResource("previous.png"));
 			imageNext = ImageIO.read(getClass().getResource("next.png"));
-//			imageGradebook = ImageIO.read(getClass().getResource("gradebookgreen.png"));
-			
-
+			imageGradebook = ImageIO.read(getClass().getResource("gradebookgreen.png"));
+			imageSettings = ImageIO.read(getClass().getResource("settingsicon1.png"));
 			System.out.println("Images loaded");
 		} catch (Exception e) {
 			System.out.println("Error loading images: " + e.getMessage());
@@ -196,6 +198,22 @@ public class GUIMain extends JFrame implements ActionListener {
 		buttonRight.addActionListener(this);
 		buttonRight.setFocusable(false);
 
+		buttonGradebook = new JButton();
+		buttonGradebook.setIcon(new ImageIcon(imageGradebook));
+		buttonGradebook.setOpaque(true);
+		buttonGradebook.setContentAreaFilled(false);
+		buttonGradebook.setBorderPainted(false);
+		buttonGradebook.addActionListener(this);
+		buttonGradebook.setFocusable(false);
+		
+		buttonSettings = new JButton();
+		buttonSettings.setIcon(new ImageIcon(imageSettings));
+		buttonSettings.setOpaque(true);
+		buttonSettings.setContentAreaFilled(false);
+		buttonSettings.setBorderPainted(false);
+		buttonSettings.addActionListener(this);
+		buttonSettings.setFocusable(false);
+		
 		//JPanel for the calendar itself
 		panelCalendar = new JPanel();
 		labelWeek = new JLabel();
@@ -225,34 +243,25 @@ public class GUIMain extends JFrame implements ActionListener {
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 //		infoPanel.setBackground(Color.BLUE);
-		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
+//		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
 
-		labelDay = new JLabel("Monday May 14, 2018");
-		labelDay.setOpaque(true);
-//		labelDay.setBackground(Color.PINK);
-		labelDay.setForeground(Color.BLACK);
-		labelDay.setFont(Fonts.DATE);
-		labelDay.setAlignmentX(CENTER_ALIGNMENT);
-		infoPanel.add(labelDay);
-
-		//JLabel so that the spacing of labelDay is consistent
-		JLabel spaceTaker = new JLabel("Monday May 14, 2018");
-		spaceTaker.setOpaque(true);
-		spaceTaker.setForeground(labelDay.getBackground());
-//		spaceTaker.setBackground(Color.CYAN);
-		spaceTaker.setFont(Fonts.DATE);
-		spaceTaker.setAlignmentX(CENTER_ALIGNMENT);
-		infoPanel.add(spaceTaker);
-
+		labelDate = new JLabel("<html>Saturday<br/>December 28, 2018</html>");
+		labelDate.setOpaque(true);
+		labelDate.setForeground(Color.BLACK);
+		labelDate.setFont(Fonts.DATE);
 		
-		//
+		
+		JPanel panelLabelDateName = new JPanel();
+		panelLabelDateName.add(labelDate);
+//		panelLabelDateName.setAlignmentX(RIGHT_ALIGNMENT);
+		
 		//Upcoming Events
-		JLabel labelEvents = new JLabel("    Upcoming Events");
+		JLabel labelEvents = new JLabel("Upcoming Events");
 		labelEvents.setOpaque(true);
 		labelEvents.setForeground(Color.BLACK);
 		labelEvents.setFont(Fonts.LIST);
-		labelEvents.setAlignmentX(LEFT_ALIGNMENT);
-		infoPanel.add(labelEvents);
+		JPanel panelLabelEvents = new JPanel();
+		panelLabelEvents.add(labelEvents);
 
 		//JList
 		events = new JList<String>();
@@ -260,15 +269,11 @@ public class GUIMain extends JFrame implements ActionListener {
 		events.setForeground(Color.BLACK);
 		String[] test = {"History Paper", "Chemistry Test", "Math Homework", "Writing Workshop Packet"};
 		events.setListData(test);
-
 		eventsScrollPane = new JScrollPane(events);
-		System.out.println(infoPanel.getWidth());
-		Dimension scrollPaneSize = new Dimension(100, 250);
-		eventsScrollPane.setPreferredSize(scrollPaneSize);
+		JPanel panelEventsScrollPane = new JPanel();
+		panelEventsScrollPane.add(eventsScrollPane);
 
-		infoPanel.add(eventsScrollPane);
-
-		//Final Box
+		//Final Organizing Structures
 		JPanel calendarVertical = new JPanel();
 		calendarVertical.add(level1);
 		calendarVertical.add(panelCalendar);
@@ -277,14 +282,20 @@ public class GUIMain extends JFrame implements ActionListener {
 		calendarVertical.setBackground(Color.white);
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
 
-		JPanel temp2 = new JPanel();
-		temp2.add(infoPanel);
+		
+		infoPanel.add(panelLabelDateName);
+		for(int i = 0; i < 5; i ++)
+			infoPanel.add(Box.createVerticalGlue());
+		infoPanel.add(panelLabelEvents);
+		infoPanel.add(panelEventsScrollPane);
+		for(int i = 0; i < 35; i ++)
+			infoPanel.add(Box.createVerticalGlue());
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(calendarVertical);
-		mainPanel.add(Box.createHorizontalGlue());
-		mainPanel.add(temp2);
-
+//		mainPanel.add(Box.createHorizontalGlue());
+		mainPanel.add(infoPanel);
+		
 		frame.add(mainPanel);
 	}
 
