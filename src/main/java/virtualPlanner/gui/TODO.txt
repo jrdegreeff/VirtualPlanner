@@ -30,5 +30,12 @@ Upcoming Events
 
 Login Screens
 
+Set Minimum Size Dimension of Day
+
+Implement Dates
+
+Highlight current day on planner
+
+Don't Extend JFrame
 
 Specific Block Lengths
