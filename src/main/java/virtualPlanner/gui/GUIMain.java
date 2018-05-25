@@ -78,7 +78,7 @@ public class GUIMain extends JFrame implements ActionListener {
 	private JLabel labelWeek, labelDay;
 
 	//Icons and Images
-	private static BufferedImage imagePrev, imageNext;
+	private static BufferedImage imagePrev, imageNext, imageGradebook, imageSettings;
 
 	//2D-Array representation of the Calendar GUIButtons
 	private GUIButton[][] buttons;
@@ -161,6 +161,9 @@ public class GUIMain extends JFrame implements ActionListener {
 		try {
 			imagePrev = ImageIO.read(getClass().getResource("previous.png"));
 			imageNext = ImageIO.read(getClass().getResource("next.png"));
+//			imageGradebook = ImageIO.read(getClass().getResource("gradebookgreen.png"));
+			
+
 			System.out.println("Images loaded");
 		} catch (Exception e) {
 			System.out.println("Error loading images: " + e.getMessage());
