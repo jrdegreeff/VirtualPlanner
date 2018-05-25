@@ -304,7 +304,7 @@ public class GUIButton extends JButton implements ActionListener {
 		submitButton.addActionListener(this);
 		JPanel panelSubmitButton = new JPanel();
 		panelSubmitButton.add(submitButton);
-
+		
 		//Main Horiztonal Box for all of the components
 		Box mainVertical = Box.createVerticalBox();
 		mainVertical.add(panelLabelCurAssignments);
@@ -354,7 +354,11 @@ public class GUIButton extends JButton implements ActionListener {
 
 		GUIMain.highlightCurDay();
 
-		if (src instanceof GUIButton) {	
+		if (src.equals(submitButton)){
+		}
+		
+		
+		else if (src instanceof GUIButton) {	
 			GUIButton button = (GUIButton)src;
 
 			//Button is a label for the day
@@ -370,6 +374,9 @@ public class GUIButton extends JButton implements ActionListener {
 
 					//Option Window
 					showAssignments();
+
+					nameField.grabFocus();
+					nameField.requestFocus();
 				}
 			}
 		}

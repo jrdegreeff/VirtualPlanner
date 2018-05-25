@@ -7,17 +7,11 @@ GUIButton Window
 - Edit
 - Remove
 - Show on JButton
-- Assigned DATE
 
 KeyListener Enters
 
-All Javadocs
 
 Alignment of JButton
-
-MenuItem
-- Add Class
-- Get current classes
 
 Preferences
 - Colors
@@ -29,16 +23,23 @@ Upcoming Events
 Login Screens
 
 
-Implement Dates
-
-Don't Extend JFrame
-
 Specific Block Lengths
 
 Actual Upcoming Events
 
-Show up for DUE DATE
+Don't Extend JFrame
+Choosing a DUE DATE shows up for the block
+All Javadocs
 
+___________________________________________________________
+___________________________________________________________
+TODO INTEGRATION
+Add course
+Add assignment
+Highlight day calls?
+
+___________________________________________________________
+___________________________________________________________
 FINISHED
 Set Minimum Size Dimension of Day
 
@@ -48,3 +49,8 @@ Buttons
 
 Highlight current day on planner
 
+MenuItem
+- Add Class
+- Get current classes
+
+- Assigned DATE
