@@ -37,7 +37,7 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
 	private static final Border highlightedBorder = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
 
-	private static final Dimension showAssignmentsSize = new Dimension(400, 650);
+	private static final Dimension showAssignmentsSize = new Dimension(400, 750);
 	private static final Dimension assignmentListSize = new Dimension(275, 200);
 	private static final Dimension inputFieldSize = new Dimension(250, 35);
 
@@ -47,9 +47,14 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Font buttonFont = new Font("SansSerif", Font.BOLD, 20);
 	private static final Font newAssignmentFont = new Font("Dialog", Font.BOLD, 18);
 
-
+	private static Date currentDate = GUIMain.getCurrentDate();
 
 	private static GUIButton highlightedButton;
+
+	private static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	private static final String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+	private static final String[] years = {"2018", "2019", "2020", "2021"};
+
 
 
 	private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
@@ -61,7 +66,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 	//Variables for adding new assignments
 	private JTextField nameField, descField;
-	private JComboBox<String> monthBox, dayBox, yearBox, typeBox;
+	private JComboBox<String> assignedMonthBox, assignedDayBox, assignedYearBox, dueMonthBox, dueDayBox, dueYearBox, typeBox;
 	private JButton submitButton, completeButton;
 
 	/**
@@ -101,7 +106,7 @@ public class GUIButton extends JButton implements ActionListener {
 		this.isDayLabel = false;
 		this.setMultiLineText("");
 	}
-	
+
 	/**
 	 * Construction for the GUIButtons in the Calendar that are the day of week labels
 	 * @param name
@@ -130,7 +135,7 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * Creates a window of options for this GUIButton
 	 */
-	
+
 	private void showAssignments() {
 		if (hasOptionsWindow)
 			return;
@@ -208,14 +213,14 @@ public class GUIButton extends JButton implements ActionListener {
 		labelDesc.setFont(newAssignmentFont);
 		JPanel panelLabelDesc = new JPanel();
 		panelLabelDesc.add(labelDesc);
-		
+
 		descField = new JTextField();
 		descField.setPreferredSize(inputFieldSize);
 		descField.setFont(newAssignmentFont);
 		JPanel panelDescField = new JPanel();
 		panelDescField.add(descField);
 
-		//JComboBox for TYPE of Assignment
+		//Adding Assignment: AssignmentType
 		String[] assignmentTypes = new String[AssignmentTypes.values().length];
 		for(int i = 0; i < assignmentTypes.length; i++)
 			assignmentTypes[i] = AssignmentTypes.values()[i].getName();
@@ -225,33 +230,73 @@ public class GUIButton extends JButton implements ActionListener {
 		JPanel panelTypeBox = new JPanel();
 		panelTypeBox.add(typeBox);
 
+		//Adding Assignment: Date Assigned
+		JLabel labelDateAssigned = new JLabel("Date Assigned:");
+		labelDateAssigned.setFont(newAssignmentFont);
+		JPanel panelLabelDateAssigned = new JPanel();
+		panelLabelDateAssigned.add(labelDateAssigned);
+
+		//Month
+		assignedMonthBox = new JComboBox<String>(months);
+		assignedMonthBox.setBackground(Color.WHITE);
+
+		//Day
+		assignedDayBox = new JComboBox<String>(days);
+		assignedDayBox.setBackground(Color.WHITE);
+
+		//Year
+		assignedYearBox = new JComboBox<String>(years);
+		assignedYearBox.setBackground(Color.WHITE);
+		//TODO: BETTER METHOD HERE
+
+		//Set Defaults for ASSIGNED DATE
+		assignedMonthBox.setSelectedItem(months[currentDate.getMonth()]);
+		assignedDayBox.setSelectedItem(days[currentDate.getDay()-1]);
+		assignedYearBox.setSelectedItem(years[currentDate.getYear()-2018]);
+		
+		Box assignedDatePicker = Box.createHorizontalBox();
+		assignedDatePicker.add(assignedMonthBox);
+		assignedDatePicker.add(assignedDayBox);
+		assignedDatePicker.add(assignedYearBox);
+
+		JPanel panelAssignedDatePicker = new JPanel();
+		panelAssignedDatePicker.add(assignedDatePicker);
+
 		//Adding Assignment: Date Due
 		JLabel labelDateDue = new JLabel("Date Due:");
 		labelDateDue.setFont(newAssignmentFont);
 		JPanel panelLabelDateDue = new JPanel();
 		panelLabelDateDue.add(labelDateDue);
-		
+
 		//TODO: Set to Current Date, functionality even needed?
-		String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-		monthBox = new JComboBox<String>(months);
-		monthBox.setBackground(Color.WHITE);
-		//TODO: Getter method for date
-		String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-		dayBox = new JComboBox<String>(days);
-		dayBox.setBackground(Color.WHITE);
-		
-		String[] years = {"2018", "2019", "2020"};
-		yearBox = new JComboBox<String>(years);
-		yearBox.setBackground(Color.WHITE);
-		
-		Box datePicker = Box.createHorizontalBox();
-		datePicker.add(monthBox);
-		datePicker.add(dayBox);
-		datePicker.add(yearBox);
-		
-		JPanel panelDatePicker = new JPanel();
-		panelDatePicker.add(datePicker);
-		
+		//TODO: ENUM?
+
+		//Month
+		dueMonthBox = new JComboBox<String>(months);
+		dueMonthBox.setBackground(Color.WHITE);
+
+		//Day
+		dueDayBox = new JComboBox<String>(days);
+		dueDayBox.setBackground(Color.WHITE);
+
+		//Year
+		dueYearBox = new JComboBox<String>(years);
+		dueYearBox.setBackground(Color.WHITE);
+		//TODO: BETTER METHOD HERE
+
+		//Set Defaults for DUE DATE
+		dueMonthBox.setSelectedItem(months[currentDate.getMonth()]);
+		dueDayBox.setSelectedItem(days[currentDate.getDay()-1]);
+		dueYearBox.setSelectedItem(years[currentDate.getYear()-2018]);
+
+		Box dueDatePicker = Box.createHorizontalBox();
+		dueDatePicker.add(dueMonthBox);
+		dueDatePicker.add(dueDayBox);
+		dueDatePicker.add(dueYearBox);
+
+		JPanel panelDueDatePicker = new JPanel();
+		panelDueDatePicker.add(dueDatePicker);
+
 		//Submit Button
 		submitButton = new JButton("Submit");
 		submitButton.setFont(buttonFont);
@@ -259,7 +304,7 @@ public class GUIButton extends JButton implements ActionListener {
 		submitButton.addActionListener(this);
 		JPanel panelSubmitButton = new JPanel();
 		panelSubmitButton.add(submitButton);
-		
+
 		//Main Horiztonal Box for all of the components
 		Box mainVertical = Box.createVerticalBox();
 		mainVertical.add(panelLabelCurAssignments);
@@ -270,8 +315,10 @@ public class GUIButton extends JButton implements ActionListener {
 		mainVertical.add(panelLabelDesc);
 		mainVertical.add(panelDescField);
 		mainVertical.add(panelTypeBox);
+		mainVertical.add(panelLabelDateAssigned);
+		mainVertical.add(panelAssignedDatePicker);
 		mainVertical.add(panelLabelDateDue);
-		mainVertical.add(panelDatePicker);
+		mainVertical.add(panelDueDatePicker);
 		mainVertical.add(panelSubmitButton);
 
 		optionsWindow.add(mainVertical);
@@ -288,7 +335,7 @@ public class GUIButton extends JButton implements ActionListener {
 		highlightedButton = button;
 		button.setBorder(highlightedBorder);
 	}
-	
+
 	/**
 	 * Deslects the button that is currently selected.
 	 */
@@ -298,21 +345,21 @@ public class GUIButton extends JButton implements ActionListener {
 			highlightedButton = null;
 		}
 	}
-	
+
 	/**
 	 * ActionListener for each individual JButtno
 	 */
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
-		
+
 		GUIMain.highlightCurDay();
-		
+
 		if (src instanceof GUIButton) {	
 			GUIButton button = (GUIButton)src;
 
 			//Button is a label for the day
 			if(button.isDayLabel) {
-				
+
 			}
 
 			//Button is a block
@@ -320,7 +367,7 @@ public class GUIButton extends JButton implements ActionListener {
 				deselect();
 				if(block.getBlock().isClass()) {
 					select(button);
-					
+
 					//Option Window
 					showAssignments();
 				}

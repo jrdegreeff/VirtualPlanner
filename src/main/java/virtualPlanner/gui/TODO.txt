@@ -31,17 +31,20 @@ Login Screens
 
 Implement Dates
 
-Highlight current day on planner
-
 Don't Extend JFrame
 
 Specific Block Lengths
 
 Actual Upcoming Events
 
-Dont
+Show up for DUE DATE
+
+FINISHED
 Set Minimum Size Dimension of Day
 
 Buttons
 - Gradebook
 - Settings
+
+Highlight current day on planner
+

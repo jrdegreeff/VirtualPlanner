@@ -380,8 +380,6 @@ public class GUIMain extends JFrame implements ActionListener {
 			highlightedDay.setBackground(Color.WHITE);
 
 		for(GUIButton b : dayOfWeekButtons){
-			System.out.println(b.getText() + " " + curDay);
-
 			if(b.getText().equalsIgnoreCase(curDay)){
 //				b.setBorder(highlightedBorder);
 				b.setBackground(Color.YELLOW);
@@ -565,6 +563,13 @@ public class GUIMain extends JFrame implements ActionListener {
 		this.currentDate = new Date();
 		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
 		updateButtons();
+	}
+	
+	/**
+	 * @return the Date object that represents the current day
+	 */
+	public static Date getCurrentDate(){
+		return currentDate;
 	}
 
 	/**
