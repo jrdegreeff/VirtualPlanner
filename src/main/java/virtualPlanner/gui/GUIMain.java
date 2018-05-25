@@ -87,8 +87,12 @@ public class GUIMain extends JFrame implements ActionListener {
 	private JList<String> events;
 	private JScrollPane eventsScrollPane;
 
-	//Dimension for the current day
-	private static final Dimension dateSize = new Dimension(400, 400);
+	//Dimension for the date
+	private static final Dimension dateSize = new Dimension(375, 95);
+	
+	//Dimension for the upcoming events list 
+	private static final Dimension upcomingEventsSize = new Dimension(365, 0);
+
 	
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
@@ -242,18 +246,16 @@ public class GUIMain extends JFrame implements ActionListener {
 		//JPanel for the right of the calendar - the 'info' section
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-//		infoPanel.setBackground(Color.BLUE);
-//		infoPanel.setAlignmentX(CENTER_ALIGNMENT);
 
 		labelDate = new JLabel("<html>Saturday<br/>December 28, 2018</html>");
 		labelDate.setOpaque(true);
 		labelDate.setForeground(Color.BLACK);
 		labelDate.setFont(Fonts.DATE);
+		labelDate.setPreferredSize(dateSize);
 		
 		
-		JPanel panelLabelDateName = new JPanel();
-		panelLabelDateName.add(labelDate);
-//		panelLabelDateName.setAlignmentX(RIGHT_ALIGNMENT);
+		JPanel panelLabelDate = new JPanel();
+		panelLabelDate.add(labelDate);
 		
 		//Upcoming Events
 		JLabel labelEvents = new JLabel("Upcoming Events");
@@ -267,6 +269,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		events = new JList<String>();
 		events.setFont(Fonts.LIST);
 		events.setForeground(Color.BLACK);
+		events.setPreferredSize(upcomingEventsSize);
 		String[] test = {"History Paper", "Chemistry Test", "Math Homework", "Writing Workshop Packet"};
 		events.setListData(test);
 		eventsScrollPane = new JScrollPane(events);
@@ -283,7 +286,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
 
 		
-		infoPanel.add(panelLabelDateName);
+		infoPanel.add(panelLabelDate);
 		for(int i = 0; i < 5; i ++)
 			infoPanel.add(Box.createVerticalGlue());
 		infoPanel.add(panelLabelEvents);
@@ -293,7 +296,6 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(calendarVertical);
-//		mainPanel.add(Box.createHorizontalGlue());
 		mainPanel.add(infoPanel);
 		
 		frame.add(mainPanel);
