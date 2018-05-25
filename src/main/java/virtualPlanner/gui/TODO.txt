@@ -37,6 +37,7 @@ TODO INTEGRATION
 Add course
 Add assignment
 Highlight day calls?
+Current Week
 
 ___________________________________________________________
 ___________________________________________________________

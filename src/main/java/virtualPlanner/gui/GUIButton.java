@@ -302,6 +302,7 @@ public class GUIButton extends JButton implements ActionListener {
 		submitButton.setFont(buttonFont);
 		submitButton.setBackground(Color.green);
 		submitButton.addActionListener(this);
+		optionsWindow.getRootPane().setDefaultButton(submitButton);
 		JPanel panelSubmitButton = new JPanel();
 		panelSubmitButton.add(submitButton);
 		
@@ -355,6 +356,7 @@ public class GUIButton extends JButton implements ActionListener {
 		GUIMain.highlightCurDay();
 
 		if (src.equals(submitButton)){
+			System.out.println("User tried to submit");
 		}
 		
 		

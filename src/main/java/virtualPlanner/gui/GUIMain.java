@@ -14,7 +14,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -29,7 +28,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
@@ -71,8 +69,8 @@ public class GUIMain extends JFrame implements ActionListener {
 
 	//JMenuBar
 	private JMenuBar menuBar;
-	private JMenu menuFile;
-	private JMenuItem menuItemFile, menuItemAddCourse;
+	private JMenu menuFile, menuOptions;
+	private JMenuItem menuItemAddCourse, menuItemCurrentWeek;
 
 	//JButtons
 	private JButton buttonLeft, buttonRight, buttonGradebook, buttonSettings;
@@ -96,10 +94,6 @@ public class GUIMain extends JFrame implements ActionListener {
 	//ArrayList of all the GUIButtons that show the day
 	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
 
-	//Borders for the GUIButtons
-	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
-	private static final Border highlightedBorder = BorderFactory.createEtchedBorder(1, Color.YELLOW, Color.WHITE);
-
 	//Dimension for the date
 	private static final Dimension dateSize = new Dimension(375, 95);
 
@@ -108,7 +102,6 @@ public class GUIMain extends JFrame implements ActionListener {
 
 	//Dimension for each individual block
 	private static final Dimension blockSize = new Dimension(calendarColumnWidth, 30);
-
 
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
@@ -157,14 +150,22 @@ public class GUIMain extends JFrame implements ActionListener {
 		frame.setJMenuBar(menuBar);
 
 		menuFile = new JMenu("File");
-		menuItemFile = new JMenuItem("There's nothing here ):");
-		menuFile.add(menuItemFile);
+		
+		menuOptions = new JMenu("Options");
+		menuItemCurrentWeek = new JMenuItem("Go to Current Week");
+		menuItemCurrentWeek.addActionListener(this);
+		menuOptions.add(menuItemCurrentWeek);
 
 		menuItemAddCourse = new JMenuItem("Add Course");
 		menuItemAddCourse.addActionListener(this);
-
+//		menuItemAddCourse.setMaximumSize(menuItemSize);
+		
+		
 		menuBar.add(menuFile);
+		menuBar.add(menuOptions);
 		menuBar.add(menuItemAddCourse);
+//		menuBar.add(menuItemCurrentWeek);
+		
 		//Add components
 		buttons = new GUIButton[7][];
 		addComponents();
@@ -476,6 +477,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		buttonAddCourse.addActionListener(this);
 		buttonAddCourse.setBackground(Color.GREEN);
 		buttonAddCourse.setForeground(Color.BLACK);
+		addCourseWindow.getRootPane().setDefaultButton(buttonAddCourse);
 		JPanel panelButtonAddCourse = new JPanel();
 		panelButtonAddCourse.add(buttonAddCourse);
 
@@ -510,40 +512,7 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		mainVertical.add(panelCoursesPane);
 
-		//		panelAddCourse.add();
-		//
-		//
-		//		panelAddCourse.setLayout(new BoxLayout(panelAddCourse, BoxLayout.Y_AXIS));
-		//		panelAddCourse.setAlignmentY(CENTER_ALIGNMENT);
-		//
-		//
-		//
-		//		nameField = new JTextField(20);
-		//		nameField.setFont(addClassFont);
-		//		nameField.setPreferredSize(fieldSize);
-		//		nameField.setMinimumSize(fieldSize);
-		//		nameField.setMaximumSize(fieldSize);
-		//		nameField.setAlignmentX(RIGHT_ALIGNMENT);
-		//
-		//		teacherField = new JTextField(20);
-		//		teacherField.setFont(addClassFont);
-		//		teacherField.setPreferredSize(fieldSize);
-		//		teacherField.setMinimumSize(fieldSize);
-		//		teacherField.setMaximumSize(fieldSize);
-		//		teacherField.setAlignmentX(RIGHT_ALIGNMENT);
-		//
-		//		Box box1 = Box.createHorizontalBox();
-		//		box1.add(nameLabel);
-		//		box1.add(nameField);
-		//
-		//		Box box2 = Box.createHorizontalBox();
-		//		box2.add(teacherLabel);
-		//		box2.add(teacherField);
-		//
-		//		panelAddCourse.add(box1);
-		//		panelAddCourse.add(box2);
 		addCourseWindow.add(mainVertical);
-
 
 		addCourseWindow.setVisible(true);
 	}
@@ -560,7 +529,7 @@ public class GUIMain extends JFrame implements ActionListener {
 	 * Refreshes the current date, week label, and all the calendar buttons.
 	 */
 	public void updateWeek() {
-		this.currentDate = new Date();
+		currentDate = new Date();
 		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
 		updateButtons();
 	}
@@ -595,7 +564,6 @@ public class GUIMain extends JFrame implements ActionListener {
 		//User wants to add a Class
 		else if (src.equals(menuItemAddCourse)) {
 			showAddCourseWindow();
-			System.out.println("yet");
 		}
 
 		else if (src.equals(buttonAddCourse)){
@@ -610,6 +578,4 @@ public class GUIMain extends JFrame implements ActionListener {
 			System.out.println("Opened Settings");
 		}
 	}
-	//TODO: CURRENT BUTTON
-	//TODO ActionListener with bordercolors
 }
