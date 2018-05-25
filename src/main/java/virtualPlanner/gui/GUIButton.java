@@ -73,17 +73,17 @@ public class GUIButton extends JButton implements ActionListener {
 		hasOptionsWindow = false;
 		this.addActionListener(this);
 		this.name = name + "\n";
-		this.setMultiLineText("");
 		this.setOpaque(true);
 		this.setFocusable(false);
 		this.setBackground(color);
 		this.setBorder(defaultBorder);
 		highlightedButton = null;
+		this.setAlignmentX(CENTER_ALIGNMENT);
 		//		this.setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
 	}
 
 	/**
-	 * Constructor for the JButtons in the Calendar that represent Blocks
+	 * Constructor for the GUIButtons in the Calendar that represent Blocks
 	 * @param block
 	 * @param courseID
 	 * @param assignments
@@ -99,13 +99,21 @@ public class GUIButton extends JButton implements ActionListener {
 		this.setVerticalAlignment(SwingConstants.TOP);
 		this.setFont(font);
 		this.isDayLabel = false;
+		this.setMultiLineText("");
 	}
 	
+	/**
+	 * Construction for the GUIButtons in the Calendar that are the day of week labels
+	 * @param name
+	 * @param size
+	 * @param font
+	 */
 	public GUIButton(String name, Dimension size, Font font) {
 		this(name);
 		this.setPreferredSize(size);
 		this.setFont(font);
 		this.isDayLabel = true;
+		this.setText(name);
 	}
 
 	/**
@@ -296,6 +304,9 @@ public class GUIButton extends JButton implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
+		
+		GUIMain.highlightCurDay();
+		
 		if (src instanceof GUIButton) {	
 			GUIButton button = (GUIButton)src;
 

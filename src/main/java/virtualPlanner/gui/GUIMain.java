@@ -11,8 +11,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -27,6 +29,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
@@ -49,11 +52,11 @@ public class GUIMain extends JFrame implements ActionListener {
 	/**
 	 * Today's date.
 	 */
-	private Date currentDate;
+	private static Date currentDate;
 	/**
 	 * The start date of the week which is being displayed currently.
 	 */
-	private Date weekStartDate;
+	private static Date weekStartDate;
 
 	//JFrame
 	private static JFrame frame;
@@ -87,11 +90,25 @@ public class GUIMain extends JFrame implements ActionListener {
 	private JList<String> events;
 	private JScrollPane eventsScrollPane;
 
+	//Variable to keep track of they highlighted Day
+	private static GUIButton highlightedDay;
+
+	//ArrayList of all the GUIButtons that show the day
+	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
+
+	//Borders for the GUIButtons
+	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
+	private static final Border highlightedBorder = BorderFactory.createEtchedBorder(1, Color.YELLOW, Color.WHITE);
+
 	//Dimension for the date
 	private static final Dimension dateSize = new Dimension(375, 95);
-	
+
 	//Dimension for the upcoming events list 
 	private static final Dimension upcomingEventsSize = new Dimension(365, 0);
+
+	//Dimension for each individual block
+	private static final Dimension blockSize = new Dimension(calendarColumnWidth, 30);
+
 
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
@@ -112,7 +129,7 @@ public class GUIMain extends JFrame implements ActionListener {
 
 		//GUIController
 		this.controller = controller;
-		
+
 		//Date
 		currentDate = new Date();
 		weekStartDate = currentDate.getWeekStartDate();
@@ -151,7 +168,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		//Add components
 		buttons = new GUIButton[7][];
 		addComponents();
-		
+
 		updateWeek();
 
 		//Frame
@@ -200,26 +217,26 @@ public class GUIMain extends JFrame implements ActionListener {
 		buttonRight.setBorderPainted(false);
 		buttonRight.addActionListener(this);
 		buttonRight.setFocusable(false);
-		
+
 		//JPanel for the calendar itself
 		panelCalendar = new JPanel();
 		labelWeek = new JLabel();
 		labelWeek.setOpaque(true);
 		labelWeek.setBackground(Color.WHITE);
-//		labelWeek.setForeground(Color.MAGENTA);
+		//		labelWeek.setForeground(Color.MAGENTA);
 		labelWeek.setFont(Fonts.WEEK);
 
 		//Level 1 -> labelWeek and Prev + Next buttons
 		Box level1 = Box.createHorizontalBox();
-//		level1.add(Box.createHorizontalGlue());
-//		level1.add(Box.createHorizontalGlue());
+		//		level1.add(Box.createHorizontalGlue());
+		//		level1.add(Box.createHorizontalGlue());
 		level1.add(buttonLeft);
 		level1.add(Box.createHorizontalGlue());
 		level1.add(labelWeek);
 		level1.add(Box.createHorizontalGlue());
 		level1.add(buttonRight);
-//		level1.add(Box.createHorizontalGlue());
-//		level1.add(Box.createHorizontalGlue());
+		//		level1.add(Box.createHorizontalGlue());
+		//		level1.add(Box.createHorizontalGlue());
 
 		//Main Panel for Calendar
 		panelCalendar = new JPanel();
@@ -235,11 +252,11 @@ public class GUIMain extends JFrame implements ActionListener {
 		labelDate.setForeground(Color.BLACK);
 		labelDate.setFont(Fonts.DATE);
 		labelDate.setPreferredSize(dateSize);
-		
-		
+
+
 		JPanel panelLabelDate = new JPanel();
 		panelLabelDate.add(labelDate);
-		
+
 		//Upcoming Events
 		JLabel labelEvents = new JLabel("Upcoming Events");
 		labelEvents.setOpaque(true);
@@ -258,7 +275,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		eventsScrollPane = new JScrollPane(events);
 		JPanel panelEventsScrollPane = new JPanel();
 		panelEventsScrollPane.add(eventsScrollPane);
-		
+
 		//Gradebook and Settings Buttons
 		buttonGradebook = new JButton();
 		buttonGradebook.setIcon(new ImageIcon(imageGradebook));
@@ -268,7 +285,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		buttonGradebook.addActionListener(this);
 		buttonGradebook.setFocusable(false);
 		buttonGradebook.setBackground(Color.cyan);
-		
+
 		buttonSettings = new JButton();
 		buttonSettings.setIcon(new ImageIcon(imageSettings));
 		buttonSettings.setOpaque(false);
@@ -276,12 +293,12 @@ public class GUIMain extends JFrame implements ActionListener {
 		buttonSettings.setBorderPainted(false);
 		buttonSettings.addActionListener(this);
 		buttonSettings.setFocusable(false);
-		
+
 		Box infoButtons = Box.createHorizontalBox();
 		infoButtons.add(buttonGradebook);
 		infoButtons.add(buttonSettings);
-		
-		
+
+
 		//Final Organizing Structures
 		JPanel calendarVertical = new JPanel();
 		calendarVertical.add(level1);
@@ -291,7 +308,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		calendarVertical.setBackground(Color.white);
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
 
-		
+
 		infoPanel.add(panelLabelDate);
 		for(int i = 0; i < 5; i ++)
 			infoPanel.add(Box.createVerticalGlue());
@@ -304,7 +321,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(calendarVertical);
 		mainPanel.add(infoPanel);
-		
+
 		frame.add(mainPanel);
 	}
 
@@ -329,10 +346,11 @@ public class GUIMain extends JFrame implements ActionListener {
 		//Weekday Labels
 		for (int i = 0; i < Days.values().length; i++) {
 			c.gridx = i;
-			panelCalendar.add(new GUIButton(Days.values()[i].getName(), labelSize, Fonts.CALENDAR_DAY), c);
+			GUIButton newButton = new GUIButton(Days.values()[i].getName(), labelSize, Fonts.CALENDAR_DAY);
+			panelCalendar.add(newButton, c);
+			dayOfWeekButtons.add(newButton);
 		}
 
-		Dimension blockSize = new Dimension(calendarColumnWidth, 30);
 		//Blocks
 		for(int i = 0; i < Days.values().length; i++) {
 			c.ipady = 25;
@@ -345,6 +363,30 @@ public class GUIMain extends JFrame implements ActionListener {
 				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation(), blockOrder.getBlock(j), controller.getCourseID(block), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), blockSize, Fonts.CALENDAR_BLOCK);
 				panelCalendar.add(button, c);
 				buttons[i][j] = button;
+			}
+		}
+
+		highlightCurDay();
+	}
+
+	/**
+	 * This method finds and highlights the day of week GUIButton that corresponds to the current day
+	 */
+	public static void highlightCurDay()
+	{
+		String curDay = currentDate.getDayOfWeek().toString();
+		
+		if(highlightedDay != null)
+			highlightedDay.setBackground(Color.WHITE);
+
+		for(GUIButton b : dayOfWeekButtons){
+			System.out.println(b.getText() + " " + curDay);
+
+			if(b.getText().equalsIgnoreCase(curDay)){
+//				b.setBorder(highlightedBorder);
+				b.setBackground(Color.YELLOW);
+				highlightedDay = b;
+				break;
 			}
 		}
 	}
@@ -381,7 +423,7 @@ public class GUIMain extends JFrame implements ActionListener {
 		nameLabel.setForeground(Color.BLACK);
 		JPanel panelNameLabel = new JPanel();
 		panelNameLabel.add(nameLabel);
-		
+
 		nameField = new JTextField(20);
 		nameField.setFont(Fonts.ADD_CLASS);
 		nameField.setPreferredSize(fieldSize);
@@ -389,13 +431,13 @@ public class GUIMain extends JFrame implements ActionListener {
 		nameField.setMaximumSize(fieldSize);	
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
-		
+
 		JLabel abbreviationLabel = new JLabel("Course Abbreviation:");
 		abbreviationLabel.setFont(Fonts.ADD_CLASS);
 		abbreviationLabel.setForeground(Color.BLACK);
 		JPanel panelAbbreviationLabel = new JPanel();
 		panelAbbreviationLabel.add(abbreviationLabel);
-		
+
 		abbreviationField = new JTextField(20);
 		abbreviationField.setFont(Fonts.ADD_CLASS);
 		abbreviationField.setPreferredSize(fieldSize);
@@ -403,13 +445,13 @@ public class GUIMain extends JFrame implements ActionListener {
 		abbreviationField.setMaximumSize(fieldSize);	
 		JPanel panelAbbreviationField = new JPanel();
 		panelAbbreviationField.add(abbreviationField);
-		
+
 		JLabel teacherLabel = new JLabel("Teacher:");
 		teacherLabel.setFont(Fonts.ADD_CLASS);
 		teacherLabel.setForeground(Color.BLACK);
 		JPanel panelTeacherLabel = new JPanel();
 		panelTeacherLabel.add(teacherLabel);
-		
+
 		teacherField = new JTextField(20);
 		teacherField.setFont(Fonts.ADD_CLASS);
 		teacherField.setPreferredSize(fieldSize);
@@ -417,13 +459,13 @@ public class GUIMain extends JFrame implements ActionListener {
 		teacherField.setMaximumSize(fieldSize);
 		JPanel panelTeacherField = new JPanel();
 		panelTeacherField.add(teacherField);
-		
+
 		JLabel blockLabel = new JLabel("Block:");
 		blockLabel.setFont(Fonts.ADD_CLASS);
 		blockLabel.setForeground(Color.BLACK);
 		JPanel panelBlockLabel = new JPanel();
 		panelBlockLabel.add(blockLabel);
-		
+
 		String[] blockList = {"A", "B", "C", "D", "E", "F", "G", "H", "L"};
 		blockComboBox = new JComboBox<String>(blockList);
 		blockComboBox.setFont(Fonts.ADD_CLASS);
@@ -438,14 +480,14 @@ public class GUIMain extends JFrame implements ActionListener {
 		buttonAddCourse.setForeground(Color.BLACK);
 		JPanel panelButtonAddCourse = new JPanel();
 		panelButtonAddCourse.add(buttonAddCourse);
-		
+
 		JLabel coursesLabel = new JLabel("Added Courses:");
 		coursesLabel.setFont(Fonts.ADD_CLASS);
 		coursesLabel.setForeground(Color.BLACK);
 		coursesLabel.setOpaque(true);
 		JPanel panelCoursesLabel = new JPanel();
 		panelCoursesLabel.add(coursesLabel);
-		
+
 		Box mainVertical = Box.createVerticalBox();
 		mainVertical.add(panelNameLabel);
 		mainVertical.add(panelNameField);
@@ -457,51 +499,51 @@ public class GUIMain extends JFrame implements ActionListener {
 		mainVertical.add(panelBlockComboBox);
 		mainVertical.add(panelButtonAddCourse);
 		mainVertical.add(panelCoursesLabel);
-		
+
 		//TODO: CURRENT COURSES
 		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
 		existingCourses.setFont(Fonts.ADD_CLASS);
 		existingCourses.setVisibleRowCount(6);
-		
+
 		JScrollPane coursesPane = new JScrollPane(existingCourses);
-		
+
 		JPanel panelCoursesPane = new JPanel();
 		panelCoursesPane.add(coursesPane);
-		
+
 		mainVertical.add(panelCoursesPane);
-		
-//		panelAddCourse.add();
-//
-//
-//		panelAddCourse.setLayout(new BoxLayout(panelAddCourse, BoxLayout.Y_AXIS));
-//		panelAddCourse.setAlignmentY(CENTER_ALIGNMENT);
-//
-//
-//
-//		nameField = new JTextField(20);
-//		nameField.setFont(addClassFont);
-//		nameField.setPreferredSize(fieldSize);
-//		nameField.setMinimumSize(fieldSize);
-//		nameField.setMaximumSize(fieldSize);
-//		nameField.setAlignmentX(RIGHT_ALIGNMENT);
-//
-//		teacherField = new JTextField(20);
-//		teacherField.setFont(addClassFont);
-//		teacherField.setPreferredSize(fieldSize);
-//		teacherField.setMinimumSize(fieldSize);
-//		teacherField.setMaximumSize(fieldSize);
-//		teacherField.setAlignmentX(RIGHT_ALIGNMENT);
-//
-//		Box box1 = Box.createHorizontalBox();
-//		box1.add(nameLabel);
-//		box1.add(nameField);
-//
-//		Box box2 = Box.createHorizontalBox();
-//		box2.add(teacherLabel);
-//		box2.add(teacherField);
-//
-//		panelAddCourse.add(box1);
-//		panelAddCourse.add(box2);
+
+		//		panelAddCourse.add();
+		//
+		//
+		//		panelAddCourse.setLayout(new BoxLayout(panelAddCourse, BoxLayout.Y_AXIS));
+		//		panelAddCourse.setAlignmentY(CENTER_ALIGNMENT);
+		//
+		//
+		//
+		//		nameField = new JTextField(20);
+		//		nameField.setFont(addClassFont);
+		//		nameField.setPreferredSize(fieldSize);
+		//		nameField.setMinimumSize(fieldSize);
+		//		nameField.setMaximumSize(fieldSize);
+		//		nameField.setAlignmentX(RIGHT_ALIGNMENT);
+		//
+		//		teacherField = new JTextField(20);
+		//		teacherField.setFont(addClassFont);
+		//		teacherField.setPreferredSize(fieldSize);
+		//		teacherField.setMinimumSize(fieldSize);
+		//		teacherField.setMaximumSize(fieldSize);
+		//		teacherField.setAlignmentX(RIGHT_ALIGNMENT);
+		//
+		//		Box box1 = Box.createHorizontalBox();
+		//		box1.add(nameLabel);
+		//		box1.add(nameField);
+		//
+		//		Box box2 = Box.createHorizontalBox();
+		//		box2.add(teacherLabel);
+		//		box2.add(teacherField);
+		//
+		//		panelAddCourse.add(box1);
+		//		panelAddCourse.add(box2);
 		addCourseWindow.add(mainVertical);
 
 
@@ -515,7 +557,7 @@ public class GUIMain extends JFrame implements ActionListener {
 	public void setEventsList(String[] eventList) {
 		events.setListData(eventList);
 	}
-	
+
 	/**
 	 * Refreshes the current date, week label, and all the calendar buttons.
 	 */
@@ -530,6 +572,8 @@ public class GUIMain extends JFrame implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
+
+		GUIMain.highlightCurDay();
 
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
@@ -548,15 +592,15 @@ public class GUIMain extends JFrame implements ActionListener {
 			showAddCourseWindow();
 			System.out.println("yet");
 		}
-		
+
 		else if (src.equals(buttonAddCourse)){
 			System.out.println("User wants to add course '" + nameField.getText() + "' (" + abbreviationField.getText() + ") with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
 		}
-		
+
 		else if (src.equals(buttonGradebook)){
 			System.out.println("Opened Gradebook");
 		}
-		
+
 		else if (src.equals(buttonSettings)){
 			System.out.println("Opened Settings");
 		}

@@ -1,8 +1,6 @@
 TODO:
 
 Buttons
-- Gradebook
-- Settings
 - Current Week
 
 GUIButton Window
@@ -43,3 +41,7 @@ Actual Upcoming Events
 
 Dont
 Set Minimum Size Dimension of Day
+
+Buttons
+- Gradebook
+- Settings
