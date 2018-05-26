@@ -13,16 +13,14 @@ Upcoming Events
 
 Login Screens
 
-
 Specific Block Lengths
 
 Display
 - Upcoming Events
 
-Don't Extend JFrame
-Choosing a DUE DATE shows up for the block
-All Javadocs
 
+All Javadocs
+Size for panelCalendar?
 ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
@@ -30,7 +28,9 @@ Add course
 Add assignment
 Highlight day calls?
 Current Week
-
+Choosing a DUE DATE shows up for the block
+DUE DATE IN GENERAL : DEFAULT
+Null Pointer when adding assignments
 ___________________________________________________________
 ___________________________________________________________
 FINISHED
@@ -54,3 +54,4 @@ Alignment of JButton
 
 JMenuItem
 Current Week
+Don't Extend JFrame
