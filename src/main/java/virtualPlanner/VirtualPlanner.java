@@ -1,5 +1,6 @@
 package virtualPlanner;
 
+import virtualPlanner.io.DatabaseController;
 import virtualPlanner.reference.Preferences;
 
 /**
@@ -14,6 +15,7 @@ public class VirtualPlanner {
 	
 	public static void main(String[] args) {
 		Preferences.loadPreferences();
+		System.out.println(DatabaseController.registerUser("jrdegreeff", "1234", "Jeremiah DeGreeff"));
 	}
 	
 }
