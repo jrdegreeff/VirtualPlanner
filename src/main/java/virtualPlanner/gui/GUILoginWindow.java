@@ -109,7 +109,6 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 		passwordField.setFont(defaultFont);
 		passwordField.setForeground(Color.GRAY);
 		passwordField.addFocusListener(this);
-		System.out.println((int)(passwordField.getEchoChar()));
 		passwordField.setEchoChar((char) 0);
 		JPanel panelPasswordField = new JPanel();
 		panelPasswordField.add(passwordField);
@@ -221,6 +220,8 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 	 * Changes some Swing Components
 	 */
 	private void toggleCreateAccountFeatures(){
+		
+		//From showingLoginFeatures to showingCreateAccountFeatures
 		if(showingLoginFeatures){
 			infoLabel.setText("Create Account:");
 			infoLabel.setForeground(Color.BLACK);
@@ -228,8 +229,10 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 			loginButton.setBackground(Color.GREEN);
 			createAccountButton.setText("Back");
 			createAccountButton.setBackground(Color.RED);
+//			passwordField.setEchoChar((char)0);
 			showingLoginFeatures = false;
 		}
+		//From showingCreateAccountFeatures to showingLoginFeatures
 		else{
 			infoLabel.setText("Please Enter User Credentials:");
 			infoLabel.setForeground(Color.BLACK);
@@ -237,6 +240,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 			loginButton.setBackground(Color.CYAN);
 			createAccountButton.setText("Create an Account");
 			createAccountButton.setBackground(Color.BLUE);
+//			passwordField.setEchoChar((char)8226);
 			showingLoginFeatures = true;
 		}
 	}
