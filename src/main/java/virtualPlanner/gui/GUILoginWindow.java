@@ -68,6 +68,9 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 	/**Boolean used in FocusListener: ignoring the defualt firstFocus*/
 	private boolean firstFocus;
 
+	/**Boolean used in toggling between Log-in and Create Account features*/
+	private boolean showingLoginFeatures;
+
 	/**
 	 * Constructor which initializes a Login Window
 	 */
@@ -86,6 +89,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 		infoLabel = new JLabel("Please Enter User Credentials:");
 		infoLabel.setPreferredSize(defaultSize);
 		infoLabel.setFont(infoFont);
+		infoLabel.setForeground(Color.BLACK);
 		JPanel panelInfoLabel = new JPanel();
 		panelInfoLabel.add(infoLabel);
 
@@ -154,9 +158,10 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 		mainVertical.add(panelRememberHorizontal);
 		mainVertical.add(panelLoginButton);
 		mainVertical.add(panelCreateAccountButton);
-		firstFocus = true;
 
-		//Final Frame Settings
+		//Final Settings
+		firstFocus = true;
+		showingLoginFeatures = true;
 		JPanel mainPanel = new JPanel();
 		mainPanel.add(mainVertical);
 		frame.add(mainPanel);
@@ -186,13 +191,54 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 
 		System.out.println("Login Attempt:" + usernameField.getText() + " + " + password + " + remember? " + remember.isSelected());
 	}
-	
+
 	/**
-	 * This method is called when the user wants to create a new account
-	 * Some settings are changed
+	 * Method that processes new accounts
 	 */
-	private void showCreateAccountFeatures(){
+	private void createAccount(){
+		//Obtain current text in passowrd
+		String password = "";
+		char[] pswrd = passwordField.getPassword();
+		for (char c : pswrd)
+			password += c;
 		
+		boolean successfulNewAccount = false; //New Account/User(usernameField.getText, password);
+		
+		if (successfulNewAccount){
+			frame.dispose();
+		} 
+		else{
+			infoLabel.setForeground(Color.RED);
+			infoLabel.setText("Invalid Input");
+		}
+		
+		System.out.println("New Account:" + usernameField.getText() + " + " + password + " + remember? " + remember.isSelected());
+
+	}
+
+	/**
+	 * This method toggles between the Log-in and create new account interfaces
+	 * Changes some Swing Components
+	 */
+	private void toggleCreateAccountFeatures(){
+		if(showingLoginFeatures){
+			infoLabel.setText("Create Account:");
+			infoLabel.setForeground(Color.BLACK);
+			loginButton.setText("Finish and Log in");
+			loginButton.setBackground(Color.GREEN);
+			createAccountButton.setText("Back");
+			createAccountButton.setBackground(Color.RED);
+			showingLoginFeatures = false;
+		}
+		else{
+			infoLabel.setText("Please Enter User Credentials:");
+			infoLabel.setForeground(Color.BLACK);
+			loginButton.setText("Log in");
+			loginButton.setBackground(Color.CYAN);
+			createAccountButton.setText("Create an Account");
+			createAccountButton.setBackground(Color.BLUE);
+			showingLoginFeatures = true;
+		}
 	}
 
 	public static void main(String[] args)
@@ -207,7 +253,16 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 		Object src = e.getSource();
 
 		if (src.equals(loginButton)){
-			login();
+			if (showingLoginFeatures){
+				login();
+			}
+			else{
+				createAccount();
+			}
+		}
+
+		else if (src.equals(createAccountButton)){
+			toggleCreateAccountFeatures();
 		}
 
 	}
@@ -217,7 +272,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 	 * Manual Implementation of the JTextField "Hint"
 	 */
 	public void focusGained(FocusEvent e) {
-		
+
 		//The usernameField is set to the default focus on startup: 
 		//Don't trigger any Events on startup
 		if (firstFocus){
@@ -229,7 +284,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 
 		//usernameField gains focus
 		if (src.equals(usernameField)){
-			//User Clicks into the field with no user input
+			//User Clicks into the field with no user keyboard input
 			if (usernameField.getText().equals(usernameFieldDefaultText)){
 				//Remove hint and change color of text
 				usernameField.setText("");
@@ -245,7 +300,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 			for (char c : pswrd)
 				password += c;
 
-			//User Clicks into the field with no user input
+			//User Clicks into the field with no user keyboard input
 			if (password.equals(passwordFieldDefaultText)){
 				//Remove hint and change color of text
 				passwordField.setText("");
@@ -261,16 +316,16 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 	 * Manual Implementation of the JTextField "Hint"
 	 */
 	public void focusLost(FocusEvent e) {
-		
+
 		//Obtain source
 		Object src = e.getSource();
 
 		//usernameField loses focus
 		if (src.equals(usernameField)){
-			
+
 			//usernameField has lost first focus: handle events as usual now
 			firstFocus = false;
-			
+
 			//If the field is blank
 			if(usernameField.getText().equals("")){
 				//Reinstate the "Hint", reset the color
@@ -303,7 +358,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 	 * Manual Implementation of the JTextField "Hint"
 	 */
 	public void keyPressed(KeyEvent e) {
-		
+
 		//Normally the "Hint" disappears as soon a field gains focus
 		//However, on startup, in order for the "Hint" to show up on the first item which gains default focus,
 		//A special KeyEvent handler is used to delete the "Hint" on KeyPressed when the user starts typing.
@@ -320,14 +375,14 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 	 * Unused method
 	 */
 	public void keyReleased(KeyEvent e) {
-		
+
 	}
-	
+
 	/**
 	 * This method handles keyTyped KeyEvents for the Login Window
 	 * Unused method
 	 */
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 }
