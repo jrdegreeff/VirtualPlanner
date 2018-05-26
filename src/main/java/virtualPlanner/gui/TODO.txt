@@ -1,17 +1,19 @@
 TODO:
+Preferences
+- Colors
+
+Login Screens
+
 GUIButton Window
 - Edit
 - Remove
 - Show on JButton
 
-Preferences
-- Colors
 
 Upcoming Events
 - When they occur
 - Remove assignment directly from Jlist
 
-Login Screens
 
 Specific Block Lengths
 
