@@ -25,6 +25,8 @@ import javax.swing.JTextField;
  */
 public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
+	private GUIController controller;
+	
 	/**This class' JFrame*/
 	private JFrame frame;
 
@@ -74,7 +76,9 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	/**
 	 * Constructor which initializes a Login Window
 	 */
-	public LoginWindow(){
+	public LoginWindow(GUIController controller) {
+		this.controller = controller;
+		
 		//Frame settings
 		frame = new JFrame("Virtual Planner");
 		frame.setSize(frameSize);
@@ -247,11 +251,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 //			passwordField.setEchoChar((char)8226);
 			showingLoginFeatures = true;
 		}
-	}
-
-	public static void main(String[] args)
-	{
-		new LoginWindow();
 	}
 
 	/**

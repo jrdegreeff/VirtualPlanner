@@ -29,6 +29,19 @@ public class GUIController {
 	 */
 	public GUIController(Controller controller) {
 		this.controller = controller;
+		new LoginWindow(this);
+	}
+	
+	/**
+	 * Registers a user with a username and password.
+	 * 
+	 * @param username The username for the new user.
+	 * @param password The password for the new user.
+	 * @param name The name of the new user.
+	 * @return 0 if successful or a negative error code as specified in {@link LoginException}.
+	 */
+	public int signUp(String username, String password, String name) {
+		return controller.signUp(username, password, name);
 	}
 	
 	/**
