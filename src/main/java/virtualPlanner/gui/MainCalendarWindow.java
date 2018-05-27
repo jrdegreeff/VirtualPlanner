@@ -596,7 +596,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * @return the Date object that represents the current day
 	 */
-	public static Date getCurrentDate(){
+	public static Date getCurrentDate() {
 		return currentDate;
 	}
 
@@ -638,7 +638,8 @@ public class MainCalendarWindow implements ActionListener {
 		}
 
 		else if (src.equals(menuItemCurrentWeek)){
-			System.out.println("User wants to return to current week");
+			weekStartDate = currentDate.getWeekStartDate();
+			updateWeek();
 		}
 	}
 }

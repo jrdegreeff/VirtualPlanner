@@ -61,7 +61,7 @@ public class Controller {
 	 * @return 0 if successful or a negative error code as specified in {@link LoginException}.
 	 */
 	public int login(String username, String password) {
-		try {dbController.login(username, password);}
+		try {user = dbController.login(username, password);}
 		catch (LoginException e) {return e.getErrorCode();}
 		return 0;
 	}

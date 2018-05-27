@@ -29,7 +29,9 @@ public class GUIController {
 	 */
 	public GUIController(Controller controller) {
 		this.controller = controller;
-		new LoginWindow(this);
+//		new LoginWindow(this);
+		controller.login("jrdegreeff", "1234");
+		new MainCalendarWindow(this);
 	}
 	
 	/**
