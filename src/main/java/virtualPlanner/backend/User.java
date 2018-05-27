@@ -95,14 +95,4 @@ public interface User {
 		return course == null ? null : new ArrayList<Assignment>(onDue ? course.getDue(date) : course.getAssigned(date));
 	}
 	
-	/**
-	 * Adds an {@code Assignment} to the specified {@code Course} in this {@code User}'s schedule.
-	 * 
-	 * @param course The {@code Course} to add the {@code Assignment} to.
-	 * @param assignment The {@code Assignment} to add.
-	 */
-	public default void addAssignment(Course course, Assignment assignment) {
-		course.addAssignment(assignment);
-	}
-	
 }

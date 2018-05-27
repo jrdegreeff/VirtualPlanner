@@ -8,13 +8,17 @@ public class LoginException extends Exception {
 	 */
 	public static final int SQL_ERROR = -1;
 	/**
+	 * The error code for a creating a account with a username that already exists.
+	 */
+	public static final int USERNAME_ALREADY_EXISTS = -2;
+	/**
 	 * The error code for a username which does not exist.
 	 */
-	public static final int USER_NOT_REGISTERED = -2;
+	public static final int USER_NOT_REGISTERED = -3;
 	/**
 	 * The error code for an incorrect password.
 	 */
-	public static final int INVALID_PASSWORD = -3;
+	public static final int INVALID_PASSWORD = -4;
 	
 	/**
 	 * The error code for this {@code LoginException}.

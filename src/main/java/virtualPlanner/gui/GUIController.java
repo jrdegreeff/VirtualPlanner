@@ -2,11 +2,11 @@ package virtualPlanner.gui;
 
 import java.util.ArrayList;
 
+import virtualPlanner.Controller;
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
-import virtualPlanner.backend.User;
+import virtualPlanner.io.LoginException;
 import virtualPlanner.reference.AssignmentTypes;
-import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
 
@@ -18,25 +18,39 @@ import virtualPlanner.util.Date;
 public class GUIController {
 	
 	/**
-	 * The {@code User} whose schedule is represented by the GUI.
+	 * The {@code Controller} for this instance.
 	 */
-	private User user;
+	private Controller controller;
 	
 	/**
 	 * Initializes the GUI.
 	 * 
-	 * @param user The user for the session.
+	 * @param controller The {@code Controller} for this instance.
 	 */
-	public GUIController(User user) {
-		this.user = user;
-		new MainCalendarWindow(this);
+	public GUIController(Controller controller) {
+		this.controller = controller;
+	}
+	
+	/**
+	 * Attempts to login a user.
+	 * If successful creates a CalendarWindow.
+	 * 
+	 * @param username The user's username.
+	 * @param password The user's password.
+	 * @return 0 if successful or a negative error code as specified in {@link LoginException}.
+	 */
+	public int login(String username, String password) {
+		int result = controller.login(username, password);
+		if(result == 0)
+			new MainCalendarWindow(this);
+		return result;
 	}
 	
 	/**
 	 * @return The name of the user.
 	 */
 	public String getUserName() {
-		return user.getName();
+		return controller.getUserName();
 	}
 	
 	/**
@@ -45,7 +59,7 @@ public class GUIController {
 	 * @return String representations of the user's courses.
 	 */
 	public String[] getCourseNames() {
-		return user.getCourseNames();
+		return controller.getCourseNames();
 	}
 	
 	/**
@@ -55,8 +69,7 @@ public class GUIController {
 	 * @return The id of the {@code Course} associated with the specified {@code Block}, or a value of -1 if the user has no {@code Course} for that {@code Block}.
 	 */
 	public int getCourseID(Block block) {
-		Course course = user.getCourse(block);
-		return course == null ? -1 : course.getID();
+		return controller.getCourseID(block);
 	}
 	
 	/**
@@ -69,7 +82,7 @@ public class GUIController {
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in the user's schedule.
 	 */
 	public boolean addCourse(Block[] blocks, String name, String abbreviation, String teacher) {
-		return user.addCourse(blocks, new Course(name, abbreviation, teacher));
+		return controller.addCourse(blocks, name, abbreviation, teacher);
 	}
 	
 	/**
@@ -78,7 +91,7 @@ public class GUIController {
 	 * @param course The {@code Course} to remove.
 	 */
 	public void removeCourse(Course course) {
-		user.removeCourse(course);
+		controller.removeCourse(course);
 	}
 	
 	/**
@@ -89,8 +102,8 @@ public class GUIController {
 	 * @param course The {@code Course} to update.
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in the user's schedule.
 	 */
-	public boolean updateCourse(Block[] newBlocks, Course course) {
-		return user.updateCourse(newBlocks, course);
+	public boolean changeCourseBlocks(Block[] newBlocks, Course course) {
+		return controller.changeCourseBlocks(newBlocks, course);
 	}
 	
 	/**
@@ -101,7 +114,7 @@ public class GUIController {
 	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
 	 */
 	public ArrayList<Assignment> getAssignments(Date date, Block block) {
-		return user.getAssignments(date, block, Preferences.displayOnDue());
+		return controller.getAssignments(date, block);
 	}
 	
 	/**
@@ -115,7 +128,7 @@ public class GUIController {
 	 * @param description The description for the new {@code Assignment}.
 	 */
 	public void addAssignment(Course course, Date assigned, Date due, AssignmentTypes type, String name, String description) {
-//		user.addAssignment(course, new Assignment(assigned, due, type, name, description));
+		controller.addAssignment(course, assigned, due, type, name, description);
 	}
 	
 }

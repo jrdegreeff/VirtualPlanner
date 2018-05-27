@@ -114,6 +114,7 @@ public class DatabaseController {
 	 * @param username The {@code User}'s username.
 	 * @param password The {@code User}'s password.
 	 * @return The {@code User} with all appropriate {@code Course}s and {@code Assignment}s.
+	 * @throw LoginException if the username is not registered or the password is invalid.
 	 */
 	public User login(String username, String password) throws LoginException {
 		try (ResultSet u = query(String.format("SELECT id, username, password, name FROM user WHERE username = \'%s\';", username))) {
@@ -186,18 +187,18 @@ public class DatabaseController {
 	 * @param username The username for the new user - must not already exist for operation to be successful.
 	 * @param password The password for the new user.
 	 * @param name The name for the new user
-	 * @return 0 if operation was successful, -1 if the username already exists, -2 if an error occurs.
+	 * @return {@code true} if successful, {@code false} otherwise.
+	 * @throws LoginException if a user with the same username already exists.
 	 */
-	public int createUser(String username, String password, String name) {
+	public boolean createUser(String username, String password, String name) throws LoginException {
 		try (ResultSet r = query(String.format("SELECT username FROM user WHERE username = \'%s\';", username))) {
 			if(r.next()) // Username already exists.
-				return -1;
+				throw new LoginException(LoginException.USERNAME_ALREADY_EXISTS);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return -2;
+			throw new LoginException(LoginException.SQL_ERROR);
 		}
-		update(String.format("INSERT INTO user (username, password, name) VALUES (\'%s\', \'%s\', \'%s\');", username, password, name));
-		return 0;
+		return update(String.format("INSERT INTO user (username, password, name) VALUES (\'%s\', \'%s\', \'%s\');", username, password, name));
 	}
 	
 	/**
@@ -233,11 +234,14 @@ public class DatabaseController {
 	 * 
 	 * @param user The {@code User} to link.
 	 * @param course The {@code Course} to link.
-	 * @param block The {@code Block} to link.
+	 * @param block An array of {@code Block}s to link.
 	 * @return {@code true} if successful, {@code false} otherwise.
 	 */
-	public boolean link(User user, Course course, Block block) {
-		return update(String.format("INSERT INTO user_course (userid, courseid, blockid) VALUES (%d, %d, %d)", user.getID(), course.getID(), block.getID()));
+	public boolean link(User user, Course course, Block[] blocks) {
+		boolean result = true;
+		for(Block block : blocks)
+			result = update(String.format("INSERT INTO user_course (userid, courseid, blockid) VALUES (%d, %d, %d)", user.getID(), course.getID(), block.getID())) && result;
+		return result;
 	}
 	
 	/**
@@ -249,6 +253,28 @@ public class DatabaseController {
 	 */
 	public boolean link(Course course, Assignment assignment) {
 		return update(String.format("INSERT INTO course_assignment (courseid, assignmentid) VALUES (%d, %d)", course.getID(), assignment.getID()));
+	}
+	
+	/**
+	 * Removes all associations between a {@code User} and a {@code Course}.
+	 * 
+	 * @param user The {@code User} to unlink.
+	 * @param course The {@code Course} to unlink.
+	 * @return {@code true} if successful, {@code false} otherwise.
+	 */
+	public boolean unlink(User user, Course course) {
+		return update(String.format("DELETE FROM user_course WHERE userid = %d AND courseid = %d", user.getID(), course.getID()));
+	}
+	
+	/**
+	 * Removes all associations between a {@code Course} and an {@code Assignment}.
+	 * 
+	 * @param course The {@code Course} to unlink.
+	 * @param assignment The {@code Assignment} to unlink.
+	 * @return @code true} if successful, {@code false} otherwise.
+	 */
+	public boolean unlink(Course course, Assignment assignment) {
+		return update(String.format("DELETE FROM course_assignment WHERE courseid = %d AND assignmentid = %d", course.getID(), assignment.getID()));
 	}
 	
 	/**
@@ -292,7 +318,7 @@ public class DatabaseController {
 			if(!r.next()) // Assignment doesn't exist.
 				return false;
 		} catch (SQLException e) {e.printStackTrace();}
-		update(String.format("Update assignment SET name = \'%s\', description = \'%s\', isComplete = %d, type = %d, assigned = \'%s\', due = \'%s\' WHERE id = %d;", assignment.getName(), assignment.getDescrip(), assignment.isComplete() ? 1 : 0, assignment.getAssignmentTypes().getID(), assignment.getAssignedDate().toStringSQL(), assignment.getDue().toStringSQL(), assignment.getID()));
+		update(String.format("Update assignment SET name = \'%s\', description = \'%s\', isComplete = %d, type = %d, assigned = \'%s\', due = \'%s\' WHERE id = %d;", assignment.getName(), assignment.getDescrip(), assignment.isComplete() ? 1 : 0, assignment.getAssignmentType().getID(), assignment.getAssignedDate().toStringSQL(), assignment.getDue().toStringSQL(), assignment.getID()));
 		return true;
 	}
 	

@@ -85,9 +85,9 @@ public class Assignment implements Comparable<Assignment> {
 	 * @return old assigned date
 	 */
 	protected Date changeAssignedDate(Date newAssn) {
-		Date oldAssn = assignedDate; 
+		Date oldAssn = assignedDate;
 		assignedDate = newAssn;
-		return oldAssn; 
+		return oldAssn;
 	}
 	
 	/**
@@ -103,16 +103,25 @@ public class Assignment implements Comparable<Assignment> {
 	 * @return old due date
 	 */
 	protected Date changeDueDate(Date newDue) {
-		Date oldDue = assignedDate; 
-		assignedDate = newDue;
-		return oldDue; 
+		Date oldDue = dueDate;
+		dueDate = newDue;
+		return oldDue;
 	}
 	
 	/**
 	 * @return type of the assignment
 	 */
-	public AssignmentTypes getAssignmentTypes() {
+	public AssignmentTypes getAssignmentType() {
 		return type;
+	}
+	
+	/**
+	 * Changes the assignment type of this {@code Assignment}.
+	 * 
+	 * @param newType The type to change to.
+	 */
+	public void setType(AssignmentTypes newType) {
+		type = newType;
 	}
 	
 	/**
@@ -123,17 +132,12 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Set the assignment to be completed. 
+	 * Sets this {@code Assignment} to be complete or incomplete.
+	 * 
+	 * @param isComplete {@code true} if complete, {@code false} if incomplete.
 	 */
-	public void complete() {
-		isComplete = true;
-	}
-	
-	/**
-	 * Set the assignment to be not completed. 
-	 */
-	public void uncomplete() {
-		isComplete = false;
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
 	}
 	
 	/**
@@ -144,8 +148,9 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Set the name of the assignment. 
-	 * @param newName name of the assignment
+	 * Changes the name of this {@code Assignment}. 
+	 * 
+	 * @param newName The new name for this {@code Assignment}.
 	 */
 	public void setName(String newName) {
 		name = newName;
@@ -159,8 +164,9 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Set the description of the assignment. 
-	 * @param newDescrip new description of the assignment
+	 * Changes the description of this {@code Assignment}. 
+	 * 
+	 * @param newDescrip The new description for this {@code Assignment}.
 	 */
 	public void setDescrip(String newDescrip) {
 		descrip = newDescrip;
