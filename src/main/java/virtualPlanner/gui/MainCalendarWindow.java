@@ -556,13 +556,16 @@ public class MainCalendarWindow implements ActionListener {
 		
 		buttonShowDateAssigned = new JRadioButton("Show Assignment on Assigned Date");
 		buttonShowDateDue = new JRadioButton("Show Assignment on Due Date");
+		JPanel panelButtonShowDateAssigned = new JPanel();
+		panelButtonShowDateAssigned.add(buttonShowDateAssigned);
+		JPanel panelButtonShowDateDue = new JPanel();
+		panelButtonShowDateDue.add(buttonShowDateDue);
 		ButtonGroup group = new ButtonGroup();
 		group.add(buttonShowDateAssigned);
 		group.add(buttonShowDateDue);
 		
-		mainVertical.add(buttonShowDateAssigned);
-		mainVertical.add(buttonShowDateDue);
-
+		mainVertical.add(panelButtonShowDateAssigned);
+		mainVertical.add(panelButtonShowDateDue);
 		
 		settingsFrame.add(mainVertical);
 		settingsFrame.setVisible(true);

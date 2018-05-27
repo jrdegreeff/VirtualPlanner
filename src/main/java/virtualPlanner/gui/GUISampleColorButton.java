@@ -33,7 +33,11 @@ public class GUISampleColorButton extends JButton implements ActionListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		this.setBackground(JColorChooser.showDialog(this, this.getText() + " Block Color", this.getBackground()));
+		Color c = JColorChooser.showDialog(this, this.getText() + " Block Color", this.getBackground());
+		if (c == null)
+			return;
+			
+		this.setBackground(c);
 	}
 
 }

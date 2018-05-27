@@ -58,9 +58,9 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 	private static final String[] years = {"2018", "2019", "2020", "2021"};
 
-
-
 	private ArrayList<Assignment> assignments;
+	private ArrayList<Assignment> completedAssignments;
+
 	private Block block;
 	private boolean hasOptionsWindow;
 	private String name;
@@ -83,7 +83,7 @@ public class GUIButton extends JButton implements ActionListener {
 		super();
 		hasOptionsWindow = false;
 		this.addActionListener(this);
-		this.name = name + "\n";
+		this.name = name;
 		this.setOpaque(true);
 		this.setFocusable(false);
 		this.setBackground(color);
@@ -166,13 +166,16 @@ public class GUIButton extends JButton implements ActionListener {
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
 		labelCurAssignments.setFont(titleFont);
 		labelCurAssignments.setOpaque(true);
-		labelCurAssignments.setBackground(Color.WHITE);
+//		labelCurAssignments.setBackground(Color.WHITE);
 		JPanel panelLabelCurAssignments = new JPanel();
 		panelLabelCurAssignments.add(labelCurAssignments);
 
 		//Assignment JList and JScrollPane
 		updateAssignmentList();
 
+		//TODO remove tester
+		String[] testtttt = {"test1", "2Test", "T3sT"};
+		assignmentList = new JList<String>(testtttt);
 		
 		assignmentList.setFont(assignmentFont);
 		
@@ -181,6 +184,7 @@ public class GUIButton extends JButton implements ActionListener {
 		    public void mouseClicked(MouseEvent e) {
 		        if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
 		            int index = assignmentList.locationToIndex(e.getPoint());
+		            System.out.println(index);
 		        } 
 		    }
 		});
@@ -204,7 +208,7 @@ public class GUIButton extends JButton implements ActionListener {
 		JLabel labelNewAssignment = new JLabel("New Assignment:");
 		labelNewAssignment.setFont(titleFont);
 		labelNewAssignment.setOpaque(true);
-		labelNewAssignment.setBackground(Color.WHITE);
+//		labelNewAssignment.setBackground(Color.WHITE);
 		JPanel panelLabelNewAssignment = new JPanel();
 		panelLabelNewAssignment.add(labelNewAssignment);
 		
@@ -340,11 +344,10 @@ public class GUIButton extends JButton implements ActionListener {
 	}
 
 	/**
-	 * Called when a user adds an assignment to a specific block to update the JList
+	 * Called when a user adds/removes/edits an assignment in a specific block to update the JList
 	 */
 	private void updateAssignmentList()
 	{
-		//TODO: Loop through assignments
 		//TODO: Descriptions on new line
 		if (assignments == null)
 		{
@@ -358,6 +361,16 @@ public class GUIButton extends JButton implements ActionListener {
 			curAssignments[i] = assignments.get(i).getName();
 
 		assignmentList = new JList<String>(curAssignments);
+	}
+	
+	/**
+	 * Updates the text that shows on the button
+	 */
+	private void updateButton(){
+		String result = name;
+		for (Assignment a: assignments)
+			result += "\n" + a.getName();
+		this.setMultiLineText(result);
 	}
 
 	/**
@@ -376,9 +389,12 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * This method moves a current assignment to the completed list
 	 */
-	private void completeAssignment()
+	private void completeAssignment(int index)
 	{
-		System.out.println("Complete.");
+		if (assignments == null || assignments.size()-1 < index)
+			return;
+		
+		completedAssignments.add(assignments.remove(index));
 	}
 	
 	/**
@@ -415,7 +431,7 @@ public class GUIButton extends JButton implements ActionListener {
 		}
 		
 		else if (src.equals(completeButton)){
-			completeAssignment();
+			completeAssignment(assignmentList.getSelectedIndex());
 		}
 
 

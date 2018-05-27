@@ -1,9 +1,5 @@
 TODO:
-Preferences
-- Colors
-- Due Date
-- Highlight Color
-- 
+
 
 GUIButton Window
 - Edit
@@ -14,8 +10,8 @@ Upcoming Events
 - When they occur
 - Remove assignment directly from Jlist
 
-Display
-- Upcoming Events
+Preferences
+- Highlight Color
 
 Specific Block Lengths
 All Javadocs
@@ -23,14 +19,13 @@ Size for panelCalendar?
 ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
-Add course
-Better retrieval of current date
-Add assignment
-Highlight day calls?
-Current Week
-Current day TODO better method
-Choosing a DUE DATE shows up for the block
-DUE DATE IN GENERAL : DEFAULT
+Add course - Where to call
+Better retrieval of current date - Efficiency
+Add assignment - Where to call
+Highlight day calls - Where to call
+Current Week - Implementation
+Choosing a DUE DATE shows up for the block - How + Needed?
+DUE DATE IN GENERAL : DEFAULT?
 Null Pointer when adding assignments
 ___________________________________________________________
 ___________________________________________________________
@@ -56,3 +51,7 @@ Alignment of JButton
 JMenuItem
 Current Week
 Don't Extend JFrame
+
+Preferences
+- Colors
+- Due Date
