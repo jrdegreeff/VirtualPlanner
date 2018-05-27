@@ -311,7 +311,6 @@ public class MainCalendarWindow implements ActionListener {
 		infoButtons.add(buttonGradebook);
 		infoButtons.add(buttonSettings);
 
-
 		//Final Organizing Structures
 		JPanel calendarVertical = new JPanel();
 		calendarVertical.add(level1);
@@ -320,7 +319,6 @@ public class MainCalendarWindow implements ActionListener {
 		calendarVertical.setOpaque(true);
 		calendarVertical.setBackground(Color.white);
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
-
 
 		infoPanel.add(panelLabelDate);
 		for(int i = 0; i < 5; i ++)

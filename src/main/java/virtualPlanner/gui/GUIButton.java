@@ -459,6 +459,18 @@ public class GUIButton extends JButton implements ActionListener {
 		//TODO: Set Dates
 		hideEditAssignmentMode();
 	}
+	
+	/**
+	 * @return an ArrayList<String> holding all the names of assignments
+	 */
+	public ArrayList<String> getEventsList(){
+		ArrayList<String> result = new ArrayList<String>();
+		for (Assignment a : assignments){
+			result.add(a.getName());
+		}
+		
+		return result;
+	}
 
 	/**
 	 * Selects a particular button.

@@ -5,12 +5,15 @@ Upcoming Events
 
 Preferences
 - Highlight Color
+- Number of days of upcoming events
 
+Set Block Colors
 Specific Block Lengths
 All Javadocs
 Size for panelCalendar?
 Sunday Blank Block
 Completed Portion of List?
+Course in Add Assignment
 ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
@@ -25,6 +28,8 @@ Null Pointer when adding assignments
 Test Assignments: Add/Remove/Edit
 SET DUE DATE/ASSIGNED DATE
 EDIT ASSIGNMENT MODE
+NAME vs. DESC? Courses?
+Get current day to set upcoming events list
 ___________________________________________________________
 ___________________________________________________________
 FINISHED
