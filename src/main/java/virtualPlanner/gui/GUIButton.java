@@ -467,6 +467,7 @@ public class GUIButton extends JButton implements ActionListener {
 		Assignment a = assignmentToEdit;
 		a.setName(nameField.getText());
 		a.setDescrip(descField.getText());
+		
 		//TODO: Set Dates
 		hideEditAssignmentMode();
 	}
