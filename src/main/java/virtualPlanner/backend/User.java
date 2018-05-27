@@ -13,9 +13,21 @@ import virtualPlanner.util.Date;
 public interface User {
 	
 	/**
+	 * @return The id of this {@code User}.
+	 */
+	public int getID();
+	
+	/**
 	 * @return The name of the this {@code User}.
 	 */
 	public String getName();
+	
+	/**
+	 * Changes the name of this {@code User}.
+	 * 
+	 * @param name The new name.
+	 */
+	public void setName(String name);
 	
 	/**
 	 * Retrieves string representations of all of this {@code User}'s courses.
@@ -40,6 +52,15 @@ public interface User {
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in this {@code User}'s schedule.
 	 */
 	public boolean addCourse(Block[] blocks, Course course);
+	
+	/**
+	 * Adds a {@code Course} to this {@code User}'s schedule in {@code Block}s with the specified blockids.
+	 * 
+	 * @param blocks The blockids to add the {@code Course} to.
+	 * @param course The {@code Course} to add.
+	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified blockids is already filled with another {@code Course} in this {@code User}'s schedule.
+	 */
+	public boolean addCourse(Integer[] blocks, Course course);
 	
 	/**
 	 * Removes a {@code Course} from this {@code User}'s schedule entirely.

@@ -12,13 +12,19 @@ import virtualPlanner.util.Date;
  * 
  * @author aldai
  * @author Leo
+ * @author JeremiahDeGreeff
  */
 public class Course {
-
+	
 	/**
-	 * course name, teacher, and abbreviation
+	 * The unique id of this {@code Course} as it is identified in the database.
 	 */
-	private String name, teacher, abbrev;
+	private final int id;
+	
+	/**
+	 * course name, abbreviation, and teacher
+	 */
+	private String name, abbrev, teacher;
 
 	/**
 	 * maps Dates to a set of all Assignments assigned that day
@@ -31,41 +37,32 @@ public class Course {
 	private Map<Date, Set<Assignment>> dueDateMap;
 	
 	/**
-	 * internal id counter for giving unique ids
-	 */
-	private static int idCounter = 0;
-	
-	/**
-	 * unique id for each course object
-	 */
-	private final int ID;
-	
-	/**
 	 * Constructor for Course class. assigned and due maps are set to empty HashMaps.
+	 * 
+	 * @param id The id of the new {@code Course}. Must be an id given from the database to avoid overwritting records.
 	 * @param name
 	 * @param teacher
 	 */
-	public Course(String name, String teacher, String abbreviation) {
+	public Course(int id, String name, String abbreviation, String teacher) {
+		this.id = id;
 		this.name = name;
-		this.teacher = teacher;
 		this.abbrev = abbreviation;
+		this.teacher = teacher;
 		assnDateMap = new HashMap<Date, Set<Assignment>>();
 		dueDateMap = new HashMap<Date, Set<Assignment>>();
-		ID = idCounter;
-		idCounter++;
 	}
 
 	/**
 	 * @return unique id for this course object
 	 */
 	public int getID() {
-		return ID;
+		return id;
 	}
 	
 	/**
 	 * @return course name
 	 */
-	public String getCourseName() {
+	public String getName() {
 		return name;
 	}
 
@@ -76,12 +73,38 @@ public class Course {
 		return teacher;
 	}
 	
-	public String getAbbrev() {
+	/**
+	 * @return abbreviation
+	 */
+	public String getAbbreviation() {
 		return abbrev;
 	}
 	
-	public void setAbbrev(String newAbbrev) {
-		abbrev = newAbbrev;
+	/**
+	 * Changes the name of this {@code Course}.
+	 * 
+	 * @param newName The new name.
+	 */
+	public void setName(String newName) {
+		this.name = newName;
+	}
+	
+	/**
+	 * Changes the teacher for this {@code Course}.
+	 * 
+	 * @param newTeacher The new teacher.
+	 */
+	public void setTeacher(String newTeacher) {
+		this.teacher = newTeacher;
+	}
+	
+	/**
+	 * Changes the abbreviation for this {@code Course}.
+	 * 
+	 * @param newAbbrev The new abbreviation.
+	 */
+	public void setAbbreviation(String newAbbrev) {
+		this.abbrev = newAbbrev;
 	}
 
 	/**
@@ -158,30 +181,25 @@ public class Course {
 		
 		assnDateMap.put(newDueDate, newAssignments);
 	}
-
-
+	
 	/**
-	 * @return true if two courses have the same course name and teacher.
-	 */
-	@Override
-	public boolean equals(Object other) {
-		if(other == null)
-			return false;
-		if(!(other instanceof Course))
-			return false;
-		return name.equals(((Course) other).getCourseName()) && teacher.equals(((Course) other).getTeacher());
-	}
-
-	/**
-	 * @return course name taught by teacher
+	 * Returns a String representation of this {@code Course}.
 	 */
 	@Override
 	public String toString() {
-		return name + " taught by " + teacher;
+		return name + " (" + abbrev + ") taught by " + teacher + " [number of assignments: " + dueDateMap.size() + "] {id = " + id + "}";
+	}
+
+	/**
+	 * Returns {@code true} if {@code other} is a {@code Course} with the same id as this {@code Course}, {@code false} otherwise.
+	 */
+	@Override
+	public boolean equals(Object other) {
+		return other != null && other instanceof Course && this.id == ((Course) other).id;
 	}
 	
 	@Override
 	public int hashCode() {
-		return toString().hashCode();
+		return ("" + id).hashCode();
 	}
 }

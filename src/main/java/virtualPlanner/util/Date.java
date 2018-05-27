@@ -1,6 +1,7 @@
 package virtualPlanner.util;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -31,6 +32,8 @@ public class Date implements Comparable<Date> {
 	}
 	
 	/**
+	 * Creates a new {@code Date} instance from a day, month, and year.
+	 * 
 	 * @param day The day of the month. (1-indexed)
 	 * @param month The month of the year. (1-indexed)
 	 * @param year The year of this {@code Date}.
@@ -39,6 +42,15 @@ public class Date implements Comparable<Date> {
 	public Date(int day, int month, int year) {
 		calendar = new GregorianCalendar(year, month - 1, day);
 		dayOfWeek = Days.getDay(calendar.get(Calendar.DAY_OF_WEEK));
+	}
+	
+	/**
+	 * Creates a new {@code Date} instance from an sql Date String.
+	 * 
+	 * @param sqlDate The date String (yyyy-MM-dd).
+	 */
+	public Date(String sqlDate) {
+		this(Integer.parseInt(sqlDate.substring(8)), Integer.parseInt(sqlDate.substring(5, 7)), Integer.parseInt(sqlDate.substring(0, 4)));
 	}
 	
 	/**
@@ -70,6 +82,15 @@ public class Date implements Comparable<Date> {
 	}
 	
 	/**
+	 * Creates a Unix timestamp (milliseconds since Epoch) for this {@code Date} object.
+	 * 
+	 * @return The Unis timestamp.
+	 */
+	public long getTimestamp() {
+		return calendar.getTimeInMillis();
+	}
+	
+	/**
 	 * Returns a long string representation of this {@code Date}.
 	 * Equivalent to toStringLong().
 	 */
@@ -86,6 +107,17 @@ public class Date implements Comparable<Date> {
 	 */
 	public String toString(int format) {
 		return DateFormat.getDateInstance(format).format(calendar.getTime());
+	}
+	
+	/**
+	 * Generates a string representation of this {@code Date} in the format "yyyy-MM-dd" as SQL uses.
+	 * 
+	 * @return The String representation.
+	 */
+	public String toStringSQL() {
+		SimpleDateFormat format = new SimpleDateFormat();
+		format.applyPattern("yyyy-MM-dd");
+		return format.format(calendar.getTime());
 	}
 	
 	/**
