@@ -232,6 +232,7 @@ public class GUIButton extends JButton implements ActionListener {
 				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
 					int index = assignmentList.locationToIndex(e.getPoint());
 					showEditAssignmentMode(index);
+					System.out.println(index);
 				} 
 			}
 		});
