@@ -205,7 +205,7 @@ public class Controller {
 	 * @param assignment The {@code Assignment} to be removed.
 	 */
 	public void removeAssignment(Course course, Assignment assignment) {
-		//TODO: course.remove(assignment);
+		course.removeAssignment(assignment);
 		dbController.delete(assignment);
 	}
 	
@@ -217,7 +217,7 @@ public class Controller {
 	 * @param assignment The {@code Assignment} to manipulate.
 	 */
 	public void changeAssignmentCourse(Course oldCourse, Course newCourse, Assignment assignment) {
-		//TODO: oldCourse.remove(assignment);
+		oldCourse.removeAssignment(assignment);
 		dbController.unlink(oldCourse, assignment);
 		newCourse.addAssignment(assignment);
 		dbController.link(newCourse, assignment);

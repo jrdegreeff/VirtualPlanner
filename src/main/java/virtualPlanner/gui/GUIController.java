@@ -88,6 +88,26 @@ public class GUIController {
 	}
 	
 	/**
+	 * Retrieves the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * 
+	 * @param date The {@code Date} to query.
+	 * @param block The {@code Block} to query.
+	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 */
+	public ArrayList<Assignment> getAssignments(Date date, Block block) {
+		return controller.getAssignments(date, block);
+	}
+	
+	/**
+	 * Changes the name of the the user.
+	 * 
+	 * @param newName The new name for the user.
+	 */
+	public void setUserName(String newName) {
+		controller.setUserName(newName);
+	}
+	
+	/**
 	 * Creates a new {@code Course} and adds it to the user's schedule in the specified {@code Block}s.
 	 * 
 	 * @param blocks The {@code Block}s to add the {@code Course} to.
@@ -122,14 +142,33 @@ public class GUIController {
 	}
 	
 	/**
-	 * Retrieves the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * Changes the name of a {@code Course}.
 	 * 
-	 * @param date The {@code Date} to query.
-	 * @param block The {@code Block} to query.
-	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 * @param course The {@code Course} to update.
+	 * @param newName The new name for the {@code Course}.
 	 */
-	public ArrayList<Assignment> getAssignments(Date date, Block block) {
-		return controller.getAssignments(date, block);
+	public void setCourseName(Course course, String newName) {
+		controller.setCourseName(course, newName);
+	}
+	
+	/**
+	 * Changes the name of a {@code Course}.
+	 * 
+	 * @param course The {@code Course} to update.
+	 * @param newAbbreviation The new abbreviation for the {@code Course}.
+	 */
+	public void setCourseAbbreviation(Course course, String newAbbreviation) {
+		controller.setCourseAbbreviation(course, newAbbreviation);
+	}
+	
+	/**
+	 * Changes the name of a {@code Course}.
+	 * 
+	 * @param course The {@code Course} to update.
+	 * @param newTeacher The new teacher for the {@code Course}.
+	 */
+	public void setCourseTeacher(Course course, String newTeacher) {
+		controller.setCourseTeacher(course, newTeacher);
 	}
 	
 	/**
@@ -144,6 +183,89 @@ public class GUIController {
 	 */
 	public void addAssignment(Course course, Date assigned, Date due, AssignmentTypes type, String name, String description) {
 		controller.addAssignment(course, assigned, due, type, name, description);
+	}
+	
+	/**
+	 * Removes an {@code Assignment} entirely.
+	 * 
+	 * @param course The course to which the {@code Assignment} is assigned.
+	 * @param assignment The {@code Assignment} to be removed.
+	 */
+	public void removeAssignment(Course course, Assignment assignment) {
+		controller.removeAssignment(course, assignment);
+	}
+	
+	/**
+	 * Changes the {@code Course} to which an {@code Assignment} is assigned.
+	 * 
+	 * @param oldCourse The {@code Course} to remove the {@code Assignment} from.
+	 * @param newCourse The {@code Course} to add the {@code Assignment} to.
+	 * @param assignment The {@code Assignment} to manipulate.
+	 */
+	public void changeAssignmentCourse(Course oldCourse, Course newCourse, Assignment assignment) {
+		controller.changeAssignmentCourse(oldCourse, newCourse, assignment);
+	}
+	
+	/**
+	 * Changes the assigned date of an {@code Assignment}.
+	 * 
+	 * @param course The {@code Course} to which the {@code Assignment} is assigned.
+	 * @param assignment The {@code Assignment} to update.
+	 * @param newDate The new assigned date.
+	 */
+	public void changeAssignedDate(Course course, Assignment assignment, Date newDate) {
+		controller.changeAssignedDate(course, assignment, newDate);
+	}
+	
+	/**
+	 * Changes the due date of an {@code Assignment}.
+	 * 
+	 * @param course The {@code Course} to which the {@code Assignment} is assigned.
+	 * @param assignment The {@code Assignment} to update.
+	 * @param newDate The new due date.
+	 */
+	public void changeDueDate(Course course, Assignment assignment, Date newDate) {
+		controller.changeDueDate(course, assignment, newDate);
+	}
+	
+	/**
+	 * Changes the name of an {@code Assignment}.
+	 * 
+	 * @param assignment The {@code Assignment} whose name will be changed.
+	 * @param newName The name to change to.
+	 */
+	public void setAssignmentName(Assignment assignment, String newName) {
+		controller.setAssignmentName(assignment, newName);
+	}
+	
+	/**
+	 * Changes the description of an {@code Assignment}.
+	 * 
+	 * @param assignment The {@code Assignment} whose description will be changed.
+	 * @param newDescription The description to change to.
+	 */
+	public void setAssignmentDescription(Assignment assignment, String newDescription) {
+		controller.setAssignmentDescription(assignment, newDescription);
+	}
+	
+	/**
+	 * Changes the type of an {@code Assignment}.
+	 * 
+	 * @param assignment The {@code Assignment} whose type will be changed.
+	 * @param newType The type to change to.
+	 */
+	public void setAssignmentType(Assignment assignment, AssignmentTypes newType) {
+		controller.setAssignmentType(assignment, newType);
+	}
+	
+	/**
+	 * Changes the completeness of an {@code Assignment}.
+	 * 
+	 * @param assignment The {@code Assignment} whose completeness will be changed.
+	 * @param isComplete {@code true} if complete, {@code false} otherwise.
+	 */
+	public void setAssignmentComplete(Assignment assignment, boolean isComplete) {
+		controller.setAssignmentComplete(assignment, isComplete);
 	}
 	
 }
