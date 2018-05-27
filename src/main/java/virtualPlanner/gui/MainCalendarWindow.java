@@ -40,7 +40,7 @@ import virtualPlanner.util.Date;
  * @author Kevin
  * @author JeremiahDeGreeff
  */
-public class GUIMain implements ActionListener {
+public class MainCalendarWindow implements ActionListener {
 
 	/**
 	 * The controller for this JFrame.
@@ -109,12 +109,14 @@ public class GUIMain implements ActionListener {
 	private JButton buttonAddCourse;
 	private JTextField nameField, teacherField, abbreviationField;
 	private JComboBox<String> blockComboBox;
+	
+	
 
 
 	/**
 	 * Constructor: Creates the main GUI
 	 */
-	public GUIMain(GUIController controller) {
+	public MainCalendarWindow(GUIController controller) {
 
 		//Name
 		frame = new JFrame("Virtual Planner");
@@ -126,7 +128,7 @@ public class GUIMain implements ActionListener {
 		currentDate = new Date();
 		weekStartDate = currentDate.getWeekStartDate();
 
-		//Variable to prevent multiple window instantiations
+		//Variables to prevent multiple window instantiations
 		hasAddCourseWindow = false;
 
 		//Size
@@ -512,6 +514,13 @@ public class GUIMain implements ActionListener {
 
 		addCourseWindow.setVisible(true);
 	}
+	
+	/**
+	 * This method creates a window which allows the user to set preferences 
+	 */
+	private void showSettingsWindow(){
+		
+	}
 
 	/**
 	 * Sets the contents of the upcoming Events JList
@@ -543,7 +552,7 @@ public class GUIMain implements ActionListener {
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
 
-		GUIMain.highlightCurDay();
+		MainCalendarWindow.highlightCurDay();
 
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {

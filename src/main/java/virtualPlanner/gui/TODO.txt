@@ -2,6 +2,8 @@ TODO:
 Preferences
 - Colors
 
+Specific Block Lengths
+
 Login Screens
 
 GUIButton Window
@@ -9,13 +11,9 @@ GUIButton Window
 - Remove
 - Show on JButton
 
-
 Upcoming Events
 - When they occur
 - Remove assignment directly from Jlist
-
-
-Specific Block Lengths
 
 Display
 - Upcoming Events
@@ -27,9 +25,11 @@ ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
 Add course
+Better retrieval of current date
 Add assignment
 Highlight day calls?
 Current Week
+Current day TODO better method
 Choosing a DUE DATE shows up for the block
 DUE DATE IN GENERAL : DEFAULT
 Null Pointer when adding assignments

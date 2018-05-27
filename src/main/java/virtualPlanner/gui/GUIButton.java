@@ -49,7 +49,8 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Font buttonFont = new Font("SansSerif", Font.BOLD, 20);
 	private static final Font newAssignmentFont = new Font("Dialog", Font.BOLD, 18);
 
-	private static Date currentDate = GUIMain.getCurrentDate();
+	//TODO: Better retrieval
+	private static Date currentDate = MainCalendarWindow.getCurrentDate();
 
 	private static GUIButton highlightedButton;
 
@@ -213,7 +214,7 @@ public class GUIButton extends JButton implements ActionListener {
 		JPanel panelLabelName = new JPanel();
 		panelLabelName.add(labelName);
 
-		//TODO: This starts with focus
+		//Starts with focus
 		nameField = new JTextField();
 		nameField.setPreferredSize(inputFieldSize);
 		nameField.setFont(newAssignmentFont);
@@ -259,7 +260,8 @@ public class GUIButton extends JButton implements ActionListener {
 		//Year
 		assignedYearBox = new JComboBox<String>(years);
 		assignedYearBox.setBackground(Color.WHITE);
-		//TODO: BETTER METHOD HERE
+		
+		//TODO: BETTER METHOD HERE for current day
 
 		//Set Defaults for ASSIGNED DATE
 		assignedMonthBox.setSelectedItem(months[currentDate.getMonth()]);
@@ -279,9 +281,6 @@ public class GUIButton extends JButton implements ActionListener {
 		labelDateDue.setFont(newAssignmentFont);
 		JPanel panelLabelDateDue = new JPanel();
 		panelLabelDateDue.add(labelDateDue);
-
-		//TODO: Set to Current Date, functionality even needed?
-		//TODO: ENUM?
 
 		//Month
 		dueMonthBox = new JComboBox<String>(months);
@@ -382,7 +381,6 @@ public class GUIButton extends JButton implements ActionListener {
 		System.out.println("Complete.");
 	}
 	
-	//TODO: KeyListener
 	/**
 	 * Selects a particular button.
 	 * 
@@ -409,7 +407,7 @@ public class GUIButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
 
-		GUIMain.highlightCurDay();
+		MainCalendarWindow.highlightCurDay();
 
 		if (src.equals(submitButton)){
 			System.out.println("User tried to submit");

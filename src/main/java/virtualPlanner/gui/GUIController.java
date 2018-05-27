@@ -29,7 +29,7 @@ public class GUIController {
 	 */
 	public GUIController(User user) {
 		this.user = user;
-		new GUIMain(this);
+		new MainCalendarWindow(this);
 	}
 	
 	/**
