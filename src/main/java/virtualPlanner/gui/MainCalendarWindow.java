@@ -32,7 +32,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import virtualPlanner.backend.Course;
-import virtualPlanner.backend.Student;
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.util.Block;
