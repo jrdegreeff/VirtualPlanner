@@ -83,6 +83,15 @@ public class Controller {
 	}
 	
 	/**
+	 * Retrieves all of the {@code User}'s {@code Courses}.
+	 * 
+	 * @return All of the {@code User}'s {@code Courses}.
+	 */
+	public Course[] getAllCourses() {
+		return user.getAllCourses();
+	}
+	
+	/**
 	 * Retrieves the {@code Course} from the user's schedule in the specified {@code Block}.
 	 * 
 	 * @param block The {@code Block} to find the {@code Course} for.

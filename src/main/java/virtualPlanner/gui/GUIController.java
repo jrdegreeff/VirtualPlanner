@@ -69,12 +69,21 @@ public class GUIController {
 	}
 	
 	/**
-	 * Retrieves string representations of all of the user's courses.
+	 * Retrieves String representations of all of the user's courses.
 	 * 
 	 * @return String representations of the user's courses.
 	 */
 	public String[] getCourseNames() {
 		return controller.getCourseNames();
+	}
+	
+	/**
+	 * Retrieves all of the user's {@code Courses}.
+	 * 
+	 * @return All of the user's {@code Courses}.
+	 */
+	public Course[] getAllCourses() {
+		return controller.getAllCourses();
 	}
 	
 	/**

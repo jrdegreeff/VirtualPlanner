@@ -125,6 +125,17 @@ public class Student implements User {
 				iter.remove();
 	}
 	
+	/**
+	 * Retrieves all of this {@code Student}'s {@code Courses}.
+	 * 
+	 * @return All of this {@code Student}'s {@code Courses}.
+	 */
+	public Course[] getAllCourses() {
+		Set<Course> courses = new TreeSet<Course>();
+		for(Course course : schedule.values())
+			courses.add(course);
+		return courses.toArray(new Course[0]);
+	}
 	
 	/**
 	 * Retrieves string representations of all of this {@code Student}'s courses.
@@ -133,13 +144,10 @@ public class Student implements User {
 	 */
 	@Override
 	public String[] getCourseNames() {
-		Set<Course> courses = new TreeSet<Course>();
-		for(Course course : schedule.values())
-			courses.add(course);
-		String[] courseNames = new String[courses.size()];
-		int idx = 0;
-		for(Course course : courses)
-			courseNames[idx++] = course.getName();
+		Course[] courses = getAllCourses();
+		String[] courseNames = new String[courses.length];
+		for(int i = 0; i < courses.length; i++)
+			courseNames[i] = courses[i].getName();
 		return courseNames;
 	}
 	

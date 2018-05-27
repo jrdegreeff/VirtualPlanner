@@ -37,6 +37,13 @@ public interface User {
 	public String[] getCourseNames();
 	
 	/**
+	 * Retrieves all of this {@code User}'s {@code Courses}.
+	 * 
+	 * @return All of this {@code User}'s {@code Courses}.
+	 */
+	public Course[] getAllCourses();
+	
+	/**
 	 * Retrieves the {@code Course} from this {@code User}'s schedule in a particular {@code Block}.
 	 * 
 	 * @param block The {@code Block} to find the {@code Course} for.
