@@ -1,8 +1,5 @@
 package virtualPlanner;
 
-import virtualPlanner.backend.Student;
-import virtualPlanner.backend.User;
-import virtualPlanner.gui.GUIController;
 import virtualPlanner.reference.Preferences;
 
 /**
@@ -16,9 +13,15 @@ import virtualPlanner.reference.Preferences;
 public class VirtualPlanner {
 	
 	public static void main(String[] args) {
+		init();
+		new Controller();
+	}
+	
+	/**
+	 * Performs static initialization.
+	 */
+	public static void init() {
 		Preferences.loadPreferences();
-		User user = new Student("Jeremiah DeGreeff");
-		new GUIController(user);
 	}
 	
 }

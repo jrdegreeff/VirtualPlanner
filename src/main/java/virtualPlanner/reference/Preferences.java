@@ -39,7 +39,7 @@ public class Preferences {
 			properties.load(in);
 			in.close();
 		} catch (IOException e) {savePreferences();}
-		
+		System.out.println("Preferences Loaded.");
 	}
 	
 	/**

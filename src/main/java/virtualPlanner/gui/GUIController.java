@@ -64,11 +64,12 @@ public class GUIController {
 	 * 
 	 * @param blocks The {@code Block}s to add the {@code Course} to.
 	 * @param name The name of the new {@code Course}.
+	 * @param abbreviation The abbrevation of the new {@code Course}.
 	 * @param teacher The name the teacher of the new {@code Course}.
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in the user's schedule.
 	 */
-	public boolean addCourse(Block[] blocks, String name, String teacher) {
-		return user.addCourse(blocks, new Course(name, teacher));
+	public boolean addCourse(Block[] blocks, String name, String abbreviation, String teacher) {
+		return user.addCourse(blocks, new Course(name, abbreviation, teacher));
 	}
 	
 	/**
