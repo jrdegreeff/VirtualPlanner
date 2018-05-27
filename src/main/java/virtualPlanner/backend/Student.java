@@ -3,6 +3,8 @@ package virtualPlanner.backend;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import virtualPlanner.util.Block;
 
@@ -131,9 +133,12 @@ public class Student implements User {
 	 */
 	@Override
 	public String[] getCourseNames() {
-		String[] courseNames = new String[schedule.size()];
-		int idx = 0;
+		Set<Course> courses = new TreeSet<Course>();
 		for(Course course : schedule.values())
+			courses.add(course);
+		String[] courseNames = new String[courses.size()];
+		int idx = 0;
+		for(Course course : courses)
 			courseNames[idx++] = course.getName();
 		return courseNames;
 	}
