@@ -127,7 +127,7 @@ public class MainCalendarWindow implements ActionListener {
 	public MainCalendarWindow(GUIController controller) {
 
 		//Name
-		frame = new JFrame("Virtual Planner");
+		frame = new JFrame("Virtual Planner - " + controller.getUserName());
 
 		//GUIController
 		this.controller = controller;
@@ -200,7 +200,7 @@ public class MainCalendarWindow implements ActionListener {
 			imageNext = ImageIO.read(getClass().getResource("next.png"));
 			imageGradebook = ImageIO.read(getClass().getResource("gradebookgreen.png"));
 			imageSettings = ImageIO.read(getClass().getResource("settingsicon1.png"));
-			System.out.println("Images loaded");
+			System.out.println("Images Loaded.");
 		} catch (Exception e) {
 			System.out.println("Error loading images: " + e.getMessage());
 		}
@@ -387,12 +387,7 @@ public class MainCalendarWindow implements ActionListener {
 	 * This method finds and highlights the day of week GUIButton that corresponds to the current day
 	 */
 	public static void highlightCurDay()
-	{
-		System.out.println("HIGHLIGHTING...");
-		System.out.println(currentDate.toString() + weekStartDate.toString() + weekStartDate.getUpcomingDate(7).toString());
-		System.out.println(currentDate.compareTo(weekStartDate) + " " + currentDate.compareTo(weekStartDate.getUpcomingDate(7)));
-		System.out.println(currentDate.equals(weekStartDate.getUpcomingDate(7)));
-		
+	{	
 		if (currentDate.compareTo(weekStartDate) < 0 || currentDate.compareTo(weekStartDate.getUpcomingDate(7)) > 0)
 			return;
 
