@@ -21,16 +21,22 @@ public class Block {
 	 * The end time of this {@code Block}.
 	 */
 	private Time end;
+	/**
+	 * Used for identifying the block for integration with the database and for special schedules.
+	 */
+	private int id;
 	
 	/**
 	 * @param block The type of this {@code Block} from {@code Blocks}.
 	 * @param start The start time of this {@code Block}.
 	 * @param end The end time of this {@code Block}.
+	 * @param id Used for identifying the block for integration with the database and for special schedules.
 	 */
-	public Block(Blocks block, Time start, Time end) {
+	public Block(Blocks block, Time start, Time end, int id) {
 		this.block = block;
 		this.start = start;
 		this.end = end;
+		this.id = id;
 	}
 	
 	/**
@@ -55,11 +61,18 @@ public class Block {
 	}
 	
 	/**
+	 * @return The id of this block which is used for integration with the database and for special schedules.
+	 */
+	public int getID() {
+		return id;
+	}
+	
+	/**
 	 * Returns a String representation of this {@code Block}.
 	 */
 	@Override
 	public String toString() {
-		return block.getFullName() + " [" + start + "-" + end + "]";
+		return block.getFullName() + " [" + start + "-" + end + "] {id = " + id + "}";
 	}
 	
 	/**

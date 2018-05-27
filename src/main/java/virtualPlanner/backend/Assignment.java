@@ -7,8 +7,14 @@ import virtualPlanner.util.Date;
  * Class defining all assignments
  * 
  * @author Leo Dong
+ * @author JeremiahDeGreeff
  */
 public class Assignment implements Comparable<Assignment> {
+	
+	/**
+	 * The unique id of this {@code Course} as it is identified in the database.
+	 */
+	private final int id;
 	
 	/**
 	 * date assigned
@@ -41,38 +47,29 @@ public class Assignment implements Comparable<Assignment> {
 	private String descrip;
 	
 	/**
-	 * internal id counter for giving unique ids
-	 */
-	private static int idCounter = 0;
-	
-	/**
-	 * unique id for each assignment object
-	 */
-	private final int ID;
-	
-	/**
 	 * Constructor for Assignment class. isComplete is set to false by default.
+	 * 
 	 * @param assigned date assigned
 	 * @param due date due
 	 * @param type type of assignment
 	 * @param name short name of the assignment
 	 * @param description detailed description of the assignment
 	 */
-	public Assignment(Date assigned, Date due, AssignmentTypes type, String name, String description) {
+	public Assignment(int id, Date assigned, Date due, AssignmentTypes type, String name, String description, boolean isComplete) {
+		this.id = id;
 		this.assignedDate = assigned;
 		this.dueDate = due; 
+		this.type = type;
 		this.name = name;
 		this.descrip = description; 
-		isComplete = false;
-		ID = idCounter; 
-		idCounter++; // update idCounter to ensure unique ids
+		this.isComplete = isComplete;
 	}
 	
 	/**
 	 * @return unique ID for this assignment object
 	 */
 	public int getID() {
-		return ID;
+		return id;
 	}
 	
 	/**
@@ -169,23 +166,26 @@ public class Assignment implements Comparable<Assignment> {
 		descrip = newDescrip;
 	}
 	
-	@Override
-	public int hashCode() {
-		return toString().hashCode();
-	}
-	
 	/**
-	 * @return string representation of the assignment
+	 * Returns a String representation of this {@code Assignment}.
 	 */
 	@Override
 	public String toString() {
-		String str = "";
-		str += "Assigned Date: " + assignedDate + "; " + "Due Date: " + dueDate + "\n"; 
-		str += "Type: " + type + "; Name: " + name + "; ID: " + ID + "\nDescription: " + descrip + "\n";
-		str += "Completed: " + isComplete; 
-		return str;
+		return name + " (" + descrip + ") [type = " + type.name() + "] assigned on " + assignedDate + ", due on " + dueDate + (isComplete ? " (complete)" : " " )+ "{id = " + id + "}";
 	}
 	
+	/**
+	 * Returns {@code true} if {@code other} is a {@code Assignment} with the same id as this {@code Assignment}, {@code false} otherwise.
+	 */
+	@Override
+	public boolean equals(Object other) {
+		return other != null && other instanceof Assignment && this.id == ((Assignment) other).id;
+	}
+	
+	@Override
+	public int hashCode() {
+		return ("" + id).hashCode();
+	}
 	
 	/**
 	 * Compare this assignment to another assignment in terms of priority and id.
@@ -198,22 +198,7 @@ public class Assignment implements Comparable<Assignment> {
 	 */
 	@Override
 	public int compareTo(Assignment assn) {
-		return this.type.getPriority() == assn.type.getPriority() ? this.ID - assn.ID : this.type.getPriority() - assn.type.getPriority();
-	}
-	
-	
-	/**
-	 * Compare this assignment to another assignment in terms of priority and id.  
-	 * @param assn another assignment to compare to
-	 * @return true if two assignments have the same priority and id; false if otherwise
-	 */
-	@Override
-	public boolean equals(Object assn) {
-		if(assn == null)
-			return false;
-		if(!(assn instanceof Assignment))
-			return false;
-		return this.compareTo((Assignment)assn) == 0;
+		return this.type.getPriority() == assn.type.getPriority() ? this.id - assn.id : this.type.getPriority() - assn.type.getPriority();
 	}
 	
 }
