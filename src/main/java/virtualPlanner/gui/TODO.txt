@@ -13,6 +13,8 @@ JCheckBoxes
 
 Test Assignments: Add/Remove/Edit
 
+
+
 Dimension for the Date
 Set Block Colors
 Base Block colors on Course
@@ -27,6 +29,7 @@ Change Finals
 Better Get Current Date
 Fix highlighting RED
 Descriptions on new lines for current assignments
+Everything OPAQUE, Nothing Resizable
 ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
