@@ -23,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import virtualPlanner.backend.Assignment;
+import virtualPlanner.backend.Course;
+import virtualPlanner.backend.Student;
 import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.util.Date;
 import virtualPlanner.reference.Preferences;
@@ -43,11 +45,12 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Dimension assignmentListSize = new Dimension(275, 200);
 	private static final Dimension inputFieldSize = new Dimension(250, 35);
 
-
 	private static final Font titleFont = new Font("Dialog", Font.BOLD, 26);
 	private static final Font assignmentFont = new Font("Dialog", Font.BOLD, 20);
 	private static final Font buttonFont = new Font("SansSerif", Font.BOLD, 20);
 	private static final Font newAssignmentFont = new Font("Dialog", Font.BOLD, 18);
+	
+	private GUIController controller;
 
 	//TODO: Better retrieval
 	private static Date currentDate = MainCalendarWindow.getCurrentDate();
@@ -57,7 +60,8 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	private static final String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 	private static final String[] years = {"2018", "2019", "2020", "2021"};
-
+	private static final AssignmentTypes[] TYPES = {AssignmentTypes.HOMEWORK, AssignmentTypes.TEST, AssignmentTypes.QUIZ, AssignmentTypes.ESSAY, AssignmentTypes.PROJECT};
+	
 	private ArrayList<Assignment> assignments;
 	private ArrayList<Assignment> completedAssignments;
 
@@ -66,6 +70,7 @@ public class GUIButton extends JButton implements ActionListener {
 	private String name;
 	private Color color;
 	private boolean isDayLabel;
+	private Course course;
 
 	//Variables for adding new assignments
 	private JTextField nameField, descField;
@@ -105,7 +110,7 @@ public class GUIButton extends JButton implements ActionListener {
 	 * @param assignments
 	 * @param size
 	 */
-	public GUIButton(String name, Block block, int courseID, ArrayList<Assignment> assignments, Dimension size, Font font) {
+	public GUIButton(String name, Block block, int courseID, ArrayList<Assignment> assignments, Dimension size, Font font, GUIController controller, Course course) {
 		this(name);
 		this.block = block;
 		this.color = Preferences.getColor(courseID);
@@ -116,6 +121,8 @@ public class GUIButton extends JButton implements ActionListener {
 		this.setFont(font);
 		this.isDayLabel = false;
 		this.setMultiLineText("");
+		this.controller = controller;
+		this.course = course;
 	}
 
 	/**
@@ -221,9 +228,6 @@ public class GUIButton extends JButton implements ActionListener {
 		updateAssignmentList();
 
 		//TODO remove tester
-		String[] testtttt = {"test1", "2Test", "T3sT"};
-		assignmentList = new JList<String>(testtttt);
-
 		assignmentList.setFont(assignmentFont);
 
 		//Double-Click edit feature
@@ -429,11 +433,17 @@ public class GUIButton extends JButton implements ActionListener {
 	 */
 	private void addAssignment()
 	{
-		Date assigned = new Date();
-		Date due = new Date();
-		//		assignments.add(new Assignment(assigned, due, AssignmentTypes.ESSAY, nameField.getText(), descField.getText()));
+		Date assigned = new Date(assignedDayBox.getSelectedIndex()+1, assignedMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(assignedYearBox.getSelectedItem())));		
+		Date due = new Date(dueDayBox.getSelectedIndex()+1, dueMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(dueYearBox.getSelectedItem())));
+		
+		AssignmentTypes type = TYPES[typeBox.getSelectedIndex()];
+		
+		controller.addAssignment(course, assigned, due, type, name, descField.getText());
+		
+//		Assignment newAssignment = new Assignment(0, assigned, due, type, nameField.getText(), descField.getText(), false);
+
+
 		updateAssignmentList();
-		//TODO: Null Pointer?
 	}
 
 	/**

@@ -7,6 +7,12 @@ Preferences
 - Highlight Color
 - Number of days of upcoming events
 
+
+JCheckBoxes
+- choosing blocks for new classes
+
+Test Assignments: Add/Remove/Edit
+
 Set Block Colors
 Specific Block Lengths
 All Javadocs
@@ -15,22 +21,22 @@ Sunday Blank Block
 Completed Portion of List?
 Course in Add Assignment
 Highlighting of current day
+Change Finals
+Better Get Current Date
+Fix highlighting RED
+Descriptions on new lines for current assignments
 ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
-Add course - Where to call
-Better retrieval of current date - Efficiency
-Add assignment - Where to call
-Highlight day calls - Where to call
-Current Week - Implementation
-Choosing a DUE DATE shows up for the block - How + Needed?
-DUE DATE IN GENERAL : DEFAULT?
-Null Pointer when adding assignments
-Test Assignments: Add/Remove/Edit
 SET DUE DATE/ASSIGNED DATE
 EDIT ASSIGNMENT MODE
 NAME vs. DESC? Courses?
 Get current day to set upcoming events list
+___________________________________________________________
+___________________________________________________________
+ASK JEREMIAH
+Choosing a DUE DATE shows up for the block - How + Needed? >> DUE DATE IN GENERAL : DEFAULT?
+"DATA STRUCTURES" ADD COURSE
 ___________________________________________________________
 ___________________________________________________________
 FINISHED
@@ -64,3 +70,12 @@ GUIButton Window
 - Edit
 - Remove
 - Show on JButton
+
+Current Week - Implementation
+
+Get current student for new assignment 
+
+Date compareTo >> Highlight curday class
+
+Add course
+

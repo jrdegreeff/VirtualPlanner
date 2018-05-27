@@ -31,6 +31,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import virtualPlanner.backend.Course;
+import virtualPlanner.backend.Student;
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.util.Block;
@@ -89,8 +91,8 @@ public class MainCalendarWindow implements ActionListener {
 	private JList<String> events;
 	private JScrollPane eventsScrollPane;
 
-	//Variable to keep track of they highlighted Day
-	private static GUIButton highlightedDay;
+//	//Variable to keep track of they highlighted Day
+//	private static GUIButton highlightedDay;
 
 	//ArrayList of all the GUIButtons that show the day
 	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
@@ -371,17 +373,15 @@ public class MainCalendarWindow implements ActionListener {
 			for(int j = 0; j < blockOrder.getBlockCount(); j++) {
 				c.gridy = j + 1;
 				Block block = blockOrder.getBlock(j);
-				GUIButton button = new GUIButton(blockOrder.getBlock(j).getBlock().getAbbreviation(), blockOrder.getBlock(j), controller.getCourseID(block), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), blockSize, Fonts.CALENDAR_BLOCK);
+				Course course = controller.getCourse(block);
+				GUIButton button = new GUIButton(block.getBlock().getAbbreviation(), block, course == null ? -1 : course.getID(), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), blockSize, Fonts.CALENDAR_BLOCK, controller, controller.getCourse(block));
 				panelCalendar.add(button, c);
 				buttons[i][j] = button;
 			}
 		}
 		
 		//Sunday
-		c.ipady = 50;
-		
-
-		highlightCurDay();
+//		c.ipady = 50;
 	}
 
 	/**
@@ -389,16 +389,20 @@ public class MainCalendarWindow implements ActionListener {
 	 */
 	public static void highlightCurDay()
 	{
+		System.out.println("HIGHLIGHTING...");
+		System.out.println(currentDate.toString() + weekStartDate.toString() + weekStartDate.getUpcomingDate(7).toString());
+		System.out.println(currentDate.compareTo(weekStartDate) + " " + currentDate.compareTo(weekStartDate.getUpcomingDate(7)));
+		System.out.println(currentDate.equals(weekStartDate.getUpcomingDate(7)));
+		
+		if (currentDate.compareTo(weekStartDate) < 0 || currentDate.compareTo(weekStartDate.getUpcomingDate(7)) > 0)
+			return;
+
 		String curDay = currentDate.getDayOfWeek().toString();
-
-		if(highlightedDay != null)
-			highlightedDay.setBackground(Color.WHITE);
-
 		for(GUIButton b : dayOfWeekButtons){
 			if(b.getText().equalsIgnoreCase(curDay)){
-				//				b.setBorder(highlightedBorder);
 				b.setBackground(Color.YELLOW);
-				highlightedDay = b;
+				b.revalidate();
+				b.repaint();
 				break;
 			}
 		}
@@ -518,7 +522,7 @@ public class MainCalendarWindow implements ActionListener {
 		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
 		existingCourses.setFont(Fonts.ADD_CLASS);
 		existingCourses.setVisibleRowCount(6);
-
+		
 		JScrollPane coursesPane = new JScrollPane(existingCourses);
 
 		JPanel panelCoursesPane = new JPanel();
@@ -571,9 +575,14 @@ public class MainCalendarWindow implements ActionListener {
 		
 		settingsFrame.add(mainVertical);
 		settingsFrame.setVisible(true);
-
-
-
+	}
+	
+	/**
+	 * 
+	 */
+	private void addCourse(){
+		controller.addCourse(null, nameField.getText(), abbreviationField.getText(), teacherField.getText());
+		//TODO: Array of blocks
 	}
 
 	/**
@@ -591,6 +600,7 @@ public class MainCalendarWindow implements ActionListener {
 		currentDate = new Date();
 		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
 		updateButtons();
+		highlightCurDay();
 	}
 
 	/**
@@ -605,9 +615,7 @@ public class MainCalendarWindow implements ActionListener {
 	 */
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
-
-		MainCalendarWindow.highlightCurDay();
-
+		
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
 			weekStartDate = weekStartDate.getUpcomingDate(-7);
@@ -626,7 +634,7 @@ public class MainCalendarWindow implements ActionListener {
 		}
 
 		else if (src.equals(buttonAddCourse)){
-			System.out.println("User wants to add course '" + nameField.getText() + "' (" + abbreviationField.getText() + ") with " + teacherField.getText() + " occurring on " + blockComboBox.getSelectedItem() + " blocks");
+			addCourse();
 		}
 
 		else if (src.equals(buttonGradebook)){

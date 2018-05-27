@@ -78,13 +78,13 @@ public class GUIController {
 	}
 	
 	/**
-	 * Retrieves the id of the {@code Course} from the user's schedule in the specified {@code Block}.
+	 * Retrieves the {@code Course} from the user's schedule in the specified {@code Block}.
 	 * 
 	 * @param block The {@code Block} to find the {@code Course} for.
-	 * @return The id of the {@code Course} associated with the specified {@code Block}, or a value of -1 if the user has no {@code Course} for that {@code Block}.
+	 * @return The {@code Course} associated with the specified {@code Block}, or {@code null} if the user has no {@code Course} for that {@code Block}.
 	 */
-	public int getCourseID(Block block) {
-		return controller.getCourseID(block);
+	public Course getCourse(Block block) {
+		return controller.getCourse(block);
 	}
 	
 	/**
