@@ -1,10 +1,9 @@
 TODO:
 Preferences
 - Colors
-
-Specific Block Lengths
-
-Login Screens
+- Due Date
+- Highlight Color
+- 
 
 GUIButton Window
 - Edit
@@ -18,7 +17,7 @@ Upcoming Events
 Display
 - Upcoming Events
 
-
+Specific Block Lengths
 All Javadocs
 Size for panelCalendar?
 ___________________________________________________________

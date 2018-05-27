@@ -368,7 +368,7 @@ public class GUIButton extends JButton implements ActionListener {
 	{
 		Date assigned = new Date();
 		Date due = new Date();
-		assignments.add(new Assignment(assigned, due, AssignmentTypes.ESSAY, nameField.getText(), descField.getText()));
+//		assignments.add(new Assignment(assigned, due, AssignmentTypes.ESSAY, nameField.getText(), descField.getText()));
 		updateAssignmentList();
 		//TODO: Null Pointer?
 	}

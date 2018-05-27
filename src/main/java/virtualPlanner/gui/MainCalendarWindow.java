@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,6 +27,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -102,6 +104,9 @@ public class MainCalendarWindow implements ActionListener {
 	//Dimension for each individual block
 	private static final Dimension blockSize = new Dimension(calendarColumnWidth, 30);
 
+	//Dimension for the settings window
+	private static final Dimension settingsSize = new Dimension(400, 500);
+
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
 	private static final Dimension courseWindowSize = new Dimension(320, 600);
@@ -109,8 +114,10 @@ public class MainCalendarWindow implements ActionListener {
 	private JButton buttonAddCourse;
 	private JTextField nameField, teacherField, abbreviationField;
 	private JComboBox<String> blockComboBox;
-	
-	
+
+	//Settings Window
+	private JRadioButton buttonShowDateAssigned = new JRadioButton();
+	private JRadioButton buttonShowDateDue = new JRadioButton();
 
 
 	/**
@@ -148,7 +155,7 @@ public class MainCalendarWindow implements ActionListener {
 		frame.setJMenuBar(menuBar);
 
 		menuFile = new JMenu("File");
-		
+
 		menuOptions = new JMenu("Options");
 		menuItemCurrentWeek = new JMenuItem("Go to Current Week");
 		menuItemCurrentWeek.addActionListener(this);
@@ -156,19 +163,26 @@ public class MainCalendarWindow implements ActionListener {
 
 		menuItemAddCourse = new JMenuItem("Add Course");
 		menuItemAddCourse.addActionListener(this);
-//		menuItemAddCourse.setMaximumSize(menuItemSize);
-		
-		
+
 		menuBar.add(menuFile);
 		menuBar.add(menuOptions);
 		menuBar.add(menuItemAddCourse);
-//		menuBar.add(menuItemCurrentWeek);
-		
+
 		//Add components
 		buttons = new GUIButton[7][];
 		addComponents();
 
 		updateWeek();
+		
+		//Initialize Settings Components
+		new GUISampleColorButton("A");
+		new GUISampleColorButton("B");
+		new GUISampleColorButton("C");
+		new GUISampleColorButton("D");
+		new GUISampleColorButton("E");
+		new GUISampleColorButton("F");
+		new GUISampleColorButton("G");
+		new GUISampleColorButton("H");
 
 		//Frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -374,13 +388,13 @@ public class MainCalendarWindow implements ActionListener {
 	public static void highlightCurDay()
 	{
 		String curDay = currentDate.getDayOfWeek().toString();
-		
+
 		if(highlightedDay != null)
 			highlightedDay.setBackground(Color.WHITE);
 
 		for(GUIButton b : dayOfWeekButtons){
 			if(b.getText().equalsIgnoreCase(curDay)){
-//				b.setBorder(highlightedBorder);
+				//				b.setBorder(highlightedBorder);
 				b.setBackground(Color.YELLOW);
 				highlightedDay = b;
 				break;
@@ -514,12 +528,47 @@ public class MainCalendarWindow implements ActionListener {
 
 		addCourseWindow.setVisible(true);
 	}
-	
+
 	/**
 	 * This method creates a window which allows the user to set preferences 
 	 */
 	private void showSettingsWindow(){
+
+		JFrame settingsFrame = new JFrame();
+		settingsFrame.setSize(settingsSize);
+		//TODO: Variable, Override WindowClosing for save settings
+		settingsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+		JLabel blockLabel = new JLabel("Block Colors");
+		blockLabel.setFont(Fonts.ADD_CLASS);
+		JPanel panelBlockLabel = new JPanel();
+		panelBlockLabel.add(blockLabel);
 		
+		Box mainVertical = Box.createVerticalBox();
+		mainVertical.add(panelBlockLabel);
+		
+		ArrayList<GUISampleColorButton> buttons = GUISampleColorButton.getButtons();
+		for (GUISampleColorButton b: buttons){
+			JPanel tempPanel = new JPanel();
+			tempPanel.add(b);
+			mainVertical.add(tempPanel);
+		}
+		
+		buttonShowDateAssigned = new JRadioButton("Show Assignment on Assigned Date");
+		buttonShowDateDue = new JRadioButton("Show Assignment on Due Date");
+		ButtonGroup group = new ButtonGroup();
+		group.add(buttonShowDateAssigned);
+		group.add(buttonShowDateDue);
+		
+		mainVertical.add(buttonShowDateAssigned);
+		mainVertical.add(buttonShowDateDue);
+
+		
+		settingsFrame.add(mainVertical);
+		settingsFrame.setVisible(true);
+
+
+
 	}
 
 	/**
@@ -538,7 +587,7 @@ public class MainCalendarWindow implements ActionListener {
 		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
 		updateButtons();
 	}
-	
+
 	/**
 	 * @return the Date object that represents the current day
 	 */
@@ -580,9 +629,9 @@ public class MainCalendarWindow implements ActionListener {
 		}
 
 		else if (src.equals(buttonSettings)){
-			System.out.println("Opened Settings");
+			showSettingsWindow();
 		}
-		
+
 		else if (src.equals(menuItemCurrentWeek)){
 			System.out.println("User wants to return to current week");
 		}

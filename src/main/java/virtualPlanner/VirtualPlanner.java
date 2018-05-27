@@ -17,8 +17,8 @@ public class VirtualPlanner {
 	
 	public static void main(String[] args) {
 		Preferences.loadPreferences();
-		User user = new Student("Jeremiah DeGreeff");
-		new GUIController(user);
+		User user = new Student(1, "Jeremiah DeGreeff");
+		new GUIController(user); 
 	}
 	
 }

@@ -114,7 +114,7 @@ public class GUIController {
 	 * @param description The description for the new {@code Assignment}.
 	 */
 	public void addAssignment(Course course, Date assigned, Date due, AssignmentTypes type, String name, String description) {
-		user.addAssignment(course, new Assignment(assigned, due, type, name, description));
+//		user.addAssignment(course, new Assignment(assigned, due, type, name, description));
 	}
 	
 }
