@@ -14,6 +14,7 @@ Size for panelCalendar?
 Sunday Blank Block
 Completed Portion of List?
 Course in Add Assignment
+Highlighting of current day
 ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
