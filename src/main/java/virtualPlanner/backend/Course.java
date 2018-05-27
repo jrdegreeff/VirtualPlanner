@@ -45,9 +45,10 @@ public class Course {
 	 * @param name
 	 * @param teacher
 	 */
-	public Course(String name, String teacher) {
+	public Course(String name, String teacher, String abbreviation) {
 		this.name = name;
 		this.teacher = teacher;
+		this.abbrev = abbreviation;
 		assnDateMap = new HashMap<Date, Set<Assignment>>();
 		dueDateMap = new HashMap<Date, Set<Assignment>>();
 		ID = idCounter;
