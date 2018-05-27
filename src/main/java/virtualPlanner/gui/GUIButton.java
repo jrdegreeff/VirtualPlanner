@@ -71,6 +71,7 @@ public class GUIButton extends JButton implements ActionListener {
 	private Color color;
 	private boolean isDayLabel;
 	private Course course;
+	private MainCalendarWindow mainWindow;
 
 	//Variables for adding new assignments
 	private JTextField nameField, descField;
@@ -110,7 +111,7 @@ public class GUIButton extends JButton implements ActionListener {
 	 * @param assignments
 	 * @param size
 	 */
-	public GUIButton(String name, Block block, int courseID, ArrayList<Assignment> assignments, Dimension size, Font font, GUIController controller, Course course) {
+	public GUIButton(String name, Block block, int courseID, ArrayList<Assignment> assignments, Dimension size, Font font, GUIController controller, Course course, MainCalendarWindow mainWindow) {
 		this(name);
 		this.block = block;
 		this.color = Preferences.getColor(courseID);
@@ -123,6 +124,7 @@ public class GUIButton extends JButton implements ActionListener {
 		this.setMultiLineText("");
 		this.controller = controller;
 		this.course = course;
+		this.mainWindow = mainWindow;
 	}
 
 	/**
@@ -202,15 +204,15 @@ public class GUIButton extends JButton implements ActionListener {
 
 		hasOptionsWindow = true;
 
-		JFrame optionsWindow = new JFrame(name);
-		optionsWindow.setSize(showAssignmentsSize);
-		optionsWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		optionsWindow.addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
+		JFrame assignmentsWindow = new JFrame(name);
+		assignmentsWindow.setSize(showAssignmentsSize);
+		assignmentsWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		assignmentsWindow.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				hasOptionsWindow = false;
-				optionsWindow.dispose();
+				assignmentsWindow.dispose();
 				updateButton();
+				updateUpcomingEvents();
 			}
 		});
 
@@ -236,7 +238,6 @@ public class GUIButton extends JButton implements ActionListener {
 				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
 					int index = assignmentList.locationToIndex(e.getPoint());
 					showEditAssignmentMode(index);
-					System.out.println(index);
 				} 
 			}
 		});
@@ -369,7 +370,7 @@ public class GUIButton extends JButton implements ActionListener {
 		submitButton.setFont(buttonFont);
 		submitButton.setBackground(Color.green);
 		submitButton.addActionListener(this);
-		optionsWindow.getRootPane().setDefaultButton(submitButton);
+		assignmentsWindow.getRootPane().setDefaultButton(submitButton);
 		JPanel panelSubmitButton = new JPanel();
 		panelSubmitButton.add(submitButton);
 
@@ -390,8 +391,17 @@ public class GUIButton extends JButton implements ActionListener {
 		mainVertical.add(panelDueDatePicker);
 		mainVertical.add(panelSubmitButton);
 
-		optionsWindow.add(mainVertical);
-		optionsWindow.setVisible(true);
+		assignmentsWindow.add(mainVertical);
+		assignmentsWindow.setVisible(true);
+	}
+	
+	/**
+	 * This method is called whenever the user is done adding an assignment so that the "Upcoming Events" list is updated
+	 */
+	private void updateUpcomingEvents(){
+		String[] test = {"1","2"};
+		//TODO: Retrieval of events list
+		mainWindow.setEventsList(test);
 	}
 
 	/**

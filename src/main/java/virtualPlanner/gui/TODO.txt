@@ -1,19 +1,13 @@
 TODO:
-Upcoming Events
-- When they occur
-- Remove assignment directly from Jlist
+Upcoming Events >> RETRIEVAL
 
 Preferences
-- Highlight Color
-- Number of days of upcoming events
-- Based on Courses
+- Number of days of upcoming events >> STORAGE + LOADING
 
 JCheckBoxes
 - choosing blocks for new classes
 
 Test Assignments: Add/Remove/Edit
-
-
 
 Dimension for the Date
 Set Block Colors
