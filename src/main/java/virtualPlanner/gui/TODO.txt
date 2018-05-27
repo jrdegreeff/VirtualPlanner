@@ -1,11 +1,4 @@
 TODO:
-
-
-GUIButton Window
-- Edit
-- Remove
-- Show on JButton
-
 Upcoming Events
 - When they occur
 - Remove assignment directly from Jlist
@@ -16,6 +9,8 @@ Preferences
 Specific Block Lengths
 All Javadocs
 Size for panelCalendar?
+Sunday Blank Block
+Completed Portion of List?
 ___________________________________________________________
 ___________________________________________________________
 TODO INTEGRATION
@@ -27,6 +22,9 @@ Current Week - Implementation
 Choosing a DUE DATE shows up for the block - How + Needed?
 DUE DATE IN GENERAL : DEFAULT?
 Null Pointer when adding assignments
+Test Assignments: Add/Remove/Edit
+SET DUE DATE/ASSIGNED DATE
+EDIT ASSIGNMENT MODE
 ___________________________________________________________
 ___________________________________________________________
 FINISHED
@@ -55,3 +53,8 @@ Don't Extend JFrame
 Preferences
 - Colors
 - Due Date
+
+GUIButton Window
+- Edit
+- Remove
+- Show on JButton

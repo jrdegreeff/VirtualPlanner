@@ -378,6 +378,10 @@ public class MainCalendarWindow implements ActionListener {
 				buttons[i][j] = button;
 			}
 		}
+		
+		//Sunday
+		c.ipady = 50;
+		
 
 		highlightCurDay();
 	}
