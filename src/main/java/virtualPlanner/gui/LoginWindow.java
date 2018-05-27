@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  * Class the represents a Login window for the VirtualPlanner
  * @author Kevin
  */
-public class GUILoginWindow implements ActionListener, FocusListener, KeyListener{
+public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 	/**This class' JFrame*/
 	private JFrame frame;
@@ -74,7 +74,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 	/**
 	 * Constructor which initializes a Login Window
 	 */
-	public GUILoginWindow(){
+	public LoginWindow(){
 		//Frame settings
 		frame = new JFrame("Virtual Planner");
 		frame.setSize(frameSize);
@@ -150,11 +150,15 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 
 		//Final Organizing Box
 		Box mainVertical = Box.createVerticalBox();
+		mainVertical.add(Box.createVerticalStrut(5));
 		mainVertical.add(panelTitleLabel);
+		mainVertical.add(Box.createVerticalStrut(20));
 		mainVertical.add(panelInfoLabel);
 		mainVertical.add(panelUsernameField);
 		mainVertical.add(panelPasswordField);
+		mainVertical.add(Box.createVerticalStrut(10));
 		mainVertical.add(panelRememberHorizontal);
+		mainVertical.add(Box.createVerticalStrut(10));
 		mainVertical.add(panelLoginButton);
 		mainVertical.add(panelCreateAccountButton);
 
@@ -247,7 +251,7 @@ public class GUILoginWindow implements ActionListener, FocusListener, KeyListene
 
 	public static void main(String[] args)
 	{
-		new GUILoginWindow();
+		new LoginWindow();
 	}
 
 	/**

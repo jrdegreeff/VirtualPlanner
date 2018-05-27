@@ -49,7 +49,8 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Font buttonFont = new Font("SansSerif", Font.BOLD, 20);
 	private static final Font newAssignmentFont = new Font("Dialog", Font.BOLD, 18);
 
-	private static Date currentDate = GUIMain.getCurrentDate();
+	//TODO: Better retrieval
+	private static Date currentDate = MainCalendarWindow.getCurrentDate();
 
 	private static GUIButton highlightedButton;
 
@@ -57,9 +58,9 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 	private static final String[] years = {"2018", "2019", "2020", "2021"};
 
-
-
 	private ArrayList<Assignment> assignments;
+	private ArrayList<Assignment> completedAssignments;
+
 	private Block block;
 	private boolean hasOptionsWindow;
 	private String name;
@@ -73,6 +74,10 @@ public class GUIButton extends JButton implements ActionListener {
 
 	private JList<String> assignmentList = new JList<String>();
 	private JScrollPane assignmentScrollPane = new JScrollPane();
+	private JLabel labelNewAssignment;
+
+	private Boolean isEditMode;
+	private Assignment assignmentToEdit;
 
 	/**
 	 * Base constructor with call to super 
@@ -82,7 +87,7 @@ public class GUIButton extends JButton implements ActionListener {
 		super();
 		hasOptionsWindow = false;
 		this.addActionListener(this);
-		this.name = name + "\n";
+		this.name = name;
 		this.setOpaque(true);
 		this.setFocusable(false);
 		this.setBackground(color);
@@ -90,7 +95,7 @@ public class GUIButton extends JButton implements ActionListener {
 		highlightedButton = null;
 		this.setAlignmentX(CENTER_ALIGNMENT);
 		this.assignments = new ArrayList<Assignment>();
-		//		this.setBorder(BorderFactory.createEtchedBorder(1, Color.RED, Color.RED));
+		isEditMode = false;
 	}
 
 	/**
@@ -139,6 +144,48 @@ public class GUIButton extends JButton implements ActionListener {
 	}
 
 	/**
+	 * Shows the Edit assignment features for an already exisiting assignment
+	 */
+	private void showEditAssignmentMode(int index) {
+		if (isEditMode || assignments == null || assignments.size()-1 < index)
+			return;
+		isEditMode = true;
+
+		Assignment a = assignments.get(index);
+
+		nameField.setText(a.getName());
+		descField.setText(a.getDescrip());
+		Date assignedDate = a.getAssignedDate();
+		assignedMonthBox.setSelectedItem(months[assignedDate.getMonth()]);
+		assignedDayBox.setSelectedItem(days[assignedDate.getDay()-1]);
+		assignedYearBox.setSelectedItem(years[assignedDate.getYear()-2018]);
+		Date dueDate = a.getDue();
+		dueMonthBox.setSelectedItem(months[dueDate.getMonth()]);
+		dueDayBox.setSelectedItem(days[dueDate.getDay()-1]);
+		dueYearBox.setSelectedItem(years[dueDate.getYear()-2018]);
+
+		labelNewAssignment.setText("Edit Assignment");
+		labelNewAssignment.setBackground(Color.YELLOW);
+		submitButton.setText("Finish");
+		submitButton.setBackground(Color.YELLOW);
+
+		assignmentToEdit = a;
+	}
+
+	/**
+	 * Hides the Edit assignment features, returns to the "New Assignment" mode
+	 */
+	private void hideEditAssignmentMode() {
+		if (!isEditMode)
+			return;
+		isEditMode = false;
+		labelNewAssignment.setText("New Assignment");
+		labelNewAssignment.setBackground(Color.GREEN);
+		submitButton.setText("Submit");
+		submitButton.setBackground(Color.GREEN);
+	}
+
+	/**
 	 * Creates a window of options for this GUIButton
 	 */
 
@@ -156,6 +203,7 @@ public class GUIButton extends JButton implements ActionListener {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				hasOptionsWindow = false;
 				optionsWindow.dispose();
+				updateButton();
 			}
 		});
 
@@ -165,26 +213,30 @@ public class GUIButton extends JButton implements ActionListener {
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
 		labelCurAssignments.setFont(titleFont);
 		labelCurAssignments.setOpaque(true);
-		labelCurAssignments.setBackground(Color.WHITE);
+		//		labelCurAssignments.setBackground(Color.WHITE);
 		JPanel panelLabelCurAssignments = new JPanel();
 		panelLabelCurAssignments.add(labelCurAssignments);
 
 		//Assignment JList and JScrollPane
 		updateAssignmentList();
 
-		
+		//TODO remove tester
+		String[] testtttt = {"test1", "2Test", "T3sT"};
+		assignmentList = new JList<String>(testtttt);
+
 		assignmentList.setFont(assignmentFont);
-		
+
 		//Double-Click edit feature
 		assignmentList.addMouseListener(new MouseAdapter() {
-		    public void mouseClicked(MouseEvent e) {
-		        if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
-		            int index = assignmentList.locationToIndex(e.getPoint());
-		        } 
-		    }
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
+					int index = assignmentList.locationToIndex(e.getPoint());
+					showEditAssignmentMode(index);
+				} 
+			}
 		});
-		
-		
+
+
 		assignmentScrollPane = new JScrollPane(assignmentList);
 		assignmentScrollPane.setPreferredSize(assignmentListSize);
 
@@ -200,20 +252,20 @@ public class GUIButton extends JButton implements ActionListener {
 		panelCompleteButton.add(completeButton);
 
 		//JLabel "New Assignment"
-		JLabel labelNewAssignment = new JLabel("New Assignment:");
+		labelNewAssignment = new JLabel("New Assignment:");
 		labelNewAssignment.setFont(titleFont);
 		labelNewAssignment.setOpaque(true);
-		labelNewAssignment.setBackground(Color.WHITE);
+		//		labelNewAssignment.setBackground(Color.WHITE);
 		JPanel panelLabelNewAssignment = new JPanel();
 		panelLabelNewAssignment.add(labelNewAssignment);
-		
+
 		//New Assignment: Name
 		JLabel labelName = new JLabel("Assignment Name:");
 		labelName.setFont(newAssignmentFont);
 		JPanel panelLabelName = new JPanel();
 		panelLabelName.add(labelName);
 
-		//TODO: This starts with focus
+		//Starts with focus
 		nameField = new JTextField();
 		nameField.setPreferredSize(inputFieldSize);
 		nameField.setFont(newAssignmentFont);
@@ -259,7 +311,8 @@ public class GUIButton extends JButton implements ActionListener {
 		//Year
 		assignedYearBox = new JComboBox<String>(years);
 		assignedYearBox.setBackground(Color.WHITE);
-		//TODO: BETTER METHOD HERE
+
+		//TODO: BETTER METHOD HERE for current day
 
 		//Set Defaults for ASSIGNED DATE
 		assignedMonthBox.setSelectedItem(months[currentDate.getMonth()]);
@@ -279,9 +332,6 @@ public class GUIButton extends JButton implements ActionListener {
 		labelDateDue.setFont(newAssignmentFont);
 		JPanel panelLabelDateDue = new JPanel();
 		panelLabelDateDue.add(labelDateDue);
-
-		//TODO: Set to Current Date, functionality even needed?
-		//TODO: ENUM?
 
 		//Month
 		dueMonthBox = new JComboBox<String>(months);
@@ -337,28 +387,39 @@ public class GUIButton extends JButton implements ActionListener {
 
 		optionsWindow.add(mainVertical);
 		optionsWindow.setVisible(true);
-
 	}
 
 	/**
-	 * Called when a user adds an assignment to a specific block to update the JList
+	 * Called when a user adds/removes/edits an assignment in a specific block to update the JList
 	 */
 	private void updateAssignmentList()
 	{
-		//TODO: Loop through assignments
 		//TODO: Descriptions on new line
 		if (assignments == null)
 		{
 			assignmentList = new JList<String>();
 			return;
 		}
-		
+
 		int length = assignments.size();
 		String[] curAssignments = new String[length];
 		for (int i = 0; i < length; i ++)
 			curAssignments[i] = assignments.get(i).getName();
 
 		assignmentList = new JList<String>(curAssignments);
+	}
+
+	/**
+	 * Updates the text that shows on the button
+	 */
+	private void updateButton(){
+		String result = name;
+		if (assignments == null)
+			return;
+		for (Assignment a: assignments)
+			result += "\n" + a.getName();
+		this.setMultiLineText(result);
+		//TODO: Check
 	}
 
 	/**
@@ -369,20 +430,36 @@ public class GUIButton extends JButton implements ActionListener {
 	{
 		Date assigned = new Date();
 		Date due = new Date();
-		assignments.add(new Assignment(assigned, due, AssignmentTypes.ESSAY, nameField.getText(), descField.getText()));
+		//		assignments.add(new Assignment(assigned, due, AssignmentTypes.ESSAY, nameField.getText(), descField.getText()));
 		updateAssignmentList();
 		//TODO: Null Pointer?
 	}
-	
+
 	/**
 	 * This method moves a current assignment to the completed list
 	 */
-	private void completeAssignment()
+	private void completeAssignment(int index)
 	{
-		System.out.println("Complete.");
+		if (assignments == null || assignments.size()-1 < index)
+			return;
+
+		completedAssignments.add(assignments.remove(index));
+		//TODO: WORKS?
 	}
-	
-	//TODO: KeyListener
+
+	/**
+	 * This method is the last part of the edit assignment procedure
+	 * After the user re-enters all the information, this method edits the original Assignment
+	 * Quits the edit assignment mode
+	 */
+	private void editAssignment(){
+		Assignment a = assignmentToEdit;
+		a.setName(nameField.getText());
+		a.setDescrip(descField.getText());
+		//TODO: Set Dates
+		hideEditAssignmentMode();
+	}
+
 	/**
 	 * Selects a particular button.
 	 * 
@@ -409,15 +486,20 @@ public class GUIButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
 
-		GUIMain.highlightCurDay();
+		MainCalendarWindow.highlightCurDay();
 
 		if (src.equals(submitButton)){
-			System.out.println("User tried to submit");
-			addAssignment();
+			if (isEditMode){
+				System.out.println("User tried to finish editing");
+			}
+			else{
+				System.out.println("User tried to submit");
+				addAssignment();
+			}
 		}
-		
+
 		else if (src.equals(completeButton)){
-			completeAssignment();
+			completeAssignment(assignmentList.getSelectedIndex());
 		}
 
 
