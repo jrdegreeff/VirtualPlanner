@@ -126,23 +126,36 @@ public class Course {
 	}
 
 	/**
-	 * addAssignment adds the given Assignment object to the Assigned HashMap
-	 * and the Due HashMap by respective dates.
-	 * @param hw
+	 * Adds the given Assignment object to both dueDateMap and assignedDateMap.
+	 * @param assn assignment to be added
 	 */
-	public void addAssignment(Assignment hw) {
-		Date dateDue = hw.getDue();
-		Date dateAssigned = hw.getAssignedDate();
+	public void addAssignment(Assignment assn) {
+		Date dateDue = assn.getDue();
+		Date dateAssigned = assn.getAssignedDate();
 		
+		// add to due date map
 		if (!dueDateMap.containsKey(dateDue)) {
 			dueDateMap.put(dateDue, new TreeSet<Assignment>());
 		}
-		dueDateMap.get(dateDue).add(hw);
+		dueDateMap.get(dateDue).add(assn);
 		
+		// add to assigned date map
 		if (!assnDateMap.containsKey(dateAssigned)) {
 			assnDateMap.put(dateAssigned, new TreeSet<Assignment>());
 		}
-		assnDateMap.get(dateAssigned).add(hw);
+		assnDateMap.get(dateAssigned).add(assn);
+	}
+	
+	/**
+	 * Removes the given Assignment object in both dueDateMap and assignedDateMap.
+	 * @param assn assignment to be removed
+	 */
+	public void removeAssignment(Assignment assn) {
+		Date dateDue = assn.getDue();
+		Date dateAssigned = assn.getAssignedDate();
+		
+		dueDateMap.get(dateDue).remove(assn);
+		assnDateMap.get(dateAssigned).remove(assn);
 	}
 
 	/**
