@@ -33,10 +33,16 @@ public class DatabaseController {
 	private static final String PASSWORD = "supersecretpassword";
 	
 	/**
+	 * This instance's connection to the database.
+	 */
+	private Connection connection;
+	
+	/**
 	 * Instantiates a {@code DatabaseController} and tests the connection.
 	 */
 	public DatabaseController() {
-		try (Connection c = connect()) {
+		try {
+			connection = connect();
 			System.out.println("Database Connection Succesful.");
 		}
 		catch (SQLException e) {
@@ -65,7 +71,7 @@ public class DatabaseController {
 	 * @return The {@code ResultSet} of the query.
 	 */
 	private ResultSet query(String sql) {
-		try {return connect().createStatement().executeQuery(sql);}
+		try {return connection.createStatement().executeQuery(sql);}
 		catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -79,7 +85,7 @@ public class DatabaseController {
 	 * @return {@code true} if successful, {@code false} otherwise.
 	 */
 	private boolean update(String sql) {
-		try (Statement s = connect().createStatement()) {
+		try (Statement s = connection.createStatement()) {
 			s.executeUpdate(sql);
 			return true;
 		} catch (SQLException e) {
@@ -95,7 +101,7 @@ public class DatabaseController {
 	 * @return The id of the record inserted or -1 if an error occurs.
 	 */
 	private int insertGetID(String sql) {
-		try (PreparedStatement s = connect().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+		try (PreparedStatement s = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 			s.executeUpdate();
 			try (ResultSet r = s.getGeneratedKeys();) {
 				if(r.next())
