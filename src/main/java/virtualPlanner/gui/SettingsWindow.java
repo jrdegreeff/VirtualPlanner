@@ -71,6 +71,7 @@ public class SettingsWindow {
 					Preferences.addColor(b.getCourse().getID(), b.getBackground());
 				}
 				frame.dispose();
+				parent.update();
 				parent.closeSettings();
 			}
 		});
