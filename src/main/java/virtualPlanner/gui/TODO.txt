@@ -1,7 +1,6 @@
 TODO:
 All Javadocs + Re-ordering of methods/Variables (FONTS INCLUDED)
 All Buttons of ANY SORT >> OPAQUE && !focusBorderPainted
-Nothing resizable
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
@@ -95,5 +94,7 @@ Fix Fonts
 Fix Images
 
 Descriptions on new lines for current assignments
+
+Nothing resizable
 
 Sunday Blank Block
