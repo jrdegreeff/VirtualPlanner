@@ -27,7 +27,7 @@ import virtualPlanner.reference.Fonts;
 public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 	private GUIController controller;
-	
+
 	/**This class' JFrame*/
 	private JFrame frame;
 
@@ -42,6 +42,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	/**Default hints for the user input fields*/
 	private static final String USERNAME_FIELD_DEFAULT_TEXT = "Username";
 	private static final String PASSWORD_FIELD_DEFAULT_TEXT = "Password";
+	private static final String NAME_FIELD_DEFAULT_TEXT = "Real Name";
 
 
 	/**Info label to directly contact/inform the user*/
@@ -52,6 +53,9 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 	/**JPasswordField for password*/
 	private JPasswordField passwordField;
+
+	/**JTextField for user's real name*/
+	private JTextField nameField;
 
 	/**JCheckBox to determine whether or not user wants to stay logged in*/
 	private JCheckBox remember;
@@ -73,7 +77,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	 */
 	public LoginWindow(GUIController controller) {
 		this.controller = controller;
-		
+
 		//Frame settings
 		frame = new JFrame("Virtual Planner");
 		frame.setSize(FRAME_SIZE);
@@ -111,6 +115,17 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		passwordField.setEchoChar((char) 0);
 		JPanel panelPasswordField = new JPanel();
 		panelPasswordField.add(passwordField);
+
+		//Real Name JTextField
+		nameField = new JTextField(NAME_FIELD_DEFAULT_TEXT);
+		nameField.setPreferredSize(DEFAULT_SIZE);
+		nameField.setFont(Fonts.LOGIN_DEFAULT);
+		nameField.setForeground(Color.GRAY);
+		nameField.addFocusListener(this);
+		nameField.addKeyListener(this);
+		nameField.setVisible(false);
+		JPanel panelNameField = new JPanel();
+		panelNameField.add(nameField);
 
 		//Stay Logged In JCheckBox and JLabel
 		remember = new JCheckBox();
@@ -155,6 +170,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		mainVertical.add(panelInfoLabel);
 		mainVertical.add(panelUsernameField);
 		mainVertical.add(panelPasswordField);
+		mainVertical.add(panelNameField);
 		mainVertical.add(Box.createVerticalStrut(10));
 		mainVertical.add(panelRememberHorizontal);
 		mainVertical.add(Box.createVerticalStrut(10));
@@ -197,9 +213,9 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	private void createAccount() {
 		//Obtain current text in passowrd
 		String password = new String(passwordField.getPassword());
-		
-		int successfulNewAccount = controller.signUp(usernameField.getText(), password, null); //New Account/User(usernameField.getText, password);
-		
+
+		int successfulNewAccount = controller.signUp(usernameField.getText(), password, nameField.getText()); //New Account/User(usernameField.getText, password);
+
 		if (successfulNewAccount == 0) {
 			new MainCalendarWindow(controller);
 			frame.dispose();
@@ -207,7 +223,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 			infoLabel.setForeground(Color.RED);
 			infoLabel.setText("Invalid Input");
 		}
-		
+
 		System.out.println("New Account:" + usernameField.getText() + " + " + password + " + remember? " + remember.isSelected());
 	}
 
@@ -216,7 +232,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	 * Changes some Swing Components
 	 */
 	private void toggleCreateAccountFeatures() {
-		
+
 		//From showingLoginFeatures to showingCreateAccountFeatures
 		if(showingLoginFeatures){
 			infoLabel.setText("Create Account:");
@@ -225,7 +241,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 			loginButton.setBackground(Color.GREEN);
 			createAccountButton.setText("Back");
 			createAccountButton.setBackground(Color.RED);
-//			passwordField.setEchoChar((char)0);
+			nameField.setVisible(true);
+			//			passwordField.setEchoChar((char)0);
 			showingLoginFeatures = false;
 		}
 		//From showingCreateAccountFeatures to showingLoginFeatures
@@ -236,7 +253,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 			loginButton.setBackground(Color.CYAN);
 			createAccountButton.setText("Create an Account");
 			createAccountButton.setBackground(Color.BLUE);
-//			passwordField.setEchoChar((char)8226);
+			nameField.setVisible(false);
+			//			passwordField.setEchoChar((char)8226);
 			showingLoginFeatures = true;
 		}
 	}
@@ -302,6 +320,16 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 				passwordField.setEchoChar((char)8226);
 			}
 		}
+
+		//nameField gains focus
+		else if (src.equals(nameField)) {
+			//User Clicks into the field with no user keyboard input
+			if (nameField.getText().equals(NAME_FIELD_DEFAULT_TEXT)) {
+				//Remove hint and change color of text
+				nameField.setText("");
+				nameField.setForeground(Color.BLACK);
+			}
+		}
 	}
 
 	/**
@@ -340,6 +368,20 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 				passwordField.setForeground(Color.GRAY);
 				//Set the passwordField to show characters
 				passwordField.setEchoChar((char)0);
+			}
+		}
+
+		//nameField loses focus
+		else if (src.equals(nameField)) {
+
+			//usernameField has lost first focus: handle events as usual now
+			firstFocus = false;
+
+			//If the field is blank
+			if(nameField.getText().equals("")) {
+				//Reinstate the "Hint", reset the color
+				nameField.setText(NAME_FIELD_DEFAULT_TEXT);
+				nameField.setForeground(Color.GRAY);
 			}
 		}
 	}
