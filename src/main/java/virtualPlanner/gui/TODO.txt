@@ -1,6 +1,6 @@
 TODO:
-All Javadocs + Re-ordering of methods/Variables (FONTS INCLUDED)
-All Buttons of ANY SORT >> OPAQUE && !focusBorderPainted
+JAVADOC FOR MAINCALENDAR WINDOW
+REORDER METHODS TO MAKE READABLE
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:

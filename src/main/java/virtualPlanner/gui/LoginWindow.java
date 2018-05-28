@@ -160,6 +160,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		loginButton.setFont(Fonts.LOGIN_BUTTON);
 		loginButton.setFocusPainted(false);
 		loginButton.addActionListener(this);
+		loginButton.setOpaque(true);
 		//This JFrame's default button >> Enter automatically calls actionPerformed with loginButton as the source
 		frame.getRootPane().setDefaultButton(loginButton);
 		JPanel panelLoginButton = new JPanel();
@@ -173,6 +174,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		createAccountButton.setFont(Fonts.LOGIN_BUTTON);
 		createAccountButton.setFocusPainted(false);
 		createAccountButton.addActionListener(this);
+		createAccountButton.setOpaque(true);
 		JPanel panelCreateAccountButton = new JPanel();
 		panelCreateAccountButton.add(createAccountButton);
 

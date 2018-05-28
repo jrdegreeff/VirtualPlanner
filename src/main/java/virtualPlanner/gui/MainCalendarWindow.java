@@ -317,7 +317,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		buttonSettings = new JButton();
 		buttonSettings.setIcon(new ImageIcon(Images.getSettings()));
-		buttonSettings.setOpaque(false);
+		buttonSettings.setOpaque(true);
 		buttonSettings.setContentAreaFilled(false);
 		buttonSettings.setBorderPainted(false);
 		buttonSettings.addActionListener(this);
@@ -496,6 +496,7 @@ public class MainCalendarWindow implements ActionListener {
 		buttonChooseBlocks = new JButton("Choose Meeting Blocks");
 		buttonChooseBlocks.setFont(Fonts.CALENDAR_ADD_CLASS);
 		buttonChooseBlocks.setFocusPainted(false);
+		buttonChooseBlocks.setOpaque(true);
 		buttonChooseBlocks.setBackground(Color.WHITE);
 		buttonChooseBlocks.addActionListener(this);
 		JPanel panelButtonChooseBlocks = new JPanel();
@@ -505,6 +506,8 @@ public class MainCalendarWindow implements ActionListener {
 		buttonAddCourse.setFont(Fonts.CALENDAR_ADD_CLASS);
 		buttonAddCourse.addActionListener(this);
 		buttonAddCourse.setBackground(Color.GREEN);
+		buttonAddCourse.setOpaque(true);
+		buttonAddCourse.setFocusPainted(false);
 		buttonAddCourse.setForeground(Color.BLACK);
 		addCourseWindow.getRootPane().setDefaultButton(buttonAddCourse);
 		JPanel panelButtonAddCourse = new JPanel();
