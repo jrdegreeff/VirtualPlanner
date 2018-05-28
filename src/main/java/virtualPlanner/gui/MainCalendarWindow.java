@@ -22,6 +22,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -43,20 +44,20 @@ public class MainCalendarWindow implements ActionListener {
 
 	/**The controller for this JFrame.*/
 	private GUIController controller;
-	
+
 	/**Today's date.*/
 	private static Date currentDate;
-	
+
 	/**The start date of the week which is being displayed currently.*/
 	private static Date weekStartDate;
 
 	/**The JFrame of this MainCalendarWindow instance*/
 	private JFrame frame;
-	
+
 	private SettingsWindow settings;
-	
+
 	private static final Dimension MAIN_SIZE = new Dimension(1280, 720);
-	
+
 	/**Outermost of all nested JPanels which is directly added into the JFrame*/
 	private JPanel mainPanel;
 	/**JPanel which holds the main calendar for the window */
@@ -383,7 +384,7 @@ public class MainCalendarWindow implements ActionListener {
 		c.fill = GridBagConstraints.VERTICAL;
 		GUIButton newButton = new GUIButton("", BLOCK_SIZE, Fonts.CALENDAR_DAY);
 		panelCalendar.add(newButton, c);
-		
+
 		panelCalendar.repaint();
 	}
 
@@ -414,7 +415,7 @@ public class MainCalendarWindow implements ActionListener {
 		//Create new Window
 		JFrame addCourseWindow = new JFrame("Add Course");
 		addCourseWindow.setResizable(false);
-		
+
 		//Override default close operation
 		addCourseWindow.setSize(COURSE_WINDOW_SIZE);
 		addCourseWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -536,11 +537,15 @@ public class MainCalendarWindow implements ActionListener {
 	private void addCourse() {
 		ArrayList<Block> tempBlocks = blockPicker.getSelectedBlocks();
 		Block[] blocks = tempBlocks.toArray(new Block[0]);
-		
-		controller.addCourse(blocks, nameField.getText(), abbreviationField.getText(), teacherField.getText());
-		existingCourses.setListData(controller.getCourseNames());
+
+		boolean successful = controller.addCourse(blocks, nameField.getText(), abbreviationField.getText(), teacherField.getText());
+		if (successful)
+			existingCourses.setListData(controller.getCourseNames());
+		else
+			JOptionPane.showMessageDialog(null, "Blocks Overlap with other courses' blocks", "Error", JOptionPane.ERROR_MESSAGE);
+
 	}
-	
+
 	protected void settingsClosed() {
 		settings = null;
 		updateWeek();
