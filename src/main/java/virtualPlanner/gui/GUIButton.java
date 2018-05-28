@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -21,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
@@ -491,6 +493,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Use GUIController to obtain most updated list of assignments
 		assignments = controller.getAssignments(date, block);
+		System.out.println(assignments);
 
 		//If null, create empty JList
 		if (assignments == null) {
@@ -503,15 +506,20 @@ public class GUIButton extends JButton implements ActionListener {
 		String[] curAssignments = new String[length];
 		for (int i = 0; i < length; i ++){
 			Assignment a = assignments.get(i);
+			
 			//This type of formatting is used to display the name and the description of the assignment on separate lines 
 			//WHILE keeping the two lines as part of ONE INDEX in the JList 
 			//Essential to the functionality of the Edit Mode
 			//Note: \n does not work, and wrapping text is intentionally avoided, as it creates unpleasant visuals
 			curAssignments[i] = a.getName() + "<br>" + a.getDescrip();
+			System.out.println(a);
 		}
 
+		System.out.println(Arrays.toString(curAssignments));
 		//Set the assignmentJList to display the current Assignments
-		assignmentJList = new JList<String>(curAssignments);
+		assignmentJList.setListData(curAssignments);
+		assignmentScrollPane.revalidate();
+		assignmentScrollPane.repaint();
 	}
 
 	/**
@@ -531,6 +539,7 @@ public class GUIButton extends JButton implements ActionListener {
 	 * Called only when the user clicks submitButton
 	 */
 	private void addAssignment() {
+		System.out.println("Attempting to add assignment");
 		//Retrieve Dates from JComboBoxes
 		Date assigned = new Date(assignedDayBox.getSelectedIndex()+1, assignedMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(assignedYearBox.getSelectedItem())));		
 		Date due = new Date(dueDayBox.getSelectedIndex()+1, dueMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(dueYearBox.getSelectedItem())));
@@ -539,7 +548,8 @@ public class GUIButton extends JButton implements ActionListener {
 		AssignmentTypes type = TYPES[typeBox.getSelectedIndex()];
 
 		//Call to controller to notify middle-end and back-end
-		controller.addAssignment(course, assigned, due, type, name, descField.getText());
+		controller.addAssignment(course, assigned, due, type, nameField.getText(), descField.getText());
+		
 		//Update the JList of current Assignments
 		updateAssignmentList();
 	}
@@ -560,7 +570,7 @@ public class GUIButton extends JButton implements ActionListener {
 		controller.setAssignmentComplete(removedAssignment, true);
 		controller.removeAssignment(course, removedAssignment);
 		//Add to the completed list
-		completedAssignments.add(removedAssignment);
+//		completedAssignments.add(removedAssignment);
 	}
 
 	/**
@@ -614,6 +624,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//The user clicks the submit button
 		if (src.equals(submitButton)) {
+			System.out.println("Submit clicked");
 			//Edit mode
 			if (isEditMode) {
 				//This means the user is done editing the assignment: proceed to the final step of the Edit Assignment procedure
