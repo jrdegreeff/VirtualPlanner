@@ -38,8 +38,12 @@ public class GUIBlockPicker {
 	 * Constructor for the GUIBlockPicker which creates a BlockPicker Window
 	 * @param name the title of the JFrame
 	 */
+<<<<<<< HEAD
 	public GUIBlockPicker(String name){
 		//Frame Settings
+=======
+	public GUIBlockPicker(String name) {
+>>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		frame = new JFrame(name);
 		frame.setSize(BLOCK_PICKER_SIZE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -62,10 +66,10 @@ public class GUIBlockPicker {
 	/**
 	 * @return the blocks that correspond to the currently selected GUICheckBoxes
 	 */
-	public ArrayList<Blocks> getSelectedBlocks(){
+	public ArrayList<Blocks> getSelectedBlocks() {
 		ArrayList<Blocks> result = new ArrayList<Blocks>();
-		for(GUICheckBox c: checkBoxes){
-			if(c.isSelected()){
+		for(GUICheckBox c: checkBoxes) {
+			if(c.isSelected()) {
 				result.add(c.getBlock());
 			}
 		}
@@ -286,7 +290,7 @@ public class GUIBlockPicker {
  *
  */
 @SuppressWarnings("serial")
-class GUICheckBox extends JCheckBox{
+class GUICheckBox extends JCheckBox {
 	
 	/**The block that corresponds to this JCheckBox*/
 	private Blocks block;
@@ -300,7 +304,7 @@ class GUICheckBox extends JCheckBox{
 	 * @param name the name of the CheckBox
 	 * @param block the corresponding block
 	 */
-	public GUICheckBox(String name, Blocks block, String dayOfWeek){
+	public GUICheckBox(String name, Blocks block, String dayOfWeek) {
 		super(name);
 		this.block = block;
 		this.dayOfWeek = dayOfWeek;
@@ -311,7 +315,7 @@ class GUICheckBox extends JCheckBox{
 	 * @param name the name of the CheckBox
 	 * @param block the corresponding block
 	 */
-	public GUICheckBox(String name, boolean selectable){
+	public GUICheckBox(String name, boolean selectable) {
 		super(name);
 		this.setEnabled(selectable);
 	}
@@ -319,14 +323,14 @@ class GUICheckBox extends JCheckBox{
 	/**
 	 * @return the block that corresponds to this GUICheckBox
 	 */
-	public Blocks getBlock(){
+	public Blocks getBlock() {
 		return block;
 	}
 	
 	/**
 	 * @return the String representation of the Day of Week that corresponds to this GUICheckBox
 	 */
-	public String getDayOfWeek(){
+	public String getDayOfWeek() {
 		return dayOfWeek;
 	}
 	

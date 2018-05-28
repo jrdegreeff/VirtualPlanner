@@ -90,9 +90,6 @@ public class MainCalendarWindow implements ActionListener {
 	private JList<String> events;
 	private JScrollPane eventsScrollPane;
 
-	//	//Variable to keep track of they highlighted Day
-	//	private static GUIButton highlightedDay;
-
 	//ArrayList of all the GUIButtons that show the day
 	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
 
@@ -111,11 +108,14 @@ public class MainCalendarWindow implements ActionListener {
 	//Dimension for the numUpcomingDays JTextField
 	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
 
+<<<<<<< HEAD
 	private static final int DEFAULT_NUM_UPCOMING_DAYS = 2;
 
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+=======
+	private static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+>>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 
-	
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
 	private static final Dimension COURSE_WINDOW_SIZE = new Dimension(320, 600);
@@ -185,6 +185,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		updateWeek();
 		hasSettingsWindow = false;
+		
 		//Initialize Settings Components
 
 		//Frame
@@ -239,20 +240,15 @@ public class MainCalendarWindow implements ActionListener {
 		labelWeek = new JLabel();
 		labelWeek.setOpaque(true);
 		labelWeek.setBackground(Color.WHITE);
-		//		labelWeek.setForeground(Color.MAGENTA);
-		labelWeek.setFont(Fonts.WEEK);
+		labelWeek.setFont(Fonts.CALENDAR_WEEK);
 
 		//Level 1 -> labelWeek and Prev + Next buttons
 		Box level1 = Box.createHorizontalBox();
-		//		level1.add(Box.createHorizontalGlue());
-		//		level1.add(Box.createHorizontalGlue());
 		level1.add(buttonLeft);
 		level1.add(Box.createHorizontalGlue());
 		level1.add(labelWeek);
 		level1.add(Box.createHorizontalGlue());
 		level1.add(buttonRight);
-		//		level1.add(Box.createHorizontalGlue());
-		//		level1.add(Box.createHorizontalGlue());
 
 		//Main Panel for Calendar
 		panelCalendar = new JPanel();
@@ -268,8 +264,13 @@ public class MainCalendarWindow implements ActionListener {
 		labelDate = new JLabel("<html>" + currentDayOfWeek + "<br/>" + MONTHS[currentDate.getMonth()] + " " + currentDate.getDay() + ", " + currentDate.getYear() + "</html>");
 		labelDate.setOpaque(true);
 		labelDate.setForeground(Color.BLACK);
+<<<<<<< HEAD
 		labelDate.setFont(Fonts.DATE);
 		labelDate.setPreferredSize(DATE_SIZE);
+=======
+		labelDate.setFont(Fonts.CALENDAR_DATE);
+		labelDate.setPreferredSize(dateSize);
+>>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 
 
 		JPanel panelLabelDate = new JPanel();
@@ -279,13 +280,13 @@ public class MainCalendarWindow implements ActionListener {
 		JLabel labelEvents = new JLabel("Upcoming Events");
 		labelEvents.setOpaque(true);
 		labelEvents.setForeground(Color.BLACK);
-		labelEvents.setFont(Fonts.LIST);
+		labelEvents.setFont(Fonts.CALENDAR_LIST);
 		JPanel panelLabelEvents = new JPanel();
 		panelLabelEvents.add(labelEvents);
 
 		//JList
 		events = new JList<String>();
-		events.setFont(Fonts.LIST);
+		events.setFont(Fonts.CALENDAR_LIST);
 		events.setForeground(Color.BLACK);
 		events.setPreferredSize(UPCOMING_EVENTS_SIZE);
 		String[] test = {"History Paper", "Chemistry Test", "Math Homework", "Writing Workshop Packet"};
@@ -390,13 +391,12 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * This method finds and highlights the day of week GUIButton that corresponds to the current day
 	 */
-	public static void highlightCurDay()
-	{	
+	public static void highlightCurDay() {	
 		if (currentDate.compareTo(weekStartDate) < 0 || currentDate.compareTo(weekStartDate.getUpcomingDate(7)) > 0)
 			return;
 
 		String curDay = currentDate.getDayOfWeek().toString();
-		for(GUIButton b : dayOfWeekButtons){
+		for(GUIButton b : dayOfWeekButtons) {
 			if(b.getText().equalsIgnoreCase(curDay)){
 				b.setBackground(Color.YELLOW);
 				b.revalidate();
@@ -433,62 +433,83 @@ public class MainCalendarWindow implements ActionListener {
 		panelAddCourse.setLayout(new GridLayout(5,1));
 
 		JLabel nameLabel = new JLabel("Course Name:");
-		nameLabel.setFont(Fonts.ADD_CLASS);
+		nameLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
 		nameLabel.setForeground(Color.BLACK);
 		JPanel panelNameLabel = new JPanel();
 		panelNameLabel.add(nameLabel);
 
 		nameField = new JTextField(20);
+<<<<<<< HEAD
 		nameField.setFont(Fonts.ADD_CLASS);
 		nameField.setPreferredSize(FIELD_SIZE);
 		nameField.setMinimumSize(FIELD_SIZE);
 		nameField.setMaximumSize(FIELD_SIZE);	
+=======
+		nameField.setFont(Fonts.CALENDAR_ADD_CLASS);
+		nameField.setPreferredSize(fieldSize);
+		nameField.setMinimumSize(fieldSize);
+		nameField.setMaximumSize(fieldSize);	
+>>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
 		JLabel abbreviationLabel = new JLabel("Course Abbreviation:");
-		abbreviationLabel.setFont(Fonts.ADD_CLASS);
+		abbreviationLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
 		abbreviationLabel.setForeground(Color.BLACK);
 		JPanel panelAbbreviationLabel = new JPanel();
 		panelAbbreviationLabel.add(abbreviationLabel);
 
 		abbreviationField = new JTextField(20);
+<<<<<<< HEAD
 		abbreviationField.setFont(Fonts.ADD_CLASS);
 		abbreviationField.setPreferredSize(FIELD_SIZE);
 		abbreviationField.setMinimumSize(FIELD_SIZE);
 		abbreviationField.setMaximumSize(FIELD_SIZE);	
+=======
+		abbreviationField.setFont(Fonts.CALENDAR_ADD_CLASS);
+		abbreviationField.setPreferredSize(fieldSize);
+		abbreviationField.setMinimumSize(fieldSize);
+		abbreviationField.setMaximumSize(fieldSize);	
+>>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelAbbreviationField = new JPanel();
 		panelAbbreviationField.add(abbreviationField);
 
 		JLabel teacherLabel = new JLabel("Teacher:");
-		teacherLabel.setFont(Fonts.ADD_CLASS);
+		teacherLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
 		teacherLabel.setForeground(Color.BLACK);
 		JPanel panelTeacherLabel = new JPanel();
 		panelTeacherLabel.add(teacherLabel);
 
 		teacherField = new JTextField(20);
+<<<<<<< HEAD
 		teacherField.setFont(Fonts.ADD_CLASS);
 		teacherField.setPreferredSize(FIELD_SIZE);
 		teacherField.setMinimumSize(FIELD_SIZE);
 		teacherField.setMaximumSize(FIELD_SIZE);
+=======
+		teacherField.setFont(Fonts.CALENDAR_ADD_CLASS);
+		teacherField.setPreferredSize(fieldSize);
+		teacherField.setMinimumSize(fieldSize);
+		teacherField.setMaximumSize(fieldSize);
+>>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelTeacherField = new JPanel();
 		panelTeacherField.add(teacherField);
 
 		JLabel blockLabel = new JLabel("Block:");
-		blockLabel.setFont(Fonts.ADD_CLASS);
+		blockLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
 		blockLabel.setForeground(Color.BLACK);
 		JPanel panelBlockLabel = new JPanel();
 		panelBlockLabel.add(blockLabel);
 
 		String[] blockList = {"A", "B", "C", "D", "E", "F", "G", "H", "L"};
 		blockComboBox = new JComboBox<String>(blockList);
-		blockComboBox.setFont(Fonts.ADD_CLASS);
+		blockComboBox.setFont(Fonts.CALENDAR_ADD_CLASS);
 		blockComboBox.setBackground(Color.WHITE);
 		JPanel panelBlockComboBox = new JPanel();
 		panelBlockComboBox.add(blockComboBox);
 
 		buttonAddCourse = new JButton("Submit");
-		buttonAddCourse.setFont(Fonts.ADD_CLASS);
+		buttonAddCourse.setFont(Fonts.CALENDAR_ADD_CLASS);
 		buttonAddCourse.addActionListener(this);
 		buttonAddCourse.setBackground(Color.GREEN);
 		buttonAddCourse.setForeground(Color.BLACK);
@@ -497,7 +518,7 @@ public class MainCalendarWindow implements ActionListener {
 		panelButtonAddCourse.add(buttonAddCourse);
 
 		JLabel coursesLabel = new JLabel("Added Courses:");
-		coursesLabel.setFont(Fonts.ADD_CLASS);
+		coursesLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
 		coursesLabel.setForeground(Color.BLACK);
 		coursesLabel.setOpaque(true);
 		JPanel panelCoursesLabel = new JPanel();
@@ -517,7 +538,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		//TODO: CURRENT COURSES
 		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
-		existingCourses.setFont(Fonts.ADD_CLASS);
+		existingCourses.setFont(Fonts.CALENDAR_ADD_CLASS);
 		existingCourses.setVisibleRowCount(6);
 
 		JScrollPane coursesPane = new JScrollPane(existingCourses);
@@ -535,7 +556,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * This method creates a window which allows the user to set preferences 
 	 */
-	private void showSettingsWindow(){
+	private void showSettingsWindow() {
 
 		if(hasSettingsWindow)
 			return;
@@ -562,7 +583,7 @@ public class MainCalendarWindow implements ActionListener {
 		});
 
 		JLabel blockLabel = new JLabel("Course Colors");
-		blockLabel.setFont(Fonts.ADD_CLASS);
+		blockLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
 		JPanel panelBlockLabel = new JPanel();
 		panelBlockLabel.add(blockLabel);
 
@@ -570,7 +591,7 @@ public class MainCalendarWindow implements ActionListener {
 		mainVertical.add(panelBlockLabel);
 
 		ArrayList<GUISampleColorButton> buttons = GUISampleColorButton.getButtons();
-		for (GUISampleColorButton b: buttons){
+		for (GUISampleColorButton b : buttons) {
 			JPanel tempPanel = new JPanel();
 			tempPanel.add(b);
 			mainVertical.add(tempPanel);
@@ -591,7 +612,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Number of days of upcoming events
 		JLabel numDaysLabel = new JLabel("Number of Days 'Upcoming Events' shows");
-		numDaysLabel.setFont(Fonts.ADD_CLASS);
+		numDaysLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
 		JPanel panelNumDaysLabel = new JPanel();
 		panelNumDaysLabel.add(numDaysLabel);
 
@@ -611,7 +632,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * 
 	 */
-	private void addCourse(){
+	private void addCourse() {
 		controller.addCourse(null, nameField.getText(), abbreviationField.getText(), teacherField.getText());
 		//TODO JUST THIS COURSE
 //		new GUISampleColorButton(abbreviationField.getText(), course);
@@ -645,6 +666,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * Method which handles of of the ActionEvents recorded by ActionListeners
 	 */
+	@Override
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
 
@@ -665,19 +687,19 @@ public class MainCalendarWindow implements ActionListener {
 			showAddCourseWindow();
 		}
 
-		else if (src.equals(buttonAddCourse)){
+		else if (src.equals(buttonAddCourse)) {
 			addCourse();
 		}
 
-		else if (src.equals(buttonGradebook)){
+		else if (src.equals(buttonGradebook)) {
 			System.out.println("Opened Gradebook");
 		}
 
-		else if (src.equals(buttonSettings)){
+		else if (src.equals(buttonSettings)) {
 			showSettingsWindow();
 		}
 
-		else if (src.equals(menuItemCurrentWeek)){
+		else if (src.equals(menuItemCurrentWeek)) {
 			weekStartDate = currentDate.getWeekStartDate();
 			updateWeek();
 		}

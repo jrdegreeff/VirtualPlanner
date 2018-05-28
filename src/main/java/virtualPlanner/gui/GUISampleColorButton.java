@@ -13,14 +13,13 @@ import virtualPlanner.backend.Course;
 import virtualPlanner.reference.Fonts;
 
 @SuppressWarnings("serial")
-public class GUISampleColorButton extends JButton implements ActionListener{
+public class GUISampleColorButton extends JButton implements ActionListener {
 
 	private static final Dimension BUTTON_SIZE = new Dimension(60,30);
 	private static ArrayList<GUISampleColorButton> buttons = new ArrayList<GUISampleColorButton>();
 	private Course course;
 	
-	public GUISampleColorButton(String name, Course course)
-	{
+	public GUISampleColorButton(String name, Course course) {
 		super(name);
 		this.setFocusPainted(false);
 		this.setFont(Fonts.CALENDAR_BLOCK);
@@ -31,7 +30,7 @@ public class GUISampleColorButton extends JButton implements ActionListener{
 		buttons.add(this);
 	}
 
-	public static ArrayList<GUISampleColorButton> getButtons(){
+	public static ArrayList<GUISampleColorButton> getButtons() {
 		return buttons;
 	}
 	
@@ -39,6 +38,7 @@ public class GUISampleColorButton extends JButton implements ActionListener{
 		return this.course;
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		Color c = JColorChooser.showDialog(this, this.getText() + " Block Color", this.getBackground());
 		if (c == null)
