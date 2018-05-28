@@ -26,6 +26,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -129,7 +130,6 @@ public class MainCalendarWindow implements ActionListener {
 	private JRadioButton buttonShowDateAssigned = new JRadioButton();
 	private JRadioButton buttonShowDateDue = new JRadioButton();
 	private boolean hasSettingsWindow;
-	private int numUpcomingDays;
 	private JTextField upcomingDaysField;
 
 
@@ -187,8 +187,6 @@ public class MainCalendarWindow implements ActionListener {
 
 		updateWeek();
 		hasSettingsWindow = false;
-		//TODO: Actual Retrieval from Settings
-		numUpcomingDays = DEFAULT_NUM_UPCOMING_DAYS;
 		//Initialize Settings Components
 
 		//Frame
@@ -551,8 +549,13 @@ public class MainCalendarWindow implements ActionListener {
 		settingsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		settingsFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
-				hasSettingsWindow = false;
+				try{
 				Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));
+				} catch (Exception e){
+					JOptionPane.showMessageDialog(null, "Invalid Input for Upcoming Days", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				hasSettingsWindow = false;
 				settingsFrame.dispose();
 			}
 		});
@@ -591,7 +594,7 @@ public class MainCalendarWindow implements ActionListener {
 		JPanel panelNumDaysLabel = new JPanel();
 		panelNumDaysLabel.add(numDaysLabel);
 
-		upcomingDaysField = new JTextField("" + numUpcomingDays);
+		upcomingDaysField = new JTextField("" + Preferences.numDaysUpcoming());
 		upcomingDaysField.setPreferredSize(upcomingDaysSize);
 		upcomingDaysField.setFont(Fonts.CALENDAR_BLOCK);
 		upcomingDaysField.setHorizontalAlignment(JTextField.CENTER);
@@ -609,7 +612,7 @@ public class MainCalendarWindow implements ActionListener {
 	 */
 	private void addCourse(){
 		controller.addCourse(null, nameField.getText(), abbreviationField.getText(), teacherField.getText());
-		new GUISampleColorButton(nameField.getText());
+		new GUISampleColorButton(abbreviationField.getText(), controller.getCourse(null));
 		//TODO: Array of blocks
 	}
 
