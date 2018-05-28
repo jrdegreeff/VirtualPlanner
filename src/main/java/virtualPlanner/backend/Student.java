@@ -1,10 +1,10 @@
 package virtualPlanner.backend;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import virtualPlanner.util.Block;
 
@@ -131,7 +131,7 @@ public class Student implements User {
 	 * @return All of this {@code Student}'s {@code Courses}.
 	 */
 	public Course[] getAllCourses() {
-		Set<Course> courses = new TreeSet<Course>();
+		Set<Course> courses = new HashSet<Course>();
 		for(Course course : schedule.values())
 			courses.add(course);
 		return courses.toArray(new Course[0]);
