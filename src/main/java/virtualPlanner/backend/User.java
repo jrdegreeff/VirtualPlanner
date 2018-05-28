@@ -53,12 +53,23 @@ public interface User {
 	
 	/**
 	 * Adds a {@code Course} to this {@code User}'s schedule in the specified {@code Block}s.
+	 * Should only be called once the availability of the {@code Block}s has been checked.
 	 * 
 	 * @param blocks The {@code Block}s to add the {@code Course} to.
 	 * @param course The {@code Course} to add.
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in this {@code User}'s schedule.
 	 */
-	public boolean addCourse(Block[] blocks, Course course);
+	public void addCourse(Block[] blocks, Course course);
+	
+	/**
+	 * Tests whether the {@code User}'s schedule conflicts with certain blocks.
+	 * Optionally ignores the {@code Block}s occupied by a particular {@code Course}.
+	 * 
+	 * @param blocks The {@code Block}s to test.
+	 * @param ignore An optional {@code Course} to ignore.
+	 * @return {@code true} if there is no conflict, {@code false} otherwise.
+	 */
+	public boolean checkAvailability(Block[] blocks, Course ignore);
 	
 	/**
 	 * Adds a {@code Course} to this {@code User}'s schedule in {@code Block}s with the specified blockids.
@@ -85,8 +96,11 @@ public interface User {
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in this {@code User}'s schedule.
 	 */
 	public default boolean updateCourse(Block[] newBlocks, Course course) {
+		if(!checkAvailability(newBlocks, course))
+			return false;
 		removeCourse(course);
-		return addCourse(newBlocks, course);
+		addCourse(newBlocks, course);
+		return true;
 	}
 	
 	/**

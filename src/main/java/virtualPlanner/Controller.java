@@ -132,8 +132,12 @@ public class Controller {
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in the user's schedule.
 	 */
 	public boolean addCourse(Block[] blocks, String name, String abbreviation, String teacher) {
+		if(!user.checkAvailability(blocks, null))
+			return false;
 		Course course = dbController.createCourse(name, abbreviation, teacher);
-		return user.addCourse(blocks, course) && dbController.link(user, course, blocks);
+		dbController.link(user, course, blocks);
+		user.addCourse(blocks, course);
+		return true;
 	}
 	
 	/**
