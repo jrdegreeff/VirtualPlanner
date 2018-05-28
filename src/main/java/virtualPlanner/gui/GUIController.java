@@ -11,7 +11,7 @@ import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
 
 /**
- * Controller for the GUI classes which provides an interface to the backend.
+ * Controller for the GUI classes which provides an interface to the rest of the project.
  * 
  * @author JeremiahDeGreeff
  */
@@ -101,29 +101,21 @@ public class GUIController {
 	 * 
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
-	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if the {@code User} has no {@code Course} in the specified {@code Block}.
 	 */
 	public ArrayList<Assignment> getAssignments(Date date, Block block) {
 		return controller.getAssignments(date, block);
 	}
 	
 	/**
-	 * Retrieves the user's {@code Assignment}s' names for a particular {@code Block} on a particular {@code Date}.
+	 * Retrieves String representations of the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
 	 * 
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
-	 * @return The {@code Assignment}s' names which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 * @return String representations of any {@code Assignment}s which the user has for the specified {@code Date} and {@code Block}.
 	 */
 	public ArrayList<String> getAssignmentNames(Date date, Block block) {
-		ArrayList<Assignment> assignments = controller.getAssignments(date, block);
-		ArrayList<String> result = new ArrayList<String>();
-		if(assignments == null)
-			return new ArrayList<String>();
-		
-		for(Assignment a: assignments)
-			result.add(a.getName());
-		
-		return result;
+		return controller.getAssignmentNames(date, block);
 	}
 	
 	/**
