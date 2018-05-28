@@ -181,6 +181,7 @@ public class GUIButton extends JButton implements ActionListener {
 		this.course = course;
 		this.mainWindow = mainWindow;
 		this.date = date;
+		updateButton();
 	}
 
 	/**
@@ -285,10 +286,10 @@ public class GUIButton extends JButton implements ActionListener {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				//Result boolean which prevents multiple instantiations
 				hasAssignmentsWindow = false;
-				//Updates the text on the Button, because the user may have edited some assignments
-				updateButton();
+//				//Updates the text on the Button, because the user may have edited some assignments
+//				updateButton();
 				//Updates the "Upcoming Events" JList on the right of the MainCalendarWindow
-				mainWindow.updateUpcomingEvents();
+				mainWindow.update();
 				//Dispose the JFrame
 				assignmentsWindow.dispose();
 			}
@@ -517,9 +518,9 @@ public class GUIButton extends JButton implements ActionListener {
 	 * Updates the text that shows on this GUIButton
 	 */
 	private void updateButton() {
-		String result = name;
 		if (assignments == null)
 			return;
+		String result = "";
 		for (Assignment a: assignments)
 			result += "\n" + a.getName();
 		this.setMultiLineText(result);
