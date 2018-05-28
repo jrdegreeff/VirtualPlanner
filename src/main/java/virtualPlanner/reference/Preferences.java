@@ -88,6 +88,31 @@ public class Preferences {
 	}
 	
 	/**
+	 * @return The number of days which should be included in the upcoming events.
+	 */
+	public static int numDaysUpcoming() {
+		return Integer.parseInt(properties.getProperty("numDaysUpcoming"));
+	}
+	
+	/**
+	 * Sets the numDaysUpcoming preference to a specified value.
+	 * 
+	 * @param value The value to set.
+	 */
+	public static void setNumDaysUpcoming(int value) {
+		properties.setProperty("numDaysUpcoming", "" + value);
+		savePreferences();
+	}
+	
+	/**
+	 * Restores the default numDaysUpcoming preference.
+	 */
+	public static void removeNumDaysUpcoming()  {
+		properties.remove("numDaysUpcoming");
+		savePreferences();
+	}
+	
+	/**
 	 * @return {@code true} if assignments should be displayed on the day when they are due; {@code false} if assignments should be displayed on the day when they are assigned.
 	 */
 	public static boolean displayOnDue() {
