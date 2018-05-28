@@ -108,6 +108,22 @@ public class GUIController {
 	}
 	
 	/**
+	 * Retrieves the user's {@code Assignment}s' names for a particular {@code Block} on a particular {@code Date}.
+	 * 
+	 * @param date The {@code Date} to query.
+	 * @param block The {@code Block} to query.
+	 * @return The {@code Assignment}s' names which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 */
+	public ArrayList<String> getAssignmentNames(Date date, Block block) {
+		ArrayList<Assignment> assignments = getAssignments(date, block);
+		ArrayList<String> result = new ArrayList<String>();
+		for(Assignment a: assignments)
+			result.add(a.getName());
+		
+		return result;
+	}
+	
+	/**
 	 * Changes the name of the the user.
 	 * 
 	 * @param newName The new name for the user.

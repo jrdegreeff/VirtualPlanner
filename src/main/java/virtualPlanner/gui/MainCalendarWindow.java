@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import virtualPlanner.backend.Course;
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
+import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
 
@@ -546,7 +547,7 @@ public class MainCalendarWindow implements ActionListener {
 		settingsFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
 				hasSettingsWindow = false;
-				//TODO SAVE
+				Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));
 				settingsFrame.dispose();
 			}
 		});

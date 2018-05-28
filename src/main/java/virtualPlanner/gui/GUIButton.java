@@ -26,6 +26,7 @@ import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
 import virtualPlanner.backend.Student;
 import virtualPlanner.reference.AssignmentTypes;
+import virtualPlanner.reference.Days;
 import virtualPlanner.util.Date;
 import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
@@ -399,9 +400,24 @@ public class GUIButton extends JButton implements ActionListener {
 	 * This method is called whenever the user is done adding an assignment so that the "Upcoming Events" list is updated
 	 */
 	private void updateUpcomingEvents(){
-		String[] test = {"1","2"};
-		//TODO: Retrieval of events list
-		mainWindow.setEventsList(test);
+		//ArrayList of the upcoming events - to be converted back to normal array later
+		ArrayList<String> arrayListEvents = new ArrayList<String>();
+		//Number of days to include in coming events
+		int numDaysUpcoming = Preferences.numDaysUpcoming();
+		
+		//For each day within the numDaysUpcoming range
+		for(int i = 0; i < numDaysUpcoming; i ++){
+			//Get the corresponding date and add its list of assignments
+			Date upcomingDate = currentDate.getUpcomingDate(i);
+			Block[] blocks = Days.getBlocksOnDay(upcomingDate);
+			for(Block b: blocks)
+				arrayListEvents.addAll(controller.getAssignmentNames(upcomingDate, b));
+		}
+		
+		//Turn ArrayList back into array
+		String[] arrayEvents = arrayListEvents.toArray(new String[arrayListEvents.size()]);
+		//Set "Upcoming Events" to display the array
+		mainWindow.setEventsList(arrayEvents);
 	}
 
 	/**
