@@ -115,8 +115,11 @@ public class GUIController {
 	 * @return The {@code Assignment}s' names which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
 	 */
 	public ArrayList<String> getAssignmentNames(Date date, Block block) {
-		ArrayList<Assignment> assignments = getAssignments(date, block);
+		ArrayList<Assignment> assignments = controller.getAssignments(date, block);
 		ArrayList<String> result = new ArrayList<String>();
+		if(assignments == null)
+			return new ArrayList<String>();
+		
 		for(Assignment a: assignments)
 			result.add(a.getName());
 		
