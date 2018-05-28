@@ -38,7 +38,7 @@ public class SettingsWindow {
 	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
 	
 	/**Size of this specific GUISampleColorButton*/
-	private static final Dimension BUTTON_SIZE = new Dimension(60,30);
+	private static final Dimension BUTTON_SIZE = new Dimension(250, 30);
 
 	/**JRadioButton to customize whether assignments show on the Date assigned*/
 	private JRadioButton buttonShowDateAssigned;
@@ -71,7 +71,7 @@ public class SettingsWindow {
 					Preferences.addColor(b.getCourse().getID(), b.getBackground());
 				}
 				frame.dispose();
-				parent.settingsClosed();
+				parent.closeSettings();
 			}
 		});
 
