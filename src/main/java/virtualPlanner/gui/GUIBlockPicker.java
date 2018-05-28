@@ -38,12 +38,8 @@ public class GUIBlockPicker {
 	 * Constructor for the GUIBlockPicker which creates a BlockPicker Window
 	 * @param name the title of the JFrame
 	 */
-<<<<<<< HEAD
-	public GUIBlockPicker(String name){
-		//Frame Settings
-=======
 	public GUIBlockPicker(String name) {
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
+		//Frame Settings
 		frame = new JFrame(name);
 		frame.setSize(BLOCK_PICKER_SIZE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

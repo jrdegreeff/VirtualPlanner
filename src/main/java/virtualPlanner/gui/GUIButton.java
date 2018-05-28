@@ -42,20 +42,9 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Border DEFAULT_BORDER = BorderFactory.createEtchedBorder(1);
 	private static final Border HIGHLIGHTED_BORDER = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
 
-<<<<<<< HEAD
 	private static final Dimension ASSIGNMENT_WINDOW_SIZE = new Dimension(400, 775);
 	private static final Dimension ASSIGNMENT_LIST_SIZE = new Dimension(275, 200);
 	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
-
-	private static final Font TITLE_FONT = new Font("Dialog", Font.BOLD, 26);
-	private static final Font ASSIGNMENT_FONT = new Font("Dialog", Font.BOLD, 20);
-	private static final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
-	private static final Font NEW_ASSIGNMENT_FONT = new Font("Dialog", Font.BOLD, 18);
-=======
-	private static final Dimension showAssignmentsSize = new Dimension(400, 775);
-	private static final Dimension assignmentListSize = new Dimension(275, 200);
-	private static final Dimension inputFieldSize = new Dimension(250, 35);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 	
 	private GUIController controller;
 
@@ -223,24 +212,14 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//JLabel "Current Assignments"
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
-<<<<<<< HEAD
-		labelCurAssignments.setFont(TITLE_FONT);
-=======
 		labelCurAssignments.setFont(Fonts.BUTTON_TITLE);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		labelCurAssignments.setOpaque(true);
 		JPanel panelLabelCurAssignments = new JPanel();
 		panelLabelCurAssignments.add(labelCurAssignments);
 
 		//Assignment JList and JScrollPane
 		updateAssignmentList();
-
-<<<<<<< HEAD
-		assignmentList.setFont(ASSIGNMENT_FONT);
-=======
-		//TODO remove tester
 		assignmentList.setFont(Fonts.BUTTON_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 
 		//Double-Click edit feature
 		assignmentList.addMouseListener(new MouseAdapter() {
@@ -260,11 +239,7 @@ public class GUIButton extends JButton implements ActionListener {
 		panelAssignmentList.add(assignmentScrollPane);
 
 		completeButton = new JButton("Complete Assignment");
-<<<<<<< HEAD
-		completeButton.setFont(BUTTON_FONT);
-=======
 		completeButton.setFont(Fonts.BUTTON_BUTTON);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		completeButton.setBackground(Color.green);
 		completeButton.addActionListener(this);
 		completeButton.setFocusable(false);
@@ -273,55 +248,33 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//JLabel "New Assignment"
 		labelNewAssignment = new JLabel("New Assignment:");
-<<<<<<< HEAD
-		labelNewAssignment.setFont(TITLE_FONT);
-=======
 		labelNewAssignment.setFont(Fonts.BUTTON_TITLE);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		labelNewAssignment.setOpaque(true);
 		JPanel panelLabelNewAssignment = new JPanel();
 		panelLabelNewAssignment.add(labelNewAssignment);
 
 		//New Assignment: Name
 		JLabel labelName = new JLabel("Assignment Name:");
-<<<<<<< HEAD
-		labelName.setFont(NEW_ASSIGNMENT_FONT);
-=======
 		labelName.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelLabelName = new JPanel();
 		panelLabelName.add(labelName);
 
 		//Starts with focus
 		nameField = new JTextField();
-<<<<<<< HEAD
 		nameField.setPreferredSize(INPUT_FIELD_SIZE);
-		nameField.setFont(NEW_ASSIGNMENT_FONT);
-=======
-		nameField.setPreferredSize(inputFieldSize);
 		nameField.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
 		//Adding Assignment: Description
 		JLabel labelDesc = new JLabel("Assignment Description (Optional):");
-<<<<<<< HEAD
-		labelDesc.setFont(NEW_ASSIGNMENT_FONT);
-=======
 		labelDesc.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelLabelDesc = new JPanel();
 		panelLabelDesc.add(labelDesc);
 
 		descField = new JTextField();
-<<<<<<< HEAD
 		descField.setPreferredSize(INPUT_FIELD_SIZE);
-		descField.setFont(NEW_ASSIGNMENT_FONT);
-=======
-		descField.setPreferredSize(inputFieldSize);
 		descField.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelDescField = new JPanel();
 		panelDescField.add(descField);
 
@@ -331,21 +284,13 @@ public class GUIButton extends JButton implements ActionListener {
 			assignmentTypes[i] = AssignmentTypes.values()[i].getName();
 		typeBox = new JComboBox<String>(assignmentTypes);
 		typeBox.setBackground(Color.WHITE);
-<<<<<<< HEAD
-		typeBox.setFont(NEW_ASSIGNMENT_FONT);
-=======
 		typeBox.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelTypeBox = new JPanel();
 		panelTypeBox.add(typeBox);
 
 		//Adding Assignment: Date Assigned
 		JLabel labelDateAssigned = new JLabel("Date Assigned:");
-<<<<<<< HEAD
-		labelDateAssigned.setFont(NEW_ASSIGNMENT_FONT);
-=======
 		labelDateAssigned.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelLabelDateAssigned = new JPanel();
 		panelLabelDateAssigned.add(labelDateAssigned);
 
@@ -377,11 +322,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Adding Assignment: Date Due
 		JLabel labelDateDue = new JLabel("Date Due:");
-<<<<<<< HEAD
-		labelDateDue.setFont(NEW_ASSIGNMENT_FONT);
-=======
 		labelDateDue.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelLabelDateDue = new JPanel();
 		panelLabelDateDue.add(labelDateDue);
 
@@ -412,11 +353,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Submit Button
 		submitButton = new JButton("Submit");
-<<<<<<< HEAD
-		submitButton.setFont(BUTTON_FONT);
-=======
 		submitButton.setFont(Fonts.BUTTON_BUTTON);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		submitButton.setBackground(Color.green);
 		submitButton.addActionListener(this);
 		assignmentsWindow.getRootPane().setDefaultButton(submitButton);
