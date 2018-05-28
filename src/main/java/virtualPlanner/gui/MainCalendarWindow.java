@@ -234,12 +234,11 @@ public class MainCalendarWindow implements ActionListener {
 		String currentDayOfWeek = currentDate.getDayOfWeek().toString();
 		currentDayOfWeek = currentDayOfWeek.charAt(0) + currentDayOfWeek.substring(1, currentDayOfWeek.length()).toLowerCase();
 		labelDate = new JLabel("<html>" + currentDayOfWeek + "<br/>" + MONTHS[currentDate.getMonth()] + " " + currentDate.getDay() + ", " + currentDate.getYear() + "</html>");
+		labelDate.setFont(Fonts.CALENDAR_DATE);
 		labelDate.setOpaque(true);
 		labelDate.setForeground(Color.BLACK);
-		
 		labelDate.setFont(Fonts.CALENDAR_DATE);
 		labelDate.setPreferredSize(DATE_SIZE);
-
 
 		JPanel panelLabelDate = new JPanel();
 		panelLabelDate.add(labelDate);

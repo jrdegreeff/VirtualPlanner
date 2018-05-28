@@ -219,8 +219,9 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Assignment JList and JScrollPane
 		updateAssignmentList();
+		
 		assignmentList.setFont(Fonts.BUTTON_ASSIGNMENT);
-
+		
 		//Double-Click edit feature
 		assignmentList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -255,6 +256,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//New Assignment: Name
 		JLabel labelName = new JLabel("Assignment Name:");
+		labelName.setPreferredSize(INPUT_FIELD_SIZE);
 		labelName.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelLabelName = new JPanel();
 		panelLabelName.add(labelName);
