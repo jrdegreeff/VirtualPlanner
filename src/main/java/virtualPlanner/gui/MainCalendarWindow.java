@@ -115,7 +115,7 @@ public class MainCalendarWindow implements ActionListener {
 	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
 
 	/**Size for labelDate*/
-	private static final Dimension DATE_SIZE = new Dimension(400, 125);
+	private static final Dimension DATE_SIZE = new Dimension(400, 100);
 
 	/**
 	 * Size of the upcoming events JList
@@ -152,6 +152,9 @@ public class MainCalendarWindow implements ActionListener {
 	private JTextField teacherField;
 	/**JButton which enables the user to choose which blocks a course meets*/
 	private JButton buttonChooseBlocks;
+	/**GUIBlockPicker which enables the user to add special meeting times for the course*/
+	private GUIBlockPicker blockPicker;
+	private JList<String> existingCourses;
 
 	//Settings Window
 	/**Boolean to prevent mutliple instantiations of the Settings Window*/
@@ -504,6 +507,7 @@ public class MainCalendarWindow implements ActionListener {
 		buttonChooseBlocks.addActionListener(this);
 		JPanel panelButtonChooseBlocks = new JPanel();
 		panelButtonChooseBlocks.add(buttonChooseBlocks);
+		blockPicker = new GUIBlockPicker("Choose Meeting Blocks");
 
 		buttonAddCourse = new JButton("Submit");
 		buttonAddCourse.setFont(Fonts.CALENDAR_ADD_CLASS);
@@ -534,9 +538,7 @@ public class MainCalendarWindow implements ActionListener {
 		mainVertical.add(panelButtonAddCourse);
 		mainVertical.add(panelCoursesLabel);
 
-		//TODO: NULL POINTER
-		//		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
-		JList<String> existingCourses = new JList<String>();
+		existingCourses = new JList<String>(controller.getCourseNames());
 
 		existingCourses.setFont(Fonts.CALENDAR_ADD_CLASS);
 		existingCourses.setVisibleRowCount(6);
@@ -637,9 +639,11 @@ public class MainCalendarWindow implements ActionListener {
 	 * 
 	 */
 	private void addCourse() {
-		controller.addCourse(null, nameField.getText(), abbreviationField.getText(), teacherField.getText());
-		//TODO JUST THIS COURSE
-		//		new GUISampleColorButton(abbreviationField.getText(), course);
+		ArrayList<Block> tempBlocks = blockPicker.getSelectedBlocks();
+		Block[] blocks = tempBlocks.toArray(new Block[0]);
+		
+		controller.addCourse(blocks, nameField.getText(), abbreviationField.getText(), teacherField.getText());
+		existingCourses.setListData(controller.getCourseNames());
 	}
 
 	/**
@@ -706,7 +710,7 @@ public class MainCalendarWindow implements ActionListener {
 		}
 
 		else if (src.equals(buttonChooseBlocks)){
-			new GUIBlockPicker("Choose Meeting Blocks");
+			blockPicker.setVisible(true);
 		}
 
 		else if (src.equals(menuItemCurrentWeek)) {

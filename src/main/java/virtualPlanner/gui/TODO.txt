@@ -1,10 +1,10 @@
 TODO:
 JAVADOC FOR MAINCALENDAR WINDOW
 REORDER METHODS TO MAKE READABLE
+REFACTOR ADD COURSE WINDOWs
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
-- Make sure passing in corrent block parameters in GUIBlockPicker
 - Null Pointer on Add Course
 - Give course in MainCalendarWindow.addCourse()
 - Test UpdateAssignmentList
@@ -98,3 +98,5 @@ Descriptions on new lines for current assignments
 Nothing resizable
 
 Sunday Blank Block
+
+- Make sure passing in corrent block parameters in GUIBlockPicker

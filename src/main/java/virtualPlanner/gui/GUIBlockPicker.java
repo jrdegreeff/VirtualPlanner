@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import virtualPlanner.reference.Blocks;
 import virtualPlanner.reference.Days;
 import virtualPlanner.util.Block;
 
@@ -32,10 +31,6 @@ public class GUIBlockPicker {
 	/**ArrayList of the GUICheckBoxes*/
 	private ArrayList<GUICheckBox[]> checkBoxes = new ArrayList<GUICheckBox[]>();
 
-	//	/**The GUICheckBoxes which represent Blocks*/
-	//	private GUICheckBox monC, monF, monD, monE, monG, monB, monA, monL, tueD, tueA, tueC, tueB, tueH, tueF, tueE, tueL, wedB, wedC, wedA, wedF, wedG, thuE, thuD, thuH, thuF, thuB, thuC, thuL, friF, friE, friB, friC, friG, friA, friD, friL, satA, satH, satE, satD;
-
-
 	/**
 	 * Constructor for the GUIBlockPicker which creates a BlockPicker Window
 	 * @param name the title of the JFrame
@@ -50,7 +45,6 @@ public class GUIBlockPicker {
 		//Override close operation
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
-				getSelectedBlocks();
 				frame.dispose();
 			}
 		});
@@ -62,7 +56,7 @@ public class GUIBlockPicker {
 		//Retrieve and show the JPanel which holds the model calendar
 		frame.add(getModelCalendar());
 
-		frame.setVisible(true);
+		frame.setVisible(false);
 		frame.setResizable(false);
 	}
 
@@ -82,7 +76,15 @@ public class GUIBlockPicker {
 
 		return result;
 	}
-
+	
+	/**
+	 * Sets the visibility of the frame of this GUIBlockPicker
+	 * @param visible the new visibility of the screen
+	 */
+	public void setVisible(boolean visible){
+		frame.setVisible(visible);
+	}
+	
 	/**
 	 * This method instantiates the GUICheckBoxes, and corresponds them to their appropriate Blocks and Days
 	 */
