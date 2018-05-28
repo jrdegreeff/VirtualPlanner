@@ -84,7 +84,7 @@ public class Assignment implements Comparable<Assignment> {
 	 * @param newAssn new assigned date
 	 * @return old assigned date
 	 */
-	protected Date changeAssignedDate(Date newAssn) {
+	public Date changeAssignedDate(Date newAssn) {
 		Date oldAssn = assignedDate;
 		assignedDate = newAssn;
 		return oldAssn;
@@ -102,7 +102,7 @@ public class Assignment implements Comparable<Assignment> {
 	 * @param newDue new due date
 	 * @return old due date
 	 */
-	protected Date changeDueDate(Date newDue) {
+	public Date changeDueDate(Date newDue) {
 		Date oldDue = dueDate;
 		dueDate = newDue;
 		return oldDue;

@@ -1,12 +1,8 @@
 TODO:
-Add/Remove/Edit Assignments
-Handle Login
-
 All Javadocs
 Sunday Blank Block
 Change Finals Names
 Re-ordering of methods/Variables
-Fix highlighting RED
 Descriptions on new lines for current assignments
 Everything OPAQUE, Nothing Resizable
 Test Assignments: Add/Remove/Edit
@@ -80,3 +76,11 @@ Dimension for the Date
 Base Block colors on Course
 
 Set Block Colors
+
+Handle Login/Signup
+- New Name field
+
+Add/Remove/Edit Assignments
+
+Fix highlighting RED
+

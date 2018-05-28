@@ -345,7 +345,7 @@ public class MainCalendarWindow implements ActionListener {
 				c.gridy = j + 1;
 				Block block = blockOrder.getBlock(j);
 				Course course = controller.getCourse(block);
-				GUIButton button = new GUIButton(block.getBlock().getAbbreviation(), block, course == null ? -1 : course.getID(), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), BLOCK_SIZE, Fonts.CALENDAR_BLOCK, controller, controller.getCourse(block), this);
+				GUIButton button = new GUIButton(block.getBlock().getAbbreviation(), block, course == null ? -1 : course.getID(), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), BLOCK_SIZE, Fonts.CALENDAR_BLOCK, controller, controller.getCourse(block), this, weekStartDate.getUpcomingDate(j));
 				panelCalendar.add(button, c);
 				buttons[i][j] = button;
 			}
@@ -621,12 +621,14 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
+			GUIButton.deselect();
 			weekStartDate = weekStartDate.getUpcomingDate(-7);
 			updateWeek();
 		}
 
 		//Right button on the calendar
 		else if (src.equals(buttonRight)) {
+			GUIButton.deselect();
 			weekStartDate = weekStartDate.getUpcomingDate(7);
 			updateWeek();
 		}
