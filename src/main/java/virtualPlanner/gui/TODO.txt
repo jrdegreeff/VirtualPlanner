@@ -1,9 +1,4 @@
 TODO:
-Upcoming Events >> RETRIEVAL
-
-Preferences
-- Number of days of upcoming events >> STORAGE + LOADING
-
 JCheckBoxes
 - choosing blocks for new classes
 
@@ -73,3 +68,8 @@ Date compareTo >> Highlight curday class
 Add course
 
 "DATA STRUCTURES" ADD COURSE
+
+Upcoming Events >> RETRIEVAL
+
+Preferences
+- Number of days of upcoming events >> STORAGE + LOADING
