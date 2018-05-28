@@ -1,5 +1,6 @@
 package virtualPlanner.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
@@ -74,7 +75,6 @@ public class GUIBlockPicker {
 		result.add(new JLabel("Thu", JLabel.CENTER));
 		result.add(new JLabel("Fri", JLabel.CENTER));
 		result.add(new JLabel("Sat", JLabel.CENTER));
-
 
 		result.add(monC);
 		result.add(tueD);
@@ -301,8 +301,9 @@ public class GUIBlockPicker {
 		checkBoxes.add(satD);
 		//blockMap.put(satD, null);
 		
-		for(JCheckBox c: checkBoxes)
+		for(JCheckBox c: checkBoxes){
 			c.setFocusPainted(false);
+		}
 	}
 	
 	public static void main(String[] args){
