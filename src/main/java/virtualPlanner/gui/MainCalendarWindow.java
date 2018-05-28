@@ -357,8 +357,6 @@ public class MainCalendarWindow implements ActionListener {
 		c.fill = GridBagConstraints.VERTICAL;
 		GUIButton newButton = new GUIButton("", BLOCK_SIZE, Fonts.CALENDAR_DAY);
 		panelCalendar.add(newButton, c);
-
-		panelCalendar.repaint();
 	}
 
 	/**

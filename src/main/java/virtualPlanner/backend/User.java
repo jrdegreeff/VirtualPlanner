@@ -109,11 +109,29 @@ public interface User {
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
 	 * @param onDue {@code true} if querying by due date, {@code false} if querying by assigned date.
-	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if the {@code User} has no {@code Course} in the specified {@code Block}.
 	 */
 	public default ArrayList<Assignment> getAssignments(Date date, Block block, boolean onDue) {
 		Course course = getCourse(block);
 		return course == null ? null : new ArrayList<Assignment>(onDue ? course.getDue(date) : course.getAssigned(date));
+	}
+	
+	/**
+	 * Retrieves String representations of the {@code User}'s {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * 
+	 * @param date The {@code Date} to query.
+	 * @param block The {@code Block} to query.
+	 * @param onDue {@code true} if querying by due date, {@code false} if querying by assigned date.
+	 * @return String representations of any {@code Assignment}s which the user has for the specified {@code Date} and {@code Block}.
+	 */
+	public default ArrayList<String> getAssignmentNames(Date date, Block block, boolean onDue) {
+		ArrayList<Assignment> assignments = getAssignments(date, block, onDue);
+		if(assignments == null)
+			return new ArrayList<String>();
+		ArrayList<String> names = new ArrayList<String>();
+		for(Assignment assignment : assignments)
+			names.add(assignment.getName());
+		return names;
 	}
 	
 }

@@ -106,10 +106,21 @@ public class Controller {
 	 * 
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
-	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if the {@code User} has no {@code Course} in the specified {@code Block}..
 	 */
 	public ArrayList<Assignment> getAssignments(Date date, Block block) {
 		return user.getAssignments(date, block, Preferences.displayOnDue());
+	}
+	
+	/**
+	 * Retrieves String representations of the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * 
+	 * @param date The {@code Date} to query.
+	 * @param block The {@code Block} to query.
+	 * @return String representations of any {@code Assignment}s which the user has for the specified {@code Date} and {@code Block}.
+	 */
+	public ArrayList<String> getAssignmentNames(Date date, Block block) {
+		return user.getAssignmentNames(date, block, Preferences.displayOnDue());
 	}
 	
 	/**
