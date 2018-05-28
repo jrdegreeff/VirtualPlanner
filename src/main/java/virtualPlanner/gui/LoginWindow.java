@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,6 +37,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 	/**The size of the JFrame*/
 	private static final Dimension FRAME_SIZE = new Dimension(450, 500);
 	/**Default Sizes of Fields and Buttons*/
+	private static final Dimension TITLE_SIZE = new Dimension(375, 35);
+	/**Default Sizes of Fields and Buttons*/
 	private static final Dimension DEFAULT_SIZE = new Dimension(300, 35);
 
 	
@@ -60,9 +61,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 	/**JTextField for user's real name - used for personalization*/
 	private JTextField nameField;
-
-	/**JCheckBox to remember whether or not user wants to stay logged in*/
-	private JCheckBox remember;
 
 	/**JButton to submit user input*/
 	private JButton loginButton;
@@ -91,7 +89,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 		//Title JLabel
 		titleLabel.setFont(Fonts.LOGIN_TITLE);
-		titleLabel.setPreferredSize(DEFAULT_SIZE);
+		titleLabel.setPreferredSize(TITLE_SIZE);
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 		//Nested Panels are the best way to ensure that the JFrame and other JPanels respect the inner components' preferred settings
 		JPanel panelTitleLabel = new JPanel();
 		panelTitleLabel.add(titleLabel);
@@ -140,18 +139,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
-		//Stay Logged In JCheckBox and JLabel
-		remember = new JCheckBox();
-		remember.setOpaque(true);
-		remember.setForeground(Color.WHITE);
-		JLabel labelRemember = new JLabel("Keep me logged in");
-		Box rememberHorizontal = Box.createHorizontalBox();
-		rememberHorizontal.add(remember);
-		rememberHorizontal.add(labelRemember);
-		JPanel panelRememberHorizontal = new JPanel();
-		panelRememberHorizontal.add(rememberHorizontal);
-		panelRememberHorizontal.setPreferredSize(DEFAULT_SIZE);
-
 		//Login JButton
 		loginButton = new JButton("Log in");
 		loginButton.setPreferredSize(DEFAULT_SIZE);
@@ -189,9 +176,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 		mainVertical.add(panelUsernameField);
 		mainVertical.add(panelPasswordField);
 		mainVertical.add(panelNameField);
-		mainVertical.add(Box.createVerticalStrut(10));
-		mainVertical.add(panelRememberHorizontal);
-		mainVertical.add(Box.createVerticalStrut(10));
+		mainVertical.add(Box.createVerticalStrut(5));
 		mainVertical.add(panelLoginButton);
 		mainVertical.add(panelCreateAccountButton);
 
@@ -217,8 +202,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 		//Successful login
 		if (successfulLogin == 0){
-			//Instantiate specific MainCalendarWindow
-			new MainCalendarWindow(controller);
 			//Dispose of LoginWindow
 			frame.dispose();	
 		} 
@@ -243,10 +226,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 		//Successful signup
 		if (successfulNewAccount == 0) {
-			//Instantiate specific MainCalendarWindow
-			new MainCalendarWindow(controller);
-			//Dispose of LoginWindow
-			frame.dispose();
+			login();
 		} 
 		//Unsuccessful signup
 		else {
@@ -255,7 +235,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 			infoLabel.setText("Invalid Input");
 		}
 
-		System.out.println("New Account:" + usernameField.getText() + " + " + password + " + remember? " + remember.isSelected());
+		System.out.println("New Account:" + usernameField.getText() + " + " + password);
 	}
 
 	/**

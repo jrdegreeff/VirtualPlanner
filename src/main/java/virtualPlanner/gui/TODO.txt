@@ -2,9 +2,9 @@ TODO:
 JAVADOC FOR MAINCALENDAR WINDOW
 REORDER METHODS TO MAKE READABLE
 SET JList for UPCOMING EVENTS
-GUISampleColorButton >> Better size + Load color
 Override Repaint
 Remove Course Button
+SetOpaque + SetBorderPaint for JButtons
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
