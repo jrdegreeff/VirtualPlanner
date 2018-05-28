@@ -16,7 +16,7 @@ import virtualPlanner.reference.Blocks;
 /**
  * This class creates a pop-up window which holds a model of the MX block-schedule
  * This window is used during the adding of courses to allow the user to input special circumstances for class meeting times (ie. Drop blocks, L blocks, Middle-of-day double blocks)
- * @author Kevin
+ * @author KevinGao
  *
  */
 public class GUIBlockPicker {
@@ -39,6 +39,7 @@ public class GUIBlockPicker {
 	 * @param name the title of the JFrame
 	 */
 	public GUIBlockPicker(String name) {
+
 		//Frame Settings
 		frame = new JFrame(name);
 		frame.setSize(BLOCK_PICKER_SIZE);
@@ -53,18 +54,24 @@ public class GUIBlockPicker {
 
 		//Instantiate all the CheckBoxes
 		addCheckBoxes();
-		
+
+		//Retrieve and show the JPanel which holds the model calendar
 		frame.add(getModelCalendar());
+
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}
-	
+
 	/**
 	 * @return the blocks that correspond to the currently selected GUICheckBoxes
 	 */
 	public ArrayList<Blocks> getSelectedBlocks() {
+		//Resulting ArrayList to return
 		ArrayList<Blocks> result = new ArrayList<Blocks>();
+
+		//For each checkBox
 		for(GUICheckBox c: checkBoxes) {
+			//If it is selected, add the block to the result
 			if(c.isSelected()) {
 				result.add(c.getBlock());
 			}
@@ -74,86 +81,13 @@ public class GUIBlockPicker {
 	}
 
 	/**
-	 * @return the JPanel with all of the GUICheckBoxes modeling the Block Schedule
-	 */
-	private JPanel getModelCalendar(){
-		JPanel result = new JPanel();
-		result.setLayout(new GridLayout(11,6));
-
-		result.add(new JLabel("Mon", JLabel.CENTER));
-		result.add(new JLabel("Tue", JLabel.CENTER));
-		result.add(new JLabel("Wed", JLabel.CENTER));
-		result.add(new JLabel("Thu", JLabel.CENTER));
-		result.add(new JLabel("Fri", JLabel.CENTER));
-		result.add(new JLabel("Sat", JLabel.CENTER));
-
-		result.add(monC);
-		result.add(tueD);
-		result.add(wedB);
-		result.add(new GUICheckBox("FCMTG", false));
-		result.add(friF);
-		result.add(satA);
-		result.add(monF);
-		result.add(tueA);
-		result.add(wedC);
-		result.add(thuE);
-		result.add(friE);
-		result.add(satH);
-		result.add(new GUICheckBox("MTNG", false));
-		result.add(new GUICheckBox("ASSEM", false));
-		result.add(new GUICheckBox("CHAPEL", false));
-		result.add(thuD);
-		result.add(new GUICheckBox("SENATE", false));
-		result.add(new GUICheckBox("ASSEM", false));
-		result.add(monD);
-		result.add(tueC);
-		result.add(wedA);
-		result.add(thuH);
-		result.add(friB);
-		result.add(satE);
-		result.add(monE);
-		result.add(tueB);
-		result.add(wedF);
-		result.add(thuF);
-		result.add(friC);
-		result.add(satD);
-		result.add(monG);
-		result.add(tueH);
-		result.add(wedG);
-		result.add(new GUICheckBox("LUNCH", false));
-		result.add(friG);
-		for(int i = 0; i < 4; i ++)
-			result.add(new GUICheckBox("LUNCH", false));
-		result.add(thuB);
-		result.add(new GUICheckBox("LUNCH", false));
-		result.add(new JPanel());
-		result.add(monB);
-		result.add(tueF);
-		result.add(new JPanel());
-		result.add(thuC);
-		result.add(friA);
-		result.add(new JPanel());
-		result.add(monA);
-		result.add(tueE);
-		result.add(new JPanel());
-		result.add(thuL);
-		result.add(friD);
-		result.add(new JPanel());
-		result.add(monL);
-		result.add(tueL);
-		for(int i = 0; i < 2; i ++)
-			result.add(new JPanel());
-		result.add(friL);
-		result.add(new JPanel());
-
-		return result;
-	}
-
-	/**
 	 * This method instantiates the GUICheckBoxes, and corresponds them to their appropriate Blocks and Days
 	 */
 	private void addCheckBoxes(){
+
+		//Instantiate GUICheckBox
 		monC = new GUICheckBox("C", Blocks.C, "Monday");
+		//Add to ArrayList holding all of the GUICheckBoxes
 		checkBoxes.add(monC);
 
 		monF = new GUICheckBox("F", Blocks.F, "Monday");
@@ -272,28 +206,110 @@ public class GUIBlockPicker {
 
 		satD = new GUICheckBox("D", Blocks.D, "Saturday");
 		checkBoxes.add(satD);
-		
+
+		//QOL update to remove pointless dotted-line highlights
 		for(GUICheckBox c: checkBoxes){
 			c.setFocusPainted(false);
 		}
+	}
+
+	/**
+	 * Adds the GUICheckBoxes to their correct locations within the JPanel
+	 * @return the JPanel with all of the GUICheckBoxes modeling the Block Schedule
+	 */
+	private JPanel getModelCalendar(){
+
+		//JPanel to return
+		JPanel result = new JPanel();
+		result.setLayout(new GridLayout(11,6));
+
+		//First Row: Day of Week Labels
+		result.add(new JLabel("Mon", JLabel.CENTER));
+		result.add(new JLabel("Tue", JLabel.CENTER));
+		result.add(new JLabel("Wed", JLabel.CENTER));
+		result.add(new JLabel("Thu", JLabel.CENTER));
+		result.add(new JLabel("Fri", JLabel.CENTER));
+		result.add(new JLabel("Sat", JLabel.CENTER));
+
+		//Add the rest of the GUICheckBoxes in the correct order
+		result.add(monC);
+		result.add(tueD);
+		result.add(wedB);
+		result.add(new GUICheckBox("FCMTG", false));
+		result.add(friF);
+		result.add(satA);
+		result.add(monF);
+		result.add(tueA);
+		result.add(wedC);
+		result.add(thuE);
+		result.add(friE);
+		result.add(satH);
+		result.add(new GUICheckBox("MTNG", false));
+		result.add(new GUICheckBox("ASSEM", false));
+		result.add(new GUICheckBox("CHAPEL", false));
+		result.add(thuD);
+		result.add(new GUICheckBox("SENATE", false));
+		result.add(new GUICheckBox("ASSEM", false));
+		result.add(monD);
+		result.add(tueC);
+		result.add(wedA);
+		result.add(thuH);
+		result.add(friB);
+		result.add(satE);
+		result.add(monE);
+		result.add(tueB);
+		result.add(wedF);
+		result.add(thuF);
+		result.add(friC);
+		result.add(satD);
+		result.add(monG);
+		result.add(tueH);
+		result.add(wedG);
+		result.add(new GUICheckBox("LUNCH", false));
+		result.add(friG);
+		for(int i = 0; i < 4; i ++)
+			result.add(new GUICheckBox("LUNCH", false));
+		result.add(thuB);
+		result.add(new GUICheckBox("LUNCH", false));
+		result.add(new JPanel());
+		result.add(monB);
+		result.add(tueF);
+		result.add(new JPanel());
+		result.add(thuC);
+		result.add(friA);
+		result.add(new JPanel());
+		result.add(monA);
+		result.add(tueE);
+		result.add(new JPanel());
+		result.add(thuL);
+		result.add(friD);
+		result.add(new JPanel());
+		result.add(monL);
+		result.add(tueL);
+		for(int i = 0; i < 2; i ++)
+			result.add(new JPanel());
+		result.add(friL);
+		result.add(new JPanel());
+
+		return result;
 	}
 }
 
 /**
  * This class is a very simple extension of javax.swing.JCheckBox which helps correspond JCheckBoxes to their corresponding Block and Day of Week
  * Used only within GUIBlockPicker
- * @author Kevin
+ * @author KevinGao
  *
  */
 @SuppressWarnings("serial")
 class GUICheckBox extends JCheckBox {
-	
+
 	/**The block that corresponds to this JCheckBox*/
 	private Blocks block;
-	
+
 	/**The Day of Week of this GUICheckBox*/
 	private String dayOfWeek;
-	
+
 	/**
 	 * Default constructor for GUICheckBox
 	 * GUICheckBox for the clickable block options
@@ -305,7 +321,7 @@ class GUICheckBox extends JCheckBox {
 		this.block = block;
 		this.dayOfWeek = dayOfWeek;
 	}
-	
+
 	/**
 	 * GUICheckBox for uncheckable placeholders (ie. Assembly, FCMTG, etc.)
 	 * @param name the name of the CheckBox
@@ -315,19 +331,19 @@ class GUICheckBox extends JCheckBox {
 		super(name);
 		this.setEnabled(selectable);
 	}
-	
+
 	/**
 	 * @return the block that corresponds to this GUICheckBox
 	 */
 	public Blocks getBlock() {
 		return block;
 	}
-	
+
 	/**
 	 * @return the String representation of the Day of Week that corresponds to this GUICheckBox
 	 */
 	public String getDayOfWeek() {
 		return dayOfWeek;
 	}
-	
+
 }

@@ -1,6 +1,5 @@
 TODO:
 All Javadocs + Re-ordering of methods/Variables (FONTS INCLUDED)
-Sunday Blank Block
 All Buttons of ANY SORT >> OPAQUE && !focusBorderPainted
 Nothing resizable
 ___________________________________________________________
@@ -10,7 +9,9 @@ FINAL TODO:
 - Null Pointer on Add Course
 - Give course in MainCalendarWindow.addCourse()
 - Test UpdateAssignmentList
+- Highlight Current Day Broken
 - Show Anna Image
+- Edit Assignments >> Presentation
 ___________________________________________________________
 ___________________________________________________________
 Ideas
@@ -94,3 +95,4 @@ Fix Images
 
 Descriptions on new lines for current assignments
 
+Sunday Blank Block

@@ -21,17 +21,18 @@ import javax.swing.JTextField;
 import virtualPlanner.reference.Fonts;
 
 /**
- * Class the represents a Login window for the VirtualPlanner
- * @author Kevin
+ * This class represents both a Login and a SignUp Window for the VirtualPlanner
+ * @author KevinGao
  */
 public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
+	/**Corresponding GUIController*/
 	private GUIController controller;
 
 	/**This class' JFrame*/
 	private JFrame frame;
 
-	/**Title label shown at the town of the window*/
+	/**Title label shown at the top of the window*/
 	private static JLabel titleLabel = new JLabel("Virtual Planner Login");
 
 	/**The size of the JFrame*/
@@ -39,11 +40,14 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	/**Default Sizes of Fields and Buttons*/
 	private static final Dimension DEFAULT_SIZE = new Dimension(300, 35);
 
-	/**Default hints for the user input fields*/
+	
+	//The following three variables are used in the manual implementation of a JTextField suggested text
+	/**Default Hint/Suggested text for the username JTextField*/
 	private static final String USERNAME_FIELD_DEFAULT_TEXT = "Username";
+	/**Default Hint/Suggested text for the password JTextField*/
 	private static final String PASSWORD_FIELD_DEFAULT_TEXT = "Password";
+	/**Default Hint/Suggested text for the realname JTextField*/
 	private static final String NAME_FIELD_DEFAULT_TEXT = "Real Name";
-
 
 	/**Info label to directly contact/inform the user*/
 	private JLabel infoLabel;
@@ -54,10 +58,10 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	/**JPasswordField for password*/
 	private JPasswordField passwordField;
 
-	/**JTextField for user's real name*/
+	/**JTextField for user's real name - used for personalization*/
 	private JTextField nameField;
 
-	/**JCheckBox to determine whether or not user wants to stay logged in*/
+	/**JCheckBox to remember whether or not user wants to stay logged in*/
 	private JCheckBox remember;
 
 	/**JButton to submit user input*/
@@ -66,7 +70,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	/**JButton for new Account Window*/
 	private JButton createAccountButton;
 
-	/**Boolean used in FocusListener: ignoring the defualt firstFocus*/
+	/**Boolean used in FocusListener: ignoring the default firstFocus*/
 	private boolean firstFocus;
 
 	/**Boolean used in toggling between Log-in and Create Account features*/
@@ -76,6 +80,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	 * Constructor which initializes a Login Window
 	 */
 	public LoginWindow(GUIController controller) {
+		//Set controller
 		this.controller = controller;
 
 		//Frame settings
@@ -86,6 +91,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		//Title JLabel
 		titleLabel.setFont(Fonts.LOGIN_TITLE);
 		titleLabel.setPreferredSize(DEFAULT_SIZE);
+		//Nested Panels are the best way to ensure that the JFrame and other JPanels respect the inner components' preferred settings
 		JPanel panelTitleLabel = new JPanel();
 		panelTitleLabel.add(titleLabel);
 
@@ -93,6 +99,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		infoLabel.setPreferredSize(DEFAULT_SIZE);
 		infoLabel.setFont(Fonts.LOGIN_INFO);
 		infoLabel.setForeground(Color.BLACK);
+		//Nested JPanel
 		JPanel panelInfoLabel = new JPanel();
 		panelInfoLabel.add(infoLabel);
 
@@ -100,6 +107,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		usernameField = new JTextField(USERNAME_FIELD_DEFAULT_TEXT);
 		usernameField.setPreferredSize(DEFAULT_SIZE);
 		usernameField.setFont(Fonts.LOGIN_DEFAULT);
+		//Set Color to Gray for suggested text
 		usernameField.setForeground(Color.GRAY);
 		usernameField.addFocusListener(this);
 		usernameField.addKeyListener(this);
@@ -110,8 +118,10 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		passwordField = new JPasswordField(PASSWORD_FIELD_DEFAULT_TEXT);
 		passwordField.setPreferredSize(DEFAULT_SIZE);
 		passwordField.setFont(Fonts.LOGIN_DEFAULT);
+		//Set Color to Gray for suggested text
 		passwordField.setForeground(Color.GRAY);
 		passwordField.addFocusListener(this);
+		//Set passwordField to SHOW contents, since it is initialized to the suggested text
 		passwordField.setEchoChar((char) 0);
 		JPanel panelPasswordField = new JPanel();
 		panelPasswordField.add(passwordField);
@@ -120,9 +130,11 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		nameField = new JTextField(NAME_FIELD_DEFAULT_TEXT);
 		nameField.setPreferredSize(DEFAULT_SIZE);
 		nameField.setFont(Fonts.LOGIN_DEFAULT);
+		//Set Color to Gray for suggested text
 		nameField.setForeground(Color.GRAY);
 		nameField.addFocusListener(this);
 		nameField.addKeyListener(this);
+		//Only used in signing up and personalization: not actually a credential used in logging in
 		nameField.setVisible(false);
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
@@ -147,6 +159,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		loginButton.setFont(Fonts.LOGIN_BUTTON);
 		loginButton.setFocusPainted(false);
 		loginButton.addActionListener(this);
+		//This JFrame's default button >> Enter automatically calls actionPerformed with loginButton as the source
 		frame.getRootPane().setDefaultButton(loginButton);
 		JPanel panelLoginButton = new JPanel();
 		panelLoginButton.add(loginButton);
@@ -187,39 +200,52 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	}
 
 	/**
-	 * Method that handles login attempts
+	 * This method handles login attempts for the front-end
 	 */
 	private void login() {
 
-		//Obtain current text in passowrd securely
+		//Obtain current text in password
 		String password = new String(passwordField.getPassword());
 
+		//Attempt to login through the GUIController
 		int successfulLogin = controller.login(usernameField.getText(), password); 
 
+		//Successful login
 		if (successfulLogin == 0){
+			//Instantiate specific MainCalendarWindow
 			new MainCalendarWindow(controller);
-			frame.dispose();
-		} else {
+			//Dispose of LoginWindow
+			frame.dispose();	
+		} 
+		//Unsuccessful login
+		else {
+			//Inform user of incorrect credentials
 			infoLabel.setForeground(Color.RED);
 			infoLabel.setText("Invalid Username or Password");
 		}
-
-		System.out.println("Login Attempt:" + usernameField.getText() + " + " + password + " + remember? " + remember.isSelected());
 	}
 
 	/**
-	 * Method that processes new accounts
+	 * This method handles the processing and creation of new accounts in the front-end
 	 */
 	private void createAccount() {
+		
 		//Obtain current text in passowrd
 		String password = new String(passwordField.getPassword());
 
+		//Attempt to signup through the GUIController
 		int successfulNewAccount = controller.signUp(usernameField.getText(), password, nameField.getText()); //New Account/User(usernameField.getText, password);
 
+		//Successful signup
 		if (successfulNewAccount == 0) {
+			//Instantiate specific MainCalendarWindow
 			new MainCalendarWindow(controller);
+			//Dispose of LoginWindow
 			frame.dispose();
-		} else {
+		} 
+		//Unsuccessful signup
+		else {
+			//Inform user of invalid input
 			infoLabel.setForeground(Color.RED);
 			infoLabel.setText("Invalid Input");
 		}
@@ -228,33 +254,37 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	}
 
 	/**
-	 * This method toggles between the Log-in and create new account interfaces
-	 * Changes some Swing Components
+	 * This method toggles between the Log-in and Create New Account interfaces
+	 * NOTE: Changes components within the JFrame
 	 */
 	private void toggleCreateAccountFeatures() {
 
 		//From showingLoginFeatures to showingCreateAccountFeatures
 		if(showingLoginFeatures){
+			//Update JLabel text, Button text, Button colors as visual cues to inform/remind user they are creating a new account
 			infoLabel.setText("Create Account:");
 			infoLabel.setForeground(Color.BLACK);
 			loginButton.setText("Finish and Log in");
 			loginButton.setBackground(Color.GREEN);
 			createAccountButton.setText("Back");
 			createAccountButton.setBackground(Color.RED);
+			//Show the real name field
 			nameField.setVisible(true);
-			//			passwordField.setEchoChar((char)0);
+			titleLabel.setText("Virtual Planner Signup");
 			showingLoginFeatures = false;
 		}
 		//From showingCreateAccountFeatures to showingLoginFeatures
 		else {
+			//Revert the visual cues to inform/remind user they are in the login mode
 			infoLabel.setText("Please Enter User Credentials:");
 			infoLabel.setForeground(Color.BLACK);
 			loginButton.setText("Log in");
 			loginButton.setBackground(Color.CYAN);
 			createAccountButton.setText("Create an Account");
 			createAccountButton.setBackground(Color.BLUE);
+			//Make the real name field invisible and take no space
 			nameField.setVisible(false);
-			//			passwordField.setEchoChar((char)8226);
+			titleLabel.setText("Virtual Planner Login");
 			showingLoginFeatures = true;
 		}
 	}
@@ -262,18 +292,25 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	/**
 	 * This method handles ActionEvents for the LoginWindow
 	 */
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
+		//Login Button Clicked
 		if (src.equals(loginButton)) {
+			
+			//Call Corresponding method
+			
+			//Login Mode
 			if (showingLoginFeatures) {
 				login();
-			} else {
+			}
+			//Signup mode
+			else {
 				createAccount();
 			}
 		}
 
+		//Toggles between the Login and Signup features
 		else if (src.equals(createAccountButton)) {
 			toggleCreateAccountFeatures();
 		}
@@ -282,13 +319,13 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 	/**
 	 * This method handles focusGained FocusEvents for the Login Window
-	 * Manual Implementation of the JTextField "Hint"
+	 * Used for Manual Implementation of the JTextField Hint/Suggested text
+	 *
 	 */
-	@Override
 	public void focusGained(FocusEvent e) {
 
 		//The usernameField is set to the default focus on startup: 
-		//Don't trigger any Events on startup
+		//Don't trigger any Events on simply on startup
 		if (firstFocus) {
 			return;
 		}
@@ -334,9 +371,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 	/**
 	 * This method handles focusLost FocusEvents for the Login Window
-	 * Manual Implementation of the JTextField "Hint"
+	 * Used for Manual Implementation of the JTextField Hint/Suggested text
 	 */
-	@Override
 	public void focusLost(FocusEvent e) {
 
 		//Obtain source
@@ -388,14 +424,13 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 	/**
 	 * This method handles keyPressed KeyEvents for the Login Window
-	 * Manual Implementation of the JTextField "Hint"
+	 * Used for Manual Implementation of the JTextField Hint/Suggested text
 	 */
-	@Override
 	public void keyPressed(KeyEvent e) {
 
 		//Normally the "Hint" disappears as soon a field gains focus
 		//However, on startup, in order for the "Hint" to show up on the first item which gains default focus,
-		//A special KeyEvent handler is used to delete the "Hint" on KeyPressed when the user starts typing.
+		//A special KeyEvent handler is used to delete the "Hint" on KeyPressed ONLY when the user starts typing.
 		//This works even if the user enters the password first
 		if(firstFocus && usernameField.hasFocus()) {
 			firstFocus = false;
@@ -406,15 +441,13 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 	/**
 	 * This method handles keyReleased KeyEvents for the Login Window
-	 * Unused method
+	 * Unused method required by KeyListener
 	 */
-	@Override
 	public void keyReleased(KeyEvent e) {}
 
 	/**
 	 * This method handles keyTyped KeyEvents for the Login Window
-	 * Unused method
+	 * Unused method required by KeyListener
 	 */
-	@Override
 	public void keyTyped(KeyEvent e) {}
 }

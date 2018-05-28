@@ -38,9 +38,9 @@ import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
 
 /**
- * This class represents a Prototype with no actionListeners/keyListeners.
+ * This class represents the main JFrame which holds the Calendar and all its immediate features
  * 
- * @author Kevin
+ * @author KevinGao
  * @author JeremiahDeGreeff
  */
 public class MainCalendarWindow implements ActionListener {
@@ -49,60 +49,88 @@ public class MainCalendarWindow implements ActionListener {
 	 * The controller for this JFrame.
 	 */
 	private GUIController controller;
+	
 	/**
 	 * Today's date.
 	 */
 	private static Date currentDate;
+	
 	/**
 	 * The start date of the week which is being displayed currently.
 	 */
 	private static Date weekStartDate;
 
-	//JFrame
+	/**The JFrame of this MainCalendarWindow instance*/
 	private JFrame frame;
+	
+	/**Outermost of all nested JPanels which is directly added into the JFrame*/
+	private JPanel mainPanel;
+	/**JPanel which holds the main calendar for the window */
+	private JPanel panelCalendar;
+	/**JPanel which holds all of the extra features accessible from MainCalendarWindow*/
+	private JPanel infoPanel;
 
-	//JPanels
-	private JPanel mainPanel, panelCalendar, infoPanel;
-
+	/**Width of each individual column (day) in the calendar*/
 	private final static int CALENDAR_COLUMN_WIDTH = 70;
+	/**Height of the day of week labels at the top of each column*/
 	private final static int CALENDAR_LABEL_HEIGHT = 20;
 
-	//JMenuBar
+	//JMenuBar and sub-components
+	/**The JMenuBar for this MainCalendarWindow*/
 	private JMenuBar menuBar;
-	private JMenu menuFile, menuOptions;
-	private JMenuItem menuItemAddCourse, menuItemCurrentWeek;
+	/**Drop-down JMenu "Options" in the menuBar*/
+	private JMenu menuOptions;
+	/**Selectable JMenuItem which allows a user to add a course*/
+	private JMenuItem menuItemAddCourse;
+	/**Selectable JMenuItem which allows a user to return to the current week*/
+	private JMenuItem menuItemCurrentWeek;
 
 	//JButtons
-	private JButton buttonLeft, buttonRight, buttonGradebook, buttonSettings;
+	/**JButton which allows the user to show previous weeks*/
+	private JButton buttonLeft;
+	/**JButton which allows the user to show upcoming weeks*/
+	private JButton buttonRight;
+	/**JButton which accesses the user's gradebook NOTE: NOT IMPLEMENTED*/
+	private JButton buttonGradebook;
+	/**JButton which allows the user to customize features*/
+	private JButton buttonSettings;
 
 	//JLabels
-	private JLabel labelWeek, labelDate;
+	/**JLabel which shows the range of Dates that the week displayed represents*/
+	private JLabel labelWeek;
+	/**JLabel which displays the current date*/
+	private JLabel labelDate;
 
-	//2D-Array representation of the Calendar GUIButtons
+	/**2D-Array representation of the Calendar GUIButtons*/
 	private GUIButton[][] buttons;
 
-	//JList and JScrollPane for upcomingEvents
+	/**JList of UpcomingEvents*/
 	private JList<String> events;
+	/**JScrollPane which enables scrollable features for the events JList*/
 	private JScrollPane eventsScrollPane;
 
-	//ArrayList of all the GUIButtons that show the day
+	/**ArrayList of all the GUIButtons that are day of week labels (simply show the current day)*/
 	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
 
-	//Dimension for the date
+	/**Size for labelDate*/
 	private static final Dimension DATE_SIZE = new Dimension(400, 125);
 
-	//Dimension for the upcoming events list 
+	/**
+	 * Size of the upcoming events JList
+	 * Note: Height is always overriden by JList's setVisibleRowCount method, hence height being 0
+	 */
 	private static final Dimension UPCOMING_EVENTS_SIZE = new Dimension(365, 0);
 
-	//Dimension for each individual block
+	/**Size of each individual block*/
 	private static final Dimension BLOCK_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, 30);
 
-	//Dimension for the settings window
+	/**Size of the settings window*/
 	private static final Dimension SETTINGS_SIZE = new Dimension(400, 500);
 
-	//Dimension for the numUpcomingDays JTextField
+	/**Size of the numUpcomingDays JTextField*/
 	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
 
+	/**Array which holds all the months for reference in displaying dates*/
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
 	//Add new Course Window Settings
@@ -151,8 +179,6 @@ public class MainCalendarWindow implements ActionListener {
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 
-		menuFile = new JMenu("File");
-
 		menuOptions = new JMenu("Options");
 		menuItemCurrentWeek = new JMenuItem("Go to Current Week");
 		menuItemCurrentWeek.addActionListener(this);
@@ -161,7 +187,6 @@ public class MainCalendarWindow implements ActionListener {
 		menuItemAddCourse = new JMenuItem("Add Course");
 		menuItemAddCourse.addActionListener(this);
 
-		menuBar.add(menuFile);
 		menuBar.add(menuOptions);
 		menuBar.add(menuItemAddCourse);
 
