@@ -1,19 +1,17 @@
 package virtualPlanner.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import virtualPlanner.util.Block;
+import virtualPlanner.reference.Blocks;
 
 /**
  * This class creates a pop-up window which holds a model of the MX block-schedule
@@ -27,16 +25,13 @@ public class GUIBlockPicker {
 	private JFrame frame;
 
 	/**Size of the window*/
-	private static final Dimension BLOCK_PICKER_SIZE = new Dimension(400, 400);
+	private static final Dimension BLOCK_PICKER_SIZE = new Dimension(500, 400);
 
-	/**ArrayList of the JCheckBoxes*/
-	private ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+	/**ArrayList of the GUICheckBoxes*/
+	private ArrayList<GUICheckBox> checkBoxes = new ArrayList<GUICheckBox>();
 
-	/**Map which corresponds the JCheckBoxes to the Block which they represent*/
-	private TreeMap<JCheckBox, Block> blockMap = new TreeMap<JCheckBox, Block>();
-
-	/**The JCheckBoxes which represent Blocks*/
-	private JCheckBox monC, monF, monD, monE, monG, monB, monA, monL, tueD, tueA, tueC, tueB, tueH, tueF, tueE, tueL, wedB, wedC, wedA, wedF, wedG, thuE, thuD, thuH, thuF, thuB, thuC, thuL, friF, friE, friB, friC, friG, friA, friD, friL, satA, satH, satE, satD;
+	/**The GUICheckBoxes which represent Blocks*/
+	private GUICheckBox monC, monF, monD, monE, monG, monB, monA, monL, tueD, tueA, tueC, tueB, tueH, tueF, tueE, tueL, wedB, wedC, wedA, wedF, wedG, thuE, thuD, thuH, thuF, thuB, thuC, thuL, friF, friE, friB, friC, friG, friA, friD, friL, satA, satH, satE, satD;
 
 
 	/**
@@ -61,9 +56,23 @@ public class GUIBlockPicker {
 		frame.setResizable(false);
 
 	}
+	
+	/**
+	 * @return the blocks that correspond to the currently selected GUICheckBoxes
+	 */
+	public ArrayList<Blocks> getSelectedBlocks(){
+		ArrayList<Blocks> result = new ArrayList<Blocks>();
+		for(GUICheckBox c: checkBoxes){
+			if(c.isSelected()){
+				result.add(c.getBlock());
+			}
+		}
+		
+		return result;
+	}
 
 	/**
-	 * @return the JPanel with all of the JCheckBoxes modeling the Block Schedule
+	 * @return the JPanel with all of the GUICheckBoxes modeling the Block Schedule
 	 */
 	private JPanel getModelCalendar(){
 		JPanel result = new JPanel();
@@ -79,7 +88,7 @@ public class GUIBlockPicker {
 		result.add(monC);
 		result.add(tueD);
 		result.add(wedB);
-		result.add(new JPanel());
+		result.add(new GUICheckBox("FCMTG", false));
 		result.add(friF);
 		result.add(satA);
 		result.add(monF);
@@ -88,11 +97,12 @@ public class GUIBlockPicker {
 		result.add(thuE);
 		result.add(friE);
 		result.add(satH);
-		for(int i = 0; i < 3; i ++)
-			result.add(new JPanel());
+		result.add(new GUICheckBox("MTNG", false));
+		result.add(new GUICheckBox("ASSEM", false));
+		result.add(new GUICheckBox("CHAPEL", false));
 		result.add(thuD);
-		for(int i = 0; i < 2; i ++)
-			result.add(new JPanel());
+		result.add(new GUICheckBox("SENATE", false));
+		result.add(new GUICheckBox("ASSEM", false));
 		result.add(monD);
 		result.add(tueC);
 		result.add(wedA);
@@ -108,13 +118,13 @@ public class GUIBlockPicker {
 		result.add(monG);
 		result.add(tueH);
 		result.add(wedG);
-		result.add(new JPanel());
+		result.add(new GUICheckBox("LUNCH", false));
 		result.add(friG);
 		for(int i = 0; i < 4; i ++)
-			result.add(new JPanel());
+			result.add(new GUICheckBox("LUNCH", false));
 		result.add(thuB);
-		for(int i = 0; i < 2; i ++)
-			result.add(new JPanel());
+		result.add(new GUICheckBox("LUNCH", false));
+		result.add(new JPanel());
 		result.add(monB);
 		result.add(tueF);
 		result.add(new JPanel());
@@ -138,170 +148,170 @@ public class GUIBlockPicker {
 	}
 
 	/**
-	 * This method instantiates the JCheckBoxes and adds them to their corresponding ArrayList and TreeMap
+	 * This method instantiates the GUICheckBoxes and adds them to their corresponding ArrayList and TreeMap
 	 */
 	private void addCheckBoxes(){
-		monC = new JCheckBox("C");
+		monC = new GUICheckBox("C", Blocks.C, "Monday");
 		checkBoxes.add(monC);
 		//blockMap.put(monC, null);
 
-		monF = new JCheckBox("F");
+		monF = new GUICheckBox("F", Blocks.F, "Monday");
 		checkBoxes.add(monF);
 		//blockMap.put(monF, null);
 
-		monD = new JCheckBox("D");
+		monD = new GUICheckBox("D", Blocks.D, "Monday");
 		checkBoxes.add(monD);
 		//blockMap.put(monD, null);
 
-		monE = new JCheckBox("E");
+		monE = new GUICheckBox("E", Blocks.E, "Monday");
 		checkBoxes.add(monE);
 		//blockMap.put(monE, null);
 
-		monG = new JCheckBox("G");
+		monG = new GUICheckBox("G", Blocks.G, "Monday");
 		checkBoxes.add(monG);
 		//blockMap.put(monG, null);
 
-		monB = new JCheckBox("B");
+		monB = new GUICheckBox("B", Blocks.B, "Monday");
 		checkBoxes.add(monB);
 		//blockMap.put(monB, null);
 
-		monA = new JCheckBox("A");
+		monA = new GUICheckBox("A", Blocks.A, "Monday");
 		checkBoxes.add(monC);
 		//blockMap.put(monC, null);
 
-		monL = new JCheckBox("L");
+		monL = new GUICheckBox("L", Blocks.L, "Monday");
 		checkBoxes.add(monL);
 		//blockMap.put(monL, null);
 
-		tueD = new JCheckBox("D");
+		tueD = new GUICheckBox("D", Blocks.D, "Tuesday");
 		checkBoxes.add(tueD);
 		//blockMap.put(tueD, null);
 
-		tueA = new JCheckBox("A");
+		tueA = new GUICheckBox("A", Blocks.A, "Tuesday");
 		checkBoxes.add(tueA);
 		//blockMap.put(tueA, null);
 
-		tueC = new JCheckBox("C");
+		tueC = new GUICheckBox("C", Blocks.C, "Tuesday");
 		checkBoxes.add(tueC);
 		//blockMap.put(tueC, null);
 
-		tueB = new JCheckBox("B");
+		tueB = new GUICheckBox("B", Blocks.B, "Tuesday");
 		checkBoxes.add(tueB);
 		//blockMap.put(tueB, null);
 
-		tueH = new JCheckBox("H");
+		tueH = new GUICheckBox("H", Blocks.H, "Tuesday");
 		checkBoxes.add(tueH);
 		//blockMap.put(tueH, null);
 
-		tueF = new JCheckBox("F");
+		tueF = new GUICheckBox("F", Blocks.F, "Tuesday");
 		checkBoxes.add(tueF);
 		//blockMap.put(tueF, null);
 
-		tueE = new JCheckBox("E");
+		tueE = new GUICheckBox("E", Blocks.E, "Tuesday");
 		checkBoxes.add(tueE);
 		//blockMap.put(tueE, null);
 
-		tueL = new JCheckBox("L");
+		tueL = new GUICheckBox("L", Blocks.L, "Tuesday");
 		checkBoxes.add(tueL);
 		//blockMap.put(tueL, null);
 
-		wedB = new JCheckBox("B");
+		wedB = new GUICheckBox("B", Blocks.B, "Wednesday");
 		checkBoxes.add(wedB);
 		//blockMap.put(wedB, null);
 
-		wedC = new JCheckBox("C");
+		wedC = new GUICheckBox("C", Blocks.C, "Wednesday");
 		checkBoxes.add(wedC);
 		//blockMap.put(wedC, null);
 
-		wedA = new JCheckBox("A");
+		wedA = new GUICheckBox("A", Blocks.A, "Wednesday");
 		checkBoxes.add(wedA);
 		//blockMap.put(wedA, null);
 
-		wedF = new JCheckBox("F");
+		wedF = new GUICheckBox("F", Blocks.F, "Wednesday");
 		checkBoxes.add(wedF);
 		//blockMap.put(wedF, null);
 
-		wedG = new JCheckBox("G");
+		wedG = new GUICheckBox("G", Blocks.G, "Wednesday");
 		checkBoxes.add(wedG);
 		//blockMap.put(wedG, null);
 
-		thuE = new JCheckBox("E");
+		thuE = new GUICheckBox("E", Blocks.E, "Thursday");
 		checkBoxes.add(thuE);
 		//blockMap.put(thuE, null);
 
-		thuD = new JCheckBox("D");
+		thuD = new GUICheckBox("D", Blocks.D, "Thursday");
 		checkBoxes.add(thuD);
 		//blockMap.put(thuD, null);
 
-		thuH = new JCheckBox("H");
+		thuH = new GUICheckBox("H", Blocks.H, "Thursday");
 		checkBoxes.add(thuH);
 		//blockMap.put(thuH, null);
 
-		thuF = new JCheckBox("F");
+		thuF = new GUICheckBox("F", Blocks.F, "Thursday");
 		checkBoxes.add(thuF);
 		//blockMap.put(thuF, null);
 
-		thuB = new JCheckBox("B");
+		thuB = new GUICheckBox("B", Blocks.B, "Thursday");
 		checkBoxes.add(thuB);
 		//blockMap.put(thuB, null);
 
-		thuC = new JCheckBox("C");
+		thuC = new GUICheckBox("C", Blocks.C, "Thursday");
 		checkBoxes.add(thuC);
 		//blockMap.put(thuC, null);
 
-		thuL = new JCheckBox("L");
+		thuL = new GUICheckBox("L", Blocks.L, "Thursday");
 		checkBoxes.add(thuL);
 		//blockMap.put(thuL, null);
 
-		friF = new JCheckBox("F");
+		friF = new GUICheckBox("F", Blocks.F, "Friday");
 		checkBoxes.add(friF);
 		//blockMap.put(friF, null);
 
-		friE = new JCheckBox("E");
+		friE = new GUICheckBox("E", Blocks.E, "Friday");
 		checkBoxes.add(friE);
 		//blockMap.put(friE, null);
 
-		friB = new JCheckBox("B");
+		friB = new GUICheckBox("B", Blocks.B, "Friday");
 		checkBoxes.add(friB);
 		//blockMap.put(friB, null);
 
-		friC = new JCheckBox("C");
+		friC = new GUICheckBox("C", Blocks.C, "Friday");
 		checkBoxes.add(friC);
 		//blockMap.put(friC, null);
 
-		friG = new JCheckBox("G");
+		friG = new GUICheckBox("G", Blocks.G, "Friday");
 		checkBoxes.add(friG);
 		//blockMap.put(friG, null);
 
-		friA = new JCheckBox("A");
+		friA = new GUICheckBox("A", Blocks.A, "Friday");
 		checkBoxes.add(friA);
 		//blockMap.put(friA, null);
 
-		friD = new JCheckBox("D");
+		friD = new GUICheckBox("D", Blocks.D, "Friday");
 		checkBoxes.add(friD);
 		//blockMap.put(friD, null);
 
-		friL = new JCheckBox("L");
+		friL = new GUICheckBox("L", Blocks.L, "Friday");
 		checkBoxes.add(friL);
 		//blockMap.put(friL, null);
 
-		satA = new JCheckBox("A");
+		satA = new GUICheckBox("A", Blocks.A, "Saturday");
 		checkBoxes.add(satA);
 		//blockMap.put(satA, null);
 
-		satH = new JCheckBox("H");
+		satH = new GUICheckBox("H", Blocks.H, "Saturday");
 		checkBoxes.add(satH);
 		//blockMap.put(satH, null);
 
-		satE = new JCheckBox("E");
+		satE = new GUICheckBox("E", Blocks.E, "Saturday");
 		checkBoxes.add(satE);
 		//blockMap.put(satE, null);
 
-		satD = new JCheckBox("D");
+		satD = new GUICheckBox("D", Blocks.D, "Saturday");
 		checkBoxes.add(satD);
 		//blockMap.put(satD, null);
 		
-		for(JCheckBox c: checkBoxes){
+		for(GUICheckBox c: checkBoxes){
 			c.setFocusPainted(false);
 		}
 	}
@@ -310,4 +320,57 @@ public class GUIBlockPicker {
 		new GUIBlockPicker("Pick the meeting times");
 	}
 
+}
+
+/**
+ * This class is a very simple extension of javax.swing.JCheckBox which helps correspond JCheckBoxes to their corresponding Block and Day of Week
+ * @author Kevin
+ *
+ */
+@SuppressWarnings("serial")
+class GUICheckBox extends JCheckBox{
+	
+	/**The block that corresponds to this JCheckBox*/
+	private Blocks block;
+	
+	/**The Day of Week of this GUICheckBox*/
+	private String dayOfWeek;
+	
+	/**
+	 * Default constructor for GUICheckBox
+	 * GUICheckBox for the clickable block options
+	 * @param name the name of the CheckBox
+	 * @param block the corresponding block
+	 */
+	public GUICheckBox(String name, Blocks block, String dayOfWeek){
+		super(name);
+		this.block = block;
+		this.dayOfWeek = dayOfWeek;
+	}
+	
+	/**
+	 * Constructor for GUICheckBox
+	 * GUICheckBox for uncheckable placeholders (ie. Assembly)
+	 * @param name the name of the CheckBox
+	 * @param block the corresponding block
+	 */
+	public GUICheckBox(String name, boolean selectable){
+		super(name);
+		this.setEnabled(selectable);
+	}
+	
+	/**
+	 * @return the block that corresponds to this GUICheckBox
+	 */
+	public Blocks getBlock(){
+		return block;
+	}
+	
+	/**
+	 * @return the String representation of the Day of Week that corresponds to this GUICheckBox
+	 */
+	public String getDayOfWeek(){
+		return dayOfWeek;
+	}
+	
 }
