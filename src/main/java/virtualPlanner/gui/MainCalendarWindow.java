@@ -98,7 +98,7 @@ public class MainCalendarWindow implements ActionListener {
 	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
 
 	//Dimension for the date
-	private static final Dimension dateSize = new Dimension(375, 95);
+	private static final Dimension dateSize = new Dimension(400, 125);
 
 	//Dimension for the upcoming events list 
 	private static final Dimension upcomingEventsSize = new Dimension(365, 0);
@@ -114,6 +114,9 @@ public class MainCalendarWindow implements ActionListener {
 
 	private static final int DEFAULT_NUM_UPCOMING_DAYS = 2;
 
+	private static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+	
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
 	private static final Dimension courseWindowSize = new Dimension(320, 600);
@@ -264,7 +267,9 @@ public class MainCalendarWindow implements ActionListener {
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
-		labelDate = new JLabel("<html>Saturday<br/>December 28, 2018</html>");
+		String currentDayOfWeek = currentDate.getDayOfWeek().toString();
+		currentDayOfWeek = currentDayOfWeek.charAt(0) + currentDayOfWeek.substring(1, currentDayOfWeek.length()).toLowerCase();
+		labelDate = new JLabel("<html>" + currentDayOfWeek + "<br/>" + months[currentDate.getMonth()] + " " + currentDate.getDay() + ", " + currentDate.getYear() + "</html>");
 		labelDate.setOpaque(true);
 		labelDate.setForeground(Color.BLACK);
 		labelDate.setFont(Fonts.DATE);

@@ -24,7 +24,6 @@ import javax.swing.border.Border;
 
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
-import virtualPlanner.backend.Student;
 import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.reference.Days;
 import virtualPlanner.util.Date;

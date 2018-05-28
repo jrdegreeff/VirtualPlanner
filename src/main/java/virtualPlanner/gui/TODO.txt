@@ -1,7 +1,4 @@
 TODO:
-JCheckBoxes
-- choosing blocks for new classes
-
 Test Assignments: Add/Remove/Edit
 
 Dimension for the Date
@@ -73,3 +70,6 @@ Upcoming Events >> RETRIEVAL
 
 Preferences
 - Number of days of upcoming events >> STORAGE + LOADING
+
+JCheckBoxes
+- choosing blocks for new classes
