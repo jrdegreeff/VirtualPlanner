@@ -1,11 +1,8 @@
 TODO:
-Descriptions on new lines for current assignments
-
 All Javadocs + Re-ordering of methods/Variables (FONTS INCLUDED)
 Sunday Blank Block
-Everything OPAQUE
+All Buttons of ANY SORT >> OPAQUE && !focusBorderPainted
 Nothing resizable
-Nothing focusBorderPainted
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
@@ -94,3 +91,6 @@ Incorporation of GUIBlockPicker
 
 Fix Fonts
 Fix Images
+
+Descriptions on new lines for current assignments
+

@@ -171,7 +171,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		updateWeek();
 		hasSettingsWindow = false;
-		
+
 		//Initialize Settings Components
 
 		//Frame
@@ -350,8 +350,13 @@ public class MainCalendarWindow implements ActionListener {
 			}
 		}
 
-		//Sunday
-		//		c.ipady = 50;
+		//Sunday Large Blank Block
+		c.gridx = Days.values().length-1;
+		c.gridy = 1;
+		c.gridheight = 10;
+		c.fill = GridBagConstraints.VERTICAL;
+		GUIButton newButton = new GUIButton("", BLOCK_SIZE, Fonts.CALENDAR_DAY);
+		panelCalendar.add(newButton, c);
 	}
 
 	/**
@@ -409,7 +414,7 @@ public class MainCalendarWindow implements ActionListener {
 		nameField.setPreferredSize(FIELD_SIZE);
 		nameField.setMinimumSize(FIELD_SIZE);
 		nameField.setMaximumSize(FIELD_SIZE);
-		
+
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
@@ -424,7 +429,7 @@ public class MainCalendarWindow implements ActionListener {
 		abbreviationField.setPreferredSize(FIELD_SIZE);
 		abbreviationField.setMinimumSize(FIELD_SIZE);
 		abbreviationField.setMaximumSize(FIELD_SIZE);
-		
+
 		JPanel panelAbbreviationField = new JPanel();
 		panelAbbreviationField.add(abbreviationField);
 
@@ -439,7 +444,7 @@ public class MainCalendarWindow implements ActionListener {
 		teacherField.setPreferredSize(FIELD_SIZE);
 		teacherField.setMinimumSize(FIELD_SIZE);
 		teacherField.setMaximumSize(FIELD_SIZE);
-		
+
 		JPanel panelTeacherField = new JPanel();
 		panelTeacherField.add(teacherField);
 
@@ -479,7 +484,7 @@ public class MainCalendarWindow implements ActionListener {
 		mainVertical.add(panelCoursesLabel);
 
 		//TODO: NULL POINTER
-//		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
+		//		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
 		JList<String> existingCourses = new JList<String>();
 
 		existingCourses.setFont(Fonts.CALENDAR_ADD_CLASS);
@@ -513,7 +518,7 @@ public class MainCalendarWindow implements ActionListener {
 		settingsFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
 				try{
-				Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));
+					Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));
 				} catch (Exception e){
 					JOptionPane.showMessageDialog(null, "Invalid Input for Upcoming Days", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -571,7 +576,7 @@ public class MainCalendarWindow implements ActionListener {
 		panelUpcomingDaysField.add(upcomingDaysField);
 		mainVertical.add(panelNumDaysLabel);
 		mainVertical.add(panelUpcomingDaysField);
-		
+
 		settingsFrame.add(mainVertical);
 		settingsFrame.setVisible(true);
 	}
@@ -582,7 +587,7 @@ public class MainCalendarWindow implements ActionListener {
 	private void addCourse() {
 		controller.addCourse(null, nameField.getText(), abbreviationField.getText(), teacherField.getText());
 		//TODO JUST THIS COURSE
-//		new GUISampleColorButton(abbreviationField.getText(), course);
+		//		new GUISampleColorButton(abbreviationField.getText(), course);
 	}
 
 	/**
@@ -647,7 +652,7 @@ public class MainCalendarWindow implements ActionListener {
 		else if (src.equals(buttonSettings)) {
 			showSettingsWindow();
 		}
-		
+
 		else if (src.equals(buttonChooseBlocks)){
 			new GUIBlockPicker("Choose Meeting Blocks");
 		}
