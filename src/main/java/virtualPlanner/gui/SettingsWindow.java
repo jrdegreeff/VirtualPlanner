@@ -155,6 +155,8 @@ public class SettingsWindow {
 			this.setFont(Fonts.CALENDAR_BLOCK);
 			this.setBackground(Color.WHITE);
 			this.setPreferredSize(BUTTON_SIZE);
+			this.setOpaque(true);
+			this.setBorderPainted(false);
 			this.addActionListener(this);
 			this.course = course;
 		}
