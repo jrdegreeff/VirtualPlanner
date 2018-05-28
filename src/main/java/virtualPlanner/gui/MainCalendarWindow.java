@@ -108,13 +108,7 @@ public class MainCalendarWindow implements ActionListener {
 	//Dimension for the numUpcomingDays JTextField
 	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
 
-<<<<<<< HEAD
-	private static final int DEFAULT_NUM_UPCOMING_DAYS = 2;
-
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-=======
-	private static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
@@ -262,16 +256,10 @@ public class MainCalendarWindow implements ActionListener {
 		String currentDayOfWeek = currentDate.getDayOfWeek().toString();
 		currentDayOfWeek = currentDayOfWeek.charAt(0) + currentDayOfWeek.substring(1, currentDayOfWeek.length()).toLowerCase();
 		labelDate = new JLabel("<html>" + currentDayOfWeek + "<br/>" + MONTHS[currentDate.getMonth()] + " " + currentDate.getDay() + ", " + currentDate.getYear() + "</html>");
+		labelDate.setFont(Fonts.CALENDAR_DATE);
 		labelDate.setOpaque(true);
 		labelDate.setForeground(Color.BLACK);
-<<<<<<< HEAD
-		labelDate.setFont(Fonts.DATE);
 		labelDate.setPreferredSize(DATE_SIZE);
-=======
-		labelDate.setFont(Fonts.CALENDAR_DATE);
-		labelDate.setPreferredSize(dateSize);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
-
 
 		JPanel panelLabelDate = new JPanel();
 		panelLabelDate.add(labelDate);
@@ -439,17 +427,10 @@ public class MainCalendarWindow implements ActionListener {
 		panelNameLabel.add(nameLabel);
 
 		nameField = new JTextField(20);
-<<<<<<< HEAD
-		nameField.setFont(Fonts.ADD_CLASS);
 		nameField.setPreferredSize(FIELD_SIZE);
 		nameField.setMinimumSize(FIELD_SIZE);
 		nameField.setMaximumSize(FIELD_SIZE);	
-=======
 		nameField.setFont(Fonts.CALENDAR_ADD_CLASS);
-		nameField.setPreferredSize(fieldSize);
-		nameField.setMinimumSize(fieldSize);
-		nameField.setMaximumSize(fieldSize);	
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
@@ -460,17 +441,10 @@ public class MainCalendarWindow implements ActionListener {
 		panelAbbreviationLabel.add(abbreviationLabel);
 
 		abbreviationField = new JTextField(20);
-<<<<<<< HEAD
-		abbreviationField.setFont(Fonts.ADD_CLASS);
 		abbreviationField.setPreferredSize(FIELD_SIZE);
 		abbreviationField.setMinimumSize(FIELD_SIZE);
 		abbreviationField.setMaximumSize(FIELD_SIZE);	
-=======
 		abbreviationField.setFont(Fonts.CALENDAR_ADD_CLASS);
-		abbreviationField.setPreferredSize(fieldSize);
-		abbreviationField.setMinimumSize(fieldSize);
-		abbreviationField.setMaximumSize(fieldSize);	
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelAbbreviationField = new JPanel();
 		panelAbbreviationField.add(abbreviationField);
 
@@ -481,17 +455,10 @@ public class MainCalendarWindow implements ActionListener {
 		panelTeacherLabel.add(teacherLabel);
 
 		teacherField = new JTextField(20);
-<<<<<<< HEAD
-		teacherField.setFont(Fonts.ADD_CLASS);
 		teacherField.setPreferredSize(FIELD_SIZE);
 		teacherField.setMinimumSize(FIELD_SIZE);
 		teacherField.setMaximumSize(FIELD_SIZE);
-=======
 		teacherField.setFont(Fonts.CALENDAR_ADD_CLASS);
-		teacherField.setPreferredSize(fieldSize);
-		teacherField.setMinimumSize(fieldSize);
-		teacherField.setMaximumSize(fieldSize);
->>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		JPanel panelTeacherField = new JPanel();
 		panelTeacherField.add(teacherField);
 
