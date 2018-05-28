@@ -440,7 +440,6 @@ public class GUIButton extends JButton implements ActionListener {
 		for (Assignment a: assignments)
 			result += "\n" + a.getName();
 		this.setMultiLineText(result);
-		//TODO: Check
 	}
 
 	/**

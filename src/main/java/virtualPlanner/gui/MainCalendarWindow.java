@@ -17,7 +17,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -112,11 +111,11 @@ public class MainCalendarWindow implements ActionListener {
 	private static final Dimension FIELD_SIZE = new Dimension(80, 35);
 	private JButton buttonAddCourse;
 	private JTextField nameField, teacherField, abbreviationField;
-	private JComboBox<String> blockComboBox;
 
 	//Settings Window
-	private JRadioButton buttonShowDateAssigned = new JRadioButton();
-	private JRadioButton buttonShowDateDue = new JRadioButton();
+	private JRadioButton buttonShowDateAssigned;
+	private JRadioButton buttonShowDateDue;
+	private JButton buttonChooseBlocks;
 	private boolean hasSettingsWindow;
 	private JTextField upcomingDaysField;
 
@@ -444,18 +443,13 @@ public class MainCalendarWindow implements ActionListener {
 		JPanel panelTeacherField = new JPanel();
 		panelTeacherField.add(teacherField);
 
-		JLabel blockLabel = new JLabel("Block:");
-		blockLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
-		blockLabel.setForeground(Color.BLACK);
-		JPanel panelBlockLabel = new JPanel();
-		panelBlockLabel.add(blockLabel);
-
-		String[] blockList = {"A", "B", "C", "D", "E", "F", "G", "H", "L"};
-		blockComboBox = new JComboBox<String>(blockList);
-		blockComboBox.setFont(Fonts.CALENDAR_ADD_CLASS);
-		blockComboBox.setBackground(Color.WHITE);
-		JPanel panelBlockComboBox = new JPanel();
-		panelBlockComboBox.add(blockComboBox);
+		buttonChooseBlocks = new JButton("Choose Meeting Blocks");
+		buttonChooseBlocks.setFont(Fonts.CALENDAR_ADD_CLASS);
+		buttonChooseBlocks.setFocusPainted(false);
+		buttonChooseBlocks.setBackground(Color.WHITE);
+		buttonChooseBlocks.addActionListener(this);
+		JPanel panelButtonChooseBlocks = new JPanel();
+		panelButtonChooseBlocks.add(buttonChooseBlocks);
 
 		buttonAddCourse = new JButton("Submit");
 		buttonAddCourse.setFont(Fonts.CALENDAR_ADD_CLASS);
@@ -480,13 +474,14 @@ public class MainCalendarWindow implements ActionListener {
 		mainVertical.add(panelAbbreviationField);
 		mainVertical.add(panelTeacherLabel);
 		mainVertical.add(panelTeacherField);
-		mainVertical.add(panelBlockLabel);
-		mainVertical.add(panelBlockComboBox);
+		mainVertical.add(panelButtonChooseBlocks);
 		mainVertical.add(panelButtonAddCourse);
 		mainVertical.add(panelCoursesLabel);
 
-		//TODO: CURRENT COURSES
-		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
+		//TODO: NULL POINTER
+//		JList<String> existingCourses = new JList<String>(controller.getCourseNames());
+		JList<String> existingCourses = new JList<String>();
+
 		existingCourses.setFont(Fonts.CALENDAR_ADD_CLASS);
 		existingCourses.setVisibleRowCount(6);
 
@@ -531,8 +526,9 @@ public class MainCalendarWindow implements ActionListener {
 			}
 		});
 
-		JLabel blockLabel = new JLabel("Course Colors");
-		blockLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
+		JLabel blockLabel = new JLabel("Course Colors:");
+		blockLabel.setFont(Fonts.CALENDAR_SETTINGS);
+		blockLabel.setForeground(Color.BLACK);
 		JPanel panelBlockLabel = new JPanel();
 		panelBlockLabel.add(blockLabel);
 
@@ -548,6 +544,8 @@ public class MainCalendarWindow implements ActionListener {
 
 		buttonShowDateAssigned = new JRadioButton("Show Assignment on Assigned Date");
 		buttonShowDateDue = new JRadioButton("Show Assignment on Due Date");
+		buttonShowDateAssigned.setFont(Fonts.CALENDAR_SETTINGS);
+		buttonShowDateDue.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateAssigned = new JPanel();
 		panelButtonShowDateAssigned.add(buttonShowDateAssigned);
 		JPanel panelButtonShowDateDue = new JPanel();
@@ -561,13 +559,13 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Number of days of upcoming events
 		JLabel numDaysLabel = new JLabel("Number of Days 'Upcoming Events' shows");
-		numDaysLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
+		numDaysLabel.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelNumDaysLabel = new JPanel();
 		panelNumDaysLabel.add(numDaysLabel);
 
 		upcomingDaysField = new JTextField("" + Preferences.numDaysUpcoming());
 		upcomingDaysField.setPreferredSize(UPCOMING_DAYS_SIZE);
-		upcomingDaysField.setFont(Fonts.CALENDAR_BLOCK);
+		upcomingDaysField.setFont(Fonts.CALENDAR_SETTINGS);
 		upcomingDaysField.setHorizontalAlignment(JTextField.CENTER);
 		JPanel panelUpcomingDaysField = new JPanel();
 		panelUpcomingDaysField.add(upcomingDaysField);
@@ -648,6 +646,10 @@ public class MainCalendarWindow implements ActionListener {
 
 		else if (src.equals(buttonSettings)) {
 			showSettingsWindow();
+		}
+		
+		else if (src.equals(buttonChooseBlocks)){
+			new GUIBlockPicker("Choose Meeting Blocks");
 		}
 
 		else if (src.equals(menuItemCurrentWeek)) {

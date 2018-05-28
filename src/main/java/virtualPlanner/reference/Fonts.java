@@ -6,6 +6,7 @@ import java.awt.Font;
  * All {@code Font}s used in the project.
  * 
  * @author JeremiahDeGreeff
+ * @author Kevin
  */
 public class Fonts {
 	
@@ -17,6 +18,7 @@ public class Fonts {
 	public static final Font CALENDAR_BLOCK = new Font("Dialog", Font.BOLD, 12);
 	public static final Font CALENDAR_LIST = new Font("Dialog", Font.BOLD, 22);
 	public static final Font CALENDAR_ADD_CLASS = new Font("Dialog", Font.BOLD, 16);
+	public static final Font CALENDAR_SETTINGS = new Font("Dialog", Font.BOLD, 16);
 	
 	public static final Font BUTTON_TITLE = new Font("Dialog", Font.BOLD, 26);
 	public static final Font BUTTON_ASSIGNMENT = new Font("Dialog", Font.BOLD, 20);

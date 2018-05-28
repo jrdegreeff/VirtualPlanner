@@ -1,15 +1,19 @@
 TODO:
-All Javadocs
-Sunday Blank Block
-Change Finals Names
-Re-ordering of methods/Variables
 Descriptions on new lines for current assignments
-Everything OPAQUE, Nothing Resizable
-Test Assignments: Add/Remove/Edit
+
+All Javadocs + Re-ordering of methods/Variables (FONTS INCLUDED)
+Sunday Blank Block
+Everything OPAQUE
+Nothing resizable
+Nothing focusBorderPainted
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
 - Make sure passing in corrent block parameters in GUIBlockPicker
+- Test Assignments: Add/Remove/Edit
+- Null Pointer on Add Course
+- Give course in MainCalendarWindow.addCourse()
+- Show Anna Image
 ___________________________________________________________
 ___________________________________________________________
 Ideas
@@ -84,3 +88,4 @@ Add/Remove/Edit Assignments
 
 Fix highlighting RED
 
+Change Finals Names
