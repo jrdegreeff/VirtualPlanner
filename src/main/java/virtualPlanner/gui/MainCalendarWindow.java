@@ -167,7 +167,7 @@ public class MainCalendarWindow implements ActionListener {
 		addComponents();
 
 		//Refresh current date, week label, and all calendar buttons
-		updateWeek();
+		update();
 
 		//Frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -378,12 +378,12 @@ public class MainCalendarWindow implements ActionListener {
 
 	protected void closeSettings() {
 		settings = null;
-		updateWeek();
+		update();
 	}
 
 	protected void closeAddAccount() {
 		addCourse = null;
-		updateWeek();
+		update();
 	}
 
 	/**
@@ -412,9 +412,9 @@ public class MainCalendarWindow implements ActionListener {
 	}
 
 	/**
-	 * Refreshes the current date, week label, and all the calendar buttons.
+	 * Refreshes everything.
 	 */
-	public void updateWeek() {
+	public void update() {
 		currentDate = new Date();
 		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
 		updateButtons();
@@ -440,14 +440,14 @@ public class MainCalendarWindow implements ActionListener {
 		if (src.equals(buttonLeft)) {
 			GUIButton.deselect();
 			weekStartDate = weekStartDate.getUpcomingDate(-7);
-			updateWeek();
+			update();
 		}
 
 		//Right button on the calendar
 		else if (src.equals(buttonRight)) {
 			GUIButton.deselect();
 			weekStartDate = weekStartDate.getUpcomingDate(7);
-			updateWeek();
+			update();
 		}
 
 		//User wants to add a Class
@@ -468,7 +468,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		else if (src.equals(menuItemCurrentWeek)) {
 			weekStartDate = currentDate.getWeekStartDate();
-			updateWeek();
+			update();
 		}
 	}
 }
