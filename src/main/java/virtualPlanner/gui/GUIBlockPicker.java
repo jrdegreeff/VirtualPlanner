@@ -76,7 +76,7 @@ public class GUIBlockPicker {
 
 		return result;
 	}
-	
+
 	/**
 	 * Sets the visibility of the frame of this GUIBlockPicker
 	 * @param visible the new visibility of the screen
@@ -84,7 +84,7 @@ public class GUIBlockPicker {
 	public void setVisible(boolean visible){
 		frame.setVisible(visible);
 	}
-	
+
 	/**
 	 * This method instantiates the GUICheckBoxes, and corresponds them to their appropriate Blocks and Days
 	 */
@@ -121,8 +121,11 @@ public class GUIBlockPicker {
 
 		for(GUICheckBox[] row : checkBoxes)
 			for(GUICheckBox c : row)
-				if(c != null)
+				if(c == null) {
+					result.add(new JPanel());
+				}else {
 					result.add(c);
+				}
 
 		return result;
 	}

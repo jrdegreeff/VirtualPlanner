@@ -12,7 +12,7 @@ public class Paths {
 	/**
 	 * System-dependent filesystem separator.
 	 */
-	private static final String SEPARATOR = FileSystems.getDefault().getSeparator();
+	private static final String SEPARATOR = ""; //FileSystems.getDefault().getSeparator();
 	
 	/**
 	 * Path to the preferences file.

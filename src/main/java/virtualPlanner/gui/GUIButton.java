@@ -635,9 +635,6 @@ public class GUIButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
-		//Highlight the Day of Week JLabel that corresponds to the current daay
-		MainCalendarWindow.highlightCurDay();
-
 		//The user clicks the submit button
 		if (src.equals(submitButton)) {
 			//Edit mode

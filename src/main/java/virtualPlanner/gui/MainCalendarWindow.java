@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,9 +22,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -33,7 +30,6 @@ import virtualPlanner.backend.Course;
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.reference.Images;
-import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
 
@@ -45,23 +41,19 @@ import virtualPlanner.util.Date;
  */
 public class MainCalendarWindow implements ActionListener {
 
-	/**
-	 * The controller for this JFrame.
-	 */
+	/**The controller for this JFrame.*/
 	private GUIController controller;
 	
-	/**
-	 * Today's date.
-	 */
+	/**Today's date.*/
 	private static Date currentDate;
 	
-	/**
-	 * The start date of the week which is being displayed currently.
-	 */
+	/**The start date of the week which is being displayed currently.*/
 	private static Date weekStartDate;
 
 	/**The JFrame of this MainCalendarWindow instance*/
 	private JFrame frame;
+	
+	private SettingsWindow settings;
 	
 	private static final Dimension MAIN_SIZE = new Dimension(1280, 720);
 	
@@ -112,7 +104,7 @@ public class MainCalendarWindow implements ActionListener {
 	private JScrollPane eventsScrollPane;
 
 	/**ArrayList of all the GUIButtons that are day of week labels (simply show the current day)*/
-	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
+	private ArrayList<GUIButton> dayOfWeekButtons;
 
 	/**Size for labelDate*/
 	private static final Dimension DATE_SIZE = new Dimension(400, 100);
@@ -125,12 +117,6 @@ public class MainCalendarWindow implements ActionListener {
 
 	/**Size of each individual block*/
 	private static final Dimension BLOCK_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, 30);
-
-	/**Size of the settings window*/
-	private static final Dimension SETTINGS_SIZE = new Dimension(400, 500);
-
-	/**Size of the numUpcomingDays JTextField*/
-	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
 
 	/**Array which holds all the months - used as reference when displaying dates*/
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
@@ -156,16 +142,6 @@ public class MainCalendarWindow implements ActionListener {
 	private GUIBlockPicker blockPicker;
 	private JList<String> existingCourses;
 
-	//Settings Window
-	/**Boolean to prevent mutliple instantiations of the Settings Window*/
-	private boolean hasSettingsWindow;
-	/**JRadioButton to customize whether assignments show on the Date assigned*/
-	private JRadioButton buttonShowDateAssigned;
-	/**JRadioButton to customize whether assignments show on the Date due*/
-	private JRadioButton buttonShowDateDue;
-	/**Field which represents the number of days the Upcoming Events JList show include*/
-	private JTextField upcomingDaysField;
-
 
 	/**
 	 * Constructor: Initializes the MainCalendarWindow
@@ -184,7 +160,6 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Variables to prevent multiple window instantiations
 		hasAddCourseWindow = false;
-		hasSettingsWindow = false;
 
 		//Size
 		frame.setSize(MAIN_SIZE);
@@ -377,6 +352,7 @@ public class MainCalendarWindow implements ActionListener {
 		Dimension labelSize = new Dimension(CALENDAR_COLUMN_WIDTH, CALENDAR_LABEL_HEIGHT);
 
 		//Add Weekday Labels
+		dayOfWeekButtons = new ArrayList<GUIButton>(7);
 		for (int i = 0; i < Days.values().length; i++) {
 			c.gridx = i;
 			GUIButton newButton = new GUIButton(Days.values()[i].getName(), labelSize, Fonts.CALENDAR_DAY);
@@ -407,22 +383,21 @@ public class MainCalendarWindow implements ActionListener {
 		c.fill = GridBagConstraints.VERTICAL;
 		GUIButton newButton = new GUIButton("", BLOCK_SIZE, Fonts.CALENDAR_DAY);
 		panelCalendar.add(newButton, c);
+		
+		panelCalendar.repaint();
 	}
 
 	/**
 	 * This method finds and highlights the day of week GUIButton that corresponds to the current day
 	 */
-	public static void highlightCurDay() {	
+	public void highlightCurDay() {
 		if (currentDate.compareTo(weekStartDate) < 0 || currentDate.compareTo(weekStartDate.getUpcomingDate(7)) > 0)
 			return;
 
 		String curDay = currentDate.getDayOfWeek().toString();
 		for(GUIButton b : dayOfWeekButtons) {
-			if(b.getText().equalsIgnoreCase(curDay)){
+			if(b.getText().equalsIgnoreCase(curDay)) {
 				b.setBackground(Color.YELLOW);
-				b.revalidate();
-				b.repaint();
-				break;
 			}
 		}
 	}
@@ -556,86 +531,6 @@ public class MainCalendarWindow implements ActionListener {
 	}
 
 	/**
-	 * This method creates a window which allows the user to set preferences 
-	 */
-	private void showSettingsWindow() {
-
-		if(hasSettingsWindow)
-			return;
-
-		hasSettingsWindow = true;
-
-		JFrame settingsFrame = new JFrame();
-		settingsFrame.setResizable(false);
-		settingsFrame.setSize(SETTINGS_SIZE);
-		settingsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		settingsFrame.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent windowEvent) {
-				try{
-					Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));
-				} catch (Exception e){
-					JOptionPane.showMessageDialog(null, "Invalid Input for Upcoming Days", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				ArrayList<GUISampleColorButton> buttons = GUISampleColorButton.getButtons();
-				for(GUISampleColorButton b: buttons)
-					Preferences.addColor(b.getCourse().getID(), b.getBackground());
-				hasSettingsWindow = false;
-				settingsFrame.dispose();
-			}
-		});
-
-		JLabel blockLabel = new JLabel("Course Colors:");
-		blockLabel.setFont(Fonts.CALENDAR_SETTINGS);
-		blockLabel.setForeground(Color.BLACK);
-		JPanel panelBlockLabel = new JPanel();
-		panelBlockLabel.add(blockLabel);
-
-		Box mainVertical = Box.createVerticalBox();
-		mainVertical.add(panelBlockLabel);
-
-		ArrayList<GUISampleColorButton> buttons = GUISampleColorButton.getButtons();
-		for (GUISampleColorButton b : buttons) {
-			JPanel tempPanel = new JPanel();
-			tempPanel.add(b);
-			mainVertical.add(tempPanel);
-		}
-
-		buttonShowDateAssigned = new JRadioButton("Show Assignment on Assigned Date");
-		buttonShowDateDue = new JRadioButton("Show Assignment on Due Date");
-		buttonShowDateAssigned.setFont(Fonts.CALENDAR_SETTINGS);
-		buttonShowDateDue.setFont(Fonts.CALENDAR_SETTINGS);
-		JPanel panelButtonShowDateAssigned = new JPanel();
-		panelButtonShowDateAssigned.add(buttonShowDateAssigned);
-		JPanel panelButtonShowDateDue = new JPanel();
-		panelButtonShowDateDue.add(buttonShowDateDue);
-		ButtonGroup group = new ButtonGroup();
-		group.add(buttonShowDateAssigned);
-		group.add(buttonShowDateDue);
-
-		mainVertical.add(panelButtonShowDateAssigned);
-		mainVertical.add(panelButtonShowDateDue);
-
-		//Number of days of upcoming events
-		JLabel numDaysLabel = new JLabel("Number of Days 'Upcoming Events' shows");
-		numDaysLabel.setFont(Fonts.CALENDAR_SETTINGS);
-		JPanel panelNumDaysLabel = new JPanel();
-		panelNumDaysLabel.add(numDaysLabel);
-
-		upcomingDaysField = new JTextField("" + Preferences.numDaysUpcoming());
-		upcomingDaysField.setPreferredSize(UPCOMING_DAYS_SIZE);
-		upcomingDaysField.setFont(Fonts.CALENDAR_SETTINGS);
-		upcomingDaysField.setHorizontalAlignment(JTextField.CENTER);
-		JPanel panelUpcomingDaysField = new JPanel();
-		panelUpcomingDaysField.add(upcomingDaysField);
-		mainVertical.add(panelNumDaysLabel);
-		mainVertical.add(panelUpcomingDaysField);
-
-		settingsFrame.add(mainVertical);
-		settingsFrame.setVisible(true);
-	}
-
-	/**
 	 * 
 	 */
 	private void addCourse() {
@@ -644,6 +539,11 @@ public class MainCalendarWindow implements ActionListener {
 		
 		controller.addCourse(blocks, nameField.getText(), abbreviationField.getText(), teacherField.getText());
 		existingCourses.setListData(controller.getCourseNames());
+	}
+	
+	protected void settingsClosed() {
+		settings = null;
+		updateWeek();
 	}
 
 	/**
@@ -706,7 +606,8 @@ public class MainCalendarWindow implements ActionListener {
 		}
 
 		else if (src.equals(buttonSettings)) {
-			showSettingsWindow();
+			if(settings == null)
+				settings = new SettingsWindow(this, controller);
 		}
 
 		else if (src.equals(buttonChooseBlocks)){

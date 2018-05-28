@@ -2,14 +2,13 @@ TODO:
 JAVADOC FOR MAINCALENDAR WINDOW
 REORDER METHODS TO MAKE READABLE
 REFACTOR ADD COURSE WINDOWs
+GUISampleColorButton >> Better size + Load color
+Override Repaint
+Warning Window for Overloaded
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
-- Null Pointer on Add Course
-- Give course in MainCalendarWindow.addCourse()
-- Test UpdateAssignmentList
 - Highlight Current Day Broken
-- Do we need showDateAssigned?
 - Show Anna Image
 - Edit Assignments >> Presentation
 ___________________________________________________________
@@ -100,3 +99,5 @@ Nothing resizable
 Sunday Blank Block
 
 - Make sure passing in corrent block parameters in GUIBlockPicker
+
+- Null Pointer on Add Course

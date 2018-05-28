@@ -1,5 +1,7 @@
 package virtualPlanner;
 
+import java.nio.file.FileSystems;
+
 import virtualPlanner.reference.Images;
 import virtualPlanner.reference.Preferences;
 
@@ -14,6 +16,7 @@ import virtualPlanner.reference.Preferences;
 public class VirtualPlanner {
 	
 	public static void main(String[] args) {
+		System.out.println(FileSystems.getDefault().getSeparator());
 		init();
 		new Controller();
 	}
