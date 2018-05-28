@@ -38,6 +38,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 	/**The size of the JFrame*/
 	private static final Dimension FRAME_SIZE = new Dimension(450, 500);
 	/**Default Sizes of Fields and Buttons*/
+	private static final Dimension TITLE_SIZE = new Dimension(375, 35);
+	/**Default Sizes of Fields and Buttons*/
 	private static final Dimension DEFAULT_SIZE = new Dimension(300, 35);
 
 	
@@ -91,7 +93,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 		//Title JLabel
 		titleLabel.setFont(Fonts.LOGIN_TITLE);
-		titleLabel.setPreferredSize(DEFAULT_SIZE);
+		titleLabel.setPreferredSize(TITLE_SIZE);
+		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 		//Nested Panels are the best way to ensure that the JFrame and other JPanels respect the inner components' preferred settings
 		JPanel panelTitleLabel = new JPanel();
 		panelTitleLabel.add(titleLabel);
@@ -217,8 +220,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 		//Successful login
 		if (successfulLogin == 0){
-			//Instantiate specific MainCalendarWindow
-			new MainCalendarWindow(controller);
 			//Dispose of LoginWindow
 			frame.dispose();	
 		} 
@@ -243,10 +244,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 		//Successful signup
 		if (successfulNewAccount == 0) {
-			//Instantiate specific MainCalendarWindow
-			new MainCalendarWindow(controller);
-			//Dispose of LoginWindow
-			frame.dispose();
+			login();
 		} 
 		//Unsuccessful signup
 		else {
