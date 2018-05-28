@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
@@ -22,15 +19,14 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 import virtualPlanner.backend.Course;
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.reference.Images;
+import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
 
@@ -394,8 +390,25 @@ public class MainCalendarWindow implements ActionListener {
 	 * Sets the contents of the upcoming Events JList
 	 * @param eventList
 	 */
-	public void setEventsList(String[] eventList) {
-		events.setListData(eventList);
+	public void updateUpcomingEvents() {
+		//ArrayList of the upcoming events - to be converted back to normal array later
+		ArrayList<String> arrayListEvents = new ArrayList<String>();
+		//Number of days to include in coming events
+		int numDaysUpcoming = Preferences.numDaysUpcoming();
+
+		//For each day within the numDaysUpcoming range
+		for(int i = 0; i < numDaysUpcoming; i++) {
+			//Get the corresponding date and add its list of assignments
+			Date upcomingDate = currentDate.getUpcomingDate(i);
+			Block[] blocks = Days.getBlocksOnDay(upcomingDate);
+			for(Block b : blocks)
+				arrayListEvents.addAll(controller.getAssignmentNames(upcomingDate, b));
+		}
+
+		//Turn ArrayList back into array
+		String[] arrayEvents = arrayListEvents.toArray(new String[0]);
+		//Set "Upcoming Events" to display the array
+		events.setListData(arrayEvents);
 	}
 
 	/**
@@ -406,6 +419,7 @@ public class MainCalendarWindow implements ActionListener {
 		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
 		updateButtons();
 		highlightCurDay();
+		updateUpcomingEvents();
 	}
 
 	/**

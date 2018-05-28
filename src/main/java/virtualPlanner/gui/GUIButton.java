@@ -288,7 +288,7 @@ public class GUIButton extends JButton implements ActionListener {
 				//Updates the text on the Button, because the user may have edited some assignments
 				updateButton();
 				//Updates the "Upcoming Events" JList on the right of the MainCalendarWindow
-				updateUpcomingEvents();
+				mainWindow.updateUpcomingEvents();
 				//Dispose the JFrame
 				assignmentsWindow.dispose();
 			}
@@ -481,30 +481,6 @@ public class GUIButton extends JButton implements ActionListener {
 		//Final Add Assignment Window Settings
 		assignmentsWindow.add(mainVertical);
 		assignmentsWindow.setVisible(true);
-	}
-
-	/**
-	 * Updates the "Upcoming Events" JList in the infoPanel of the MainCalendarWindow
-	 */
-	private void updateUpcomingEvents() {
-		//ArrayList of the upcoming events - to be converted back to normal array later
-		ArrayList<String> arrayListEvents = new ArrayList<String>();
-		//Number of days to include in coming events
-		int numDaysUpcoming = Preferences.numDaysUpcoming();
-
-		//For each day within the numDaysUpcoming range
-		for(int i = 0; i < numDaysUpcoming; i++) {
-			//Get the corresponding date and add its list of assignments
-			Date upcomingDate = currentDate.getUpcomingDate(i);
-			Block[] blocks = Days.getBlocksOnDay(upcomingDate);
-			for(Block b : blocks)
-				arrayListEvents.addAll(controller.getAssignmentNames(upcomingDate, b));
-		}
-
-		//Turn ArrayList back into array
-		String[] arrayEvents = arrayListEvents.toArray(new String[arrayListEvents.size()]);
-		//Set "Upcoming Events" to display the array
-		mainWindow.setEventsList(arrayEvents);
 	}
 
 	/**
