@@ -24,7 +24,7 @@ import virtualPlanner.reference.Fonts;
  * This class represents both a Login and a SignUp Window for the VirtualPlanner
  * @author KevinGao
  */
-public class LoginWindow implements ActionListener, FocusListener, KeyListener{
+public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 
 	/**Corresponding GUIController*/
 	private GUIController controller;
@@ -160,6 +160,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		loginButton.setFont(Fonts.LOGIN_BUTTON);
 		loginButton.setFocusPainted(false);
 		loginButton.addActionListener(this);
+		loginButton.setBorderPainted(false);
 		loginButton.setOpaque(true);
 		//This JFrame's default button >> Enter automatically calls actionPerformed with loginButton as the source
 		frame.getRootPane().setDefaultButton(loginButton);
@@ -174,6 +175,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		createAccountButton.setFont(Fonts.LOGIN_BUTTON);
 		createAccountButton.setFocusPainted(false);
 		createAccountButton.addActionListener(this);
+		createAccountButton.setBorderPainted(false);
 		createAccountButton.setOpaque(true);
 		JPanel panelCreateAccountButton = new JPanel();
 		panelCreateAccountButton.add(createAccountButton);
