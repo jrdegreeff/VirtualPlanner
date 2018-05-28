@@ -1,26 +1,27 @@
 TODO:
-Test Assignments: Add/Remove/Edit
+Add/Remove/Edit Assignments
+Handle Login
 
-Set Block Colors
-Base Block colors on Course
-Specific Block Lengths
 All Javadocs
-Size for panelCalendar?
 Sunday Blank Block
-Completed Portion of List?
-Course in Add Assignment
-Highlighting of current day
-Change Finals
-Better Get Current Date
+Change Finals Names
+Re-ordering of methods/Variables
 Fix highlighting RED
 Descriptions on new lines for current assignments
 Everything OPAQUE, Nothing Resizable
+Test Assignments: Add/Remove/Edit
 ___________________________________________________________
 ___________________________________________________________
-TODO INTEGRATION
-SET DUE DATE/ASSIGNED DATE
-EDIT ASSIGNMENT MODE
-Get current day to set upcoming events list
+FINAL TODO:
+- Make sure passing in corrent block parameters in GUIBlockPicker
+___________________________________________________________
+___________________________________________________________
+Ideas
+Specific Block Lengths
+Remove directly from Upcoming Events
+Size for panelCalendar?
+Completed Portion of List?
+All completed/past assignments?
 ___________________________________________________________
 ___________________________________________________________
 FINISHED
@@ -69,8 +70,13 @@ Upcoming Events >> RETRIEVAL
 
 Preferences
 - Number of days of upcoming events >> STORAGE + LOADING
+- Check for invalid number of days
 
 JCheckBoxes
 - choosing blocks for new classes
 
 Dimension for the Date
+
+Base Block colors on Course
+
+Set Block Colors

@@ -15,7 +15,7 @@ import virtualPlanner.reference.Blocks;
 
 /**
  * This class creates a pop-up window which holds a model of the MX block-schedule
- * This window is used during the adding of courses to allow the user to input special circumstances for class meeting times (ie. Drop blocks, L blocks, Middle of day double-blocks)
+ * This window is used during the adding of courses to allow the user to input special circumstances for class meeting times (ie. Drop blocks, L blocks, Middle-of-day double blocks)
  * @author Kevin
  *
  */
@@ -38,23 +38,29 @@ public class GUIBlockPicker {
 	 * Constructor for the GUIBlockPicker which creates a BlockPicker Window
 	 * @param name the title of the JFrame
 	 */
+<<<<<<< HEAD
+	public GUIBlockPicker(String name){
+		//Frame Settings
+=======
 	public GUIBlockPicker(String name) {
+>>>>>>> 92ddc8704b6540e318048e3d686f8ee5edf5bfe7
 		frame = new JFrame(name);
 		frame.setSize(BLOCK_PICKER_SIZE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		//Override close operation
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
+				getSelectedBlocks();
 				frame.dispose();
-				//TODO: Pass in the number of blocks
 			}
 		});
 
+		//Instantiate all the CheckBoxes
 		addCheckBoxes();
 		
 		frame.add(getModelCalendar());
 		frame.setVisible(true);
 		frame.setResizable(false);
-
 	}
 	
 	/**
@@ -67,7 +73,7 @@ public class GUIBlockPicker {
 				result.add(c.getBlock());
 			}
 		}
-		
+		//TODO: CORRECT BLOCKS?
 		return result;
 	}
 
@@ -148,168 +154,128 @@ public class GUIBlockPicker {
 	}
 
 	/**
-	 * This method instantiates the GUICheckBoxes and adds them to their corresponding ArrayList and TreeMap
+	 * This method instantiates the GUICheckBoxes, and corresponds them to their appropriate Blocks and Days
 	 */
 	private void addCheckBoxes(){
 		monC = new GUICheckBox("C", Blocks.C, "Monday");
 		checkBoxes.add(monC);
-		//blockMap.put(monC, null);
 
 		monF = new GUICheckBox("F", Blocks.F, "Monday");
 		checkBoxes.add(monF);
-		//blockMap.put(monF, null);
 
 		monD = new GUICheckBox("D", Blocks.D, "Monday");
 		checkBoxes.add(monD);
-		//blockMap.put(monD, null);
 
 		monE = new GUICheckBox("E", Blocks.E, "Monday");
 		checkBoxes.add(monE);
-		//blockMap.put(monE, null);
 
 		monG = new GUICheckBox("G", Blocks.G, "Monday");
 		checkBoxes.add(monG);
-		//blockMap.put(monG, null);
 
 		monB = new GUICheckBox("B", Blocks.B, "Monday");
 		checkBoxes.add(monB);
-		//blockMap.put(monB, null);
 
 		monA = new GUICheckBox("A", Blocks.A, "Monday");
 		checkBoxes.add(monC);
-		//blockMap.put(monC, null);
 
 		monL = new GUICheckBox("L", Blocks.L, "Monday");
 		checkBoxes.add(monL);
-		//blockMap.put(monL, null);
 
 		tueD = new GUICheckBox("D", Blocks.D, "Tuesday");
 		checkBoxes.add(tueD);
-		//blockMap.put(tueD, null);
 
 		tueA = new GUICheckBox("A", Blocks.A, "Tuesday");
 		checkBoxes.add(tueA);
-		//blockMap.put(tueA, null);
 
 		tueC = new GUICheckBox("C", Blocks.C, "Tuesday");
 		checkBoxes.add(tueC);
-		//blockMap.put(tueC, null);
 
 		tueB = new GUICheckBox("B", Blocks.B, "Tuesday");
 		checkBoxes.add(tueB);
-		//blockMap.put(tueB, null);
 
 		tueH = new GUICheckBox("H", Blocks.H, "Tuesday");
 		checkBoxes.add(tueH);
-		//blockMap.put(tueH, null);
 
 		tueF = new GUICheckBox("F", Blocks.F, "Tuesday");
 		checkBoxes.add(tueF);
-		//blockMap.put(tueF, null);
 
 		tueE = new GUICheckBox("E", Blocks.E, "Tuesday");
 		checkBoxes.add(tueE);
-		//blockMap.put(tueE, null);
 
 		tueL = new GUICheckBox("L", Blocks.L, "Tuesday");
 		checkBoxes.add(tueL);
-		//blockMap.put(tueL, null);
 
 		wedB = new GUICheckBox("B", Blocks.B, "Wednesday");
 		checkBoxes.add(wedB);
-		//blockMap.put(wedB, null);
 
 		wedC = new GUICheckBox("C", Blocks.C, "Wednesday");
 		checkBoxes.add(wedC);
-		//blockMap.put(wedC, null);
 
 		wedA = new GUICheckBox("A", Blocks.A, "Wednesday");
 		checkBoxes.add(wedA);
-		//blockMap.put(wedA, null);
 
 		wedF = new GUICheckBox("F", Blocks.F, "Wednesday");
 		checkBoxes.add(wedF);
-		//blockMap.put(wedF, null);
 
 		wedG = new GUICheckBox("G", Blocks.G, "Wednesday");
 		checkBoxes.add(wedG);
-		//blockMap.put(wedG, null);
 
 		thuE = new GUICheckBox("E", Blocks.E, "Thursday");
 		checkBoxes.add(thuE);
-		//blockMap.put(thuE, null);
 
 		thuD = new GUICheckBox("D", Blocks.D, "Thursday");
 		checkBoxes.add(thuD);
-		//blockMap.put(thuD, null);
 
 		thuH = new GUICheckBox("H", Blocks.H, "Thursday");
 		checkBoxes.add(thuH);
-		//blockMap.put(thuH, null);
 
 		thuF = new GUICheckBox("F", Blocks.F, "Thursday");
 		checkBoxes.add(thuF);
-		//blockMap.put(thuF, null);
 
 		thuB = new GUICheckBox("B", Blocks.B, "Thursday");
 		checkBoxes.add(thuB);
-		//blockMap.put(thuB, null);
 
 		thuC = new GUICheckBox("C", Blocks.C, "Thursday");
 		checkBoxes.add(thuC);
-		//blockMap.put(thuC, null);
 
 		thuL = new GUICheckBox("L", Blocks.L, "Thursday");
 		checkBoxes.add(thuL);
-		//blockMap.put(thuL, null);
 
 		friF = new GUICheckBox("F", Blocks.F, "Friday");
 		checkBoxes.add(friF);
-		//blockMap.put(friF, null);
 
 		friE = new GUICheckBox("E", Blocks.E, "Friday");
 		checkBoxes.add(friE);
-		//blockMap.put(friE, null);
 
 		friB = new GUICheckBox("B", Blocks.B, "Friday");
 		checkBoxes.add(friB);
-		//blockMap.put(friB, null);
 
 		friC = new GUICheckBox("C", Blocks.C, "Friday");
 		checkBoxes.add(friC);
-		//blockMap.put(friC, null);
 
 		friG = new GUICheckBox("G", Blocks.G, "Friday");
 		checkBoxes.add(friG);
-		//blockMap.put(friG, null);
 
 		friA = new GUICheckBox("A", Blocks.A, "Friday");
 		checkBoxes.add(friA);
-		//blockMap.put(friA, null);
 
 		friD = new GUICheckBox("D", Blocks.D, "Friday");
 		checkBoxes.add(friD);
-		//blockMap.put(friD, null);
 
 		friL = new GUICheckBox("L", Blocks.L, "Friday");
 		checkBoxes.add(friL);
-		//blockMap.put(friL, null);
 
 		satA = new GUICheckBox("A", Blocks.A, "Saturday");
 		checkBoxes.add(satA);
-		//blockMap.put(satA, null);
 
 		satH = new GUICheckBox("H", Blocks.H, "Saturday");
 		checkBoxes.add(satH);
-		//blockMap.put(satH, null);
 
 		satE = new GUICheckBox("E", Blocks.E, "Saturday");
 		checkBoxes.add(satE);
-		//blockMap.put(satE, null);
 
 		satD = new GUICheckBox("D", Blocks.D, "Saturday");
 		checkBoxes.add(satD);
-		//blockMap.put(satD, null);
 		
 		for(GUICheckBox c: checkBoxes){
 			c.setFocusPainted(false);
@@ -319,6 +285,7 @@ public class GUIBlockPicker {
 
 /**
  * This class is a very simple extension of javax.swing.JCheckBox which helps correspond JCheckBoxes to their corresponding Block and Day of Week
+ * Used only within GUIBlockPicker
  * @author Kevin
  *
  */
@@ -344,8 +311,7 @@ class GUICheckBox extends JCheckBox {
 	}
 	
 	/**
-	 * Constructor for GUICheckBox
-	 * GUICheckBox for uncheckable placeholders (ie. Assembly)
+	 * GUICheckBox for uncheckable placeholders (ie. Assembly, FCMTG, etc.)
 	 * @param name the name of the CheckBox
 	 * @param block the corresponding block
 	 */
