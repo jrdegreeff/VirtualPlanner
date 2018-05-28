@@ -1,9 +1,11 @@
 TODO:
+SetOpaque + SetBorderPaint for JButtons
+
 SET JList for UPCOMING EVENTS
 Remove Course Button
-SetOpaque + SetBorderPaint for JButtons
 JAVADOC FOR MAINCALENDAR WINDOW
 REORDER METHODS TO MAKE READABLE
+
 Override Repaint
 Only open assignment window if block has course
 Pass in course
