@@ -9,11 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -35,6 +33,7 @@ import javax.swing.JTextField;
 import virtualPlanner.backend.Course;
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
+import virtualPlanner.reference.Images;
 import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
@@ -79,9 +78,6 @@ public class MainCalendarWindow implements ActionListener {
 
 	//JLabels
 	private JLabel labelWeek, labelDate;
-
-	//Icons and Images
-	private static BufferedImage imagePrev, imageNext, imageGradebook, imageSettings;
 
 	//2D-Array representation of the Calendar GUIButtons
 	private GUIButton[][] buttons;
@@ -152,9 +148,6 @@ public class MainCalendarWindow implements ActionListener {
 		//Main Panel
 		mainPanel = new JPanel();
 
-		//Load Images
-		loadImages();
-
 		//JMenuBar
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
@@ -189,21 +182,6 @@ public class MainCalendarWindow implements ActionListener {
 	}
 
 	/**
-	 * Loads the images from the source folder
-	 */
-	private void loadImages() {
-		try {
-			imagePrev = ImageIO.read(getClass().getResource("previous.png"));
-			imageNext = ImageIO.read(getClass().getResource("next.png"));
-			imageGradebook = ImageIO.read(getClass().getResource("gradebookgreen.png"));
-			imageSettings = ImageIO.read(getClass().getResource("settingsicon1.png"));
-			System.out.println("Images Loaded.");
-		} catch (Exception e) {
-			System.out.println("Error loading images: " + e.getMessage());
-		}
-	}
-
-	/**
 	 * Adds the main base components of the GUI 
 	 */
 	public void addComponents() {
@@ -214,7 +192,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Left and Right Calendar buttons
 		buttonLeft = new JButton();
-		buttonLeft.setIcon(new ImageIcon(imagePrev));
+		buttonLeft.setIcon(new ImageIcon(Images.getPrevious()));
 		buttonLeft.setOpaque(true);
 		buttonLeft.setContentAreaFilled(false);
 		buttonLeft.setBorderPainted(false);
@@ -222,7 +200,7 @@ public class MainCalendarWindow implements ActionListener {
 		buttonLeft.setFocusable(false);		
 
 		buttonRight = new JButton();
-		buttonRight.setIcon(new ImageIcon(imageNext));
+		buttonRight.setIcon(new ImageIcon(Images.getNext()));
 		buttonRight.setOpaque(true);
 		buttonRight.setContentAreaFilled(false);
 		buttonRight.setBorderPainted(false);
@@ -285,7 +263,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Gradebook and Settings Buttons
 		buttonGradebook = new JButton();
-		buttonGradebook.setIcon(new ImageIcon(imageGradebook));
+		buttonGradebook.setIcon(new ImageIcon(Images.getGradebook()));
 		buttonGradebook.setOpaque(true);
 		buttonGradebook.setContentAreaFilled(false);
 		buttonGradebook.setBorderPainted(false);
@@ -294,7 +272,7 @@ public class MainCalendarWindow implements ActionListener {
 		buttonGradebook.setBackground(Color.cyan);
 
 		buttonSettings = new JButton();
-		buttonSettings.setIcon(new ImageIcon(imageSettings));
+		buttonSettings.setIcon(new ImageIcon(Images.getSettings()));
 		buttonSettings.setOpaque(false);
 		buttonSettings.setContentAreaFilled(false);
 		buttonSettings.setBorderPainted(false);
