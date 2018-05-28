@@ -224,7 +224,7 @@ public class MainCalendarWindow implements ActionListener {
 	}
 
 	/**
-	 * Adds the main base components of the GUI 
+	 * Adds the main base components of the MainCalendarWindow 
 	 */
 	public void addComponents() {
 		//Clear frame
@@ -232,7 +232,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Calendar 
 
-		//Left and Right Calendar buttons
+		//Left Button to show previous week
 		buttonLeft = new JButton();
 		buttonLeft.setIcon(new ImageIcon(Images.getPrevious()));
 		buttonLeft.setOpaque(true);
@@ -241,6 +241,7 @@ public class MainCalendarWindow implements ActionListener {
 		buttonLeft.addActionListener(this);
 		buttonLeft.setFocusable(false);		
 
+		//Right Button to show next week
 		buttonRight = new JButton();
 		buttonRight.setIcon(new ImageIcon(Images.getNext()));
 		buttonRight.setOpaque(true);
@@ -274,6 +275,7 @@ public class MainCalendarWindow implements ActionListener {
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
+		//Set the infoPanel to show the current day
 		String currentDayOfWeek = currentDate.getDayOfWeek().toString();
 		currentDayOfWeek = currentDayOfWeek.charAt(0) + currentDayOfWeek.substring(1, currentDayOfWeek.length()).toLowerCase();
 		labelDate = new JLabel("<html>" + currentDayOfWeek + "<br/>" + MONTHS[currentDate.getMonth()] + " " + currentDate.getDay() + ", " + currentDate.getYear() + "</html>");
@@ -282,11 +284,10 @@ public class MainCalendarWindow implements ActionListener {
 		labelDate.setForeground(Color.BLACK);
 		labelDate.setFont(Fonts.CALENDAR_DATE);
 		labelDate.setPreferredSize(DATE_SIZE);
-
 		JPanel panelLabelDate = new JPanel();
 		panelLabelDate.add(labelDate);
 
-		//Upcoming Events
+		//Upcoming Events JLabel and JList
 		JLabel labelEvents = new JLabel("Upcoming Events");
 		labelEvents.setOpaque(true);
 		labelEvents.setForeground(Color.BLACK);
@@ -294,7 +295,6 @@ public class MainCalendarWindow implements ActionListener {
 		JPanel panelLabelEvents = new JPanel();
 		panelLabelEvents.add(labelEvents);
 
-		//JList
 		events = new JList<String>();
 		events.setFont(Fonts.CALENDAR_LIST);
 		events.setForeground(Color.BLACK);
@@ -323,11 +323,12 @@ public class MainCalendarWindow implements ActionListener {
 		buttonSettings.addActionListener(this);
 		buttonSettings.setFocusable(false);
 
+		//Organizing structore for the Gradebook and Settings Buttons
 		Box infoButtons = Box.createHorizontalBox();
 		infoButtons.add(buttonGradebook);
 		infoButtons.add(buttonSettings);
 
-		//Final Organizing Structures
+		//Final Organizing JPanel of the calendar portion of MainCalendarWindow
 		JPanel calendarVertical = new JPanel();
 		calendarVertical.add(weekBox);
 		calendarVertical.add(panelCalendar);
@@ -336,6 +337,7 @@ public class MainCalendarWindow implements ActionListener {
 		calendarVertical.setBackground(Color.white);
 		calendarVertical.setLayout(new BoxLayout(calendarVertical, BoxLayout.Y_AXIS));
 
+		//Adding components and features to the infoPanel
 		infoPanel.add(panelLabelDate);
 		for(int i = 0; i < 5; i ++)
 			infoPanel.add(Box.createVerticalGlue());
@@ -345,6 +347,7 @@ public class MainCalendarWindow implements ActionListener {
 			infoPanel.add(Box.createVerticalGlue());
 		infoPanel.add(infoButtons);
 
+		//Final organizing panel
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
 		mainPanel.add(calendarVertical);
 		mainPanel.add(infoPanel);
@@ -370,7 +373,7 @@ public class MainCalendarWindow implements ActionListener {
 		//Dimension to keep all sizes constant
 		Dimension labelSize = new Dimension(CALENDAR_COLUMN_WIDTH, CALENDAR_LABEL_HEIGHT);
 
-		//Weekday Labels
+		//Add Weekday Labels
 		for (int i = 0; i < Days.values().length; i++) {
 			c.gridx = i;
 			GUIButton newButton = new GUIButton(Days.values()[i].getName(), labelSize, Fonts.CALENDAR_DAY);
@@ -378,7 +381,7 @@ public class MainCalendarWindow implements ActionListener {
 			dayOfWeekButtons.add(newButton);
 		}
 
-		//Blocks
+		//Add Blocks
 		for(int i = 0; i < Days.values().length; i++) {
 			c.ipady = 25;
 			c.gridx = i;
