@@ -416,16 +416,17 @@ public class GUIButton extends JButton implements ActionListener {
 		
 		assignments = controller.getAssignments(date, block);
 		
-		//TODO: Descriptions on new line
 		if (assignments == null) {
 			assignmentJList = new JList<String>();
 			return;
 		}
-
+		
 		int length = assignments.size();
 		String[] curAssignments = new String[length];
-		for (int i = 0; i < length; i ++)
-			curAssignments[i] = assignments.get(i).getName();
+		for (int i = 0; i < length; i ++){
+			Assignment a = assignments.get(i);
+			curAssignments[i] = a.getName() + "<br>" + a.getDescrip();
+		}
 
 		assignmentJList = new JList<String>(curAssignments);
 	}
