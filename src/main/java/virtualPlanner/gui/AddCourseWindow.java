@@ -121,6 +121,7 @@ public class AddCourseWindow implements ActionListener{
 		buttonChooseBlocks.setFont(Fonts.CALENDAR_ADD_CLASS);
 		buttonChooseBlocks.setFocusPainted(false);
 		buttonChooseBlocks.setOpaque(true);
+		buttonChooseBlocks.setBorderPainted(false);
 		buttonChooseBlocks.setBackground(Color.WHITE);
 		buttonChooseBlocks.addActionListener(this);
 		JPanel panelButtonChooseBlocks = new JPanel();
@@ -132,6 +133,7 @@ public class AddCourseWindow implements ActionListener{
 		buttonAddCourse.addActionListener(this);
 		buttonAddCourse.setBackground(Color.GREEN);
 		buttonAddCourse.setOpaque(true);
+		buttonAddCourse.setBorderPainted(false);
 		buttonAddCourse.setFocusPainted(false);
 		buttonAddCourse.setForeground(Color.BLACK);
 		frame.getRootPane().setDefaultButton(buttonAddCourse);
