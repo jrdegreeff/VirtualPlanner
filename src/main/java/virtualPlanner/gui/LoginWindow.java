@@ -178,9 +178,10 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		//Obtain current text in passowrd securely
 		String password = new String(passwordField.getPassword());
 
-		boolean successfulLogin = false; //New Account/User(usernameField.getText, password);
+		int successfulLogin = controller.login(usernameField.getText(), password); 
 
-		if (successfulLogin){
+		if (successfulLogin == 0){
+			new MainCalendarWindow(controller);
 			frame.dispose();
 		} else {
 			infoLabel.setForeground(Color.RED);
@@ -197,9 +198,10 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		//Obtain current text in passowrd
 		String password = new String(passwordField.getPassword());
 		
-		boolean successfulNewAccount = false; //New Account/User(usernameField.getText, password);
+		int successfulNewAccount = controller.signUp(usernameField.getText(), password, null); //New Account/User(usernameField.getText, password);
 		
-		if (successfulNewAccount) {
+		if (successfulNewAccount == 0) {
+			new MainCalendarWindow(controller);
 			frame.dispose();
 		} else {
 			infoLabel.setForeground(Color.RED);
