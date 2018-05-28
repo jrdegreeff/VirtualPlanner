@@ -45,7 +45,7 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Dimension ASSIGNMENT_WINDOW_SIZE = new Dimension(400, 775);
 	private static final Dimension ASSIGNMENT_LIST_SIZE = new Dimension(275, 200);
 	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
-
+	
 	private GUIController controller;
 
 	private static Date currentDate = MainCalendarWindow.getCurrentDate();

@@ -80,8 +80,8 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Title JLabel
-		titleLabel.setPreferredSize(DEFAULT_SIZE);
 		titleLabel.setFont(Fonts.LOGIN_TITLE);
+		titleLabel.setPreferredSize(DEFAULT_SIZE);
 		JPanel panelTitleLabel = new JPanel();
 		panelTitleLabel.add(titleLabel);
 
@@ -279,7 +279,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		//usernameField gains focus
 		if (src.equals(usernameField)) {
 			//User Clicks into the field with no user keyboard input
-			if (usernameField.getText().equals(USERNAME_FIELD_DEFAULT_TEXT)){
+			if (usernameField.getText().equals(USERNAME_FIELD_DEFAULT_TEXT)) {
 				//Remove hint and change color of text
 				usernameField.setText("");
 				usernameField.setForeground(Color.BLACK);
@@ -289,13 +289,10 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		//passwordField gains focus
 		else if (src.equals(passwordField)) {
 			//Obtain current text in passowrd
-			String password = "";
-			char[] pswrd = passwordField.getPassword();
-			for (char c : pswrd)
-				password += c;
+			String password = new String(passwordField.getPassword());
 
 			//User Clicks into the field with no user keyboard input
-			if (password.equals(PASSWORD_FIELD_DEFAULT_TEXT)){
+			if (password.equals(PASSWORD_FIELD_DEFAULT_TEXT)) {
 				//Remove hint and change color of text
 				passwordField.setText("");
 				passwordField.setForeground(Color.BLACK);

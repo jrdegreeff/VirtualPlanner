@@ -237,6 +237,7 @@ public class MainCalendarWindow implements ActionListener {
 		labelDate.setFont(Fonts.CALENDAR_DATE);
 		labelDate.setOpaque(true);
 		labelDate.setForeground(Color.BLACK);
+		labelDate.setFont(Fonts.CALENDAR_DATE);
 		labelDate.setPreferredSize(DATE_SIZE);
 
 		JPanel panelLabelDate = new JPanel();
@@ -405,10 +406,11 @@ public class MainCalendarWindow implements ActionListener {
 		panelNameLabel.add(nameLabel);
 
 		nameField = new JTextField(20);
+		nameField.setFont(Fonts.CALENDAR_ADD_CLASS);
 		nameField.setPreferredSize(FIELD_SIZE);
 		nameField.setMinimumSize(FIELD_SIZE);
-		nameField.setMaximumSize(FIELD_SIZE);	
-		nameField.setFont(Fonts.CALENDAR_ADD_CLASS);
+		nameField.setMaximumSize(FIELD_SIZE);
+		
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
@@ -419,10 +421,11 @@ public class MainCalendarWindow implements ActionListener {
 		panelAbbreviationLabel.add(abbreviationLabel);
 
 		abbreviationField = new JTextField(20);
+		abbreviationField.setFont(Fonts.CALENDAR_ADD_CLASS);
 		abbreviationField.setPreferredSize(FIELD_SIZE);
 		abbreviationField.setMinimumSize(FIELD_SIZE);
-		abbreviationField.setMaximumSize(FIELD_SIZE);	
-		abbreviationField.setFont(Fonts.CALENDAR_ADD_CLASS);
+		abbreviationField.setMaximumSize(FIELD_SIZE);
+		
 		JPanel panelAbbreviationField = new JPanel();
 		panelAbbreviationField.add(abbreviationField);
 
@@ -433,10 +436,11 @@ public class MainCalendarWindow implements ActionListener {
 		panelTeacherLabel.add(teacherLabel);
 
 		teacherField = new JTextField(20);
+		teacherField.setFont(Fonts.CALENDAR_ADD_CLASS);
 		teacherField.setPreferredSize(FIELD_SIZE);
 		teacherField.setMinimumSize(FIELD_SIZE);
 		teacherField.setMaximumSize(FIELD_SIZE);
-		teacherField.setFont(Fonts.CALENDAR_ADD_CLASS);
+		
 		JPanel panelTeacherField = new JPanel();
 		panelTeacherField.add(teacherField);
 
