@@ -338,6 +338,8 @@ public class GUIButton extends JButton implements ActionListener {
 		completeButton.setBackground(Color.green);
 		completeButton.addActionListener(this);
 		completeButton.setFocusPainted(false);
+		completeButton.setOpaque(true);
+		completeButton.setBorderPainted(false);
 
 		//Nested Panel 
 		JPanel panelCompleteButton = new JPanel();
@@ -459,6 +461,8 @@ public class GUIButton extends JButton implements ActionListener {
 		submitButton.setFont(Fonts.BUTTON_BUTTON);
 		submitButton.setBackground(Color.green);
 		submitButton.addActionListener(this);
+		submitButton.setOpaque(true);
+		submitButton.setBorderPainted(false);
 		//Default button of JFrame >> Enter defaults to calling actionPerformed with submitButton as the source
 		assignmentsWindow.getRootPane().setDefaultButton(submitButton);
 		JPanel panelSubmitButton = new JPanel();
