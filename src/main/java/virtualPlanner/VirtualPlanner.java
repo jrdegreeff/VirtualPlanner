@@ -1,5 +1,6 @@
 package virtualPlanner;
 
+import virtualPlanner.reference.Images;
 import virtualPlanner.reference.Preferences;
 
 /**
@@ -22,6 +23,7 @@ public class VirtualPlanner {
 	 */
 	public static void init() {
 		Preferences.loadPreferences();
+		Images.loadImages();
 	}
 	
 }
