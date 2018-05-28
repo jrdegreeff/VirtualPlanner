@@ -85,6 +85,14 @@ public class GUIBlockPicker {
 		frame.setVisible(visible);
 	}
 
+	public void clearCheckBoxes() {
+		//For each checkBox
+		for(GUICheckBox[] row : checkBoxes)
+			for(GUICheckBox c : row)
+				if(c != null)
+					c.setSelected(false);
+	}
+
 	/**
 	 * This method instantiates the GUICheckBoxes, and corresponds them to their appropriate Blocks and Days
 	 */

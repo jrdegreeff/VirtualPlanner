@@ -1,10 +1,10 @@
 TODO:
 JAVADOC FOR MAINCALENDAR WINDOW
 REORDER METHODS TO MAKE READABLE
-REFACTOR ADD COURSE WINDOWs
+SET JList for UPCOMING EVENTS
 GUISampleColorButton >> Better size + Load color
 Override Repaint
-Warning Window for Overloaded
+Remove Course Button
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
