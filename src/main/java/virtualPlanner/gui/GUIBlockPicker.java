@@ -44,6 +44,7 @@ public class GUIBlockPicker {
 		frame = new JFrame(name);
 		frame.setSize(BLOCK_PICKER_SIZE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setResizable(false);
 		//Override close operation
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
@@ -51,6 +52,7 @@ public class GUIBlockPicker {
 				frame.dispose();
 			}
 		});
+		frame.setResizable(false);
 
 		//Instantiate all the CheckBoxes
 		addCheckBoxes();

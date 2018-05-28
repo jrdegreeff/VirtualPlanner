@@ -86,6 +86,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		//Frame settings
 		frame = new JFrame("Virtual Planner");
 		frame.setSize(FRAME_SIZE);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Title JLabel

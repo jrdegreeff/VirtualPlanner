@@ -63,6 +63,8 @@ public class MainCalendarWindow implements ActionListener {
 	/**The JFrame of this MainCalendarWindow instance*/
 	private JFrame frame;
 	
+	private static final Dimension MAIN_SIZE = new Dimension(1280, 720);
+	
 	/**Outermost of all nested JPanels which is directly added into the JFrame*/
 	private JPanel mainPanel;
 	/**JPanel which holds the main calendar for the window */
@@ -71,9 +73,9 @@ public class MainCalendarWindow implements ActionListener {
 	private JPanel infoPanel;
 
 	/**Width of each individual column (day) in the calendar*/
-	private final static int CALENDAR_COLUMN_WIDTH = 70;
+	private static final int CALENDAR_COLUMN_WIDTH = 70;
 	/**Height of the day of week labels at the top of each column*/
-	private final static int CALENDAR_LABEL_HEIGHT = 20;
+	private static final int CALENDAR_LABEL_HEIGHT = 20;
 
 	//JMenuBar and sub-components
 	/**The JMenuBar for this MainCalendarWindow*/
@@ -130,30 +132,44 @@ public class MainCalendarWindow implements ActionListener {
 	/**Size of the numUpcomingDays JTextField*/
 	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
 
-	/**Array which holds all the months for reference in displaying dates*/
+	/**Array which holds all the months - used as reference when displaying dates*/
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
-	//Add new Course Window Settings
+	//Add Course Window Settings
+	/**Boolean to prevent multiple instantiations of the Add Course Window*/
 	private boolean hasAddCourseWindow;
+	/**Size of the Add Course Window*/
 	private static final Dimension COURSE_WINDOW_SIZE = new Dimension(320, 600);
+	/**Size of the individual fields within the Add Course Window*/
 	private static final Dimension FIELD_SIZE = new Dimension(80, 35);
+	/**JButton for user to submit new course*/
 	private JButton buttonAddCourse;
-	private JTextField nameField, teacherField, abbreviationField;
+	/**The Name of the New Course to Add*/
+	private JTextField nameField;
+	/**The Abbreviation of the New Course to Add*/
+	private JTextField abbreviationField;
+	/**The Teacher of the New Course to Add*/
+	private JTextField teacherField;
+	/**JButton which enables the user to choose which blocks a course meets*/
+	private JButton buttonChooseBlocks;
 
 	//Settings Window
-	private JRadioButton buttonShowDateAssigned;
-	private JRadioButton buttonShowDateDue;
-	private JButton buttonChooseBlocks;
+	/**Boolean to prevent mutliple instantiations of the Settings Window*/
 	private boolean hasSettingsWindow;
+	/**JRadioButton to customize whether assignments show on the Date assigned*/
+	private JRadioButton buttonShowDateAssigned;
+	/**JRadioButton to customize whether assignments show on the Date due*/
+	private JRadioButton buttonShowDateDue;
+	/**Field which represents the number of days the Upcoming Events JList show include*/
 	private JTextField upcomingDaysField;
 
 
 	/**
-	 * Constructor: Creates the main GUI
+	 * Constructor: Initializes the MainCalendarWindow
 	 */
 	public MainCalendarWindow(GUIController controller) {
 
-		//Name
+		//Name - personalization
 		frame = new JFrame("Virtual Planner - " + controller.getUserName());
 
 		//GUIController
@@ -165,9 +181,10 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Variables to prevent multiple window instantiations
 		hasAddCourseWindow = false;
+		hasSettingsWindow = false;
 
 		//Size
-		frame.setSize(1280, 720);
+		frame.setSize(MAIN_SIZE);
 
 		//Color
 		frame.setBackground(Color.WHITE);
@@ -179,25 +196,26 @@ public class MainCalendarWindow implements ActionListener {
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 
+		//Option JMenu and Current Week feature
 		menuOptions = new JMenu("Options");
 		menuItemCurrentWeek = new JMenuItem("Go to Current Week");
 		menuItemCurrentWeek.addActionListener(this);
 		menuOptions.add(menuItemCurrentWeek);
 
+		//Add Course JMenuItem
 		menuItemAddCourse = new JMenuItem("Add Course");
 		menuItemAddCourse.addActionListener(this);
 
+		//Add components to menuBar
 		menuBar.add(menuOptions);
 		menuBar.add(menuItemAddCourse);
 
-		//Add components
+		//Add the base components of the GUI
 		buttons = new GUIButton[7][];
 		addComponents();
 
+		//Refresh current date, week label, and all calendar buttons
 		updateWeek();
-		hasSettingsWindow = false;
-
-		//Initialize Settings Components
 
 		//Frame
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -238,13 +256,14 @@ public class MainCalendarWindow implements ActionListener {
 		labelWeek.setBackground(Color.WHITE);
 		labelWeek.setFont(Fonts.CALENDAR_WEEK);
 
-		//Level 1 -> labelWeek and Prev + Next buttons
-		Box level1 = Box.createHorizontalBox();
-		level1.add(buttonLeft);
-		level1.add(Box.createHorizontalGlue());
-		level1.add(labelWeek);
-		level1.add(Box.createHorizontalGlue());
-		level1.add(buttonRight);
+		//First row above the Calendar
+		//Displaying of labelWeek and Prev + Next buttons
+		Box weekBox = Box.createHorizontalBox();
+		weekBox.add(buttonLeft);
+		weekBox.add(Box.createHorizontalGlue());
+		weekBox.add(labelWeek);
+		weekBox.add(Box.createHorizontalGlue());
+		weekBox.add(buttonRight);
 
 		//Main Panel for Calendar
 		panelCalendar = new JPanel();
@@ -310,7 +329,7 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Final Organizing Structures
 		JPanel calendarVertical = new JPanel();
-		calendarVertical.add(level1);
+		calendarVertical.add(weekBox);
 		calendarVertical.add(panelCalendar);
 
 		calendarVertical.setOpaque(true);
@@ -413,7 +432,8 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Create new Window
 		JFrame addCourseWindow = new JFrame("Add Course");
-
+		addCourseWindow.setResizable(false);
+		
 		//Override default close operation
 		addCourseWindow.setSize(COURSE_WINDOW_SIZE);
 		addCourseWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -538,6 +558,7 @@ public class MainCalendarWindow implements ActionListener {
 		hasSettingsWindow = true;
 
 		JFrame settingsFrame = new JFrame();
+		settingsFrame.setResizable(false);
 		settingsFrame.setSize(SETTINGS_SIZE);
 		settingsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		settingsFrame.addWindowListener(new WindowAdapter() {

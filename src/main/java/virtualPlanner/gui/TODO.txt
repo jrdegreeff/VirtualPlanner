@@ -10,6 +10,7 @@ FINAL TODO:
 - Give course in MainCalendarWindow.addCourse()
 - Test UpdateAssignmentList
 - Highlight Current Day Broken
+- Do we need showDateAssigned?
 - Show Anna Image
 - Edit Assignments >> Presentation
 ___________________________________________________________

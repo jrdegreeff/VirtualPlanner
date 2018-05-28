@@ -275,6 +275,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Make new JFrame for the New Assignment Window
 		JFrame assignmentsWindow = new JFrame(name);
+		assignmentsWindow.setResizable(false);
 		assignmentsWindow.setSize(ASSIGNMENT_WINDOW_SIZE);
 		assignmentsWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
