@@ -38,28 +38,27 @@ import virtualPlanner.util.Block;
 @SuppressWarnings("serial")
 public class GUIButton extends JButton implements ActionListener {
 
-	private static final Border defaultBorder = BorderFactory.createEtchedBorder(1);
-	private static final Border highlightedBorder = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
+	private static final Border DEFAULT_BORDER = BorderFactory.createEtchedBorder(1);
+	private static final Border HIGHLIGHTED_BORDER = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
 
-	private static final Dimension showAssignmentsSize = new Dimension(400, 775);
-	private static final Dimension assignmentListSize = new Dimension(275, 200);
-	private static final Dimension inputFieldSize = new Dimension(250, 35);
+	private static final Dimension ASSIGNMENT_WINDOW_SIZE = new Dimension(400, 775);
+	private static final Dimension ASSIGNMENT_LIST_SIZE = new Dimension(275, 200);
+	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
 
-	private static final Font titleFont = new Font("Dialog", Font.BOLD, 26);
-	private static final Font assignmentFont = new Font("Dialog", Font.BOLD, 20);
-	private static final Font buttonFont = new Font("SansSerif", Font.BOLD, 20);
-	private static final Font newAssignmentFont = new Font("Dialog", Font.BOLD, 18);
+	private static final Font TITLE_FONT = new Font("Dialog", Font.BOLD, 26);
+	private static final Font ASSIGNMENT_FONT = new Font("Dialog", Font.BOLD, 20);
+	private static final Font BUTTON_FONT = new Font("SansSerif", Font.BOLD, 20);
+	private static final Font NEW_ASSIGNMENT_FONT = new Font("Dialog", Font.BOLD, 18);
 	
 	private GUIController controller;
 
-	//TODO: Better retrieval
 	private static Date currentDate = MainCalendarWindow.getCurrentDate();
 
 	private static GUIButton highlightedButton;
 
-	private static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-	private static final String[] days = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-	private static final String[] years = {"2018", "2019", "2020", "2021"};
+	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	private static final String[] DAYS = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+	private static final String[] YEARS = {"2018", "2019", "2020", "2021"};
 	private static final AssignmentTypes[] TYPES = {AssignmentTypes.HOMEWORK, AssignmentTypes.TEST, AssignmentTypes.QUIZ, AssignmentTypes.ESSAY, AssignmentTypes.PROJECT};
 	
 	private ArrayList<Assignment> assignments;
@@ -97,7 +96,7 @@ public class GUIButton extends JButton implements ActionListener {
 		this.setOpaque(true);
 		this.setFocusable(false);
 		this.setBackground(color);
-		this.setBorder(defaultBorder);
+		this.setBorder(DEFAULT_BORDER);
 		highlightedButton = null;
 		this.setAlignmentX(CENTER_ALIGNMENT);
 		this.assignments = new ArrayList<Assignment>();
@@ -165,13 +164,13 @@ public class GUIButton extends JButton implements ActionListener {
 		nameField.setText(a.getName());
 		descField.setText(a.getDescrip());
 		Date assignedDate = a.getAssignedDate();
-		assignedMonthBox.setSelectedItem(months[assignedDate.getMonth()]);
-		assignedDayBox.setSelectedItem(days[assignedDate.getDay()-1]);
-		assignedYearBox.setSelectedItem(years[assignedDate.getYear()-2018]);
+		assignedMonthBox.setSelectedItem(MONTHS[assignedDate.getMonth()]);
+		assignedDayBox.setSelectedItem(DAYS[assignedDate.getDay()-1]);
+		assignedYearBox.setSelectedItem(YEARS[assignedDate.getYear()-2018]);
 		Date dueDate = a.getDue();
-		dueMonthBox.setSelectedItem(months[dueDate.getMonth()]);
-		dueDayBox.setSelectedItem(days[dueDate.getDay()-1]);
-		dueYearBox.setSelectedItem(years[dueDate.getYear()-2018]);
+		dueMonthBox.setSelectedItem(MONTHS[dueDate.getMonth()]);
+		dueDayBox.setSelectedItem(DAYS[dueDate.getDay()-1]);
+		dueYearBox.setSelectedItem(YEARS[dueDate.getYear()-2018]);
 
 		labelNewAssignment.setText("Edit Assignment");
 		labelNewAssignment.setBackground(Color.YELLOW);
@@ -197,7 +196,6 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * Creates a window of options for this GUIButton
 	 */
-
 	private void showAssignments() {
 		if (hasOptionsWindow)
 			return;
@@ -205,7 +203,7 @@ public class GUIButton extends JButton implements ActionListener {
 		hasOptionsWindow = true;
 
 		JFrame assignmentsWindow = new JFrame(name);
-		assignmentsWindow.setSize(showAssignmentsSize);
+		assignmentsWindow.setSize(ASSIGNMENT_WINDOW_SIZE);
 		assignmentsWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		assignmentsWindow.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -216,21 +214,17 @@ public class GUIButton extends JButton implements ActionListener {
 			}
 		});
 
-
-
 		//JLabel "Current Assignments"
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
-		labelCurAssignments.setFont(titleFont);
+		labelCurAssignments.setFont(TITLE_FONT);
 		labelCurAssignments.setOpaque(true);
-		//		labelCurAssignments.setBackground(Color.WHITE);
 		JPanel panelLabelCurAssignments = new JPanel();
 		panelLabelCurAssignments.add(labelCurAssignments);
 
 		//Assignment JList and JScrollPane
 		updateAssignmentList();
 
-		//TODO remove tester
-		assignmentList.setFont(assignmentFont);
+		assignmentList.setFont(ASSIGNMENT_FONT);
 
 		//Double-Click edit feature
 		assignmentList.addMouseListener(new MouseAdapter() {
@@ -244,13 +238,13 @@ public class GUIButton extends JButton implements ActionListener {
 
 
 		assignmentScrollPane = new JScrollPane(assignmentList);
-		assignmentScrollPane.setPreferredSize(assignmentListSize);
+		assignmentScrollPane.setPreferredSize(ASSIGNMENT_LIST_SIZE);
 
 		JPanel panelAssignmentList = new JPanel();
 		panelAssignmentList.add(assignmentScrollPane);
 
 		completeButton = new JButton("Complete Assignment");
-		completeButton.setFont(buttonFont);
+		completeButton.setFont(BUTTON_FONT);
 		completeButton.setBackground(Color.green);
 		completeButton.addActionListener(this);
 		completeButton.setFocusable(false);
@@ -259,7 +253,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//JLabel "New Assignment"
 		labelNewAssignment = new JLabel("New Assignment:");
-		labelNewAssignment.setFont(titleFont);
+		labelNewAssignment.setFont(TITLE_FONT);
 		labelNewAssignment.setOpaque(true);
 		//		labelNewAssignment.setBackground(Color.WHITE);
 		JPanel panelLabelNewAssignment = new JPanel();
@@ -267,26 +261,26 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//New Assignment: Name
 		JLabel labelName = new JLabel("Assignment Name:");
-		labelName.setFont(newAssignmentFont);
+		labelName.setFont(NEW_ASSIGNMENT_FONT);
 		JPanel panelLabelName = new JPanel();
 		panelLabelName.add(labelName);
 
 		//Starts with focus
 		nameField = new JTextField();
-		nameField.setPreferredSize(inputFieldSize);
-		nameField.setFont(newAssignmentFont);
+		nameField.setPreferredSize(INPUT_FIELD_SIZE);
+		nameField.setFont(NEW_ASSIGNMENT_FONT);
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
 		//Adding Assignment: Description
 		JLabel labelDesc = new JLabel("Assignment Description (Optional):");
-		labelDesc.setFont(newAssignmentFont);
+		labelDesc.setFont(NEW_ASSIGNMENT_FONT);
 		JPanel panelLabelDesc = new JPanel();
 		panelLabelDesc.add(labelDesc);
 
 		descField = new JTextField();
-		descField.setPreferredSize(inputFieldSize);
-		descField.setFont(newAssignmentFont);
+		descField.setPreferredSize(INPUT_FIELD_SIZE);
+		descField.setFont(NEW_ASSIGNMENT_FONT);
 		JPanel panelDescField = new JPanel();
 		panelDescField.add(descField);
 
@@ -296,34 +290,33 @@ public class GUIButton extends JButton implements ActionListener {
 			assignmentTypes[i] = AssignmentTypes.values()[i].getName();
 		typeBox = new JComboBox<String>(assignmentTypes);
 		typeBox.setBackground(Color.WHITE);
-		typeBox.setFont(newAssignmentFont);
+		typeBox.setFont(NEW_ASSIGNMENT_FONT);
 		JPanel panelTypeBox = new JPanel();
 		panelTypeBox.add(typeBox);
 
 		//Adding Assignment: Date Assigned
 		JLabel labelDateAssigned = new JLabel("Date Assigned:");
-		labelDateAssigned.setFont(newAssignmentFont);
+		labelDateAssigned.setFont(NEW_ASSIGNMENT_FONT);
 		JPanel panelLabelDateAssigned = new JPanel();
 		panelLabelDateAssigned.add(labelDateAssigned);
 
 		//Month
-		assignedMonthBox = new JComboBox<String>(months);
+		assignedMonthBox = new JComboBox<String>(MONTHS);
 		assignedMonthBox.setBackground(Color.WHITE);
 
 		//Day
-		assignedDayBox = new JComboBox<String>(days);
+		assignedDayBox = new JComboBox<String>(DAYS);
 		assignedDayBox.setBackground(Color.WHITE);
 
 		//Year
-		assignedYearBox = new JComboBox<String>(years);
+		assignedYearBox = new JComboBox<String>(YEARS);
 		assignedYearBox.setBackground(Color.WHITE);
 
-		//TODO: BETTER METHOD HERE for current day
 
 		//Set Defaults for ASSIGNED DATE
-		assignedMonthBox.setSelectedItem(months[currentDate.getMonth()]);
-		assignedDayBox.setSelectedItem(days[currentDate.getDay()-1]);
-		assignedYearBox.setSelectedItem(years[currentDate.getYear()-2018]);
+		assignedMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
+		assignedDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
+		assignedYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
 
 		Box assignedDatePicker = Box.createHorizontalBox();
 		assignedDatePicker.add(assignedMonthBox);
@@ -335,27 +328,26 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Adding Assignment: Date Due
 		JLabel labelDateDue = new JLabel("Date Due:");
-		labelDateDue.setFont(newAssignmentFont);
+		labelDateDue.setFont(NEW_ASSIGNMENT_FONT);
 		JPanel panelLabelDateDue = new JPanel();
 		panelLabelDateDue.add(labelDateDue);
 
 		//Month
-		dueMonthBox = new JComboBox<String>(months);
+		dueMonthBox = new JComboBox<String>(MONTHS);
 		dueMonthBox.setBackground(Color.WHITE);
 
 		//Day
-		dueDayBox = new JComboBox<String>(days);
+		dueDayBox = new JComboBox<String>(DAYS);
 		dueDayBox.setBackground(Color.WHITE);
 
 		//Year
-		dueYearBox = new JComboBox<String>(years);
+		dueYearBox = new JComboBox<String>(YEARS);
 		dueYearBox.setBackground(Color.WHITE);
-		//TODO: BETTER METHOD HERE
 
 		//Set Defaults for DUE DATE
-		dueMonthBox.setSelectedItem(months[currentDate.getMonth()]);
-		dueDayBox.setSelectedItem(days[currentDate.getDay()-1]);
-		dueYearBox.setSelectedItem(years[currentDate.getYear()-2018]);
+		dueMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
+		dueDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
+		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
 
 		Box dueDatePicker = Box.createHorizontalBox();
 		dueDatePicker.add(dueMonthBox);
@@ -367,7 +359,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Submit Button
 		submitButton = new JButton("Submit");
-		submitButton.setFont(buttonFont);
+		submitButton.setFont(BUTTON_FONT);
 		submitButton.setBackground(Color.green);
 		submitButton.addActionListener(this);
 		assignmentsWindow.getRootPane().setDefaultButton(submitButton);
@@ -516,7 +508,7 @@ public class GUIButton extends JButton implements ActionListener {
 	 */
 	public static void select(GUIButton button) {
 		highlightedButton = button;
-		button.setBorder(highlightedBorder);
+		button.setBorder(HIGHLIGHTED_BORDER);
 	}
 
 	/**
@@ -524,7 +516,7 @@ public class GUIButton extends JButton implements ActionListener {
 	 */
 	public static void deselect() {
 		if(highlightedButton != null) {
-			highlightedButton.setBorder(defaultBorder);
+			highlightedButton.setBorder(DEFAULT_BORDER);
 			highlightedButton = null;
 		}
 	}

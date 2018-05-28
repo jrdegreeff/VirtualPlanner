@@ -15,7 +15,7 @@ import virtualPlanner.reference.Fonts;
 @SuppressWarnings("serial")
 public class GUISampleColorButton extends JButton implements ActionListener{
 
-	private static final Dimension buttonSize = new Dimension(30,30);
+	private static final Dimension BUTTON_SIZE = new Dimension(60,30);
 	private static ArrayList<GUISampleColorButton> buttons = new ArrayList<GUISampleColorButton>();
 	private Course course;
 	
@@ -25,6 +25,7 @@ public class GUISampleColorButton extends JButton implements ActionListener{
 		this.setFocusPainted(false);
 		this.setFont(Fonts.CALENDAR_BLOCK);
 		this.setBackground(Color.WHITE);
+		this.setPreferredSize(BUTTON_SIZE);
 		this.addActionListener(this);
 		this.course = course;
 		buttons.add(this);

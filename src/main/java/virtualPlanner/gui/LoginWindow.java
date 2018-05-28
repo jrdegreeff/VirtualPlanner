@@ -34,19 +34,19 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 	private static JLabel titleLabel = new JLabel("Virtual Planner Login");
 
 	/**The size of the JFrame*/
-	private static final Dimension frameSize = new Dimension(450, 500);
+	private static final Dimension FRAME_SIZE = new Dimension(450, 500);
 	/**Default Sizes of Fields and Buttons*/
-	private static final Dimension defaultSize = new Dimension(300, 35);
+	private static final Dimension DEFAULT_SIZE = new Dimension(300, 35);
 
 	/**Fonts for this JFrame*/
-	private static final Font titleFont = new Font("Dialog", Font.BOLD, 28);
-	private static final Font infoFont = new Font("Dialog", Font.BOLD, 18);
-	private static final Font defaultFont = new Font("Dialog", Font.PLAIN, 18);
-	private static final Font buttonFont = new Font("Dialog", Font.BOLD, 22);
+	private static final Font TITLE_FONT = new Font("Dialog", Font.BOLD, 28);
+	private static final Font INFO_FONT = new Font("Dialog", Font.BOLD, 18);
+	private static final Font DEFAULT_FONT = new Font("Dialog", Font.PLAIN, 18);
+	private static final Font BUTTON_FONT = new Font("Dialog", Font.BOLD, 22);
 
 	/**Default hints for the user input fields*/
-	private static final String usernameFieldDefaultText = "Username";
-	private static final String passwordFieldDefaultText = "Password";
+	private static final String USERNAME_FIELD_DEFAULT_TEXT = "Username";
+	private static final String PASSWORD_FIELD_DEFAULT_TEXT = "Password";
 
 
 	/**Info label to directly contact/inform the user*/
@@ -81,26 +81,26 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		
 		//Frame settings
 		frame = new JFrame("Virtual Planner");
-		frame.setSize(frameSize);
+		frame.setSize(FRAME_SIZE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Title JLabel
-		titleLabel.setFont(titleFont);
-		titleLabel.setPreferredSize(defaultSize);
+		titleLabel.setFont(TITLE_FONT);
+		titleLabel.setPreferredSize(DEFAULT_SIZE);
 		JPanel panelTitleLabel = new JPanel();
 		panelTitleLabel.add(titleLabel);
 
 		infoLabel = new JLabel("Please Enter User Credentials:");
-		infoLabel.setPreferredSize(defaultSize);
-		infoLabel.setFont(infoFont);
+		infoLabel.setPreferredSize(DEFAULT_SIZE);
+		infoLabel.setFont(INFO_FONT);
 		infoLabel.setForeground(Color.BLACK);
 		JPanel panelInfoLabel = new JPanel();
 		panelInfoLabel.add(infoLabel);
 
 		//Username JTextField
-		usernameField = new JTextField(usernameFieldDefaultText);
-		usernameField.setPreferredSize(defaultSize);
-		usernameField.setFont(defaultFont);
+		usernameField = new JTextField(USERNAME_FIELD_DEFAULT_TEXT);
+		usernameField.setPreferredSize(DEFAULT_SIZE);
+		usernameField.setFont(DEFAULT_FONT);
 		usernameField.setForeground(Color.GRAY);
 		usernameField.addFocusListener(this);
 		usernameField.addKeyListener(this);
@@ -108,9 +108,9 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		panelUsernameField.add(usernameField);
 
 		//Password JTextField
-		passwordField = new JPasswordField(passwordFieldDefaultText);
-		passwordField.setPreferredSize(defaultSize);
-		passwordField.setFont(defaultFont);
+		passwordField = new JPasswordField(PASSWORD_FIELD_DEFAULT_TEXT);
+		passwordField.setPreferredSize(DEFAULT_SIZE);
+		passwordField.setFont(DEFAULT_FONT);
 		passwordField.setForeground(Color.GRAY);
 		passwordField.addFocusListener(this);
 		passwordField.setEchoChar((char) 0);
@@ -127,14 +127,14 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		rememberHorizontal.add(labelRemember);
 		JPanel panelRememberHorizontal = new JPanel();
 		panelRememberHorizontal.add(rememberHorizontal);
-		panelRememberHorizontal.setPreferredSize(defaultSize);
+		panelRememberHorizontal.setPreferredSize(DEFAULT_SIZE);
 
 		//Login JButton
 		loginButton = new JButton("Log in");
-		loginButton.setPreferredSize(defaultSize);
+		loginButton.setPreferredSize(DEFAULT_SIZE);
 		loginButton.setBackground(Color.CYAN);
 		loginButton.setForeground(Color.WHITE);
-		loginButton.setFont(buttonFont);
+		loginButton.setFont(BUTTON_FONT);
 		loginButton.setFocusPainted(false);
 		loginButton.addActionListener(this);
 		frame.getRootPane().setDefaultButton(loginButton);
@@ -143,10 +143,10 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 
 		//New Account JButton
 		createAccountButton = new JButton("Create an Account");
-		createAccountButton.setPreferredSize(defaultSize);
+		createAccountButton.setPreferredSize(DEFAULT_SIZE);
 		createAccountButton.setBackground(Color.BLUE);
 		createAccountButton.setForeground(Color.WHITE);
-		createAccountButton.setFont(buttonFont);
+		createAccountButton.setFont(BUTTON_FONT);
 		createAccountButton.setFocusPainted(false);
 		createAccountButton.addActionListener(this);
 		JPanel panelCreateAccountButton = new JPanel();
@@ -292,7 +292,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 		//usernameField gains focus
 		if (src.equals(usernameField)){
 			//User Clicks into the field with no user keyboard input
-			if (usernameField.getText().equals(usernameFieldDefaultText)){
+			if (usernameField.getText().equals(USERNAME_FIELD_DEFAULT_TEXT)){
 				//Remove hint and change color of text
 				usernameField.setText("");
 				usernameField.setForeground(Color.BLACK);
@@ -308,7 +308,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 				password += c;
 
 			//User Clicks into the field with no user keyboard input
-			if (password.equals(passwordFieldDefaultText)){
+			if (password.equals(PASSWORD_FIELD_DEFAULT_TEXT)){
 				//Remove hint and change color of text
 				passwordField.setText("");
 				passwordField.setForeground(Color.BLACK);
@@ -336,7 +336,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 			//If the field is blank
 			if(usernameField.getText().equals("")){
 				//Reinstate the "Hint", reset the color
-				usernameField.setText(usernameFieldDefaultText);
+				usernameField.setText(USERNAME_FIELD_DEFAULT_TEXT);
 				usernameField.setForeground(Color.GRAY);
 			}
 		}
@@ -352,7 +352,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener{
 			//If the field is blacnk
 			if (password.equals("")){
 				//Reinstate the "Hint, reset the color
-				passwordField.setText(passwordFieldDefaultText);
+				passwordField.setText(PASSWORD_FIELD_DEFAULT_TEXT);
 				passwordField.setForeground(Color.GRAY);
 				//Set the passwordField to show characters
 				passwordField.setEchoChar((char)0);
