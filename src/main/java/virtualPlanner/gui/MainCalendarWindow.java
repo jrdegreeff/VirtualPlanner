@@ -26,6 +26,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -95,7 +96,7 @@ public class MainCalendarWindow implements ActionListener {
 	private static ArrayList<GUIButton> dayOfWeekButtons = new ArrayList<GUIButton>();
 
 	//Dimension for the date
-	private static final Dimension dateSize = new Dimension(375, 95);
+	private static final Dimension dateSize = new Dimension(400, 125);
 
 	//Dimension for the upcoming events list 
 	private static final Dimension upcomingEventsSize = new Dimension(365, 0);
@@ -108,6 +109,8 @@ public class MainCalendarWindow implements ActionListener {
 
 	//Dimension for the numUpcomingDays JTextField
 	private static final Dimension upcomingDaysSize = new Dimension(30, 25);
+
+	private static final String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
 	//Add new Course Window Settings
 	private boolean hasAddCourseWindow;
@@ -252,7 +255,9 @@ public class MainCalendarWindow implements ActionListener {
 		infoPanel = new JPanel();
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 
-		labelDate = new JLabel("<html>Saturday<br/>December 28, 2018</html>");
+		String currentDayOfWeek = currentDate.getDayOfWeek().toString();
+		currentDayOfWeek = currentDayOfWeek.charAt(0) + currentDayOfWeek.substring(1, currentDayOfWeek.length()).toLowerCase();
+		labelDate = new JLabel("<html>" + currentDayOfWeek + "<br/>" + months[currentDate.getMonth()] + " " + currentDate.getDay() + ", " + currentDate.getYear() + "</html>");
 		labelDate.setOpaque(true);
 		labelDate.setForeground(Color.BLACK);
 		labelDate.setFont(Fonts.CALENDAR_DATE);
@@ -533,8 +538,13 @@ public class MainCalendarWindow implements ActionListener {
 		settingsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		settingsFrame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
-				hasSettingsWindow = false;
+				try{
 				Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));
+				} catch (Exception e){
+					JOptionPane.showMessageDialog(null, "Invalid Input for Upcoming Days", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				hasSettingsWindow = false;
 				settingsFrame.dispose();
 			}
 		});
@@ -591,7 +601,7 @@ public class MainCalendarWindow implements ActionListener {
 	 */
 	private void addCourse() {
 		controller.addCourse(null, nameField.getText(), abbreviationField.getText(), teacherField.getText());
-		new GUISampleColorButton(nameField.getText());
+		new GUISampleColorButton(abbreviationField.getText(), controller.getCourse(null));
 		//TODO: Array of blocks
 	}
 

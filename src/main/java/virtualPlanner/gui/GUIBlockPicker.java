@@ -315,11 +315,6 @@ public class GUIBlockPicker {
 			c.setFocusPainted(false);
 		}
 	}
-	
-	public static void main(String[] args){
-		new GUIBlockPicker("Pick the meeting times");
-	}
-
 }
 
 /**

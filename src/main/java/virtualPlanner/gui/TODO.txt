@@ -1,10 +1,6 @@
 TODO:
-JCheckBoxes
-- choosing blocks for new classes
-
 Test Assignments: Add/Remove/Edit
 
-Dimension for the Date
 Set Block Colors
 Base Block colors on Course
 Specific Block Lengths
@@ -73,3 +69,8 @@ Upcoming Events >> RETRIEVAL
 
 Preferences
 - Number of days of upcoming events >> STORAGE + LOADING
+
+JCheckBoxes
+- choosing blocks for new classes
+
+Dimension for the Date
