@@ -24,9 +24,9 @@ import javax.swing.border.Border;
 
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
-import virtualPlanner.backend.Student;
 import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.reference.Days;
+import virtualPlanner.reference.Fonts;
 import virtualPlanner.util.Date;
 import virtualPlanner.reference.Preferences;
 import virtualPlanner.util.Block;
@@ -45,11 +45,6 @@ public class GUIButton extends JButton implements ActionListener {
 	private static final Dimension showAssignmentsSize = new Dimension(400, 775);
 	private static final Dimension assignmentListSize = new Dimension(275, 200);
 	private static final Dimension inputFieldSize = new Dimension(250, 35);
-
-	private static final Font titleFont = new Font("Dialog", Font.BOLD, 26);
-	private static final Font assignmentFont = new Font("Dialog", Font.BOLD, 20);
-	private static final Font buttonFont = new Font("SansSerif", Font.BOLD, 20);
-	private static final Font newAssignmentFont = new Font("Dialog", Font.BOLD, 18);
 	
 	private GUIController controller;
 
@@ -154,7 +149,7 @@ public class GUIButton extends JButton implements ActionListener {
 	}
 
 	/**
-	 * Shows the Edit assignment features for an already exisiting assignment
+	 * Shows the Edit assignment features for an already existing assignment
 	 */
 	private void showEditAssignmentMode(int index) {
 		if (isEditMode || assignments == null || assignments.size()-1 < index)
@@ -198,7 +193,6 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * Creates a window of options for this GUIButton
 	 */
-
 	private void showAssignments() {
 		if (hasOptionsWindow)
 			return;
@@ -221,9 +215,8 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//JLabel "Current Assignments"
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
-		labelCurAssignments.setFont(titleFont);
+		labelCurAssignments.setFont(Fonts.BUTTON_TITLE);
 		labelCurAssignments.setOpaque(true);
-		//		labelCurAssignments.setBackground(Color.WHITE);
 		JPanel panelLabelCurAssignments = new JPanel();
 		panelLabelCurAssignments.add(labelCurAssignments);
 
@@ -231,7 +224,7 @@ public class GUIButton extends JButton implements ActionListener {
 		updateAssignmentList();
 
 		//TODO remove tester
-		assignmentList.setFont(assignmentFont);
+		assignmentList.setFont(Fonts.BUTTON_ASSIGNMENT);
 
 		//Double-Click edit feature
 		assignmentList.addMouseListener(new MouseAdapter() {
@@ -251,7 +244,7 @@ public class GUIButton extends JButton implements ActionListener {
 		panelAssignmentList.add(assignmentScrollPane);
 
 		completeButton = new JButton("Complete Assignment");
-		completeButton.setFont(buttonFont);
+		completeButton.setFont(Fonts.BUTTON_BUTTON);
 		completeButton.setBackground(Color.green);
 		completeButton.addActionListener(this);
 		completeButton.setFocusable(false);
@@ -260,34 +253,33 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//JLabel "New Assignment"
 		labelNewAssignment = new JLabel("New Assignment:");
-		labelNewAssignment.setFont(titleFont);
+		labelNewAssignment.setFont(Fonts.BUTTON_TITLE);
 		labelNewAssignment.setOpaque(true);
-		//		labelNewAssignment.setBackground(Color.WHITE);
 		JPanel panelLabelNewAssignment = new JPanel();
 		panelLabelNewAssignment.add(labelNewAssignment);
 
 		//New Assignment: Name
 		JLabel labelName = new JLabel("Assignment Name:");
-		labelName.setFont(newAssignmentFont);
+		labelName.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelLabelName = new JPanel();
 		panelLabelName.add(labelName);
 
 		//Starts with focus
 		nameField = new JTextField();
 		nameField.setPreferredSize(inputFieldSize);
-		nameField.setFont(newAssignmentFont);
+		nameField.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
 		//Adding Assignment: Description
 		JLabel labelDesc = new JLabel("Assignment Description (Optional):");
-		labelDesc.setFont(newAssignmentFont);
+		labelDesc.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelLabelDesc = new JPanel();
 		panelLabelDesc.add(labelDesc);
 
 		descField = new JTextField();
 		descField.setPreferredSize(inputFieldSize);
-		descField.setFont(newAssignmentFont);
+		descField.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelDescField = new JPanel();
 		panelDescField.add(descField);
 
@@ -297,13 +289,13 @@ public class GUIButton extends JButton implements ActionListener {
 			assignmentTypes[i] = AssignmentTypes.values()[i].getName();
 		typeBox = new JComboBox<String>(assignmentTypes);
 		typeBox.setBackground(Color.WHITE);
-		typeBox.setFont(newAssignmentFont);
+		typeBox.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelTypeBox = new JPanel();
 		panelTypeBox.add(typeBox);
 
 		//Adding Assignment: Date Assigned
 		JLabel labelDateAssigned = new JLabel("Date Assigned:");
-		labelDateAssigned.setFont(newAssignmentFont);
+		labelDateAssigned.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelLabelDateAssigned = new JPanel();
 		panelLabelDateAssigned.add(labelDateAssigned);
 
@@ -336,7 +328,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Adding Assignment: Date Due
 		JLabel labelDateDue = new JLabel("Date Due:");
-		labelDateDue.setFont(newAssignmentFont);
+		labelDateDue.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
 		JPanel panelLabelDateDue = new JPanel();
 		panelLabelDateDue.add(labelDateDue);
 
@@ -368,7 +360,7 @@ public class GUIButton extends JButton implements ActionListener {
 
 		//Submit Button
 		submitButton = new JButton("Submit");
-		submitButton.setFont(buttonFont);
+		submitButton.setFont(Fonts.BUTTON_BUTTON);
 		submitButton.setBackground(Color.green);
 		submitButton.addActionListener(this);
 		assignmentsWindow.getRootPane().setDefaultButton(submitButton);
@@ -399,18 +391,18 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * This method is called whenever the user is done adding an assignment so that the "Upcoming Events" list is updated
 	 */
-	private void updateUpcomingEvents(){
+	private void updateUpcomingEvents() {
 		//ArrayList of the upcoming events - to be converted back to normal array later
 		ArrayList<String> arrayListEvents = new ArrayList<String>();
 		//Number of days to include in coming events
 		int numDaysUpcoming = Preferences.numDaysUpcoming();
 		
 		//For each day within the numDaysUpcoming range
-		for(int i = 0; i < numDaysUpcoming; i ++){
+		for(int i = 0; i < numDaysUpcoming; i++) {
 			//Get the corresponding date and add its list of assignments
 			Date upcomingDate = currentDate.getUpcomingDate(i);
 			Block[] blocks = Days.getBlocksOnDay(upcomingDate);
-			for(Block b: blocks)
+			for(Block b : blocks)
 				arrayListEvents.addAll(controller.getAssignmentNames(upcomingDate, b));
 		}
 		
@@ -423,11 +415,9 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * Called when a user adds/removes/edits an assignment in a specific block to update the JList
 	 */
-	private void updateAssignmentList()
-	{
+	private void updateAssignmentList() {
 		//TODO: Descriptions on new line
-		if (assignments == null)
-		{
+		if (assignments == null) {
 			assignmentList = new JList<String>();
 			return;
 		}
@@ -443,7 +433,7 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * Updates the text that shows on the button
 	 */
-	private void updateButton(){
+	private void updateButton() {
 		String result = name;
 		if (assignments == null)
 			return;
@@ -457,17 +447,13 @@ public class GUIButton extends JButton implements ActionListener {
 	 * This method adds an assignment to the JList 
 	 * Only called when the user clicks the submitButton
 	 */
-	private void addAssignment()
-	{
+	private void addAssignment() {
 		Date assigned = new Date(assignedDayBox.getSelectedIndex()+1, assignedMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(assignedYearBox.getSelectedItem())));		
 		Date due = new Date(dueDayBox.getSelectedIndex()+1, dueMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(dueYearBox.getSelectedItem())));
 		
 		AssignmentTypes type = TYPES[typeBox.getSelectedIndex()];
 		
 		controller.addAssignment(course, assigned, due, type, name, descField.getText());
-		
-//		Assignment newAssignment = new Assignment(0, assigned, due, type, nameField.getText(), descField.getText(), false);
-
 
 		updateAssignmentList();
 	}
@@ -475,9 +461,8 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * This method moves a current assignment to the completed list
 	 */
-	private void completeAssignment(int index)
-	{
-		if (assignments == null || assignments.size()-1 < index)
+	private void completeAssignment(int index) {
+		if (assignments == null || assignments.size() - 1 < index)
 			return;
 
 		completedAssignments.add(assignments.remove(index));
@@ -489,7 +474,7 @@ public class GUIButton extends JButton implements ActionListener {
 	 * After the user re-enters all the information, this method edits the original Assignment
 	 * Quits the edit assignment mode
 	 */
-	private void editAssignment(){
+	private void editAssignment() {
 		Assignment a = assignmentToEdit;
 		a.setName(nameField.getText());
 		a.setDescrip(descField.getText());
@@ -501,11 +486,10 @@ public class GUIButton extends JButton implements ActionListener {
 	/**
 	 * @return an ArrayList<String> holding all the names of assignments
 	 */
-	public ArrayList<String> getEventsList(){
+	public ArrayList<String> getEventsList() {
 		ArrayList<String> result = new ArrayList<String>();
-		for (Assignment a : assignments){
+		for (Assignment a : assignments)
 			result.add(a.getName());
-		}
 		
 		return result;
 	}
@@ -531,27 +515,25 @@ public class GUIButton extends JButton implements ActionListener {
 	}
 
 	/**
-	 * ActionListener for each individual JButtno
+	 * ActionListener for each individual JButton
 	 */
-	public void actionPerformed(ActionEvent e)  {
+	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
 		MainCalendarWindow.highlightCurDay();
 
-		if (src.equals(submitButton)){
-			if (isEditMode){
+		if (src.equals(submitButton)) {
+			if (isEditMode) {
 				System.out.println("User tried to finish editing");
-			}
-			else{
+			} else {
 				System.out.println("User tried to submit");
 				addAssignment();
 			}
 		}
 
-		else if (src.equals(completeButton)){
+		else if (src.equals(completeButton)) {
 			completeAssignment(assignmentList.getSelectedIndex());
 		}
-
 
 		else if (src instanceof GUIButton) {	
 			GUIButton button = (GUIButton)src;
@@ -576,4 +558,5 @@ public class GUIButton extends JButton implements ActionListener {
 			}
 		}
 	}
+	
 }
