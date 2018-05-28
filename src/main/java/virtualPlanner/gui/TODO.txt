@@ -1,6 +1,4 @@
 TODO:
-SetOpaque + SetBorderPaint for JButtons
-
 SET JList for UPCOMING EVENTS
 Remove Course Button
 JAVADOC FOR MAINCALENDAR WINDOW
