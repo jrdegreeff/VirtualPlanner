@@ -195,6 +195,8 @@ public class AssignmentWindow implements ActionListener {
 		completeButton.setBackground(Color.green);
 		completeButton.addActionListener(this);
 		completeButton.setFocusPainted(false);
+		completeButton.setOpaque(true);
+		completeButton.setBorderPainted(false);
 
 		//Nested Panel 
 		JPanel panelCompleteButton = new JPanel();
@@ -319,6 +321,8 @@ public class AssignmentWindow implements ActionListener {
 		submitButton = new JButton("Submit");
 		submitButton.setFont(Fonts.BUTTON_BUTTON);
 		submitButton.setBackground(Color.green);
+		submitButton.setOpaque(true);
+		submitButton.setBorderPainted(false);
 		submitButton.addActionListener(this);
 		//Default button of JFrame >> Enter defaults to calling actionPerformed with submitButton as the source
 		frame.getRootPane().setDefaultButton(submitButton);
