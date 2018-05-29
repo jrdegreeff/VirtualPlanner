@@ -85,6 +85,9 @@ public class GUIBlockPicker {
 		frame.setVisible(visible);
 	}
 
+	/**
+	 * Clears all of the check boxes in this GUIBlockPicker
+	 */
 	public void clearCheckBoxes() {
 		//For each checkBox
 		for(GUICheckBox[] row : checkBoxes)
@@ -135,7 +138,8 @@ public class GUIBlockPicker {
 	}
 
 	/**
-	 * This class is a very simple extension of javax.swing.JCheckBox which helps correspond JCheckBoxes to their corresponding Block and Day of Week
+	 * This class is a very simple extension of javax.swing.JCheckBox which helps correspond JCheckBoxes to their corresponding Block
+	 * Note: This class is used instead of a Map because JCheckBox is not comparable
 	 * Used only within GUIBlockPicker
 	 * @author KevinGao
 	 *

@@ -451,7 +451,6 @@ public class CalendarWindow implements ActionListener {
 	/**
 	 * Method which handles of of the ActionEvents recorded by ActionListeners
 	 */
-	@Override
 	public void actionPerformed(ActionEvent e)  {
 		Object src = e.getSource();
 
@@ -602,7 +601,5 @@ public class CalendarWindow implements ActionListener {
 				}
 			}
 		}
-		
 	}
-	
 }

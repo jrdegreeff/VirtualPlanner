@@ -5,12 +5,10 @@ JAVADOC FOR MAINCALENDAR WINDOW
 - OTHER FIELDS
 REORDER METHODS TO MAKE READABLE
 
-Settings Window
-- Upcoming Events
-
 Removal instantly updates the JList >> Strikethrough for finished Objects
 - Upcoming Events and JButton don't show finished Objects
-//TODO: Remove + Edit gives bad pointer
+//TODO: Edit gives bad pointer
+		Only remove 1 at a time
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:

@@ -21,7 +21,7 @@ import virtualPlanner.io.LoginException;
 import virtualPlanner.reference.Fonts;
 
 /**
- * This class represents both a Login and a SignUp Window for the VirtualPlanner
+ * This class implments both a Login and a SignUp Window for the VirtualPlanner
  * @author KevinGao
  */
 public class LoginWindow implements ActionListener, FocusListener, KeyListener {
@@ -91,6 +91,9 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Add all of the Java Swing components to this LoginWindow's JFrame
+	 */
 	private void addComponents() {
 		//Title JLabel
 		titleLabel.setFont(Fonts.LOGIN_TITLE);
@@ -243,8 +246,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 			infoLabel.setForeground(Color.RED);
 			infoLabel.setText("Username already exists");
 		}
-
-		System.out.println("New Account:" + usernameField.getText() + " + " + password);
 	}
 
 	/**
@@ -281,20 +282,20 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 			titleLabel.setText("Virtual Planner Login");
 			showingLoginFeatures = true;
 		}
+		
+		frame.invalidate();
+		frame.revalidate();
 	}
 
 	/**
 	 * This method handles ActionEvents for the LoginWindow
 	 */
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 
-		//Login Button Clicked
+		//Login Button Clicked - call Corresponding method
+
 		if (src.equals(loginButton)) {
-			
-			//Call Corresponding method
-			
 			//Login Mode
 			if (showingLoginFeatures) {
 				login();
@@ -315,9 +316,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 	/**
 	 * This method handles focusGained FocusEvents for the Login Window
 	 * Used for Manual Implementation of the JTextField Hint/Suggested text
-	 *
 	 */
-	@Override
 	public void focusGained(FocusEvent e) {
 
 		//The usernameField is set to the default focus on startup: 
@@ -369,7 +368,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 	 * This method handles focusLost FocusEvents for the Login Window
 	 * Used for Manual Implementation of the JTextField Hint/Suggested text
 	 */
-	@Override
 	public void focusLost(FocusEvent e) {
 
 		//Obtain source
@@ -423,7 +421,6 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 	 * This method handles keyPressed KeyEvents for the Login Window
 	 * Used for Manual Implementation of the JTextField Hint/Suggested text
 	 */
-	@Override
 	public void keyPressed(KeyEvent e) {
 
 		//Normally the "Hint" disappears as soon a field gains focus
@@ -441,13 +438,11 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 	 * This method handles keyReleased KeyEvents for the Login Window
 	 * Unused method required by KeyListener
 	 */
-	@Override
 	public void keyReleased(KeyEvent e) {}
 
 	/**
 	 * This method handles keyTyped KeyEvents for the Login Window
 	 * Unused method required by KeyListener
 	 */
-	@Override
 	public void keyTyped(KeyEvent e) {}
 }

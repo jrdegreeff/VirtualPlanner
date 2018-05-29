@@ -1,4 +1,4 @@
-package virtualPlanner.gui;
+ package virtualPlanner.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,7 +28,7 @@ import virtualPlanner.util.Block;
 import virtualPlanner.util.Date;
 
 /**
- * This class represents an Assignment Window for each individual block in the schedule
+ * This class implements an Assignment Window for each individual block in the schedule
  * @author KevinGao
  *
  */
@@ -49,6 +49,7 @@ public class AssignmentWindow implements ActionListener {
 	/**Size of the Input Fields within the Add Assignment Window*/
 	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
 
+	/**The JFrame of this AssignmentWindow*/
 	private JFrame frame;
 
 	//The following variables must have references here in order to be able to be accessed in actionPerformed.
@@ -86,22 +87,36 @@ public class AssignmentWindow implements ActionListener {
 	/**Reference to the JLabel in the Add Assignment Window which informs the user what the window is for*/
 	private JLabel labelNewAssignment;
 
+	/**This AssignmentWindow's GUIController*/
 	private GUIController controller;
+	/**An ArrayList of existing assignments*/
 	private ArrayList<Assignment> assignments;
-	private Date currentDate;
-	private Date clickedDate;
+	/**The Block that is associated with this Assignment Window*/
 	private Block block;
+	/**The Course that is associated with this Assignment Window*/
 	private Course course;
-
+	/**The current calendar day in real life*/
+	private Date currentDate;
+	/**The Date on which the Block to which this AssignmentWindow belongs exists*/
+	private Date clickedDate;
 	/**
 	 * If true, the user is currently editing an existing assignment
 	 * If false, the user is currently adding a new assignment
 	 */
 	private Boolean isEditMode;
-
 	/**Reference of assignment that the user wants to update*/
 	private Assignment assignmentToEdit;
 
+	/**
+	 * Constructor for AssignmentWindow 
+	 * Instantiates an AssignmentWindow window
+	 * @param title the title of the JFrame
+	 * @param currentDate the current calendar date
+	 * @param clickedDate the date which the clicked Block represents
+	 * @param block the Block that is associated with this Assignment Window
+	 * @param course the Course that is associated with this Assignment Window
+	 * @param controller the GUIController for this Assignment Window
+	 */
 	protected AssignmentWindow(String title, Date currentDate, Date clickedDate, Block block, Course course, GUIController controller) {
 		//Make new JFrame for the New Assignment Window
 		title = clickedDate.getDayOfWeek().toString() + " " + title;
@@ -119,6 +134,7 @@ public class AssignmentWindow implements ActionListener {
 			}
 		});
 
+		//Set Fields and add components
 		this.currentDate = currentDate;
 		this.clickedDate = clickedDate;
 		this.block = block;
@@ -129,10 +145,14 @@ public class AssignmentWindow implements ActionListener {
 		addComponents();
 		frame.setVisible(true);
 		
+		//Give nameField default focus - the flashing cursor
 		nameField.grabFocus();
 		nameField.requestFocus();
 	}
 
+	/**
+	 * Adds the Java Swing Components to this AssignmentWindow's JFrame
+	 */
 	private void addComponents() {
 		//JLabel "Current Assignments"
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
@@ -145,6 +165,7 @@ public class AssignmentWindow implements ActionListener {
 		//Update and show the JList of current Assignments
 		updateAssignmentList();
 
+		//Set Font
 		assignmentJList.setFont(Fonts.BUTTON_ASSIGNMENT);
 
 		//MouseListener which enables editing of items in the JList
@@ -339,7 +360,7 @@ public class AssignmentWindow implements ActionListener {
 			return;
 		}
 
-		//Else, set the JList to the return ArrayList's contents
+		//Else, set the JList to show assignment's contents
 		int length = assignments.size();
 		String[] curAssignments = new String[length];
 		for (int i = 0; i < length; i ++){
@@ -354,12 +375,14 @@ public class AssignmentWindow implements ActionListener {
 
 		//Set the assignmentJList to display the current Assignments
 		assignmentJList.setListData(curAssignments);
+		assignmentScrollPane.invalidate();
 		assignmentScrollPane.revalidate();
 		assignmentScrollPane.repaint();
 	}
 
 	/**
 	 * Enables the edit assignment features within the Add Assignment Window for a particular existing Assignment
+	 * @param index the index of the Assignment to edit
 	 */
 	private void showEditAssignmentMode(int index) {
 
@@ -423,7 +446,7 @@ public class AssignmentWindow implements ActionListener {
 
 	/**
 	 * This method is the last part of the edit assignment procedure
-	 * After the user re-enters all the information, this method edits the original Assignment
+	 * After the user re-enters all the information, this method passes the information to the backend and changes its information in the database through the GUIController
 	 * Quits the edit assignment mode after the user re-submits
 	 */
 	private void editAssignment() {
@@ -452,7 +475,6 @@ public class AssignmentWindow implements ActionListener {
 	 * Called only when the user clicks submitButton
 	 */
 	private void addAssignment() {
-		System.out.println("Attempting to add assignment");
 		//Retrieve Dates from JComboBoxes
 		Date assigned = new Date(assignedDayBox.getSelectedIndex()+1, assignedMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(assignedYearBox.getSelectedItem())));		
 		Date due = new Date(dueDayBox.getSelectedIndex()+1, dueMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(dueYearBox.getSelectedItem())));
@@ -497,8 +519,10 @@ public class AssignmentWindow implements ActionListener {
 		//Add to the completed list
 		//		completedAssignments.add(removedAssignment);
 	}
-
-	@Override
+	
+	/**
+	 * ActionEvent handler for the AssignmentWindow class
+	 */
 	public void actionPerformed(ActionEvent e){
 		Object src = e.getSource();
 
@@ -521,7 +545,5 @@ public class AssignmentWindow implements ActionListener {
 		else if (src.equals(completeButton)) {
 			completeAssignment(assignmentJList.getSelectedIndex());
 		}
-
 	}
-
 }
