@@ -217,7 +217,7 @@ public class LoginWindow implements ActionListener, FocusListener, KeyListener {
 			infoLabel.setForeground(Color.RED);
 			infoLabel.setText("Invalid Username");
 			break;
-		case LoginException.USERNAME_ALREADY_EXISTS:
+		case LoginException.INVALID_PASSWORD:
 			//Inform user of incorrect credentials
 			infoLabel.setForeground(Color.RED);
 			infoLabel.setText("Invalid Password");
