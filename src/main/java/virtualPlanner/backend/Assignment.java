@@ -177,7 +177,7 @@ public class Assignment implements Comparable<Assignment> {
 	 */
 	@Override
 	public String toString() {
-		return name + " (" + descrip + ") [type = " + type.name() + "] assigned on " + assignedDate + ", due on " + dueDate + (isComplete ? " (complete)" : " " )+ "{id = " + id + "}";
+		return name + (descrip.equals("") ? "" : " (" + descrip + ")") + "[type = " + type.name() + "] assigned on " + assignedDate + ", due on " + dueDate + (isComplete ? " (complete)" : " " )+ "{id = " + id + "}";
 	}
 	
 	/**
