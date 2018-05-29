@@ -467,6 +467,9 @@ public class AssignmentWindow implements ActionListener {
 		controller.changeAssignedDate(course, a, assigned);
 		controller.changeDueDate(course, a, due);
 
+		//Update the JList of current Assignments
+		updateAssignmentList();
+		
 		//Quit the Edit Assignment Mode
 		hideEditAssignmentMode();
 		
