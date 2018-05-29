@@ -1,6 +1,7 @@
 package virtualPlanner.reference;
 
 import virtualPlanner.util.Block;
+import virtualPlanner.util.Date;
 import virtualPlanner.util.Time;
 
 /**
@@ -118,6 +119,16 @@ public enum Days {
 	 */
 	public Block getBlock(int n) {
 		return blocks[n];
+	}
+	
+	/**
+	 * Retrieves the all the {@code Block}s which occur on a particular {@code Date}.
+	 * 
+	 * @param date The {@code Date} to find {@code Block}s for.
+	 * @return All the {@code Block}s which occur on the specified {@code Date}.
+	 */
+	public static Block[] getBlocksOnDay(Date date) {
+		return date.getDayOfWeek().blocks;
 	}
 	
 	/**

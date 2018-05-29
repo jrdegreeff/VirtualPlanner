@@ -1,8 +1,10 @@
 package virtualPlanner.backend;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import virtualPlanner.util.Block;
 
@@ -46,6 +48,7 @@ public class Student implements User {
 	/**
 	 * @return The id of this {@code Student}.
 	 */
+	@Override
 	public int getID() {
 		return id;
 	}
@@ -78,18 +81,30 @@ public class Student implements User {
 
 	/**
 	 * Adds a course to a student's schedule according to its {@code Block}s.
+	 * Should only be called once the availability of the blocks has been checked.
 	 * 
 	 * @param blocks {@code Block}s to add the {@code Course} to.
 	 * @param course The {@code Course} to add.
-	 * @return {@code true} if successful, {@code false} otherwise.
 	 */
 	@Override
-	public boolean addCourse(Block[] blocks, Course course) {
-		for (Block block : blocks)
-			if (schedule.containsKey(block.getID()))
-				return false;
+	public void addCourse(Block[] blocks, Course course) {
 		for (Block block : blocks)
 			schedule.put(block.getID(), course);
+	}
+	
+	/**
+	 * Tests whether the {@code Student}'s schedule conflicts with certain blocks.
+	 * Optionally ignores the {@code Block}s occupied by a particular {@code Course}.
+	 * 
+	 * @param blocks The {@code Block}s to test.
+	 * @param ignore An optional {@code Course} to ignore.
+	 * @return {@code true} if there is no conflict, {@code false} otherwise.
+	 */
+	@Override
+	public boolean checkAvailability(Block[] blocks, Course ignore) {
+		for (Block block : blocks)
+			if (schedule.containsKey(block.getID()) && !schedule.get(block.getID()).equals(ignore))
+				return false;
 		return true;
 	}
 	
@@ -123,6 +138,18 @@ public class Student implements User {
 				iter.remove();
 	}
 	
+	/**
+	 * Retrieves all of this {@code Student}'s {@code Courses}.
+	 * 
+	 * @return All of this {@code Student}'s {@code Courses}.
+	 */
+	@Override
+	public Course[] getAllCourses() {
+		Set<Course> courses = new HashSet<Course>();
+		for(Course course : schedule.values())
+			courses.add(course);
+		return courses.toArray(new Course[0]);
+	}
 	
 	/**
 	 * Retrieves string representations of all of this {@code Student}'s courses.
@@ -131,10 +158,10 @@ public class Student implements User {
 	 */
 	@Override
 	public String[] getCourseNames() {
-		String[] courseNames = new String[schedule.size()];
-		int idx = 0;
-		for(Course course : schedule.values())
-			courseNames[idx++] = course.getName();
+		Course[] courses = getAllCourses();
+		String[] courseNames = new String[courses.length];
+		for(int i = 0; i < courses.length; i++)
+			courseNames[i] = courses[i].getName();
 		return courseNames;
 	}
 	

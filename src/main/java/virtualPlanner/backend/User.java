@@ -32,26 +32,44 @@ public interface User {
 	/**
 	 * Retrieves string representations of all of this {@code User}'s courses.
 	 * 
-	 * @return String representations of the {@code User}'s courses.
+	 * @return String representations of this {@code User}'s courses.
 	 */
 	public String[] getCourseNames();
 	
 	/**
+	 * Retrieves all of this {@code User}'s {@code Courses}.
+	 * 
+	 * @return All of this {@code User}'s {@code Courses}.
+	 */
+	public Course[] getAllCourses();
+	
+	/**
 	 * Retrieves the {@code Course} from this {@code User}'s schedule in a particular {@code Block}.
 	 * 
-	 * @param block The {@code Block} to find the course for.
+	 * @param block The {@code Block} to find the {@code Course} for.
 	 * @return The {@code Course} associated with the specified {@code Block}, or {@code null} if this {@code User} has no {@code Course} for that {@code Block}.
 	 */
 	public Course getCourse(Block block);
 	
 	/**
 	 * Adds a {@code Course} to this {@code User}'s schedule in the specified {@code Block}s.
+	 * Should only be called once the availability of the {@code Block}s has been checked.
 	 * 
 	 * @param blocks The {@code Block}s to add the {@code Course} to.
 	 * @param course The {@code Course} to add.
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in this {@code User}'s schedule.
 	 */
-	public boolean addCourse(Block[] blocks, Course course);
+	public void addCourse(Block[] blocks, Course course);
+	
+	/**
+	 * Tests whether the {@code User}'s schedule conflicts with certain blocks.
+	 * Optionally ignores the {@code Block}s occupied by a particular {@code Course}.
+	 * 
+	 * @param blocks The {@code Block}s to test.
+	 * @param ignore An optional {@code Course} to ignore.
+	 * @return {@code true} if there is no conflict, {@code false} otherwise.
+	 */
+	public boolean checkAvailability(Block[] blocks, Course ignore);
 	
 	/**
 	 * Adds a {@code Course} to this {@code User}'s schedule in {@code Block}s with the specified blockids.
@@ -78,8 +96,11 @@ public interface User {
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in this {@code User}'s schedule.
 	 */
 	public default boolean updateCourse(Block[] newBlocks, Course course) {
+		if(!checkAvailability(newBlocks, course))
+			return false;
 		removeCourse(course);
-		return addCourse(newBlocks, course);
+		addCourse(newBlocks, course);
+		return true;
 	}
 	
 	/**
@@ -88,7 +109,7 @@ public interface User {
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
 	 * @param onDue {@code true} if querying by due date, {@code false} if querying by assigned date.
-	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if there are no such {@code Assignment}s.
+	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if the {@code User} has no {@code Course} in the specified {@code Block}.
 	 */
 	public default ArrayList<Assignment> getAssignments(Date date, Block block, boolean onDue) {
 		Course course = getCourse(block);
@@ -96,13 +117,21 @@ public interface User {
 	}
 	
 	/**
-	 * Adds an {@code Assignment} to the specified {@code Course} in this {@code User}'s schedule.
+	 * Retrieves String representations of the {@code User}'s {@code Assignment}s for a particular {@code Block} that are due on a particular {@code Date}.
 	 * 
-	 * @param course The {@code Course} to add the {@code Assignment} to.
-	 * @param assignment The {@code Assignment} to add.
+	 * @param date The {@code Date} to query.
+	 * @param block The {@code Block} to query.
+	 * @param onDue {@code true} if querying by due date, {@code false} if querying by assigned date.
+	 * @return String representations of any {@code Assignment}s which the user has for the specified {@code Date} and {@code Block}.
 	 */
-	public default void addAssignment(Course course, Assignment assignment) {
-		course.addAssignment(assignment);
+	public default ArrayList<String> getAssignmentNames(Date date, Block block) {
+		ArrayList<Assignment> assignments = getAssignments(date, block, true);
+		if(assignments == null)
+			return new ArrayList<String>();
+		ArrayList<String> names = new ArrayList<String>();
+		for(Assignment assignment : assignments)
+			names.add(assignment.getName());
+		return names;
 	}
 	
 }

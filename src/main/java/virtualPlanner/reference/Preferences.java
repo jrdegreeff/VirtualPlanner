@@ -39,7 +39,7 @@ public class Preferences {
 			properties.load(in);
 			in.close();
 		} catch (IOException e) {savePreferences();}
-		
+		System.out.println("Preferences Loaded.");
 	}
 	
 	/**
@@ -84,6 +84,31 @@ public class Preferences {
 	 */
 	public static void removeColor(int courseID) {
 		properties.remove("course-" + courseID);
+		savePreferences();
+	}
+	
+	/**
+	 * @return The number of days which should be included in the upcoming events.
+	 */
+	public static int numDaysUpcoming() {
+		return Integer.parseInt(properties.getProperty("numDaysUpcoming"));
+	}
+	
+	/**
+	 * Sets the numDaysUpcoming preference to a specified value.
+	 * 
+	 * @param value The value to set.
+	 */
+	public static void setNumDaysUpcoming(int value) {
+		properties.setProperty("numDaysUpcoming", "" + value);
+		savePreferences();
+	}
+	
+	/**
+	 * Restores the default numDaysUpcoming preference.
+	 */
+	public static void removeNumDaysUpcoming()  {
+		properties.remove("numDaysUpcoming");
 		savePreferences();
 	}
 	

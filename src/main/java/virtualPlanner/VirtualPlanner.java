@@ -1,5 +1,9 @@
 package virtualPlanner;
 
+import virtualPlanner.backend.Controller;
+import virtualPlanner.gui.GUIController;
+import virtualPlanner.io.DatabaseController;
+import virtualPlanner.reference.Images;
 import virtualPlanner.reference.Preferences;
 
 /**
@@ -13,7 +17,18 @@ import virtualPlanner.reference.Preferences;
 public class VirtualPlanner {
 	
 	public static void main(String[] args) {
+		init();
+		DatabaseController dbController = new DatabaseController();
+		Controller controller = new Controller(dbController);
+		new GUIController(controller);
+	}
+	
+	/**
+	 * Performs static initialization.
+	 */
+	public static void init() {
 		Preferences.loadPreferences();
+		Images.loadImages();
 	}
 	
 }

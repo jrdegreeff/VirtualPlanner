@@ -80,17 +80,6 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Changes the assigned date. 
-	 * @param newAssn new assigned date
-	 * @return old assigned date
-	 */
-	protected Date changeAssignedDate(Date newAssn) {
-		Date oldAssn = assignedDate; 
-		assignedDate = newAssn;
-		return oldAssn; 
-	}
-	
-	/**
 	 * @return due date of an assignment
 	 */
 	public Date getDue() {
@@ -98,20 +87,9 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Changes the due date. 
-	 * @param newDue new due date
-	 * @return old due date
-	 */
-	protected Date changeDueDate(Date newDue) {
-		Date oldDue = assignedDate; 
-		assignedDate = newDue;
-		return oldDue; 
-	}
-	
-	/**
 	 * @return type of the assignment
 	 */
-	public AssignmentTypes getAssignmentTypes() {
+	public AssignmentTypes getAssignmentType() {
 		return type;
 	}
 	
@@ -123,32 +101,10 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Set the assignment to be completed. 
-	 */
-	public void complete() {
-		isComplete = true;
-	}
-	
-	/**
-	 * Set the assignment to be not completed. 
-	 */
-	public void uncomplete() {
-		isComplete = false;
-	}
-	
-	/**
 	 * @return name of the assignment
 	 */
 	public String getName() {
 		return name;
-	}
-	
-	/**
-	 * Set the name of the assignment. 
-	 * @param newName name of the assignment
-	 */
-	public void setName(String newName) {
-		name = newName;
 	}
 	
 	/**
@@ -159,10 +115,60 @@ public class Assignment implements Comparable<Assignment> {
 	}
 	
 	/**
-	 * Set the description of the assignment. 
-	 * @param newDescrip new description of the assignment
+	 * Changes the assigned date. 
+	 * @param newAssn new assigned date
+	 * @return old assigned date
 	 */
-	public void setDescrip(String newDescrip) {
+	protected Date changeAssignedDate(Date newAssn) {
+		Date oldAssn = assignedDate;
+		assignedDate = newAssn;
+		return oldAssn;
+	}
+	
+	/**
+	 * Changes the due date. 
+	 * @param newDue new due date
+	 * @return old due date
+	 */
+	protected Date changeDueDate(Date newDue) {
+		Date oldDue = dueDate;
+		dueDate = newDue;
+		return oldDue;
+	}
+	
+	/**
+	 * Changes the assignment type of this {@code Assignment}.
+	 * 
+	 * @param newType The type to change to.
+	 */
+	protected void setType(AssignmentTypes newType) {
+		type = newType;
+	}
+	
+	/**
+	 * Sets this {@code Assignment} to be complete or incomplete.
+	 * 
+	 * @param isComplete {@code true} if complete, {@code false} if incomplete.
+	 */
+	protected void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
+	}
+	
+	/**
+	 * Changes the name of this {@code Assignment}. 
+	 * 
+	 * @param newName The new name for this {@code Assignment}.
+	 */
+	protected void setName(String newName) {
+		name = newName;
+	}
+	
+	/**
+	 * Changes the description of this {@code Assignment}. 
+	 * 
+	 * @param newDescrip The new description for this {@code Assignment}.
+	 */
+	protected void setDescrip(String newDescrip) {
 		descrip = newDescrip;
 	}
 	
@@ -171,7 +177,7 @@ public class Assignment implements Comparable<Assignment> {
 	 */
 	@Override
 	public String toString() {
-		return name + " (" + descrip + ") [type = " + type.name() + "] assigned on " + assignedDate + ", due on " + dueDate + (isComplete ? " (complete)" : " " )+ "{id = " + id + "}";
+		return name + (descrip.equals("") ? "" : " (" + descrip + ")") + "[type = " + type.name() + "] assigned on " + assignedDate + ", due on " + dueDate + (isComplete ? " (complete)" : " " )+ "{id = " + id + "}";
 	}
 	
 	/**

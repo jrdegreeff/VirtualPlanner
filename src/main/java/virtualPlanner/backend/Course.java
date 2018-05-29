@@ -85,7 +85,7 @@ public class Course {
 	 * 
 	 * @param newName The new name.
 	 */
-	public void setName(String newName) {
+	protected void setName(String newName) {
 		this.name = newName;
 	}
 	
@@ -94,7 +94,7 @@ public class Course {
 	 * 
 	 * @param newTeacher The new teacher.
 	 */
-	public void setTeacher(String newTeacher) {
+	protected void setTeacher(String newTeacher) {
 		this.teacher = newTeacher;
 	}
 	
@@ -103,7 +103,7 @@ public class Course {
 	 * 
 	 * @param newAbbrev The new abbreviation.
 	 */
-	public void setAbbreviation(String newAbbrev) {
+	protected void setAbbreviation(String newAbbrev) {
 		this.abbrev = newAbbrev;
 	}
 
@@ -111,7 +111,7 @@ public class Course {
 	 * @param dateDue
 	 * @return TreeSet of Assignments due on a given date.
 	 */
-	public Set<Assignment> getDue(Date dateDue) {
+	protected Set<Assignment> getDue(Date dateDue) {
 		Set<Assignment> assignments = dueDateMap.get(dateDue);
 		return assignments == null ? new TreeSet<Assignment>() : assignments;
 	}
@@ -120,29 +120,42 @@ public class Course {
 	 * @param dateAssigned
 	 * @return TreeSet of Assignments assigned on a given date.
 	 */
-	public Set<Assignment> getAssigned(Date dateAssigned) {
+	protected Set<Assignment> getAssigned(Date dateAssigned) {
 		Set<Assignment> assignments = assnDateMap.get(dateAssigned);
 		return assignments == null ? new TreeSet<Assignment>() : assignments;
 	}
 
 	/**
-	 * addAssignment adds the given Assignment object to the Assigned HashMap
-	 * and the Due HashMap by respective dates.
-	 * @param hw
+	 * Adds the given Assignment object to both dueDateMap and assignedDateMap.
+	 * @param assn assignment to be added
 	 */
-	public void addAssignment(Assignment hw) {
-		Date dateDue = hw.getDue();
-		Date dateAssigned = hw.getAssignedDate();
+	public void addAssignment(Assignment assn) {
+		Date dateDue = assn.getDue();
+		Date dateAssigned = assn.getAssignedDate();
 		
+		// add to due date map
 		if (!dueDateMap.containsKey(dateDue)) {
 			dueDateMap.put(dateDue, new TreeSet<Assignment>());
 		}
-		dueDateMap.get(dateDue).add(hw);
+		dueDateMap.get(dateDue).add(assn);
 		
+		// add to assigned date map
 		if (!assnDateMap.containsKey(dateAssigned)) {
 			assnDateMap.put(dateAssigned, new TreeSet<Assignment>());
 		}
-		assnDateMap.get(dateAssigned).add(hw);
+		assnDateMap.get(dateAssigned).add(assn);
+	}
+	
+	/**
+	 * Removes the given Assignment object in both dueDateMap and assignedDateMap.
+	 * @param assn assignment to be removed
+	 */
+	protected void removeAssignment(Assignment assn) {
+		Date dateDue = assn.getDue();
+		Date dateAssigned = assn.getAssignedDate();
+		
+		dueDateMap.get(dateDue).remove(assn);
+		assnDateMap.get(dateAssigned).remove(assn);
 	}
 
 	/**
@@ -150,7 +163,7 @@ public class Course {
 	 * @param assn assignment
 	 * @param newAssnDate new assigned date
 	 */
-	public void changeAssignedDate(Assignment assn, Date newAssnDate) {
+	protected void changeAssignedDate(Assignment assn, Date newAssnDate) {
 		// update assigned date in assignment
 		Date oldAssnDate = assn.changeAssignedDate(newAssnDate);
 
@@ -169,17 +182,17 @@ public class Course {
 	 * @param assn assignment
 	 * @param newDueDate new due date
 	 */
-	public void changeDueDate(Assignment assn, Date newDueDate) {
+	protected void changeDueDate(Assignment assn, Date newDueDate) {
 		// update assigned date in assignment
 		Date oldDueDate = assn.changeDueDate(newDueDate);
-
+		
 		// ArrayList of assignment on old assignment date
-		Set<Assignment> oldAssignments = assnDateMap.get(oldDueDate); // old assignments set for old date
+		Set<Assignment> oldAssignments = dueDateMap.get(oldDueDate); // old assignments set for old date
 		oldAssignments.remove(assn);
-		Set<Assignment> newAssignments = assnDateMap.get(newDueDate); // new assignments set for new date
+		Set<Assignment> newAssignments = dueDateMap.get(newDueDate); // new assignments set for new date
 		newAssignments.add(assn);
 		
-		assnDateMap.put(newDueDate, newAssignments);
+		dueDateMap.put(newDueDate, newAssignments);
 	}
 	
 	/**
