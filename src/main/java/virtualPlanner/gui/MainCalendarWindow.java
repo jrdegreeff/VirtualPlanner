@@ -350,7 +350,7 @@ public class MainCalendarWindow implements ActionListener {
 			for(int j = 0; j < blockOrder.getBlockCount(); j++) {
 				c.gridy = j + 1;
 				Block block = blockOrder.getBlock(j);
-				CalendarButton button = new CalendarButton(BLOCK_SIZE, block, controller.getAssignments(weekStartDate.getUpcomingDate(j), block), controller.getCourse(block), weekStartDate.getUpcomingDate(j));
+				CalendarButton button = new CalendarButton(BLOCK_SIZE, block, controller.getAssignments(weekStartDate.getUpcomingDate(i), block), controller.getCourse(block), weekStartDate.getUpcomingDate(j));
 				panelCalendar.add(button, c);
 				buttons[i][j] = button;
 			}
