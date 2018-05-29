@@ -58,7 +58,6 @@ public class AssignmentWindow implements ActionListener{
 	/**JComboBox which represents the AssignmentType of the assignment*/
 	private JComboBox<String> typeBox;
 
-
 	/**String array which represents all the months in a year*/
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	/**String array which represents all the days in a month*/
@@ -73,8 +72,6 @@ public class AssignmentWindow implements ActionListener{
 	private static final Dimension ASSIGNMENT_LIST_SIZE = new Dimension(275, 200);
 	/**Size of the Input Fields within the Add Assignment Window*/
 	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
-
-	
 	
 	/**Date Object which represents the current date in real life*/
 	private static Date currentDate = MainCalendarWindow.getCurrentDate();
@@ -347,7 +344,7 @@ public class AssignmentWindow implements ActionListener{
 			//WHILE keeping the two lines as part of ONE INDEX in the JList 
 			//Essential to the functionality of the Edit Mode
 			//Note: \n does not work, and wrapping text is intentionally avoided, as it creates unpleasant visuals
-			curAssignments[i] = a.getName() + "<br>" + a.getDescrip();
+			curAssignments[i] = a.getName() + " (" + a.getDescrip() + ")";
 			System.out.println(a);
 		}
 
