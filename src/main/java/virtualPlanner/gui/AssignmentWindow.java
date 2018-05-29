@@ -349,7 +349,7 @@ public class AssignmentWindow implements ActionListener {
 			//WHILE keeping the two lines as part of ONE INDEX in the JList 
 			//Essential to the functionality of the Edit Mode
 			//Note: \n does not work, and wrapping text is intentionally avoided, as it creates unpleasant visuals
-			curAssignments[i] = a.getName() + (a.getDescrip().equals("") ? "" : " (" + a.getDescrip() + ")");
+			curAssignments[i] = "<html>" + a.getName() + (a.getDescrip().equals("") ? "" : "<br/>(" + a.getDescrip() + ")") + "</html>";
 		}
 
 		//Set the assignmentJList to display the current Assignments

@@ -5,8 +5,6 @@ JAVADOC FOR MAINCALENDAR WINDOW
 - OTHER FIELDS
 REORDER METHODS TO MAKE READABLE
 
-Add Assignment Window Day of Week
-Upcoming Events Descriptions
 Removal instantly updates the JList >> Strikethrough for finished Objects
 - Set assignmentcomplete in assignmentwindow's edit assignment
 - Upcoming Events and JButton don't show finished Objects
@@ -15,7 +13,7 @@ Settings Window
 - Upcoming Events
 
 
-//TODO: Remove gives bad pointer
+//TODO: Remove + Edit gives bad pointer
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
@@ -28,6 +26,7 @@ FINAL TODO:
 - Invalid Days of Month, Setting assigned message 
 - DATE SELECTER SHOULD MORE CHECKS
 - Remove Course Button
+- Upcoming Events Descriptions
 ___________________________________________________________
 ___________________________________________________________
 Ideas
