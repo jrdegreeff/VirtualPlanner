@@ -1,15 +1,29 @@
 TODO:
-SET JList for UPCOMING EVENTS
 JAVADOC FOR MAINCALENDAR WINDOW
+- CONSTANTS
+- SWING FIELDS
+- OTHER FIELDS
 REORDER METHODS TO MAKE READABLE
-
+Upcoming Events Size
+NameField focus
 Remove Course Button
+Auto-set Date Due to clicked day
+Add Assignment Window Day of Week
+Upcoming Events Descriptions
+Removal instantly updates the JList >> Strikethrough for finished Objects
+- Upcoming Events and JButton don't show finished Objects
+Default Show Assignments When
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
 - Highlight Current Day Broken
 - Show Anna Image
 - Edit Assignments >> Presentation
+- Color-Coded by Assignment Type >> Nested JLabels in GUIButtons
+- Short names, max 1 assignment per course for presentation
+- Completed adds to compmleted list >> GET ALL PAST ADDED ASSIGNMENTS
+- Invalid Days of Month, 
+- DATE SELECTER SHOULD MORE CHECKS
 ___________________________________________________________
 ___________________________________________________________
 Ideas
@@ -18,6 +32,8 @@ Remove directly from Upcoming Events
 Size for panelCalendar?
 Completed Portion of List?
 All completed/past assignments?
+Invalid Days of Month
+Variable Resolution
 ___________________________________________________________
 ___________________________________________________________
 FINISHED
