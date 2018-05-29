@@ -320,6 +320,8 @@ public class MainCalendarWindow implements ActionListener {
 	 * This method adds the weekly JButtons to the calendarPanel
 	 */
 	public void updateButtons() {
+		
+		//Remove the previous, outdated components
 		panelCalendar.removeAll();
 		
 		//Initial default values for GridBagLayout constraints
@@ -365,6 +367,9 @@ public class MainCalendarWindow implements ActionListener {
 		c.fill = GridBagConstraints.VERTICAL;
 		CalendarButton newButton = new CalendarButton("", BLOCK_SIZE);
 		panelCalendar.add(newButton, c);
+		
+		panelCalendar.invalidate();
+		panelCalendar.revalidate();
 	}
 
 	/**
