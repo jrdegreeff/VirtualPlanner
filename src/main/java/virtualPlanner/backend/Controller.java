@@ -23,17 +23,12 @@ public class Controller {
 	 */
 	private DatabaseController dbController;
 	/**
-	 * The {@code GUIController} instance.
-	 */
-	private GUIController guiController;
-	/**
 	 * The {@code User} instance/.
 	 */
 	private User user;
 	
-	public Controller() {
-		dbController = new DatabaseController();
-		guiController = new GUIController(this);
+	public Controller(DatabaseController dbController) {
+		this.dbController = dbController;
 	}
 	
 	/**
