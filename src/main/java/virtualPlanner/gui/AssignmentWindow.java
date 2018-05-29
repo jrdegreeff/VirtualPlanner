@@ -104,6 +104,7 @@ public class AssignmentWindow implements ActionListener {
 
 	protected AssignmentWindow(String title, Date currentDate, Date clickedDate, Block block, Course course, GUIController controller) {
 		//Make new JFrame for the New Assignment Window
+		title = clickedDate.getDayOfWeek().toString() + " " + title;
 		frame = new JFrame(title);
 		frame.setResizable(false);
 		frame.setSize(ASSIGNMENT_WINDOW_SIZE);
