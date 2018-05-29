@@ -41,7 +41,7 @@ import virtualPlanner.util.Date;
  * @author KevinGao
  * @author JeremiahDeGreeff
  */
-public class MainCalendarWindow implements ActionListener {
+public class CalendarWindow implements ActionListener {
 
 	private static final Dimension MAIN_SIZE = new Dimension(1280, 720);
 
@@ -134,7 +134,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * Constructor: Initializes the MainCalendarWindow
 	 */
-	protected MainCalendarWindow(GUIController controller) {
+	protected CalendarWindow(GUIController controller) {
 		//GUIController
 		this.controller = controller;
 		

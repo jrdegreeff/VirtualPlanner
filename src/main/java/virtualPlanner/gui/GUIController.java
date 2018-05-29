@@ -22,7 +22,7 @@ public class GUIController {
 	 */
 	private Controller controller;
 	
-	private MainCalendarWindow calendarWindow;
+	private CalendarWindow calendarWindow;
 	private SettingsWindow settingsWindow;
 	private AddCourseWindow addCourseWindow;
 	private AssignmentWindow assignmentWindow;
@@ -60,7 +60,7 @@ public class GUIController {
 	protected int login(String username, String password) {
 		int result = controller.login(username, password);
 		if(result == 0)
-			calendarWindow = new MainCalendarWindow(this);
+			calendarWindow = new CalendarWindow(this);
 		return result;
 	}
 	
