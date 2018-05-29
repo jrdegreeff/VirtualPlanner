@@ -186,7 +186,7 @@ public class GUIController {
 	}
 	
 	/**
-	 * Retrieves String representations of the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * Retrieves String representations of the user's {@code Assignment}s for a particular {@code Block} that are due on a particular {@code Date}.
 	 * 
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.

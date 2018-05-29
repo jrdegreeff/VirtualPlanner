@@ -2,7 +2,6 @@ package virtualPlanner.backend;
 
 import java.util.ArrayList;
 
-import virtualPlanner.gui.GUIController;
 import virtualPlanner.io.DatabaseController;
 import virtualPlanner.io.LoginException;
 import virtualPlanner.reference.AssignmentTypes;
@@ -105,14 +104,14 @@ public class Controller {
 	}
 	
 	/**
-	 * Retrieves String representations of the user's {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * Retrieves String representations of the user's {@code Assignment}s for a particular {@code Block} that are due on a particular {@code Date}.
 	 * 
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
 	 * @return String representations of any {@code Assignment}s which the user has for the specified {@code Date} and {@code Block}.
 	 */
 	public ArrayList<String> getAssignmentNames(Date date, Block block) {
-		return user.getAssignmentNames(date, block, Preferences.displayOnDue());
+		return user.getAssignmentNames(date, block);
 	}
 	
 	/**

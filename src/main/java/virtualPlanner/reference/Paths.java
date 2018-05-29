@@ -1,18 +1,10 @@
 package virtualPlanner.reference;
-
-import java.nio.file.FileSystems;
-
 /**
  * Contains static path constants for various I/O operations.
  * 
  * @author JeremiahDeGreeff
  */
 public class Paths {
-	
-	/**
-	 * System-dependent filesystem separator.
-	 */
-	private static final String SEPARATOR = ""; //FileSystems.getDefault().getSeparator();
 	
 	/**
 	 * Path to the preferences file.
@@ -26,18 +18,18 @@ public class Paths {
 	/**
 	 * Path to the previous arrow image.
 	 */
-	public static final String IMAGE_PREVIOUS = SEPARATOR + "previous.png";
+	public static final String IMAGE_PREVIOUS = "previous.png";
 	/**
 	 * Path to the next arrow image.
 	 */
-	public static final String IMAGE_NEXT = SEPARATOR + "next.png";
+	public static final String IMAGE_NEXT = "next.png";
 	/**
 	 * Path to the gradebook image.
 	 */
-	public static final String IMAGE_GRADEBOOK = SEPARATOR + "gradebookgreen.png";
+	public static final String IMAGE_GRADEBOOK = "gradebookgreen.png";
 	/**
 	 * Path to the settings image.
 	 */
-	public static final String IMAGE_SETTINGS = SEPARATOR + "settingsicon1.png";
+	public static final String IMAGE_SETTINGS = "settingsicon1.png";
 	
 }

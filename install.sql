@@ -34,5 +34,6 @@ CREATE TABLE `user_course` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `userid` int(11) NOT NULL,
   `courseid` int(11) NOT NULL,
+  `blockid` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

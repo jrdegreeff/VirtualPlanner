@@ -117,15 +117,15 @@ public interface User {
 	}
 	
 	/**
-	 * Retrieves String representations of the {@code User}'s {@code Assignment}s for a particular {@code Block} on a particular {@code Date}.
+	 * Retrieves String representations of the {@code User}'s {@code Assignment}s for a particular {@code Block} that are due on a particular {@code Date}.
 	 * 
 	 * @param date The {@code Date} to query.
 	 * @param block The {@code Block} to query.
 	 * @param onDue {@code true} if querying by due date, {@code false} if querying by assigned date.
 	 * @return String representations of any {@code Assignment}s which the user has for the specified {@code Date} and {@code Block}.
 	 */
-	public default ArrayList<String> getAssignmentNames(Date date, Block block, boolean onDue) {
-		ArrayList<Assignment> assignments = getAssignments(date, block, onDue);
+	public default ArrayList<String> getAssignmentNames(Date date, Block block) {
+		ArrayList<Assignment> assignments = getAssignments(date, block, true);
 		if(assignments == null)
 			return new ArrayList<String>();
 		ArrayList<String> names = new ArrayList<String>();

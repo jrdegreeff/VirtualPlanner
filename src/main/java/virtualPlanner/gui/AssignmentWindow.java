@@ -516,8 +516,9 @@ public class AssignmentWindow implements ActionListener {
 		//Contact middle-end & back-end
 		controller.setAssignmentComplete(removedAssignment, true);
 		controller.removeAssignment(course, removedAssignment);
-		//Add to the completed list
-		//		completedAssignments.add(removedAssignment);
+		
+		//Update the JList of current Assignments
+		updateAssignmentList();
 	}
 	
 	/**
@@ -528,7 +529,6 @@ public class AssignmentWindow implements ActionListener {
 
 		//The user clicks the submit button
 		if (src.equals(submitButton)) {
-			System.out.println("Submit clicked");
 			//Edit mode
 			if (isEditMode) {
 				//This means the user is done editing the assignment: proceed to the final step of the Edit Assignment procedure
