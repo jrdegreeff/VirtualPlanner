@@ -5,8 +5,6 @@ JAVADOC FOR MAINCALENDAR WINDOW
 - OTHER FIELDS
 REORDER METHODS TO MAKE READABLE
 
-NameField focus
-Auto-set Date Due to clicked day
 Add Assignment Window Day of Week
 Upcoming Events Descriptions
 Removal instantly updates the JList >> Strikethrough for finished Objects

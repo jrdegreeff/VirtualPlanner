@@ -248,7 +248,7 @@ public class AssignmentWindow implements ActionListener {
 		//Set default for Assigned Date to today
 		assignedMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
 		assignedDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
-		assignedYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
+		assignedYearBox.setSelectedItem(YEARS[currentDate.getYear()-Integer.parseInt(YEARS[0])]);
 
 		//Box for organizing purposes
 		Box assignedDatePicker = Box.createHorizontalBox();
@@ -278,10 +278,10 @@ public class AssignmentWindow implements ActionListener {
 		dueYearBox = new JComboBox<String>(YEARS);
 		dueYearBox.setBackground(Color.WHITE);
 
-		//Set default for due date to today
-		dueMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
-		dueDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
-		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
+		//Set default for due date to the CalendarButton which was clicked
+		dueMonthBox.setSelectedItem(MONTHS[clickedDate.getMonth()]);
+		dueDayBox.setSelectedItem(DAYS[clickedDate.getDay()-1]);
+		dueYearBox.setSelectedItem(YEARS[clickedDate.getYear()-Integer.parseInt(YEARS[0])]);
 
 		//Box for organizing purposes
 		Box dueDatePicker = Box.createHorizontalBox();
@@ -379,11 +379,11 @@ public class AssignmentWindow implements ActionListener {
 		Date assignedDate = a.getAssignedDate();
 		assignedMonthBox.setSelectedItem(MONTHS[assignedDate.getMonth()]);
 		assignedDayBox.setSelectedItem(DAYS[assignedDate.getDay()-1]);
-		assignedYearBox.setSelectedItem(YEARS[assignedDate.getYear()-2018]);
+		assignedYearBox.setSelectedItem(YEARS[assignedDate.getYear()-Integer.parseInt(YEARS[0])]);
 		Date dueDate = a.getDue();
 		dueMonthBox.setSelectedItem(MONTHS[dueDate.getMonth()]);
 		dueDayBox.setSelectedItem(DAYS[dueDate.getDay()-1]);
-		dueYearBox.setSelectedItem(YEARS[dueDate.getYear()-2018]);
+		dueYearBox.setSelectedItem(YEARS[dueDate.getYear()-Integer.parseInt(YEARS[0])]);
 
 		//Make visual change to notify/remind user they have entered Edit Mode
 		labelNewAssignment.setText("Edit Assignment");
@@ -414,17 +414,10 @@ public class AssignmentWindow implements ActionListener {
 		descField.setText("");
 		assignedMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
 		assignedDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
-		assignedYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
+		assignedYearBox.setSelectedItem(YEARS[currentDate.getYear()-Integer.parseInt(YEARS[0])]);
 		dueMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
 		dueDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
-		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
-	}
-
-	/**
-	 * This method gives focus to the Name Field in this AssignmentWindow
-	 */
-	private void giveNameFieldFocus() {
-		//Give focus to the intial nameField
+		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-Integer.parseInt(YEARS[0])]);
 	}
 
 	/**
@@ -473,10 +466,10 @@ public class AssignmentWindow implements ActionListener {
 		descField.setText("");
 		assignedMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
 		assignedDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
-		assignedYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
+		assignedYearBox.setSelectedItem(YEARS[currentDate.getYear()-Integer.parseInt(YEARS[0])]);
 		dueMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
 		dueDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
-		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
+		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-Integer.parseInt(YEARS[0])]);
 	}
 
 	/**
