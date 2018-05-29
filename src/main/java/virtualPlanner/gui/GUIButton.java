@@ -118,6 +118,10 @@ public class GUIButton extends JButton implements ActionListener {
 		this.setText(name);
 	}
 	
+	public MainCalendarWindow getMainCalendarWindow(){
+		return this.mainWindow;
+	}
+	
 	public void closeAssignmentWindow(){
 		assignmentWindow = null;
 		mainWindow.update();

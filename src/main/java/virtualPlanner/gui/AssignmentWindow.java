@@ -114,10 +114,11 @@ public class AssignmentWindow implements ActionListener{
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			//This method is called when the user closes the New Assignment Window
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				// 						Updates the text on the Button, because the user may have edited some assignments
-				//						updateButton();
+				//Updates the text on the Button, because the user may have edited some assignments
+				//updateButton();
 				//Updates the "Upcoming Events" JList on the right of the MainCalendarWindow
 				//Dispose the JFrame
+				parent.getMainCalendarWindow().updateUpcomingEvents();
 				frame.dispose();
 			}
 		});
