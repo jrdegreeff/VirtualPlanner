@@ -189,7 +189,7 @@ public class GUIButton extends JButton implements ActionListener {
 				if(block.getBlock().isClass()) {
 					select(button);
 					//Create the New Assignments window for that GUIButton
-					if(assignmentWindow == null)
+					if(course != null && assignmentWindow == null)
 						assignmentWindow = new AssignmentWindow(name, assignments, date, block, course, controller);
 				}
 			}

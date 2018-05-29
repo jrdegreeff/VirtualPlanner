@@ -1,12 +1,11 @@
 TODO:
 SET JList for UPCOMING EVENTS
-Remove Course Button
 JAVADOC FOR MAINCALENDAR WINDOW
 REORDER METHODS TO MAKE READABLE
-
-Override Repaint
 Only open assignment window if block has course
 Pass in course
+
+Remove Course Button
 ___________________________________________________________
 ___________________________________________________________
 FINAL TODO:
