@@ -185,14 +185,14 @@ public class Course {
 	protected void changeDueDate(Assignment assn, Date newDueDate) {
 		// update assigned date in assignment
 		Date oldDueDate = assn.changeDueDate(newDueDate);
-
+		
 		// ArrayList of assignment on old assignment date
-		Set<Assignment> oldAssignments = assnDateMap.get(oldDueDate); // old assignments set for old date
+		Set<Assignment> oldAssignments = dueDateMap.get(oldDueDate); // old assignments set for old date
 		oldAssignments.remove(assn);
-		Set<Assignment> newAssignments = assnDateMap.get(newDueDate); // new assignments set for new date
+		Set<Assignment> newAssignments = dueDateMap.get(newDueDate); // new assignments set for new date
 		newAssignments.add(assn);
 		
-		assnDateMap.put(newDueDate, newAssignments);
+		dueDateMap.put(newDueDate, newAssignments);
 	}
 	
 	/**
