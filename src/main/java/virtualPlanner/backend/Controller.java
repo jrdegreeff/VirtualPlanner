@@ -1,10 +1,7 @@
-package virtualPlanner;
+package virtualPlanner.backend;
 
 import java.util.ArrayList;
 
-import virtualPlanner.backend.Assignment;
-import virtualPlanner.backend.Course;
-import virtualPlanner.backend.User;
 import virtualPlanner.gui.GUIController;
 import virtualPlanner.io.DatabaseController;
 import virtualPlanner.io.LoginException;
@@ -22,15 +19,15 @@ import virtualPlanner.util.Date;
 public class Controller {
 	
 	/**
-	 * The {@code DatabaseController} instance for the VirtualPlanner.
+	 * The {@code DatabaseController} instance.
 	 */
 	private DatabaseController dbController;
 	/**
-	 * The {@code GUIController} instance for the VirtualPlanner.
+	 * The {@code GUIController} instance.
 	 */
 	private GUIController guiController;
 	/**
-	 * The {@code User} instance for the VirtualPlanner.
+	 * The {@code User} instance/.
 	 */
 	private User user;
 	

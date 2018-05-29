@@ -2,6 +2,7 @@ package virtualPlanner;
 
 import java.nio.file.FileSystems;
 
+import virtualPlanner.backend.Controller;
 import virtualPlanner.reference.Images;
 import virtualPlanner.reference.Preferences;
 

@@ -85,7 +85,7 @@ public class Course {
 	 * 
 	 * @param newName The new name.
 	 */
-	public void setName(String newName) {
+	protected void setName(String newName) {
 		this.name = newName;
 	}
 	
@@ -94,7 +94,7 @@ public class Course {
 	 * 
 	 * @param newTeacher The new teacher.
 	 */
-	public void setTeacher(String newTeacher) {
+	protected void setTeacher(String newTeacher) {
 		this.teacher = newTeacher;
 	}
 	
@@ -103,7 +103,7 @@ public class Course {
 	 * 
 	 * @param newAbbrev The new abbreviation.
 	 */
-	public void setAbbreviation(String newAbbrev) {
+	protected void setAbbreviation(String newAbbrev) {
 		this.abbrev = newAbbrev;
 	}
 
@@ -111,7 +111,7 @@ public class Course {
 	 * @param dateDue
 	 * @return TreeSet of Assignments due on a given date.
 	 */
-	public Set<Assignment> getDue(Date dateDue) {
+	protected Set<Assignment> getDue(Date dateDue) {
 		Set<Assignment> assignments = dueDateMap.get(dateDue);
 		return assignments == null ? new TreeSet<Assignment>() : assignments;
 	}
@@ -120,7 +120,7 @@ public class Course {
 	 * @param dateAssigned
 	 * @return TreeSet of Assignments assigned on a given date.
 	 */
-	public Set<Assignment> getAssigned(Date dateAssigned) {
+	protected Set<Assignment> getAssigned(Date dateAssigned) {
 		Set<Assignment> assignments = assnDateMap.get(dateAssigned);
 		return assignments == null ? new TreeSet<Assignment>() : assignments;
 	}
@@ -150,7 +150,7 @@ public class Course {
 	 * Removes the given Assignment object in both dueDateMap and assignedDateMap.
 	 * @param assn assignment to be removed
 	 */
-	public void removeAssignment(Assignment assn) {
+	protected void removeAssignment(Assignment assn) {
 		Date dateDue = assn.getDue();
 		Date dateAssigned = assn.getAssignedDate();
 		
@@ -163,7 +163,7 @@ public class Course {
 	 * @param assn assignment
 	 * @param newAssnDate new assigned date
 	 */
-	public void changeAssignedDate(Assignment assn, Date newAssnDate) {
+	protected void changeAssignedDate(Assignment assn, Date newAssnDate) {
 		// update assigned date in assignment
 		Date oldAssnDate = assn.changeAssignedDate(newAssnDate);
 
@@ -182,7 +182,7 @@ public class Course {
 	 * @param assn assignment
 	 * @param newDueDate new due date
 	 */
-	public void changeDueDate(Assignment assn, Date newDueDate) {
+	protected void changeDueDate(Assignment assn, Date newDueDate) {
 		// update assigned date in assignment
 		Date oldDueDate = assn.changeDueDate(newDueDate);
 

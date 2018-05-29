@@ -48,6 +48,7 @@ public class Student implements User {
 	/**
 	 * @return The id of this {@code Student}.
 	 */
+	@Override
 	public int getID() {
 		return id;
 	}
@@ -142,6 +143,7 @@ public class Student implements User {
 	 * 
 	 * @return All of this {@code Student}'s {@code Courses}.
 	 */
+	@Override
 	public Course[] getAllCourses() {
 		Set<Course> courses = new HashSet<Course>();
 		for(Course course : schedule.values())

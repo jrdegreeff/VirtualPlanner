@@ -489,8 +489,9 @@ public class CalendarWindow implements ActionListener {
 	
 	/**
 	 * This class is used in place of JButton to provide extra functionality to the JButtons in the Calendar
+	 * 
 	 * @author KevinGao
-	 *
+	 * @author JeremiahDeGreeff
 	 */
 	@SuppressWarnings("serial")
 	private class CalendarButton extends JButton implements ActionListener {

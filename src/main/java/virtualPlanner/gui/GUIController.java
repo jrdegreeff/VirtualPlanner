@@ -2,8 +2,8 @@ package virtualPlanner.gui;
 
 import java.util.ArrayList;
 
-import virtualPlanner.Controller;
 import virtualPlanner.backend.Assignment;
+import virtualPlanner.backend.Controller;
 import virtualPlanner.backend.Course;
 import virtualPlanner.io.LoginException;
 import virtualPlanner.reference.AssignmentTypes;
