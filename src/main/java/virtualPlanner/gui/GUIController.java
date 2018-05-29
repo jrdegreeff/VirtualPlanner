@@ -22,9 +22,21 @@ public class GUIController {
 	 */
 	private Controller controller;
 	
+	/**
+	 * The {@code CalendarWindow} being displayed, or {@code null} if there is currently no {@code CalendarWindow}.
+	 */
 	private CalendarWindow calendarWindow;
+	/**
+	 * The {@code settingsWindow} being displayed, or {@code null} if there is currently no {@code settingsWindow}.
+	 */
 	private SettingsWindow settingsWindow;
+	/**
+	 * The {@code addCourseWindow} being displayed, or {@code null} if there is currently no {@code addCourseWindow}.
+	 */
 	private AddCourseWindow addCourseWindow;
+	/**
+	 * The {@code assignmentWindow} being displayed, or {@code null} if there is currently no {@code assignmentWindow}.
+	 */
 	private AssignmentWindow assignmentWindow;
 	
 	/**
