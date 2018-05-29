@@ -50,7 +50,7 @@ public class AssignmentWindow implements ActionListener {
 	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
 
 	private JFrame frame;
-	
+
 	//The following variables must have references here in order to be able to be accessed in actionPerformed.
 	/**The JTextField in the Add Assignment Window which holds the name of the assignment*/
 	private JTextField nameField; 
@@ -117,7 +117,7 @@ public class AssignmentWindow implements ActionListener {
 				frame.dispose();
 			}
 		});
-		
+
 		this.currentDate = currentDate;
 		this.clickedDate = clickedDate;
 		this.block = block;
@@ -127,8 +127,11 @@ public class AssignmentWindow implements ActionListener {
 
 		addComponents();
 		frame.setVisible(true);
+		
+		nameField.grabFocus();
+		nameField.requestFocus();
 	}
-	
+
 	private void addComponents() {
 		//JLabel "Current Assignments"
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
@@ -188,6 +191,7 @@ public class AssignmentWindow implements ActionListener {
 		JLabel labelName = new JLabel("Assignment Name:");
 		labelName.setPreferredSize(INPUT_FIELD_SIZE);
 		labelName.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
+		labelName.setHorizontalAlignment(JLabel.CENTER);
 		JPanel panelLabelName = new JPanel();
 		panelLabelName.add(labelName);
 
@@ -195,12 +199,14 @@ public class AssignmentWindow implements ActionListener {
 		nameField = new JTextField();
 		nameField.setPreferredSize(INPUT_FIELD_SIZE);
 		nameField.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
+		nameField.setFocusable(true);
 		JPanel panelNameField = new JPanel();
 		panelNameField.add(nameField);
 
 		//Assignment Description JLabel and JTextField
 		JLabel labelDesc = new JLabel("Assignment Description (Optional):");
 		labelDesc.setFont(Fonts.BUTTON_NEW_ASSIGNMENT);
+		labelDesc.setHorizontalAlignment(JLabel.CENTER);
 		JPanel panelLabelDesc = new JPanel();
 		panelLabelDesc.add(labelDesc);
 
@@ -419,8 +425,6 @@ public class AssignmentWindow implements ActionListener {
 	 */
 	private void giveNameFieldFocus() {
 		//Give focus to the intial nameField
-		nameField.grabFocus();
-		nameField.requestFocus();
 	}
 
 	/**
@@ -437,10 +441,10 @@ public class AssignmentWindow implements ActionListener {
 		Date due = new Date(dueDayBox.getSelectedIndex()+1, dueMonthBox.getSelectedIndex()+1, Integer.parseInt((String)(dueYearBox.getSelectedItem())));
 
 		//Change the Assignment's fields
-		a.setName(nameField.getText());
-		a.setDescrip(descField.getText());
-		a.changeAssignedDate(assigned);
-		a.changeDueDate(due);
+		controller.setAssignmentName(a, nameField.getText());
+		controller.setAssignmentDescription(a, descField.getText());
+		controller.changeAssignedDate(course, a, assigned);
+		controller.changeDueDate(course, a, due);
 
 		//Quit the Edit Assignment Mode
 		hideEditAssignmentMode();
