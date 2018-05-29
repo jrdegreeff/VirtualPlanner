@@ -25,16 +25,16 @@ import virtualPlanner.reference.Preferences;
 
 public class SettingsWindow {
 
-	private JFrame frame;
-
 	/**Size of the settings window*/
 	private static final Dimension SETTINGS_SIZE = new Dimension(400, 500);
 
 	/**Size of the numUpcomingDays JTextField*/
 	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
-	
+
 	/**Size of this specific GUISampleColorButton*/
 	private static final Dimension BUTTON_SIZE = new Dimension(250, 30);
+
+	private JFrame frame;
 
 	/**JRadioButton to customize whether assignments show on the Date assigned*/
 	private JRadioButton buttonShowDateAssigned;
@@ -44,30 +44,35 @@ public class SettingsWindow {
 	private JTextField upcomingDaysField;
 
 	private ArrayList<GUISampleColorButton> buttons;
+	
+	private GUIController controller;
 
-	public SettingsWindow(GUIController controller) {
-
+	protected SettingsWindow(GUIController controller) {
+		this.controller = controller;
+		
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setSize(SETTINGS_SIZE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
-				try {
-					Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));
-				} catch (Exception e) {
+				try {Preferences.setNumDaysUpcoming(Integer.parseInt(upcomingDaysField.getText()));}
+				catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(null, "Invalid Input for Upcoming Days", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-
-				for(GUISampleColorButton b: buttons) {
+				for(GUISampleColorButton b: buttons)
 					Preferences.addColor(b.getCourse().getID(), b.getBackground());
-				}
 				frame.dispose();
 				controller.settingsClosed();
 			}
 		});
 
+		addComponents();
+		frame.setVisible(true);
+	}
+
+	private void addComponents() {
 		JLabel blockLabel = new JLabel("Course Colors:");
 		blockLabel.setFont(Fonts.CALENDAR_SETTINGS);
 		blockLabel.setForeground(Color.BLACK);
@@ -88,28 +93,28 @@ public class SettingsWindow {
 			tempPanel.add(b);
 			mainVertical.add(tempPanel);
 		}
-		
+
 		JLabel labelShowAssignmentOptions = new JLabel("Show assignments when: ");
 		labelShowAssignmentOptions.setFont(Fonts.CALENDAR_SETTINGS);
 		labelShowAssignmentOptions.setForeground(Color.BLACK);
 		JPanel panelLabelShowAssignmentOptions = new JPanel();
 		panelLabelShowAssignmentOptions.add(labelShowAssignmentOptions);
 		mainVertical.add(panelLabelShowAssignmentOptions);
-		
+
 		buttonShowDateAssigned = new JRadioButton("Assigned");
 		buttonShowDateAssigned.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateAssigned = new JPanel();
 		panelButtonShowDateAssigned.add(buttonShowDateAssigned);
-		
+
 		buttonShowDateDue = new JRadioButton("Due");
 		buttonShowDateDue.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateDue = new JPanel();
 		panelButtonShowDateDue.add(buttonShowDateDue);
-		
+
 		ButtonGroup group = new ButtonGroup();
 		group.add(buttonShowDateAssigned);
 		group.add(buttonShowDateDue);
-		
+
 		Box showAssignmentOptionsBox = Box.createHorizontalBox();
 		showAssignmentOptionsBox.add(panelButtonShowDateAssigned);
 		showAssignmentOptionsBox.add(panelButtonShowDateDue);
@@ -132,9 +137,8 @@ public class SettingsWindow {
 		mainVertical.add(panelUpcomingDaysField);
 
 		frame.add(mainVertical);
-		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * This class represents an extension to the javax.swing.JButton class with added functionality for displaying colors and choosing colors
 	 * Used in the Settings JFrame, where the user can choose custom colors for each course 
@@ -143,17 +147,17 @@ public class SettingsWindow {
 	 */
 	@SuppressWarnings("serial")
 	private class GUISampleColorButton extends JButton implements ActionListener {
-		
+
 		/**Course which this GUISampleColorButton corresponds to*/
 		private Course course;
-		
+
 		/**
 		 * Constructor for GUISampleColorButton
 		 * Sets all the defaults of the butotn
 		 * @param name text for the GUISampleColorButton to show
 		 * @param course which corresponds to this GUISampleColorButton
 		 */
-		public GUISampleColorButton(Course course) {
+		private GUISampleColorButton(Course course) {
 			super(course.getName());
 			this.setFocusPainted(false);
 			this.setFont(Fonts.CALENDAR_BLOCK);
@@ -164,25 +168,26 @@ public class SettingsWindow {
 			this.addActionListener(this);
 			this.course = course;
 		}
-		
+
 		/**
 		 * @return the course which corresponds to this GUISampleColorButton
 		 */
-		public Course getCourse() {
+		private Course getCourse() {
 			return this.course;
 		}
 
 		/**
 		 * actionPerformed method which handles the ActionEvents for all GUISampleColorButtons
 		 */
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			//Show a color palatte and save the user's choice
 			Color c = JColorChooser.showDialog(this, this.getText() + " Block Color", this.getBackground());
-			
+
 			//If the user cancelled out, do nothing
 			if (c == null)
 				return;
-			
+
 			//If the user selected a color, update the color
 			this.setBackground(c);
 		}

@@ -43,26 +43,7 @@ import virtualPlanner.util.Date;
  */
 public class MainCalendarWindow implements ActionListener {
 
-	/**The controller for this JFrame.*/
-	private GUIController controller;
-
-	/**Today's date.*/
-	private static Date currentDate;
-
-	/**The start date of the week which is being displayed currently.*/
-	private static Date weekStartDate;
-
-	/**The JFrame of this MainCalendarWindow instance*/
-	private JFrame frame;
-
 	private static final Dimension MAIN_SIZE = new Dimension(1280, 720);
-
-	/**Outermost of all nested JPanels which is directly added into the JFrame*/
-	private JPanel mainPanel;
-	/**JPanel which holds the main calendar for the window */
-	private JPanel panelCalendar;
-	/**JPanel which holds all of the extra features accessible from MainCalendarWindow*/
-	private JPanel infoPanel;
 
 	/**Width of each individual column (day) in the calendar*/
 	private static final int CALENDAR_COLUMN_WIDTH = 70;
@@ -74,8 +55,32 @@ public class MainCalendarWindow implements ActionListener {
 	/**Highlight Border used to indicate the last edited GUIButton which represents a block*/
 	private static final Border HIGHLIGHTED_BORDER = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
 
-	/**Reference to the last highlighted button so that it can be easily reset to normal*/
-	private static CalendarButton highlightedButton;
+	/**Size for labelDate*/
+	private static final Dimension DATE_SIZE = new Dimension(400, 100);
+
+	/**
+	 * Size of the upcoming events JList
+	 * Note: Height is always overriden by JList's setVisibleRowCount method, hence height being 0
+	 */
+	private static final Dimension UPCOMING_EVENTS_SIZE = new Dimension(365, 0);
+
+	/**Size of each individual block*/
+	private static final Dimension BLOCK_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, 30);
+	
+	private static final Dimension LABEL_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, CALENDAR_LABEL_HEIGHT);
+
+	/**Array which holds all the months - used as reference when displaying dates*/
+	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	
+	/**The JFrame of this MainCalendarWindow instance*/
+	private JFrame frame;
+	
+	/**Outermost of all nested JPanels which is directly added into the JFrame*/
+	private JPanel mainPanel;
+	/**JPanel which holds the main calendar for the window */
+	private JPanel panelCalendar;
+	/**JPanel which holds all of the extra features accessible from MainCalendarWindow*/
+	private JPanel infoPanel;
 	
 	//JMenuBar and sub-components
 	/**The JMenuBar for this MainCalendarWindow*/
@@ -114,40 +119,37 @@ public class MainCalendarWindow implements ActionListener {
 	/**ArrayList of all the GUIButtons that are day of week labels (simply show the current day)*/
 	private ArrayList<CalendarButton> dayOfWeekButtons;
 
-	/**Size for labelDate*/
-	private static final Dimension DATE_SIZE = new Dimension(400, 100);
+	/**The controller for this JFrame.*/
+	private GUIController controller;
 
-	/**
-	 * Size of the upcoming events JList
-	 * Note: Height is always overriden by JList's setVisibleRowCount method, hence height being 0
-	 */
-	private static final Dimension UPCOMING_EVENTS_SIZE = new Dimension(365, 0);
+	/**Today's date.*/
+	private Date currentDate;
 
-	/**Size of each individual block*/
-	private static final Dimension BLOCK_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, 30);
+	/**The start date of the week which is being displayed currently.*/
+	private Date weekStartDate;
 	
-	private static final Dimension LABEL_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, CALENDAR_LABEL_HEIGHT);
-
-	/**Array which holds all the months - used as reference when displaying dates*/
-	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-
+	/**Reference to the last highlighted button so that it can be easily reset to normal*/
+	private CalendarButton highlightedButton;
+	
 	/**
 	 * Constructor: Initializes the MainCalendarWindow
 	 */
-	public MainCalendarWindow(GUIController controller) {
-
-		//Name - personalization
-		frame = new JFrame("Virtual Planner - " + controller.getUserName());
-
+	protected MainCalendarWindow(GUIController controller) {
 		//GUIController
 		this.controller = controller;
-
+		
 		//Date
 		currentDate = new Date();
 		weekStartDate = currentDate.getWeekStartDate();
+		
+		//Name - personalization
+		frame = new JFrame("Virtual Planner - " + controller.getUserName());
 
 		//Size
 		frame.setSize(MAIN_SIZE);
+		frame.setResizable(false);
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);;
 
 		//Color
 		frame.setBackground(Color.WHITE);
@@ -180,19 +182,13 @@ public class MainCalendarWindow implements ActionListener {
 		//Refresh current date, week label, and all calendar buttons
 		update();
 
-		//Frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		frame.setResizable(false);
 	}
 
 	/**
 	 * Adds the main base components of the MainCalendarWindow 
 	 */
-	public void addComponents() {
-		//Clear frame
-		frame.getContentPane().removeAll();
-
+	private void addComponents() {
 		//Left Button to show previous week
 		buttonLeft = new JButton();
 		buttonLeft.setIcon(new ImageIcon(Images.getPrevious()));
@@ -319,7 +315,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * This method adds the weekly JButtons to the calendarPanel
 	 */
-	public void updateButtons() {
+	private void updateButtons() {
 		
 		//Remove the previous, outdated components
 		panelCalendar.removeAll();
@@ -375,7 +371,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * This method finds and highlights the day of week GUIButton that corresponds to the current day
 	 */
-	public void highlightCurDay() {
+	private void highlightCurDay() {
 		if (currentDate.compareTo(weekStartDate) < 0 || currentDate.compareTo(weekStartDate.getUpcomingDate(7)) > 0)
 			return;
 
@@ -391,7 +387,7 @@ public class MainCalendarWindow implements ActionListener {
 	 * Sets the contents of the upcoming Events JList
 	 * @param eventList
 	 */
-	public void updateUpcomingEvents() {
+	private void updateUpcomingEvents() {
 		//ArrayList of the upcoming events - to be converted back to normal array later
 		ArrayList<String> arrayListEvents = new ArrayList<String>();
 		//Number of days to include in coming events
@@ -415,7 +411,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * Refreshes everything.
 	 */
-	public void update() {
+	protected void update() {
 		currentDate = new Date();
 		labelWeek.setText(weekStartDate.toString(DateFormat.MEDIUM) + " - " + weekStartDate.getUpcomingDate(6).toString(DateFormat.MEDIUM));
 		updateButtons();
@@ -423,20 +419,13 @@ public class MainCalendarWindow implements ActionListener {
 		updateUpcomingEvents();
 		deselect();
 	}
-
-	/**
-	 * @return the Date object that represents the current day
-	 */
-	public static Date getCurrentDate() {
-		return currentDate;
-	}
 	
 	/**
 	 * Highlights a particular button.
 	 * 
 	 * @param button The button to select.
 	 */
-	public void select(CalendarButton button) {
+	private void select(CalendarButton button) {
 		highlightedButton = button;
 		button.setBorder(HIGHLIGHTED_BORDER);
 	}
@@ -444,7 +433,7 @@ public class MainCalendarWindow implements ActionListener {
 	/**
 	 * De-Highlights the button that is currently highlighted.
 	 */
-	public void deselect() {
+	private void deselect() {
 		if(highlightedButton != null) {
 			highlightedButton.setBorder(DEFAULT_BORDER);
 			highlightedButton = null;
@@ -496,10 +485,7 @@ public class MainCalendarWindow implements ActionListener {
 	 *
 	 */
 	@SuppressWarnings("serial")
-	public class CalendarButton extends JButton implements ActionListener {
-
-		/**Reference to this GUIButton's add assignment window*/
-		private AssignmentWindow assignmentWindow;
+	private class CalendarButton extends JButton implements ActionListener {
 
 		/**ArrayList of all uncompleted assignments within this GUIButton*/
 		private ArrayList<Assignment> assignments;
@@ -568,11 +554,6 @@ public class MainCalendarWindow implements ActionListener {
 			this.setFont(Fonts.CALENDAR_DAY);
 		}
 		
-		public void assignmentWindowClosed() {
-			assignmentWindow = null;
-			controller.updateCalendar();
-		}
-		
 		private void addAssignmentText() {
 			String assignmentString = "";
 			if(assignments != null)
@@ -594,10 +575,9 @@ public class MainCalendarWindow implements ActionListener {
 		/**
 		 * actionPerformed method which handles all ActionEvents for GUIButtons
 		 */
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object src = e.getSource();
-
-			//All other GUIButtons
 			if (src instanceof CalendarButton) {	
 				CalendarButton button = (CalendarButton)src;
 				//Button is a Block
@@ -605,11 +585,10 @@ public class MainCalendarWindow implements ActionListener {
 					//Un-highlight the already highlighted block
 					deselect();
 					//Re-highlight the clicked GUIButton if it represents a class
-					if(block.getBlock().isClass()) {
+					if(block.getBlock().isClass() && course != null) {
 						select(button);
 						//Create the New Assignments window for that GUIButton
-						if(course != null && assignmentWindow == null)
-							assignmentWindow = new AssignmentWindow(name, assignments, date, block, course, this, controller);
+						controller.openAddAssignment(name, currentDate, date, block, course);
 					}
 				}
 			}

@@ -25,6 +25,7 @@ public class GUIController {
 	private MainCalendarWindow calendarWindow;
 	private SettingsWindow settingsWindow;
 	private AddCourseWindow addCourseWindow;
+	private AssignmentWindow assignmentWindow;
 	
 	/**
 	 * Initializes the GUI.
@@ -87,6 +88,19 @@ public class GUIController {
 	}
 	
 	/**
+	 * Opens an assignment window if one doesn't already exist.
+	 * 
+	 * @param title The title for the window.
+	 * @param date The date for the window.
+	 * @param block The block for the window.
+	 * @param course The course for the window.
+	 */
+	protected void openAddAssignment(String title, Date currentDate, Date clickedDate, Block block, Course course) {
+		if(assignmentWindow == null)
+			assignmentWindow = new AssignmentWindow(title, currentDate, clickedDate, block, course, this);
+	}
+	
+	/**
 	 * To be called when the add courses window has closed.
 	 * Updates the calendar appropriately.
 	 */
@@ -96,11 +110,20 @@ public class GUIController {
 	}
 	
 	/**
-	 * To be called when the close settings window has closed.
+	 * To be called when the settings window has closed.
 	 * Updates the calendar appropriately.
 	 */
 	protected void settingsClosed() {
 		settingsWindow = null;
+		updateCalendar();
+	}
+	
+	/**
+	 * To be called when the assignments window has closed.
+	 * Updates the calendar appropriately.
+	 */
+	protected void addAssignmentWindowClosed() {
+		assignmentWindow = null;
 		updateCalendar();
 	}
 	

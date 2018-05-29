@@ -24,13 +24,11 @@ import virtualPlanner.util.Block;
 
 public class AddCourseWindow implements ActionListener {
 
-	GUIController controller;
-	
-	//Add Course Window Settings
 	/**Size of the Add Course Window*/
 	private static final Dimension COURSE_WINDOW_SIZE = new Dimension(320, 600);
 	/**Size of the individual fields within the Add Course Window*/
 	private static final Dimension FIELD_SIZE = new Dimension(80, 35);
+
 	/**JButton for user to submit new course*/
 	private JButton buttonAddCourse;
 	/**The Name of the New Course to Add*/
@@ -44,10 +42,12 @@ public class AddCourseWindow implements ActionListener {
 	/**GUIBlockPicker which enables the user to add special meeting times for the course*/
 	private GUIBlockPicker blockPicker;
 	private JList<String> existingCourses;
-	
+
 	private JFrame frame;
 
-	public AddCourseWindow(GUIController controller) {
+	private GUIController controller;
+
+	protected AddCourseWindow(GUIController controller) {
 		this.controller = controller;
 
 		//Create new Window
@@ -64,9 +64,14 @@ public class AddCourseWindow implements ActionListener {
 			}
 		});
 
+		addComponents();
+		frame.setVisible(true);
+	}
+
+	private void addComponents() {
 		//Panel with organizing structure
 		JPanel panelAddCourse = new JPanel();
-		panelAddCourse.setLayout(new GridLayout(5,1));
+		panelAddCourse.setLayout(new GridLayout(5, 1));
 
 		JLabel nameLabel = new JLabel("Course Name:");
 		nameLabel.setFont(Fonts.CALENDAR_ADD_CLASS);
@@ -167,40 +172,35 @@ public class AddCourseWindow implements ActionListener {
 		mainVertical.add(panelCoursesPane);
 
 		frame.add(mainVertical);
-
-		frame.setVisible(true);
 	}
-	
+
 	private void addCourse() {
 		ArrayList<Block> tempBlocks = blockPicker.getSelectedBlocks();
 		Block[] blocks = tempBlocks.toArray(new Block[0]);
 
 		boolean successful = controller.addCourse(blocks, nameField.getText(), abbreviationField.getText(), teacherField.getText());
-		if (successful){
+		if (successful) {
 			existingCourses.setListData(controller.getCourseNames());
 			nameField.setText("");
 			abbreviationField.setText("");
 			teacherField.setText("");
 			blockPicker.clearCheckBoxes();
-		}
-		else
+		} else
 			JOptionPane.showMessageDialog(null, "Blocks Overlap with other courses' blocks", "Error", JOptionPane.ERROR_MESSAGE);
-
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
-
 		Object src = e.getSource();
-		
 
 		if (src.equals(buttonAddCourse)) {
 			addCourse();
 		}
-		
 
-		else if (src.equals(buttonChooseBlocks)){
+		else if (src.equals(buttonChooseBlocks)) {
 			blockPicker.setVisible(true);
 		}
+
 	}
 
 }

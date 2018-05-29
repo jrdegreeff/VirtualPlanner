@@ -22,11 +22,11 @@ import virtualPlanner.util.Block;
  */
 public class GUIBlockPicker {
 
-	/**The JFrame of this GUIBlockPicker instance*/
-	private JFrame frame;
-
 	/**Size of the window*/
 	private static final Dimension BLOCK_PICKER_SIZE = new Dimension(500, 400);
+
+	/**The JFrame of this GUIBlockPicker instance*/
+	private JFrame frame;
 
 	/**ArrayList of the GUICheckBoxes*/
 	private ArrayList<GUICheckBox[]> checkBoxes = new ArrayList<GUICheckBox[]>();
@@ -35,7 +35,7 @@ public class GUIBlockPicker {
 	 * Constructor for the GUIBlockPicker which creates a BlockPicker Window
 	 * @param name the title of the JFrame
 	 */
-	public GUIBlockPicker(String name) {
+	protected GUIBlockPicker(String name) {
 
 		//Frame Settings
 		frame = new JFrame(name);
@@ -63,7 +63,7 @@ public class GUIBlockPicker {
 	/**
 	 * @return the blocks that correspond to the currently selected GUICheckBoxes
 	 */
-	public ArrayList<Block> getSelectedBlocks() {
+	protected ArrayList<Block> getSelectedBlocks() {
 		//Resulting ArrayList to return
 		ArrayList<Block> result = new ArrayList<Block>();
 
@@ -81,7 +81,7 @@ public class GUIBlockPicker {
 	 * Sets the visibility of the frame of this GUIBlockPicker
 	 * @param visible the new visibility of the screen
 	 */
-	public void setVisible(boolean visible){
+	protected void setVisible(boolean visible) {
 		frame.setVisible(visible);
 	}
 
@@ -129,47 +129,44 @@ public class GUIBlockPicker {
 
 		for(GUICheckBox[] row : checkBoxes)
 			for(GUICheckBox c : row)
-				if(c == null) {
-					result.add(new JPanel());
-				}else {
-					result.add(c);
-				}
+				result.add(c == null ? new JPanel() : c);
 
 		return result;
 	}
-}
-
-/**
- * This class is a very simple extension of javax.swing.JCheckBox which helps correspond JCheckBoxes to their corresponding Block and Day of Week
- * Used only within GUIBlockPicker
- * @author KevinGao
- *
- */
-@SuppressWarnings("serial")
-class GUICheckBox extends JCheckBox {
-
-	/**The block that corresponds to this JCheckBox*/
-	private Block block;
 
 	/**
-	 * Default constructor for GUICheckBox
-	 * GUICheckBox for the clickable block options
-	 * @param name the name of the CheckBox
-	 * @param block the corresponding block
-	 * @param selectable whether to enable or disable the check box
+	 * This class is a very simple extension of javax.swing.JCheckBox which helps correspond JCheckBoxes to their corresponding Block and Day of Week
+	 * Used only within GUIBlockPicker
+	 * @author KevinGao
+	 *
 	 */
-	public GUICheckBox(String name, Block block, boolean selectable) {
-		super(name);
-		this.block = block;
-		setEnabled(selectable);
-		setFocusPainted(false);
-	}
+	@SuppressWarnings("serial")
+	private class GUICheckBox extends JCheckBox {
 
-	/**
-	 * @return the block that corresponds to this GUICheckBox
-	 */
-	public Block getBlock() {
-		return block;
+		/**The block that corresponds to this JCheckBox*/
+		private Block block;
+
+		/**
+		 * Default constructor for GUICheckBox
+		 * GUICheckBox for the clickable block options
+		 * @param name the name of the CheckBox
+		 * @param block the corresponding block
+		 * @param selectable whether to enable or disable the check box
+		 */
+		private GUICheckBox(String name, Block block, boolean selectable) {
+			super(name);
+			this.block = block;
+			setEnabled(selectable);
+			setFocusPainted(false);
+		}
+
+		/**
+		 * @return the block that corresponds to this GUICheckBox
+		 */
+		private Block getBlock() {
+			return block;
+		}
+
 	}
 
 }

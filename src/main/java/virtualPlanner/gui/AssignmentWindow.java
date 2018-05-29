@@ -9,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -23,7 +22,6 @@ import javax.swing.JTextField;
 
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
-import virtualPlanner.gui.MainCalendarWindow.CalendarButton;
 import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.util.Block;
@@ -34,11 +32,25 @@ import virtualPlanner.util.Date;
  * @author KevinGao
  *
  */
-public class AssignmentWindow implements ActionListener{
+public class AssignmentWindow implements ActionListener {
 
-	private GUIController controller;
+	/**String array which represents all the months in a year*/
+	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+	/**String array which represents all the days in a month*/
+	private static final String[] DAYS = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+	/**String array which represents years*/
+	private static final String[] YEARS = {"2018", "2019", "2020", "2021"};
+	/**AssignmentTypes in the JComboBox drop-down used in selecting the type of Assignment*/
+	private static final AssignmentTypes[] TYPES = {AssignmentTypes.HOMEWORK, AssignmentTypes.TEST, AssignmentTypes.QUIZ, AssignmentTypes.ESSAY, AssignmentTypes.PROJECT};
+	/**Size of the Add Assignment Window*/
+	private static final Dimension ASSIGNMENT_WINDOW_SIZE = new Dimension(400, 775);
+	/**Size of the Current Assignments JList*/
+	private static final Dimension ASSIGNMENT_LIST_SIZE = new Dimension(275, 200);
+	/**Size of the Input Fields within the Add Assignment Window*/
+	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
+
 	private JFrame frame;
-
+	
 	//The following variables must have references here in order to be able to be accessed in actionPerformed.
 	/**The JTextField in the Add Assignment Window which holds the name of the assignment*/
 	private JTextField nameField; 
@@ -60,29 +72,6 @@ public class AssignmentWindow implements ActionListener{
 	/**JComboBox which represents the AssignmentType of the assignment*/
 	private JComboBox<String> typeBox;
 
-	/**String array which represents all the months in a year*/
-	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-	/**String array which represents all the days in a month*/
-	private static final String[] DAYS = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-	/**String array which represents years*/
-	private static final String[] YEARS = {"2018", "2019", "2020", "2021"};
-	/**AssignmentTypes in the JComboBox drop-down used in selecting the type of Assignment*/
-	private static final AssignmentTypes[] TYPES = {AssignmentTypes.HOMEWORK, AssignmentTypes.TEST, AssignmentTypes.QUIZ, AssignmentTypes.ESSAY, AssignmentTypes.PROJECT};
-	/**Size of the Add Assignment Window*/
-	private static final Dimension ASSIGNMENT_WINDOW_SIZE = new Dimension(400, 775);
-	/**Size of the Current Assignments JList*/
-	private static final Dimension ASSIGNMENT_LIST_SIZE = new Dimension(275, 200);
-	/**Size of the Input Fields within the Add Assignment Window*/
-	private static final Dimension INPUT_FIELD_SIZE = new Dimension(250, 35);
-	
-	/**Date Object which represents the current date in real life*/
-	private static Date currentDate = MainCalendarWindow.getCurrentDate();
-
-	private ArrayList<Assignment> assignments;
-	private Date date;
-	private Block block;
-	private Course course;
-
 	/**Button clicked by user to 'complete' an existing assignment*/
 	private JButton completeButton;
 
@@ -97,6 +86,13 @@ public class AssignmentWindow implements ActionListener{
 	/**Reference to the JLabel in the Add Assignment Window which informs the user what the window is for*/
 	private JLabel labelNewAssignment;
 
+	private GUIController controller;
+	private ArrayList<Assignment> assignments;
+	private Date currentDate;
+	private Date clickedDate;
+	private Block block;
+	private Course course;
+
 	/**
 	 * If true, the user is currently editing an existing assignment
 	 * If false, the user is currently adding a new assignment
@@ -106,7 +102,7 @@ public class AssignmentWindow implements ActionListener{
 	/**Reference of assignment that the user wants to update*/
 	private Assignment assignmentToEdit;
 
-	public AssignmentWindow(String title, ArrayList<Assignment> assignments, Date date, Block block, Course course, CalendarButton parent, GUIController controller) {
+	protected AssignmentWindow(String title, Date currentDate, Date clickedDate, Block block, Course course, GUIController controller) {
 		//Make new JFrame for the New Assignment Window
 		frame = new JFrame(title);
 		frame.setResizable(false);
@@ -116,19 +112,24 @@ public class AssignmentWindow implements ActionListener{
 		frame.addWindowListener(new WindowAdapter() {
 			//This method is called when the user closes the New Assignment Window
 			public void windowClosing(WindowEvent windowEvent) {
-				parent.assignmentWindowClosed();
+				controller.addAssignmentWindowClosed();
 				//Dispose the JFrame
 				frame.dispose();
 			}
 		});
-
-		this.assignments = assignments;
-		this.date = date;
+		
+		this.currentDate = currentDate;
+		this.clickedDate = clickedDate;
 		this.block = block;
 		this.course = course;
 		this.controller = controller;
-		this.isEditMode = false;
-		
+		isEditMode = false;
+
+		addComponents();
+		frame.setVisible(true);
+	}
+	
+	private void addComponents() {
 		//JLabel "Current Assignments"
 		JLabel labelCurAssignments = new JLabel("Current Assignments:");
 		labelCurAssignments.setFont(Fonts.BUTTON_TITLE);
@@ -141,7 +142,6 @@ public class AssignmentWindow implements ActionListener{
 		updateAssignmentList();
 
 		assignmentJList.setFont(Fonts.BUTTON_ASSIGNMENT);
-
 
 		//MouseListener which enables editing of items in the JList
 		assignmentJList.addMouseListener(new MouseAdapter() {
@@ -316,16 +316,15 @@ public class AssignmentWindow implements ActionListener{
 
 		//Final Add Assignment Window Settings
 		frame.add(mainVertical);
-		frame.setVisible(true);
 	}
 
 	/**
 	 * Updates the JList of current assignments in the New Assignment Window
 	 */
-	public void updateAssignmentList() {
+	private void updateAssignmentList() {
 
 		//Use GUIController to obtain most updated list of assignments
-		assignments = controller.getAssignments(date, block);
+		assignments = controller.getAssignments(clickedDate, block);
 
 		//If null, create empty JList
 		if (assignments == null) {
@@ -355,7 +354,7 @@ public class AssignmentWindow implements ActionListener{
 	/**
 	 * Enables the edit assignment features within the Add Assignment Window for a particular existing Assignment
 	 */
-	public void showEditAssignmentMode(int index) {
+	private void showEditAssignmentMode(int index) {
 
 		//Quit if
 		//1) Already in Edit Mode
@@ -393,7 +392,7 @@ public class AssignmentWindow implements ActionListener{
 	/**
 	 * Disables the Edit assignment features, returns to the New Assignment mode
 	 */
-	public void hideEditAssignmentMode() {
+	private void hideEditAssignmentMode() {
 		//Quit if
 		//1) Already in New Assignment mode
 		if (!isEditMode)
@@ -414,11 +413,11 @@ public class AssignmentWindow implements ActionListener{
 		dueDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
 		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-2018]);
 	}
-	
+
 	/**
 	 * This method gives focus to the Name Field in this AssignmentWindow
 	 */
-	public void giveNameFieldFocus() {
+	private void giveNameFieldFocus() {
 		//Give focus to the intial nameField
 		nameField.grabFocus();
 		nameField.requestFocus();
@@ -462,10 +461,10 @@ public class AssignmentWindow implements ActionListener{
 
 		//Call to controller to notify middle-end and back-end
 		controller.addAssignment(course, assigned, due, type, nameField.getText(), descField.getText());
-		
+
 		//Update the JList of current Assignments
 		updateAssignmentList();
-		
+
 		nameField.setText("");
 		descField.setText("");
 		assignedMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
@@ -477,7 +476,7 @@ public class AssignmentWindow implements ActionListener{
 	}
 
 	/**
-	 * This method markes an assignment at a specific index as complete and moves it to the completed list
+	 * This method marks an assignment at a specific index as complete and moves it to the completed list
 	 */
 	private void completeAssignment(int index) {
 		//Quit if
@@ -492,9 +491,10 @@ public class AssignmentWindow implements ActionListener{
 		controller.setAssignmentComplete(removedAssignment, true);
 		controller.removeAssignment(course, removedAssignment);
 		//Add to the completed list
-//		completedAssignments.add(removedAssignment);
+		//		completedAssignments.add(removedAssignment);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e){
 		Object src = e.getSource();
 
