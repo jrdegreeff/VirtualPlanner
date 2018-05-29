@@ -22,11 +22,9 @@ import javax.swing.JTextField;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.util.Block;
 
-public class AddCourseWindow implements ActionListener{
+public class AddCourseWindow implements ActionListener {
 
 	GUIController controller;
-	
-	MainCalendarWindow parent;
 	
 	//Add Course Window Settings
 	/**Size of the Add Course Window*/
@@ -49,9 +47,7 @@ public class AddCourseWindow implements ActionListener{
 	
 	private JFrame frame;
 
-	public AddCourseWindow(MainCalendarWindow parent, GUIController controller){
-		
-		this.parent = parent;
+	public AddCourseWindow(GUIController controller) {
 		this.controller = controller;
 
 		//Create new Window
@@ -63,8 +59,8 @@ public class AddCourseWindow implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent) {
-				parent.closeAddAccount();
 				frame.dispose();
+				controller.addCourseClosed();
 			}
 		});
 
@@ -173,8 +169,6 @@ public class AddCourseWindow implements ActionListener{
 		frame.add(mainVertical);
 
 		frame.setVisible(true);
-
-
 	}
 	
 	private void addCourse() {

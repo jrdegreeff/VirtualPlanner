@@ -25,10 +25,6 @@ import virtualPlanner.reference.Preferences;
 
 public class SettingsWindow {
 
-	private MainCalendarWindow parent;
-
-	private GUIController controller;
-
 	private JFrame frame;
 
 	/**Size of the settings window*/
@@ -49,9 +45,7 @@ public class SettingsWindow {
 
 	private ArrayList<GUISampleColorButton> buttons;
 
-	public SettingsWindow(MainCalendarWindow parent, GUIController controller) {
-		this.parent = parent;
-		this.controller = controller;
+	public SettingsWindow(GUIController controller) {
 
 		frame = new JFrame();
 		frame.setResizable(false);
@@ -67,12 +61,10 @@ public class SettingsWindow {
 				}
 
 				for(GUISampleColorButton b: buttons) {
-					System.out.println(b.getBackground());
 					Preferences.addColor(b.getCourse().getID(), b.getBackground());
 				}
 				frame.dispose();
-				parent.update();
-				parent.closeSettings();
+				controller.settingsClosed();
 			}
 		});
 
@@ -98,13 +90,15 @@ public class SettingsWindow {
 		}
 
 		buttonShowDateAssigned = new JRadioButton("Show Assignment on Assigned Date");
-		buttonShowDateDue = new JRadioButton("Show Assignment on Due Date");
 		buttonShowDateAssigned.setFont(Fonts.CALENDAR_SETTINGS);
-		buttonShowDateDue.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateAssigned = new JPanel();
 		panelButtonShowDateAssigned.add(buttonShowDateAssigned);
+		
+		buttonShowDateDue = new JRadioButton("Show Assignment on Due Date");
+		buttonShowDateDue.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateDue = new JPanel();
 		panelButtonShowDateDue.add(buttonShowDateDue);
+		
 		ButtonGroup group = new ButtonGroup();
 		group.add(buttonShowDateAssigned);
 		group.add(buttonShowDateDue);

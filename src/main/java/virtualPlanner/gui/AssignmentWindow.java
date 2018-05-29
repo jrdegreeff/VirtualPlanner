@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -21,6 +23,7 @@ import javax.swing.JTextField;
 
 import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
+import virtualPlanner.gui.MainCalendarWindow.CalendarButton;
 import virtualPlanner.reference.AssignmentTypes;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.util.Block;
@@ -35,7 +38,6 @@ public class AssignmentWindow implements ActionListener{
 
 	private GUIController controller;
 	private JFrame frame;
-	private GUIButton parent;
 
 	//The following variables must have references here in order to be able to be accessed in actionPerformed.
 	/**The JTextField in the Add Assignment Window which holds the name of the assignment*/
@@ -104,21 +106,18 @@ public class AssignmentWindow implements ActionListener{
 	/**Reference of assignment that the user wants to update*/
 	private Assignment assignmentToEdit;
 
-	public AssignmentWindow(String title, ArrayList<Assignment> assignments, Date date, Block block, Course course, GUIController controller){
+	public AssignmentWindow(String title, ArrayList<Assignment> assignments, Date date, Block block, Course course, CalendarButton parent, GUIController controller) {
 		//Make new JFrame for the New Assignment Window
 		frame = new JFrame(title);
 		frame.setResizable(false);
 		frame.setSize(ASSIGNMENT_WINDOW_SIZE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//Override the Close Operation
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		frame.addWindowListener(new WindowAdapter() {
 			//This method is called when the user closes the New Assignment Window
-			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				//Updates the text on the Button, because the user may have edited some assignments
-				//updateButton();
-				//Updates the "Upcoming Events" JList on the right of the MainCalendarWindow
+			public void windowClosing(WindowEvent windowEvent) {
+				parent.assignmentWindowClosed();
 				//Dispose the JFrame
-				parent.getMainCalendarWindow().updateUpcomingEvents();
 				frame.dispose();
 			}
 		});
@@ -327,7 +326,6 @@ public class AssignmentWindow implements ActionListener{
 
 		//Use GUIController to obtain most updated list of assignments
 		assignments = controller.getAssignments(date, block);
-		System.out.println(assignments);
 
 		//If null, create empty JList
 		if (assignments == null) {
@@ -346,10 +344,8 @@ public class AssignmentWindow implements ActionListener{
 			//Essential to the functionality of the Edit Mode
 			//Note: \n does not work, and wrapping text is intentionally avoided, as it creates unpleasant visuals
 			curAssignments[i] = a.getName() + " (" + a.getDescrip() + ")";
-			System.out.println(a);
 		}
 
-		System.out.println(Arrays.toString(curAssignments));
 		//Set the assignmentJList to display the current Assignments
 		assignmentJList.setListData(curAssignments);
 		assignmentScrollPane.revalidate();
@@ -422,7 +418,7 @@ public class AssignmentWindow implements ActionListener{
 	/**
 	 * This method gives focus to the Name Field in this AssignmentWindow
 	 */
-	public void giveNameFieldFocus(){
+	public void giveNameFieldFocus() {
 		//Give focus to the intial nameField
 		nameField.grabFocus();
 		nameField.requestFocus();

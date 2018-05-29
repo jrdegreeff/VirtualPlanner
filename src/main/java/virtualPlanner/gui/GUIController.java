@@ -22,6 +22,10 @@ public class GUIController {
 	 */
 	private Controller controller;
 	
+	private MainCalendarWindow calendarWindow;
+	private SettingsWindow settingsWindow;
+	private AddCourseWindow addCourseWindow;
+	
 	/**
 	 * Initializes the GUI.
 	 * 
@@ -30,8 +34,6 @@ public class GUIController {
 	public GUIController(Controller controller) {
 		this.controller = controller;
 		new LoginWindow(this);
-//		controller.login("jrdegreeff", "1234");
-//		new MainCalendarWindow(this);
 	}
 	
 	/**
@@ -42,7 +44,7 @@ public class GUIController {
 	 * @param name The name of the new user.
 	 * @return 0 if successful or a negative error code as specified in {@link LoginException}.
 	 */
-	public int signUp(String username, String password, String name) {
+	protected int signUp(String username, String password, String name) {
 		return controller.signUp(username, password, name);
 	}
 	
@@ -54,17 +56,58 @@ public class GUIController {
 	 * @param password The user's password.
 	 * @return 0 if successful or a negative error code as specified in {@link LoginException}.
 	 */
-	public int login(String username, String password) {
+	protected int login(String username, String password) {
 		int result = controller.login(username, password);
 		if(result == 0)
-			new MainCalendarWindow(this);
+			calendarWindow = new MainCalendarWindow(this);
 		return result;
+	}
+	
+	/**
+	 * Updates everything in the calendar.
+	 */
+	protected void updateCalendar() {
+		calendarWindow.update();
+	}
+	
+	/**
+	 * Opens an add course window if one doesn't already exist.
+	 */
+	protected void openAddCourse() {
+		if(addCourseWindow == null)
+			addCourseWindow = new AddCourseWindow(this);
+	}
+	
+	/**
+	 * Opens a settings window if one doesn't already exist.
+	 */
+	protected void openSettings() {
+		if(settingsWindow == null)
+			settingsWindow = new SettingsWindow(this);
+	}
+	
+	/**
+	 * To be called when the add courses window has closed.
+	 * Updates the calendar appropriately.
+	 */
+	protected void addCourseClosed() {
+		addCourseWindow = null;
+		updateCalendar();
+	}
+	
+	/**
+	 * To be called when the close settings window has closed.
+	 * Updates the calendar appropriately.
+	 */
+	protected void settingsClosed() {
+		settingsWindow = null;
+		updateCalendar();
 	}
 	
 	/**
 	 * @return The name of the user.
 	 */
-	public String getUserName() {
+	protected String getUserName() {
 		return controller.getUserName();
 	}
 	
@@ -73,7 +116,7 @@ public class GUIController {
 	 * 
 	 * @return String representations of the user's courses.
 	 */
-	public String[] getCourseNames() {
+	protected String[] getCourseNames() {
 		return controller.getCourseNames();
 	}
 	
@@ -82,7 +125,7 @@ public class GUIController {
 	 * 
 	 * @return All of the user's {@code Courses}.
 	 */
-	public Course[] getAllCourses() {
+	protected Course[] getAllCourses() {
 		return controller.getAllCourses();
 	}
 	
@@ -92,7 +135,7 @@ public class GUIController {
 	 * @param block The {@code Block} to find the {@code Course} for.
 	 * @return The {@code Course} associated with the specified {@code Block}, or {@code null} if the user has no {@code Course} for that {@code Block}.
 	 */
-	public Course getCourse(Block block) {
+	protected Course getCourse(Block block) {
 		return controller.getCourse(block);
 	}
 	
@@ -103,7 +146,7 @@ public class GUIController {
 	 * @param block The {@code Block} to query.
 	 * @return The {@code Assignment}s which the user has for the specified {@code Date} and {@code Block} or {@code null} if the {@code User} has no {@code Course} in the specified {@code Block}.
 	 */
-	public ArrayList<Assignment> getAssignments(Date date, Block block) {
+	protected ArrayList<Assignment> getAssignments(Date date, Block block) {
 		return controller.getAssignments(date, block);
 	}
 	
@@ -114,7 +157,7 @@ public class GUIController {
 	 * @param block The {@code Block} to query.
 	 * @return String representations of any {@code Assignment}s which the user has for the specified {@code Date} and {@code Block}.
 	 */
-	public ArrayList<String> getAssignmentNames(Date date, Block block) {
+	protected ArrayList<String> getAssignmentNames(Date date, Block block) {
 		return controller.getAssignmentNames(date, block);
 	}
 	
@@ -123,7 +166,7 @@ public class GUIController {
 	 * 
 	 * @param newName The new name for the user.
 	 */
-	public void setUserName(String newName) {
+	protected void setUserName(String newName) {
 		controller.setUserName(newName);
 	}
 	
@@ -136,7 +179,7 @@ public class GUIController {
 	 * @param teacher The name the teacher of the new {@code Course}.
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in the user's schedule.
 	 */
-	public boolean addCourse(Block[] blocks, String name, String abbreviation, String teacher) {
+	protected boolean addCourse(Block[] blocks, String name, String abbreviation, String teacher) {
 		return controller.addCourse(blocks, name, abbreviation, teacher);
 	}
 	
@@ -145,7 +188,7 @@ public class GUIController {
 	 * 
 	 * @param course The {@code Course} to remove.
 	 */
-	public void removeCourse(Course course) {
+	protected void removeCourse(Course course) {
 		controller.removeCourse(course);
 	}
 	
@@ -157,7 +200,7 @@ public class GUIController {
 	 * @param course The {@code Course} to update.
 	 * @return {@code true} if the operation was successful; {@code false} if a conflict occurs because one or more of the specified {@code Block}s is already filled with another {@code Course} in the user's schedule.
 	 */
-	public boolean changeCourseBlocks(Block[] newBlocks, Course course) {
+	protected boolean changeCourseBlocks(Block[] newBlocks, Course course) {
 		return controller.changeCourseBlocks(newBlocks, course);
 	}
 	
@@ -167,7 +210,7 @@ public class GUIController {
 	 * @param course The {@code Course} to update.
 	 * @param newName The new name for the {@code Course}.
 	 */
-	public void setCourseName(Course course, String newName) {
+	protected void setCourseName(Course course, String newName) {
 		controller.setCourseName(course, newName);
 	}
 	
@@ -177,7 +220,7 @@ public class GUIController {
 	 * @param course The {@code Course} to update.
 	 * @param newAbbreviation The new abbreviation for the {@code Course}.
 	 */
-	public void setCourseAbbreviation(Course course, String newAbbreviation) {
+	protected void setCourseAbbreviation(Course course, String newAbbreviation) {
 		controller.setCourseAbbreviation(course, newAbbreviation);
 	}
 	
@@ -187,7 +230,7 @@ public class GUIController {
 	 * @param course The {@code Course} to update.
 	 * @param newTeacher The new teacher for the {@code Course}.
 	 */
-	public void setCourseTeacher(Course course, String newTeacher) {
+	protected void setCourseTeacher(Course course, String newTeacher) {
 		controller.setCourseTeacher(course, newTeacher);
 	}
 	
@@ -201,7 +244,7 @@ public class GUIController {
 	 * @param name The name for the new {@code Assignment}.
 	 * @param description The description for the new {@code Assignment}.
 	 */
-	public void addAssignment(Course course, Date assigned, Date due, AssignmentTypes type, String name, String description) {
+	protected void addAssignment(Course course, Date assigned, Date due, AssignmentTypes type, String name, String description) {
 		controller.addAssignment(course, assigned, due, type, name, description);
 	}
 	
@@ -211,7 +254,7 @@ public class GUIController {
 	 * @param course The course to which the {@code Assignment} is assigned.
 	 * @param assignment The {@code Assignment} to be removed.
 	 */
-	public void removeAssignment(Course course, Assignment assignment) {
+	protected void removeAssignment(Course course, Assignment assignment) {
 		controller.removeAssignment(course, assignment);
 	}
 	
@@ -222,7 +265,7 @@ public class GUIController {
 	 * @param newCourse The {@code Course} to add the {@code Assignment} to.
 	 * @param assignment The {@code Assignment} to manipulate.
 	 */
-	public void changeAssignmentCourse(Course oldCourse, Course newCourse, Assignment assignment) {
+	protected void changeAssignmentCourse(Course oldCourse, Course newCourse, Assignment assignment) {
 		controller.changeAssignmentCourse(oldCourse, newCourse, assignment);
 	}
 	
@@ -233,7 +276,7 @@ public class GUIController {
 	 * @param assignment The {@code Assignment} to update.
 	 * @param newDate The new assigned date.
 	 */
-	public void changeAssignedDate(Course course, Assignment assignment, Date newDate) {
+	protected void changeAssignedDate(Course course, Assignment assignment, Date newDate) {
 		controller.changeAssignedDate(course, assignment, newDate);
 	}
 	
@@ -244,7 +287,7 @@ public class GUIController {
 	 * @param assignment The {@code Assignment} to update.
 	 * @param newDate The new due date.
 	 */
-	public void changeDueDate(Course course, Assignment assignment, Date newDate) {
+	protected void changeDueDate(Course course, Assignment assignment, Date newDate) {
 		controller.changeDueDate(course, assignment, newDate);
 	}
 	
@@ -254,7 +297,7 @@ public class GUIController {
 	 * @param assignment The {@code Assignment} whose name will be changed.
 	 * @param newName The name to change to.
 	 */
-	public void setAssignmentName(Assignment assignment, String newName) {
+	protected void setAssignmentName(Assignment assignment, String newName) {
 		controller.setAssignmentName(assignment, newName);
 	}
 	
@@ -264,7 +307,7 @@ public class GUIController {
 	 * @param assignment The {@code Assignment} whose description will be changed.
 	 * @param newDescription The description to change to.
 	 */
-	public void setAssignmentDescription(Assignment assignment, String newDescription) {
+	protected void setAssignmentDescription(Assignment assignment, String newDescription) {
 		controller.setAssignmentDescription(assignment, newDescription);
 	}
 	
@@ -274,7 +317,7 @@ public class GUIController {
 	 * @param assignment The {@code Assignment} whose type will be changed.
 	 * @param newType The type to change to.
 	 */
-	public void setAssignmentType(Assignment assignment, AssignmentTypes newType) {
+	protected void setAssignmentType(Assignment assignment, AssignmentTypes newType) {
 		controller.setAssignmentType(assignment, newType);
 	}
 	
@@ -284,7 +327,7 @@ public class GUIController {
 	 * @param assignment The {@code Assignment} whose completeness will be changed.
 	 * @param isComplete {@code true} if complete, {@code false} otherwise.
 	 */
-	public void setAssignmentComplete(Assignment assignment, boolean isComplete) {
+	protected void setAssignmentComplete(Assignment assignment, boolean isComplete) {
 		controller.setAssignmentComplete(assignment, isComplete);
 	}
 	

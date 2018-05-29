@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -21,8 +22,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
+import virtualPlanner.backend.Assignment;
 import virtualPlanner.backend.Course;
+import virtualPlanner.reference.Colors;
 import virtualPlanner.reference.Days;
 import virtualPlanner.reference.Fonts;
 import virtualPlanner.reference.Images;
@@ -50,10 +55,6 @@ public class MainCalendarWindow implements ActionListener {
 	/**The JFrame of this MainCalendarWindow instance*/
 	private JFrame frame;
 
-	private SettingsWindow settings;
-
-	private AddCourseWindow addCourse;
-
 	private static final Dimension MAIN_SIZE = new Dimension(1280, 720);
 
 	/**Outermost of all nested JPanels which is directly added into the JFrame*/
@@ -68,6 +69,14 @@ public class MainCalendarWindow implements ActionListener {
 	/**Height of the day of week labels at the top of each column*/
 	private static final int CALENDAR_LABEL_HEIGHT = 20;
 
+	/**Default Border which all buttons are instantiated with*/
+	private static final Border DEFAULT_BORDER = BorderFactory.createEtchedBorder(1);
+	/**Highlight Border used to indicate the last edited GUIButton which represents a block*/
+	private static final Border HIGHLIGHTED_BORDER = BorderFactory.createEtchedBorder(1, Color.RED, Color.WHITE);
+
+	/**Reference to the last highlighted button so that it can be easily reset to normal*/
+	private static CalendarButton highlightedButton;
+	
 	//JMenuBar and sub-components
 	/**The JMenuBar for this MainCalendarWindow*/
 	private JMenuBar menuBar;
@@ -95,7 +104,7 @@ public class MainCalendarWindow implements ActionListener {
 	private JLabel labelDate;
 
 	/**2D-Array representation of the Calendar GUIButtons*/
-	private GUIButton[][] buttons;
+	private CalendarButton[][] buttons;
 
 	/**JList of UpcomingEvents*/
 	private JList<String> events;
@@ -103,7 +112,7 @@ public class MainCalendarWindow implements ActionListener {
 	private JScrollPane eventsScrollPane;
 
 	/**ArrayList of all the GUIButtons that are day of week labels (simply show the current day)*/
-	private ArrayList<GUIButton> dayOfWeekButtons;
+	private ArrayList<CalendarButton> dayOfWeekButtons;
 
 	/**Size for labelDate*/
 	private static final Dimension DATE_SIZE = new Dimension(400, 100);
@@ -116,6 +125,8 @@ public class MainCalendarWindow implements ActionListener {
 
 	/**Size of each individual block*/
 	private static final Dimension BLOCK_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, 30);
+	
+	private static final Dimension LABEL_SIZE = new Dimension(CALENDAR_COLUMN_WIDTH, CALENDAR_LABEL_HEIGHT);
 
 	/**Array which holds all the months - used as reference when displaying dates*/
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
@@ -163,7 +174,7 @@ public class MainCalendarWindow implements ActionListener {
 		menuBar.add(menuItemAddCourse);
 
 		//Add the base components of the GUI
-		buttons = new GUIButton[7][];
+		buttons = new CalendarButton[7][];
 		addComponents();
 
 		//Refresh current date, week label, and all calendar buttons
@@ -181,8 +192,6 @@ public class MainCalendarWindow implements ActionListener {
 	public void addComponents() {
 		//Clear frame
 		frame.getContentPane().removeAll();
-
-		//Calendar 
 
 		//Left Button to show previous week
 		buttonLeft = new JButton();
@@ -311,6 +320,8 @@ public class MainCalendarWindow implements ActionListener {
 	 * This method adds the weekly JButtons to the calendarPanel
 	 */
 	public void updateButtons() {
+		panelCalendar.removeAll();
+		
 		//Initial default values for GridBagLayout constraints
 		GridBagConstraints c = new GridBagConstraints();
 		c.ipadx = 50;
@@ -322,14 +333,12 @@ public class MainCalendarWindow implements ActionListener {
 		c.gridy = 0;
 		//Vertical Padding
 		c.ipady = 10;
-		//Dimension to keep all sizes constant
-		Dimension labelSize = new Dimension(CALENDAR_COLUMN_WIDTH, CALENDAR_LABEL_HEIGHT);
 
 		//Add Weekday Labels
-		dayOfWeekButtons = new ArrayList<GUIButton>(7);
+		dayOfWeekButtons = new ArrayList<CalendarButton>(7);
 		for (int i = 0; i < Days.values().length; i++) {
 			c.gridx = i;
-			GUIButton newButton = new GUIButton(Days.values()[i].getName(), labelSize, Fonts.CALENDAR_DAY);
+			CalendarButton newButton = new CalendarButton(Days.values()[i].getName(), LABEL_SIZE);
 			panelCalendar.add(newButton, c);
 			dayOfWeekButtons.add(newButton);
 		}
@@ -339,12 +348,11 @@ public class MainCalendarWindow implements ActionListener {
 			c.ipady = 25;
 			c.gridx = i;
 			Days blockOrder = Days.values()[i];
-			buttons[i] = new GUIButton[blockOrder.getBlockCount()];
+			buttons[i] = new CalendarButton[blockOrder.getBlockCount()];
 			for(int j = 0; j < blockOrder.getBlockCount(); j++) {
 				c.gridy = j + 1;
 				Block block = blockOrder.getBlock(j);
-				Course course = controller.getCourse(block);
-				GUIButton button = new GUIButton(block.getBlock().getAbbreviation(), block, course == null ? -1 : course.getID(), controller.getAssignments(weekStartDate.getUpcomingDate(j), block), BLOCK_SIZE, Fonts.CALENDAR_BLOCK, controller, controller.getCourse(block), this, weekStartDate.getUpcomingDate(j));
+				CalendarButton button = new CalendarButton(BLOCK_SIZE, block, controller.getAssignments(weekStartDate.getUpcomingDate(j), block), controller.getCourse(block), weekStartDate.getUpcomingDate(j));
 				panelCalendar.add(button, c);
 				buttons[i][j] = button;
 			}
@@ -355,7 +363,7 @@ public class MainCalendarWindow implements ActionListener {
 		c.gridy = 1;
 		c.gridheight = 10;
 		c.fill = GridBagConstraints.VERTICAL;
-		GUIButton newButton = new GUIButton("", BLOCK_SIZE, Fonts.CALENDAR_DAY);
+		CalendarButton newButton = new CalendarButton("", BLOCK_SIZE);
 		panelCalendar.add(newButton, c);
 	}
 
@@ -367,21 +375,11 @@ public class MainCalendarWindow implements ActionListener {
 			return;
 
 		String curDay = currentDate.getDayOfWeek().toString();
-		for(GUIButton b : dayOfWeekButtons) {
+		for(CalendarButton b : dayOfWeekButtons) {
 			if(b.getText().equalsIgnoreCase(curDay)) {
 				b.setBackground(Color.YELLOW);
 			}
 		}
-	}
-
-	protected void closeSettings() {
-		settings = null;
-		update();
-	}
-
-	protected void closeAddAccount() {
-		addCourse = null;
-		update();
 	}
 
 	/**
@@ -418,6 +416,7 @@ public class MainCalendarWindow implements ActionListener {
 		updateButtons();
 		highlightCurDay();
 		updateUpcomingEvents();
+		deselect();
 	}
 
 	/**
@@ -425,6 +424,26 @@ public class MainCalendarWindow implements ActionListener {
 	 */
 	public static Date getCurrentDate() {
 		return currentDate;
+	}
+	
+	/**
+	 * Highlights a particular button.
+	 * 
+	 * @param button The button to select.
+	 */
+	public void select(CalendarButton button) {
+		highlightedButton = button;
+		button.setBorder(HIGHLIGHTED_BORDER);
+	}
+
+	/**
+	 * De-Highlights the button that is currently highlighted.
+	 */
+	public void deselect() {
+		if(highlightedButton != null) {
+			highlightedButton.setBorder(DEFAULT_BORDER);
+			highlightedButton = null;
+		}
 	}
 
 	/**
@@ -436,22 +455,19 @@ public class MainCalendarWindow implements ActionListener {
 
 		//Left button on the calendar
 		if (src.equals(buttonLeft)) {
-			GUIButton.deselect();
 			weekStartDate = weekStartDate.getUpcomingDate(-7);
 			update();
 		}
 
 		//Right button on the calendar
 		else if (src.equals(buttonRight)) {
-			GUIButton.deselect();
 			weekStartDate = weekStartDate.getUpcomingDate(7);
 			update();
 		}
 
 		//User wants to add a Class
 		else if (src.equals(menuItemAddCourse)) {
-			if(addCourse == null)
-				addCourse = new AddCourseWindow(this, controller);
+			controller.openAddCourse();
 		}
 
 
@@ -460,8 +476,7 @@ public class MainCalendarWindow implements ActionListener {
 		}
 
 		else if (src.equals(buttonSettings)) {
-			if(settings == null)
-				settings = new SettingsWindow(this, controller);
+			controller.openSettings();
 		}
 
 		else if (src.equals(menuItemCurrentWeek)) {
@@ -469,4 +484,132 @@ public class MainCalendarWindow implements ActionListener {
 			update();
 		}
 	}
+	
+	/**
+	 * This class is used in place of JButton to provide extra functionality to the JButtons in the Calendar
+	 * @author KevinGao
+	 *
+	 */
+	@SuppressWarnings("serial")
+	public class CalendarButton extends JButton implements ActionListener {
+
+		/**Reference to this GUIButton's add assignment window*/
+		private AssignmentWindow assignmentWindow;
+
+		/**ArrayList of all uncompleted assignments within this GUIButton*/
+		private ArrayList<Assignment> assignments;
+
+		/**The block that corresponds to this GUIButton*/
+		private Block block;
+		/**The course that corresponds to this GUIButton*/
+		private Course course;
+		/**The name and text of this GUIButton*/
+		private String name;
+		/**The Calendar Date on which this GUIButton exists*/
+		private Date date;
+
+		/**
+		 * If true, this GUIButton represents a label for the day of week
+		 * If false, this GUIButton represents a block on the schedule
+		 */
+		private boolean isDayLabel;
+
+		/**
+		 * Base constructor with call to super 
+		 * Sets the universal defaults for all GUIButtons
+		 */
+		private CalendarButton(Dimension size, Color color) {
+			super();
+			this.setPreferredSize(size);
+			this.setBackground(color);
+			this.addActionListener(this);
+			this.setOpaque(true);
+			this.setFocusPainted(false);
+			this.setBorder(DEFAULT_BORDER);
+			this.setAlignmentX(CENTER_ALIGNMENT);
+			this.setPreferredSize(BLOCK_SIZE);
+		}
+
+		/**
+		 * Constructor for the GUIButtons in the Calendar that represent Blocks
+		 * @param block the block that corresponds to the GUIButton
+		 * @param courseID the courseID of the course 
+		 * @param assignments an ArrayList of type Assignment which holds all existing Assignments for this GUIButton
+		 * @param size the preferred size of this GUIButton
+		 */
+		public CalendarButton(Dimension size, Block block, ArrayList<Assignment> assignments, Course course, Date date) {
+			this(size, Preferences.getColor(course == null ? -1 : course.getID()));
+			this.name = block.getBlock().getAbbreviation() + (course == null ? "" : " - " + course.getAbbreviation());
+			this.isDayLabel = false;
+			this.block = block;
+			this.assignments = assignments;
+			this.course = course;
+			this.date = date;
+			this.setFont(Fonts.CALENDAR_BLOCK);
+			this.setVerticalAlignment(SwingConstants.TOP);
+			addAssignmentText();
+		}
+
+		/**
+		 * Construction for the GUIButtons in the Calendar that are the day of week labels
+		 * @param name
+		 * @param size
+		 * @param font
+		 */
+		public CalendarButton(String name, Dimension size) {
+			this(size, Colors.DEFAULT);
+			this.isDayLabel = true;
+			this.setText(name);
+			this.setFont(Fonts.CALENDAR_DAY);
+		}
+		
+		public void assignmentWindowClosed() {
+			assignmentWindow = null;
+			controller.updateCalendar();
+		}
+		
+		private void addAssignmentText() {
+			String assignmentString = "";
+			if(assignments != null)
+				for (Assignment a : assignments)
+					assignmentString += "\n" + a.getName();
+			setMultiLineText(assignmentString);
+		}
+
+		/**
+		 * Enables multi-line text
+		 * PRECONDITION: New lines are denotated by a "\n"
+		 * @param text the text which this GUIButton will be set to display
+		 */
+		private void setMultiLineText(String text) {
+			String newText = name + text;
+			this.setText("<html><center>" + newText.replaceAll("\\n", "<br>") + "</center></html>");
+		}
+
+		/**
+		 * actionPerformed method which handles all ActionEvents for GUIButtons
+		 */
+		public void actionPerformed(ActionEvent e) {
+			Object src = e.getSource();
+
+			//All other GUIButtons
+			if (src instanceof CalendarButton) {	
+				CalendarButton button = (CalendarButton)src;
+				//Button is a Block
+				if(!button.isDayLabel) {
+					//Un-highlight the already highlighted block
+					deselect();
+					//Re-highlight the clicked GUIButton if it represents a class
+					if(block.getBlock().isClass()) {
+						select(button);
+						//Create the New Assignments window for that GUIButton
+						if(course != null && assignmentWindow == null)
+							assignmentWindow = new AssignmentWindow(name, assignments, date, block, course, this, controller);
+					}
+				}
+			}
+		}
+		
+	}
+	
 }
