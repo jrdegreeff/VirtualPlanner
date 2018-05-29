@@ -88,13 +88,20 @@ public class SettingsWindow {
 			tempPanel.add(b);
 			mainVertical.add(tempPanel);
 		}
-
-		buttonShowDateAssigned = new JRadioButton("Show Assignment on Assigned Date");
+		
+		JLabel labelShowAssignmentOptions = new JLabel("Show assignments when: ");
+		labelShowAssignmentOptions.setFont(Fonts.CALENDAR_SETTINGS);
+		labelShowAssignmentOptions.setForeground(Color.BLACK);
+		JPanel panelLabelShowAssignmentOptions = new JPanel();
+		panelLabelShowAssignmentOptions.add(labelShowAssignmentOptions);
+		mainVertical.add(panelLabelShowAssignmentOptions);
+		
+		buttonShowDateAssigned = new JRadioButton("Assigned");
 		buttonShowDateAssigned.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateAssigned = new JPanel();
 		panelButtonShowDateAssigned.add(buttonShowDateAssigned);
 		
-		buttonShowDateDue = new JRadioButton("Show Assignment on Due Date");
+		buttonShowDateDue = new JRadioButton("Due");
 		buttonShowDateDue.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateDue = new JPanel();
 		panelButtonShowDateDue.add(buttonShowDateDue);
@@ -102,9 +109,12 @@ public class SettingsWindow {
 		ButtonGroup group = new ButtonGroup();
 		group.add(buttonShowDateAssigned);
 		group.add(buttonShowDateDue);
+		
+		Box showAssignmentOptionsBox = Box.createHorizontalBox();
+		showAssignmentOptionsBox.add(panelButtonShowDateAssigned);
+		showAssignmentOptionsBox.add(panelButtonShowDateDue);
 
-		mainVertical.add(panelButtonShowDateAssigned);
-		mainVertical.add(panelButtonShowDateDue);
+		mainVertical.add(showAssignmentOptionsBox);
 
 		//Number of days of upcoming events
 		JLabel numDaysLabel = new JLabel("Number of Days 'Upcoming Events' shows");
