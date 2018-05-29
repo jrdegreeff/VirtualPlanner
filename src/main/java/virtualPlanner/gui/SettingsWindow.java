@@ -44,12 +44,12 @@ public class SettingsWindow {
 	private JTextField upcomingDaysField;
 
 	private ArrayList<GUISampleColorButton> buttons;
-	
+
 	private GUIController controller;
 
 	protected SettingsWindow(GUIController controller) {
 		this.controller = controller;
-		
+
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.setSize(SETTINGS_SIZE);
@@ -61,6 +61,11 @@ public class SettingsWindow {
 					JOptionPane.showMessageDialog(null, "Invalid Input for Upcoming Days", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				if(buttonShowDateDue.isSelected())
+					Preferences.setDisplayOnDue(true);
+				else
+					Preferences.setDisplayOnDue(false);
+
 				for(GUISampleColorButton b: buttons)
 					Preferences.addColor(b.getCourse().getID(), b.getBackground());
 				frame.dispose();
@@ -110,6 +115,11 @@ public class SettingsWindow {
 		buttonShowDateDue.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelButtonShowDateDue = new JPanel();
 		panelButtonShowDateDue.add(buttonShowDateDue);
+
+		if(Preferences.displayOnDue())
+			buttonShowDateDue.setSelected(true);
+		else
+			buttonShowDateAssigned.setSelected(true);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(buttonShowDateAssigned);

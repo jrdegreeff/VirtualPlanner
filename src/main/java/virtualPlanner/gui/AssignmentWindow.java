@@ -442,6 +442,9 @@ public class AssignmentWindow implements ActionListener {
 
 		//Quit the Edit Assignment Mode
 		hideEditAssignmentMode();
+		
+		nameField.grabFocus();
+		nameField.requestFocus();
 	}
 
 	/**
@@ -471,6 +474,9 @@ public class AssignmentWindow implements ActionListener {
 		dueMonthBox.setSelectedItem(MONTHS[currentDate.getMonth()]);
 		dueDayBox.setSelectedItem(DAYS[currentDate.getDay()-1]);
 		dueYearBox.setSelectedItem(YEARS[currentDate.getYear()-Integer.parseInt(YEARS[0])]);
+		
+		nameField.grabFocus();
+		nameField.requestFocus();
 	}
 
 	/**

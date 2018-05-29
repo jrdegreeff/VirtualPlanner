@@ -5,14 +5,12 @@ JAVADOC FOR MAINCALENDAR WINDOW
 - OTHER FIELDS
 REORDER METHODS TO MAKE READABLE
 
-Removal instantly updates the JList >> Strikethrough for finished Objects
-- Set assignmentcomplete in assignmentwindow's edit assignment
-- Upcoming Events and JButton don't show finished Objects
 Default Show Assignments When
 Settings Window
 - Upcoming Events
 
-
+Removal instantly updates the JList >> Strikethrough for finished Objects
+- Upcoming Events and JButton don't show finished Objects
 //TODO: Remove + Edit gives bad pointer
 ___________________________________________________________
 ___________________________________________________________
