@@ -72,6 +72,8 @@ public class CalendarWindow implements ActionListener {
 	/**Array which holds all the months - used as reference when displaying dates*/
 	private static final String[] MONTHS = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 	
+	private static final String NO_UPCOMING_EVENTS_TEXT = "No Upcoming Events";
+	
 	/**The JFrame of this MainCalendarWindow instance*/
 	private JFrame frame;
 	
@@ -404,6 +406,12 @@ public class CalendarWindow implements ActionListener {
 
 		//Turn ArrayList back into array
 		String[] arrayEvents = arrayListEvents.toArray(new String[0]);
+		
+		if(arrayEvents.length == 0){
+			String[] temp = {NO_UPCOMING_EVENTS_TEXT};
+			arrayEvents = temp;
+		}
+		
 		//Set "Upcoming Events" to display the array
 		events.setListData(arrayEvents);
 	}

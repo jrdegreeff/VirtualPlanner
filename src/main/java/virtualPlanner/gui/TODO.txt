@@ -4,6 +4,7 @@ JAVADOC FOR MAINCALENDAR WINDOW
 - SWING FIELDS
 - OTHER FIELDS
 REORDER METHODS TO MAKE READABLE
+
 Upcoming Events Size
 NameField focus
 Remove Course Button
@@ -22,7 +23,7 @@ FINAL TODO:
 - Color-Coded by Assignment Type >> Nested JLabels in GUIButtons
 - Short names, max 1 assignment per course for presentation
 - Completed adds to compmleted list >> GET ALL PAST ADDED ASSIGNMENTS
-- Invalid Days of Month, 
+- Invalid Days of Month, Setting assigned message 
 - DATE SELECTER SHOULD MORE CHECKS
 ___________________________________________________________
 ___________________________________________________________
