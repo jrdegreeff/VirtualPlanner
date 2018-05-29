@@ -5,7 +5,6 @@ JAVADOC FOR MAINCALENDAR WINDOW
 - OTHER FIELDS
 REORDER METHODS TO MAKE READABLE
 
-Default Show Assignments When
 Settings Window
 - Upcoming Events
 

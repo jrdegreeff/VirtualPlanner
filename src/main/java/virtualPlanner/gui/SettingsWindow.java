@@ -26,7 +26,7 @@ import virtualPlanner.reference.Preferences;
 public class SettingsWindow {
 
 	/**Size of the settings window*/
-	private static final Dimension SETTINGS_SIZE = new Dimension(400, 500);
+	private static final Dimension SETTINGS_SIZE = new Dimension(430, 500);
 
 	/**Size of the numUpcomingDays JTextField*/
 	private static final Dimension UPCOMING_DAYS_SIZE = new Dimension(30, 25);
@@ -104,7 +104,6 @@ public class SettingsWindow {
 		labelShowAssignmentOptions.setForeground(Color.BLACK);
 		JPanel panelLabelShowAssignmentOptions = new JPanel();
 		panelLabelShowAssignmentOptions.add(labelShowAssignmentOptions);
-		mainVertical.add(panelLabelShowAssignmentOptions);
 
 		buttonShowDateAssigned = new JRadioButton("Assigned");
 		buttonShowDateAssigned.setFont(Fonts.CALENDAR_SETTINGS);
@@ -126,13 +125,14 @@ public class SettingsWindow {
 		group.add(buttonShowDateDue);
 
 		Box showAssignmentOptionsBox = Box.createHorizontalBox();
+		showAssignmentOptionsBox.add(panelLabelShowAssignmentOptions);
 		showAssignmentOptionsBox.add(panelButtonShowDateAssigned);
 		showAssignmentOptionsBox.add(panelButtonShowDateDue);
 
 		mainVertical.add(showAssignmentOptionsBox);
 
 		//Number of days of upcoming events
-		JLabel numDaysLabel = new JLabel("Number of Days 'Upcoming Events' shows");
+		JLabel numDaysLabel = new JLabel("Number of Days 'Upcoming Events' shows: ");
 		numDaysLabel.setFont(Fonts.CALENDAR_SETTINGS);
 		JPanel panelNumDaysLabel = new JPanel();
 		panelNumDaysLabel.add(numDaysLabel);
@@ -143,8 +143,12 @@ public class SettingsWindow {
 		upcomingDaysField.setHorizontalAlignment(JTextField.CENTER);
 		JPanel panelUpcomingDaysField = new JPanel();
 		panelUpcomingDaysField.add(upcomingDaysField);
-		mainVertical.add(panelNumDaysLabel);
-		mainVertical.add(panelUpcomingDaysField);
+		
+		Box showUpcomingDaysBox = Box.createHorizontalBox();
+		showUpcomingDaysBox.add(panelNumDaysLabel);
+		showUpcomingDaysBox.add(panelUpcomingDaysField);
+		
+		mainVertical.add(showUpcomingDaysBox);
 
 		frame.add(mainVertical);
 	}
